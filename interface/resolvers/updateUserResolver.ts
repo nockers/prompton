@@ -20,7 +20,7 @@ export const updateUserResolver: MutationResolvers["updateUser"] = async (
 
   const output = await command.execute({
     userId: ctx.currentUser.uid,
-    userAvatarFileId: args.input.avatarFileId ?? null,
+    userAvatarFileId: args.input.avatarFileId,
     userName: args.input.name,
   })
 

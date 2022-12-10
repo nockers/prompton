@@ -16,10 +16,11 @@ export const postsResolver: QueryResolvers["posts"] = async (_, args) => {
       id: post.user.id,
       name: post.user.name,
       createdAt: Math.floor(post.user.createdAt.getTime() / 1000),
-      avatarImageURL: post.user.avatarImageURL ?? null,
-      avatarImageId: post.user.avatarFileId ?? null,
+      avatarImageURL: post.user.avatarImageURL,
+      avatarImageId: post.user.avatarFileId,
       headerImageId: null,
       biography: "",
+      login: null,
       posts: {
         totalCount: 0,
         edges: [],

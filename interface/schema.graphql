@@ -1,5 +1,5 @@
 type Query {
-  viewer: Viewer
+  # viewer: Viewer
   posts(after: ID): PostsConnection!
   user(id: ID!): UserNode
 }
@@ -57,15 +57,19 @@ type PageInfo {
 
 type Mutation {
   createPost(input: CreatePostInput!): PostNode!
-  addReaction(input: AddReactionInput!): PostNode!
+  updatePost(input: UpdatePostInput!): PostNode!
   createUser(input: CreateUserInput!): Boolean
   updateUser(input: UpdateUserInput!): Boolean
-  login(input: LoginInput!): Boolean
-  logout: Boolean
+  addReaction(input: AddReactionInput!): PostNode!
 }
 
 input CreatePostInput {
   fileId: String!
+}
+
+input UpdatePostInput {
+  postId: String!
+  prompt: String
 }
 
 input AddReactionInput {

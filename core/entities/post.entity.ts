@@ -5,6 +5,7 @@ const zProps = z.object({
   id: z.instanceof(Id),
   title: z.string().nullable(),
   fileId: z.instanceof(Id),
+  prompt: z.string().nullable(),
   userId: z.instanceof(Id),
 })
 
@@ -34,9 +35,18 @@ export class PostEntity {
    */
   readonly userId!: Props["userId"]
 
+  readonly prompt!: Props["prompt"]
+
   constructor(public props: Props) {
     zProps.parse(props)
     Object.assign(this, props)
     Object.freeze(this)
+  }
+
+  updatePrompt(prompt: string | null) {
+    return new PostEntity({
+      ...this.props,
+      prompt,
+    })
   }
 }

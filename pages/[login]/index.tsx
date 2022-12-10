@@ -49,8 +49,6 @@ const UserPage: BlitzPage = () => {
     skip: typeof router.query.login === "undefined",
   })
 
-  const isMyPage = router.query.login === appContext.currentUser?.uid
-
   const [uploadFile] = useFileUpload()
 
   const toast = useToast()
@@ -148,16 +146,18 @@ const UserPage: BlitzPage = () => {
     return <Box>{"NOT FOUND"}</Box>
   }
 
+  const isEditable = router.query.login === appContext.currentUser?.uid
+
   return (
     <Stack as={"main"} px={4} spacing={4} pb={4}>
       <UserHeaderProfile
-        avatarImageId={user.avatarImageId ?? null}
+        avatarImageId={user.avatarImageId}
         userId={user.id}
         userName={user.name}
-        isEditable={isMyPage}
+        isEditable={isEditable}
         onEdit={onEditProfile}
       />
-      {isMyPage && (
+      {isEditable && (
         <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
       )}
       <SimpleGrid minChildWidth={"280px"} gap={4}>
@@ -166,9 +166,11 @@ const UserPage: BlitzPage = () => {
             key={edge.node.id}
             id={edge.node.id}
             postFileId={edge.node.fileId}
+            postPrompt={edge.node.prompt}
             userId={user.id}
             userName={user.name}
-            userAvatarImageURL={user.avatarImageURL ?? null}
+            userAvatarImageURL={user.avatarImageURL}
+            isEditable={isEditable}
           />
         ))}
         {toBlanks(user.posts.edges).map((_, index) => (
@@ -177,7 +179,7 @@ const UserPage: BlitzPage = () => {
       </SimpleGrid>
       <UserModalProfile
         userName={user.name}
-        userAvatarFileId={user.avatarImageId ?? null}
+        userAvatarFileId={user.avatarImageId}
         isOpen={isOpenModalProfile}
         onClose={onCloseModalProfile}
         onChangeAvatarFileId={onChangeAvatarFileId}

@@ -18,6 +18,7 @@ export class PostRepository {
         title: post.title,
         fileId: new Id(post.fileId),
         userId: new Id(post.userId),
+        prompt: post.prompt,
       })
     } catch (error) {
       captureException(error)
@@ -37,6 +38,7 @@ export class PostRepository {
         },
         update: {
           title: entity.title,
+          prompt: entity.prompt,
         },
         where: { id: entity.id.value },
       })

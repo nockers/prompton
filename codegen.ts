@@ -10,6 +10,8 @@ const config: CodegenConfig = {
       config: {
         useIndexSignature: true,
         contextType: "types#Context",
+        avoidOptionals: true,
+        enumsAsConst: true,
       },
       plugins: ["typescript", "typescript-resolvers"],
     },
@@ -20,6 +22,10 @@ const config: CodegenConfig = {
         "typescript-operations",
         "typescript-react-apollo",
       ],
+      config: {
+        avoidOptionals: true,
+        enumsAsConst: true,
+      },
     },
   },
 }

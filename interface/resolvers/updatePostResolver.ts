@@ -3,9 +3,9 @@ import { GraphQLError } from "graphql"
 import { container } from "tsyringe"
 import db from "db"
 import { MutationResolvers, PostNode } from "interface/__generated__/node"
-import { CreatePostCommand } from "service"
+import { UpdatePostCommand } from "service"
 
-export const createPostResolver: MutationResolvers["createPost"] = async (
+export const updatePostResolver: MutationResolvers["updatePost"] = async (
   _,
   args,
   ctx,
@@ -16,11 +16,12 @@ export const createPostResolver: MutationResolvers["createPost"] = async (
     })
   }
 
-  const command = container.resolve(CreatePostCommand)
+  const command = container.resolve(UpdatePostCommand)
 
   const output = await command.execute({
     userId: ctx.currentUser.uid,
-    postFileId: args.input.fileId,
+    postId: args.input.postId,
+    postPrompt: args.input.prompt,
   })
 
   if (output instanceof Error) {
@@ -30,7 +31,7 @@ export const createPostResolver: MutationResolvers["createPost"] = async (
   }
 
   const post = await db.post.findUnique({
-    where: { id: output.userId },
+    where: { id: args.input.postId },
     include: { user: true },
   })
 

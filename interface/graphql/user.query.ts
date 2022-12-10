@@ -23,6 +23,7 @@ export default gql`
             createdAt
             title
             fileId
+            prompt
             likeCount
           }
         }

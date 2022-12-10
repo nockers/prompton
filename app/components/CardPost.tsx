@@ -6,9 +6,11 @@ import { ModalPost } from "app/components/ModalPost"
 type Props = {
   id: string
   postFileId: string
+  postPrompt: string | null
   userId: string
   userName: string
   userAvatarImageURL: string | null
+  isEditable: boolean
 }
 
 export const CardPost: FC<Props> = (props) => {
@@ -39,11 +41,13 @@ export const CardPost: FC<Props> = (props) => {
       <ModalPost
         postId={props.id}
         postFileId={props.postFileId}
+        postPrompt={props.postPrompt}
         userId={props.userId}
         userName={props.userName}
         userAvatarImageURL={props.userAvatarImageURL}
         onOpenUser={onOpenUser}
         isOpen={isOpen}
+        isEditable={props.isEditable}
         onOpen={onOpen}
         onClose={onClose}
       />

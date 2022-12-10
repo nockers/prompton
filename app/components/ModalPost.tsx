@@ -6,6 +6,7 @@ import {
   ModalOverlay,
   ModalContent,
   ModalCloseButton,
+  Text,
   ModalBody,
   ModalFooter,
   Icon,
@@ -14,19 +15,22 @@ import {
   HStack,
   Tag,
   ModalHeader,
+  Textarea,
 } from "@chakra-ui/react"
-import { FC } from "react"
-import { BiBookmark, BiHeart } from "react-icons/bi"
-import { PostPrompt } from "app/components/PostPrompt"
+import { FC, useState } from "react"
+import { BiBookmark, BiEdit, BiHeart } from "react-icons/bi"
 import { UserProfile } from "app/components/UserProfile"
+import { useUpdatePostMutation } from "interface/__generated__/react"
 
 type Props = {
   postId: string
   postFileId: string
+  postPrompt: string | null
   userId: string
   userName: string
   userAvatarImageURL: string | null
   isOpen: boolean
+  isEditable: boolean
   onOpenUser(): void
   onOpen(): void
   onClose(): void
@@ -34,6 +38,27 @@ type Props = {
 
 export const ModalPost: FC<Props> = (props) => {
   const margin = useBreakpointValue({ base: 0, md: 4 })
+
+  const [updatePost] = useUpdatePostMutation()
+
+  const [isEditable, setIsEditable] = useState(false)
+
+  const [prompt, setPrompt] = useState(props.postPrompt ?? "")
+
+  const onEdit = () => {
+    setIsEditable((state) => !state)
+  }
+
+  const onBlur = async () => {
+    await updatePost({
+      variables: {
+        input: {
+          postId: props.postId,
+          prompt: prompt,
+        },
+      },
+    })
+  }
 
   return (
     <Modal
@@ -55,11 +80,22 @@ export const ModalPost: FC<Props> = (props) => {
               w={"100%"}
             />
             <HStack spacing={2}>
-              <Tag>{"#Prompt"}</Tag>
-              <Tag>{"#Prompt"}</Tag>
-              <Tag>{"#Prompt"}</Tag>
+              <HStack spacing={2}>
+                <Tag>{"#Prompt"}</Tag>
+                <Tag>{"#Prompt"}</Tag>
+                <Tag>{"#Prompt"}</Tag>
+              </HStack>
             </HStack>
-            <PostPrompt />
+            {isEditable && (
+              <Textarea
+                value={prompt}
+                onChange={(event) => {
+                  setPrompt(event.target.value)
+                }}
+                onBlur={onBlur}
+              />
+            )}
+            {!isEditable && <Text>{props.postPrompt ?? "no prompt"}</Text>}
             <UserProfile
               userId={props.userId}
               userAvatarImageURL={props.userAvatarImageURL}
@@ -69,21 +105,30 @@ export const ModalPost: FC<Props> = (props) => {
           </Stack>
         </ModalBody>
         <ModalFooter px={4}>
-          <IconButton
-            mr={2}
-            size={"sm"}
-            onClick={props.onClose}
-            aria-label={""}
-          >
-            <Icon as={BiBookmark} />
-          </IconButton>
-          <Button
-            size={"sm"}
-            leftIcon={<Icon as={BiHeart} />}
-            colorScheme={"blue"}
-          >
-            {"いいね"}
-          </Button>
+          <HStack>
+            <IconButton size={"sm"} onClick={props.onClose} aria-label={""}>
+              <Icon as={BiBookmark} />
+            </IconButton>
+            {!props.isEditable && (
+              <Button
+                size={"sm"}
+                leftIcon={<Icon as={BiHeart} />}
+                colorScheme={"blue"}
+              >
+                {"いいね"}
+              </Button>
+            )}
+            {props.isEditable && (
+              <Button
+                size={"sm"}
+                leftIcon={<Icon as={BiEdit} />}
+                colorScheme={"blue"}
+                onClick={onEdit}
+              >
+                {isEditable ? "終了" : "編集"}
+              </Button>
+            )}
+          </HStack>
         </ModalFooter>
       </ModalContent>
     </Modal>
