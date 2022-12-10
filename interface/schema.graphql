@@ -60,7 +60,7 @@ type Mutation {
   updatePost(input: UpdatePostInput!): PostNode!
   createUser(input: CreateUserInput!): Boolean
   updateUser(input: UpdateUserInput!): Boolean
-  addReaction(input: AddReactionInput!): PostNode!
+  # addReaction(input: AddReactionInput!): PostNode!
 }
 
 input CreatePostInput {

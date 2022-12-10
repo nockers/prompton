@@ -90,6 +90,7 @@ const UserPage: BlitzPage = () => {
         variables: {
           input: {
             avatarFileId: fileId,
+            headerImageId: data?.user?.headerImageId ?? null,
             biography: "",
             name: data?.user?.name ?? "-",
           },
@@ -117,7 +118,8 @@ const UserPage: BlitzPage = () => {
       await updateUser({
         variables: {
           input: {
-            avatarFileId: data?.user?.avatarImageId,
+            avatarFileId: data?.user?.avatarImageId ?? null,
+            headerImageId: data?.user?.headerImageId ?? null,
             biography: "",
             name: name,
           },
