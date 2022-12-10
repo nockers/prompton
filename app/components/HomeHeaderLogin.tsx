@@ -3,7 +3,6 @@ import Link from "next/link"
 import { FC, useContext } from "react"
 import { BiCog } from "react-icons/bi"
 import { FcGoogle } from "react-icons/fc"
-import { useCurrentUser } from "app/hooks/useCurrentUser"
 import { AppContext } from "interface/contexts/appContext"
 
 type Props = {
@@ -13,18 +12,17 @@ type Props = {
 export const HomeHeaderLogin: FC<Props> = (props) => {
   const appContext = useContext(AppContext)
 
-  const currentUser = useCurrentUser()
-
   if (appContext.isLoading) {
     return <Button isLoading={true} fontSize={14} />
   }
 
-  if (currentUser === null) {
+  if (appContext.currentUser === null) {
     return (
       <Button
         leftIcon={<Icon as={FcGoogle} />}
         fontSize={14}
         onClick={props.onLogin}
+        minW={28}
       >
         {"ログイン"}
       </Button>
@@ -33,7 +31,7 @@ export const HomeHeaderLogin: FC<Props> = (props) => {
 
   return (
     <HStack>
-      <Link href={`/${currentUser.uid}`}>
+      <Link href={`/${appContext.currentUser.uid}`}>
         <Button fontSize={14}>{"マイページ"}</Button>
       </Link>
       <Link href={"/settings"}>

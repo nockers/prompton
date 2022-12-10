@@ -1,7 +1,7 @@
 import { Image, useDisclosure, Button } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { FC } from "react"
-import { DrawerPost } from "app/components/DrawerPost"
+import { ModalPost } from "app/components/ModalPost"
 
 type Props = {
   id: string
@@ -36,7 +36,7 @@ export const CardPost: FC<Props> = (props) => {
           borderRadius={4}
         />
       </Button>
-      <DrawerPost
+      <ModalPost
         postId={props.id}
         postFileId={props.postFileId}
         userId={props.userId}

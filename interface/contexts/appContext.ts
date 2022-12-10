@@ -1,5 +1,12 @@
+import { User } from "firebase/auth"
 import { createContext } from "react"
 
-export const AppContext = createContext({
+type Value = {
+  isLoading: boolean
+  currentUser: User | null
+}
+
+export const AppContext = createContext<Value>({
   isLoading: false,
+  currentUser: null,
 })

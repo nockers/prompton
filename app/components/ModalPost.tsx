@@ -13,6 +13,7 @@ import {
   IconButton,
   HStack,
   Tag,
+  ModalHeader,
 } from "@chakra-ui/react"
 import { FC } from "react"
 import { BiBookmark, BiHeart } from "react-icons/bi"
@@ -31,21 +32,21 @@ type Props = {
   onClose(): void
 }
 
-export const DrawerPost: FC<Props> = (props) => {
+export const ModalPost: FC<Props> = (props) => {
   const margin = useBreakpointValue({ base: 0, md: 4 })
 
   return (
     <Modal
       isOpen={props.isOpen}
-      size={{ sm: "full", md: "xl" }}
+      size={{ base: "full", md: "xl" }}
       scrollBehavior={"inside"}
       onClose={props.onClose}
     >
       <ModalOverlay backdropFilter="blur(10px)" />
       <ModalContent mx={margin}>
-        {/* <ModalHeader px={4}>{props.postId}</ModalHeader> */}
+        <ModalHeader px={4}>{props.postId}</ModalHeader>
         <ModalCloseButton top={4} right={4} />
-        <ModalBody pb={0} pt={4} px={4}>
+        <ModalBody pb={0} pt={0} px={4}>
           <Stack spacing={4}>
             <Image
               alt={""}
