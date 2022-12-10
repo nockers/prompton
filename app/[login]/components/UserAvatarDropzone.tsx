@@ -15,14 +15,14 @@ export const UserAvatarDropzone: FC<Props> = (props) => {
     props.onChange(file)
   }
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     maxFiles: 1,
   })
 
   const src =
     props.userAvatarFileId !== null
-      ? `/api/images/${props.userAvatarFileId}?w=280&q=80`
+      ? `/api/images/${props.userAvatarFileId}?w=160&h=160`
       : ""
 
   return (

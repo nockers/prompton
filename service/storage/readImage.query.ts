@@ -8,6 +8,7 @@ import { FirebaseAdapter } from "infrastructure"
 type Props = {
   fileId: string
   width: number
+  height: number | null
   quality: number
 }
 
@@ -19,7 +20,9 @@ export class ReadImageQuery {
     try {
       await this.firebaseAdapter.initialize()
 
-      const tmpPath = `${tmpdir()}/${props.fileId}`
+      const tmpPath = `${tmpdir()}/${props.fileId}.${props.width}.${
+        props.height
+      }.${props.quality}`
 
       try {
         const buffer = await sharp(tmpPath).toBuffer()
@@ -33,6 +36,18 @@ export class ReadImageQuery {
       })
 
       try {
+        if (props.width !== null && props.height !== null) {
+          const shapeImage = sharp(file)
+            .resize({
+              width: props.width,
+              height: props.height,
+              fit: sharp.fit.cover,
+            })
+            .png({ quality: props.quality })
+          const buffer = shapeImage.toBuffer()
+          await shapeImage.toFile(tmpPath)
+          return buffer
+        }
         const shapeImage = sharp(file)
           .resize(props.width)
           .png({ quality: props.quality })

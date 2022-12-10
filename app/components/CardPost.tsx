@@ -34,7 +34,7 @@ export const CardPost: FC<Props> = (props) => {
         <Image
           w={"100%"}
           alt={""}
-          src={`/api/images/${props.postFileId}?w=400&q=100`}
+          src={`/api/images/${props.postFileId}?w=400&h=400`}
           borderRadius={4}
         />
       </Button>

@@ -13,7 +13,7 @@ type Props = {
 export const UserHeaderProfile: FC<Props> = (props) => {
   const src =
     props.avatarImageId !== null
-      ? `/api/images/${props.avatarImageId}?w=280&q=80`
+      ? `/api/images/${props.avatarImageId}?w=160&h=160`
       : ""
 
   return (

@@ -75,7 +75,7 @@ export const ModalPost: FC<Props> = (props) => {
           <Stack spacing={4}>
             <Image
               alt={""}
-              src={`/api/images/${props.postFileId}?w=1024&q=100`}
+              src={`/api/images/${props.postFileId}?w=1024`}
               borderRadius={8}
               w={"100%"}
             />

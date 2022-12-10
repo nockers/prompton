@@ -5,11 +5,15 @@ import { ReadImageQuery } from "service"
 
 const apiHandler: NextApiHandler = async (req, resp) => {
   try {
-    if (typeof req.query.w !== "string" || typeof req.query.q !== "string") {
+    if (typeof req.query.w !== "string") {
       return resp.status(500).end()
     }
 
     if (typeof req.query.id !== "string") {
+      return resp.status(500).end()
+    }
+
+    if (typeof req.query.h !== "undefined" && typeof req.query.h !== "string") {
       return resp.status(500).end()
     }
 
@@ -19,9 +23,12 @@ const apiHandler: NextApiHandler = async (req, resp) => {
 
     const width = parseInt(req.query.w)
 
-    const quality = parseInt(req.query.q)
+    const height =
+      typeof req.query.h === "string" ? parseInt(req.query.h) : null
 
-    const file = await readFileQuery.execute({ fileId, width, quality })
+    const quality = typeof req.query.q == "string" ? parseInt(req.query.q) : 100
+
+    const file = await readFileQuery.execute({ fileId, width, height, quality })
 
     if (file instanceof Error) {
       return resp.status(500).end()
