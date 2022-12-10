@@ -1,0 +1,13 @@
+{
+  "extends": ["next/core-web-vitals", "prettier"],
+  "plugins": ["unused-imports"],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "import/order": ["error", { "alphabetize": { "order": "asc" } }],
+    "unused-imports/no-unused-imports": "error",
+    "@next/next/no-img-element": "off",
+    "react/display-name": "off"
+  }
+}

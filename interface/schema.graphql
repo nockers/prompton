@@ -1,0 +1,89 @@
+type Query {
+  viewer: Viewer
+  posts(after: ID): PostsConnection!
+  user(id: ID!): UserNode
+}
+
+type Viewer {
+  posts(after: ID): PostsConnection!
+}
+
+type PostNode implements Node {
+  id: ID!
+  createdAt: Int!
+  title: String
+  fileId: String!
+  likeCount: Int!
+  user: UserNode!
+}
+
+type PostEdge implements Edge {
+  cursor: String!
+  node: PostNode!
+}
+
+type PostsConnection implements Connection {
+  totalCount: Int
+  pageInfo: PageInfo!
+  edges: [PostEdge!]!
+}
+
+type UserNode implements Node {
+  id: ID!
+  name: String!
+  avatarImageURL: String
+  posts(after: ID): PostsConnection!
+}
+
+type ReactionNode implements Node {
+  id: ID!
+  text: String!
+  count: Int!
+  secretCount: Int!
+  isConnected: Boolean!
+}
+
+type PageInfo {
+  endCursor: String
+  hasNextPage: Boolean!
+}
+
+type Mutation {
+  createPost(input: CreatePostInput!): PostNode!
+  addReaction(input: AddReactionInput!): PostNode!
+  createUser(input: CreateUserInput!): Boolean
+  login(input: LoginInput!): Boolean
+  logout: Boolean
+}
+
+input CreatePostInput {
+  fileId: String!
+}
+
+input AddReactionInput {
+  postId: String!
+  text: String!
+}
+
+input CreateUserInput {
+  name: String!
+}
+
+input LoginInput {
+  token: String!
+}
+
+interface Node {
+  id: ID!
+}
+
+interface Edge {
+  cursor: String!
+  node: Node!
+}
+
+interface Connection {
+  totalCount: Int
+  pageInfo: PageInfo!
+  edges: [Edge!]!
+}

@@ -1,0 +1,11 @@
+export const createDocId = () => {
+  const text = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+
+  let value = ""
+
+  for (let i = 0; i < 20; i++) {
+    value += text.charAt(Math.floor(Math.random() * text.length))
+  }
+
+  return value
+}
