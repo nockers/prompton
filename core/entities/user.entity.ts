@@ -74,16 +74,16 @@ export class UserEntity {
 
   update(input: {
     headerImageId?: Id
-    iconImageId?: Id
+    avatarImageId?: Id | null
     name: Name
-    biography: Biography
+    biography?: Biography
   }) {
     return new UserEntity({
       ...this.props,
       biography: input.biography ?? this.biography,
       name: input.name ?? this.name,
-      headerImageId: input.iconImageId ?? this.headerImageId,
-      avatarImageId: input.iconImageId ?? this.avatarImageId,
+      headerImageId: input.headerImageId ?? this.headerImageId,
+      avatarImageId: input.avatarImageId ?? this.avatarImageId,
     })
   }
 }

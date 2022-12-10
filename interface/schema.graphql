@@ -13,6 +13,8 @@ type PostNode implements Node {
   createdAt: Int!
   title: String
   fileId: String!
+  prompt: String
+  model: String
   likeCount: Int!
   user: UserNode!
 }
@@ -31,7 +33,12 @@ type PostsConnection implements Connection {
 type UserNode implements Node {
   id: ID!
   name: String!
+  login: String
+  createdAt: Int!
   avatarImageURL: String
+  avatarImageId: String
+  headerImageId: String
+  biography: String!
   posts(after: ID): PostsConnection!
 }
 
@@ -52,6 +59,7 @@ type Mutation {
   createPost(input: CreatePostInput!): PostNode!
   addReaction(input: AddReactionInput!): PostNode!
   createUser(input: CreateUserInput!): Boolean
+  updateUser(input: UpdateUserInput!): Boolean
   login(input: LoginInput!): Boolean
   logout: Boolean
 }
@@ -67,6 +75,13 @@ input AddReactionInput {
 
 input CreateUserInput {
   name: String!
+}
+
+input UpdateUserInput {
+  name: String!
+  avatarFileId: String
+  headerImageId: String
+  biography: String!
 }
 
 input LoginInput {

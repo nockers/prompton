@@ -3,9 +3,9 @@ import { getAuth } from "firebase-admin/auth"
 import { GraphQLError } from "graphql"
 import { container } from "tsyringe"
 import { MutationResolvers } from "interface/__generated__/node"
-import { CreateUserCommand } from "service"
+import { UpdateUserCommand } from "service"
 
-export const createUserResolver: MutationResolvers["createUser"] = async (
+export const updateUserResolver: MutationResolvers["updateUser"] = async (
   _,
   args,
   ctx,
@@ -16,13 +16,12 @@ export const createUserResolver: MutationResolvers["createUser"] = async (
     })
   }
 
-  const command = container.resolve(CreateUserCommand)
+  const command = container.resolve(UpdateUserCommand)
 
   const output = await command.execute({
     userId: ctx.currentUser.uid,
-    userAvatarURL: ctx.currentUser.picture ?? null,
+    userAvatarFileId: args.input.avatarFileId ?? null,
     userName: args.input.name,
-    userEmail: ctx.currentUser.email ?? null,
   })
 
   if (output instanceof Error) {
@@ -33,10 +32,6 @@ export const createUserResolver: MutationResolvers["createUser"] = async (
 
   await getAuth().updateUser(ctx.currentUser.uid, {
     displayName: args.input.name,
-  })
-
-  await getAuth().setCustomUserClaims(ctx.currentUser.uid, {
-    isInitialized: true,
   })
 
   return true

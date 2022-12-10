@@ -35,7 +35,11 @@ export const userResolver: QueryResolvers["user"] = async (_, args) => {
         user: {
           id: user.id,
           name: user.name,
+          createdAt: Math.floor(user.createdAt.getTime() / 1000),
           avatarImageURL: user.avatarImageURL ?? null,
+          avatarImageId: user.avatarFileId ?? null,
+          headerImageId: null,
+          biography: "",
           posts: {
             totalCount: 0,
             edges: [],
@@ -61,6 +65,11 @@ export const userResolver: QueryResolvers["user"] = async (_, args) => {
   const node: UserNode = {
     id: user.id,
     name: user.name,
+    createdAt: Math.floor(user.createdAt.getTime() / 1000),
+    avatarImageURL: user.avatarImageURL ?? null,
+    avatarImageId: user.avatarFileId ?? null,
+    headerImageId: null,
+    biography: "",
     posts: postsConnection,
   }
 

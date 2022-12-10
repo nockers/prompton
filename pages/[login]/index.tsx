@@ -3,14 +3,14 @@ import {
   Box,
   SimpleGrid,
   Stack,
+  useDisclosure,
   useToast,
-  Text,
-  HStack,
-  Avatar,
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { UploadDropzone } from "app/[login]/components/UploadDropzone"
+import { UserHeaderProfile } from "app/[login]/components/UserHeaderProfile"
+import { UserModalProfile } from "app/[login]/components/UserModalProfile"
 import UserLayout from "app/[login]/layout"
 import UserLoading from "app/[login]/loading"
 import { CardPost } from "app/components/CardPost"
@@ -18,15 +18,27 @@ import { useFileUpload } from "app/hooks/useFileUpload"
 import { toBlanks } from "app/utils/toBlanks"
 import {
   useCreatePostMutation,
+  useUpdateUserMutation,
   useUserQuery,
 } from "interface/__generated__/react"
+import { AppContext } from "interface/contexts/appContext"
 
 const UserPage: BlitzPage = () => {
+  const appContext = useContext(AppContext)
+
   const router = useRouter()
+
+  const {
+    isOpen: isOpenModalProfile,
+    onOpen: onOpenModalProfile,
+    onClose: onCloseModalProfile,
+  } = useDisclosure()
 
   const [isLoading, setLoading] = useState(false)
 
   const [createPost] = useCreatePostMutation()
+
+  const [updateUser] = useUpdateUserMutation()
 
   const {
     data = null,
@@ -37,7 +49,7 @@ const UserPage: BlitzPage = () => {
     skip: typeof router.query.login === "undefined",
   })
 
-  const isMyPage = data?.user?.id === router.query.login
+  const isMyPage = router.query.login === appContext.currentUser?.uid
 
   const [uploadFile] = useFileUpload()
 
@@ -73,7 +85,60 @@ const UserPage: BlitzPage = () => {
     }
   }
 
-  if (typeof router.query.login === "undefined" && loading) {
+  const onChangeAvatarFileId = async (file: File) => {
+    try {
+      const fileId = await uploadFile(file)
+      await updateUser({
+        variables: {
+          input: {
+            avatarFileId: fileId,
+            biography: "",
+            name: data?.user?.name ?? "-",
+          },
+        },
+      })
+      await refetch()
+      toast({ title: "プロフィールを更新しました" })
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          title: "ERROR",
+          description: error.message,
+          status: "error",
+        })
+      }
+    }
+  }
+
+  const onEditProfile = () => {
+    onOpenModalProfile()
+  }
+
+  const onChangeName = async (name: string) => {
+    try {
+      await updateUser({
+        variables: {
+          input: {
+            avatarFileId: data?.user?.avatarImageId,
+            biography: "",
+            name: name,
+          },
+        },
+      })
+      await refetch()
+      toast({ title: "プロフィールを更新しました" })
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          title: "ERROR",
+          description: error.message,
+          status: "error",
+        })
+      }
+    }
+  }
+
+  if (typeof router.query.login === "undefined" || loading) {
     return <UserLoading />
   }
 
@@ -85,22 +150,16 @@ const UserPage: BlitzPage = () => {
 
   return (
     <Stack as={"main"} px={4} spacing={4} pb={4}>
+      <UserHeaderProfile
+        avatarImageId={user.avatarImageId ?? null}
+        userId={user.id}
+        userName={user.name}
+        isEditable={isMyPage}
+        onEdit={onEditProfile}
+      />
       {isMyPage && (
-        <Stack py={4}>
-          <HStack spacing={4}>
-            <Avatar size={"lg"} src={user.avatarImageURL ?? ""} />
-            <Stack spacing={1}>
-              <Text fontSize={"xs"} fontWeight={"bold"} opacity={0.8}>
-                {`@${user.id}`}
-              </Text>
-              <Text fontSize={"2xl"} lineHeight={1} fontWeight={"bold"}>
-                {user.name}
-              </Text>
-            </Stack>
-          </HStack>
-        </Stack>
+        <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
       )}
-      <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
       <SimpleGrid minChildWidth={"280px"} gap={4}>
         {user.posts.edges.map((edge) => (
           <CardPost
@@ -116,6 +175,14 @@ const UserPage: BlitzPage = () => {
           <Box key={index} />
         ))}
       </SimpleGrid>
+      <UserModalProfile
+        userName={user.name}
+        userAvatarFileId={user.avatarImageId ?? null}
+        isOpen={isOpenModalProfile}
+        onClose={onCloseModalProfile}
+        onChangeAvatarFileId={onChangeAvatarFileId}
+        onChangeName={onChangeName}
+      />
     </Stack>
   )
 }

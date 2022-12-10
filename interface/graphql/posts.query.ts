@@ -16,6 +16,8 @@ export default gql`
           title
           fileId
           likeCount
+          prompt
+          model
           user {
             id
             name

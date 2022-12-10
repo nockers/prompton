@@ -6,6 +6,10 @@ export default gql`
       id
       name
       avatarImageURL
+      avatarImageId
+      headerImageId
+      biography
+      createdAt
       posts {
         totalCount
         pageInfo {

@@ -3,10 +3,10 @@ import { Biography, Email, Id, Name, Url, UserEntity, Username } from "core"
 import db from "db"
 
 export class UserRepository {
-  async findByEmail(email: Email) {
+  async find(id: Id) {
     try {
       const user = await db.user.findUnique({
-        where: { email: email.value },
+        where: { id: id.value },
       })
 
       if (user === null) {
@@ -66,10 +66,16 @@ export class UserRepository {
           login: entity.username?.value ?? null,
           name: entity.name.value,
           avatarImageURL: entity.avatarImageURL?.value ?? null,
+          avatarFileId: entity.avatarImageId?.value ?? null,
+          description: entity.biography.value,
         },
         update: {
+          email: entity.email?.value,
+          login: entity.username?.value ?? null,
           name: entity.name.value,
           avatarImageURL: entity.avatarImageURL?.value ?? null,
+          avatarFileId: entity.avatarImageId?.value ?? null,
+          description: entity.biography.value,
         },
         where: { email: entity.email?.value },
       })
