@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client"
 
 export default gql`
-  query Posts($after: ID) {
-    posts(after: $after) {
+  query Posts($after: ID, $labelName: String, $color: String) {
+    posts(after: $after, labelName: $labelName, color: $color) {
       totalCount
       pageInfo {
         endCursor

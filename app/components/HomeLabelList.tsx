@@ -5,6 +5,7 @@ import { useLabelsQuery } from "interface/__generated__/react"
 
 export const HomeLabelList: BlitzPage = () => {
   const { data } = useLabelsQuery({
+    fetchPolicy: "cache-and-network",
     variables: { after: null },
   })
 

@@ -171,7 +171,10 @@ const UserPage: BlitzPage = () => {
                 postAnnotationRacy={post.annotationRacy}
                 postAnnotationSpoof={post.annotationSpoof}
                 postAnnotationViolence={post.annotationViolence}
-                postLabels={post.labels.map((label) => label.name)}
+                postLabels={post.labels.map((label) => [
+                  label.name,
+                  label.count,
+                ])}
                 postColors={post.colors}
                 postWebColors={post.webColors}
                 userId={user.id}

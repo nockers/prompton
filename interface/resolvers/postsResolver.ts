@@ -9,12 +9,30 @@ import {
 import { UpdatePostColorsCommand } from "service"
 
 export const postsResolver: QueryResolvers["posts"] = async (_, args) => {
+  console.log("args", args)
+
   const posts = await db.post.findMany({
     orderBy: { createdAt: "desc" },
     include: {
       user: true,
-      labels: { include: { _count: { select: { posts: true } } } },
+      labels: {
+        include: { _count: { select: { posts: true } } },
+        orderBy: { posts: { _count: "desc" } },
+      },
     },
+    where: args.labelName
+      ? {
+          labels: {
+            some: { name: args.labelName! },
+          },
+        }
+      : args.color
+      ? {
+          webColors: {
+            has: `#${args.color}`,
+          },
+        }
+      : undefined,
   })
 
   for (const post of posts) {

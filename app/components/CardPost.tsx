@@ -12,7 +12,7 @@ type Props = {
   postAnnotationRacy: string | null
   postAnnotationSpoof: string | null
   postAnnotationViolence: string | null
-  postLabels: string[]
+  postLabels: [string, number][]
   postColors: string[]
   postWebColors: string[]
   userId: string
@@ -27,14 +27,17 @@ export const CardPost: FC<Props> = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   const onOpenUser = () => {
+    onClose()
     router.push(`/${props.userId}`)
   }
 
   const onLinkColor = (color: string) => {
-    router.push(`/colors/${color}`)
+    onClose()
+    router.push(`/colors/${color.replace("#", "")}`)
   }
 
   const onLinkLabel = (label: string) => {
+    onClose()
     router.push(`/labels/${label}`)
   }
 

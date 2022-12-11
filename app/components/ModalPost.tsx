@@ -34,7 +34,7 @@ type Props = {
   postAnnotationRacy: string | null
   postAnnotationSpoof: string | null
   postAnnotationViolence: string | null
-  postLabels: string[]
+  postLabels: [string, number][]
   postColors: string[]
   postWebColors: string[]
   userId: string
@@ -93,10 +93,11 @@ export const ModalPost: FC<Props> = (props) => {
               w={"100%"}
             />
             <Wrap>
-              {props.postLabels.map((label) => (
+              {props.postLabels.map(([label, count]) => (
                 <WrapItem key={label}>
                   <ButtonLinkLabel
                     label={label}
+                    count={count}
                     onClick={() => {
                       props.onLinkLabel(label)
                     }}

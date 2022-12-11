@@ -9,7 +9,7 @@ export const HomePostList: BlitzPage = () => {
   const appContext = useContext(AppContext)
 
   const { data } = usePostsQuery({
-    variables: { after: null },
+    fetchPolicy: "cache-and-network",
   })
 
   return (
@@ -29,7 +29,10 @@ export const HomePostList: BlitzPage = () => {
               postAnnotationRacy={edge.node.annotationRacy}
               postAnnotationSpoof={edge.node.annotationSpoof}
               postAnnotationViolence={edge.node.annotationViolence}
-              postLabels={edge.node.labels.map((label) => label.name)}
+              postLabels={edge.node.labels.map((label) => [
+                label.name,
+                label.count,
+              ])}
               postColors={edge.node.colors}
               postWebColors={edge.node.webColors}
               userId={edge.node.user.id}
