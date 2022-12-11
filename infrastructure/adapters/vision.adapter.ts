@@ -34,7 +34,7 @@ export class VisionAdapter {
       }
 
       return result.labelAnnotations.map((annotation) => {
-        return annotation.description!
+        return annotation.description!.replaceAll(/\s/g, "_").toLowerCase()
       })
     } catch (error) {
       captureException(error)

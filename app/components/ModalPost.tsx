@@ -98,7 +98,7 @@ export const ModalPost: FC<Props> = (props) => {
             <Wrap>
               {props.postColors.map((color) => (
                 <WrapItem key={color}>
-                  <Tag bgColor={color}>{`#${color}`}</Tag>
+                  <Tag bgColor={color}>{color}</Tag>
                 </WrapItem>
               ))}
             </Wrap>
