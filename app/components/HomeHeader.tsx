@@ -6,6 +6,7 @@ import {
   Input,
   useToast,
 } from "@chakra-ui/react"
+import { useDebounce } from "@react-hook/debounce"
 import {
   getAuth,
   getIdTokenResult,
@@ -21,7 +22,9 @@ import { HomeHeaderLogin } from "app/components/HomeHeaderLogin"
 export const HomeHeader: FC = () => {
   const router = useRouter()
 
-  const [search, setSearch] = useState("")
+  const [searchText, setSearchText] = useState("")
+
+  const [search, setSearch] = useDebounce(searchText, 1000)
 
   const toast = useToast()
 
@@ -64,8 +67,9 @@ export const HomeHeader: FC = () => {
           <Input
             variant={"filled"}
             placeholder={"検索"}
-            value={search}
+            value={searchText}
             onChange={(event) => {
+              setSearchText(event.target.value)
               setSearch(event.target.value)
             }}
           />

@@ -4870,6 +4870,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-hook/debounce@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "@react-hook/debounce@npm:4.0.0"
+  dependencies:
+    "@react-hook/latest": ^1.0.2
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 199f944fd905b6cbeb0665e94ce49805f6a0a6f758f35862d784b87dd5c52760dcf2ce9a66abc5698f5b1418be387df5452a703812e9362d1dda0f9718a5d01d
+  languageName: node
+  linkType: hard
+
+"@react-hook/latest@npm:^1.0.2":
+  version: 1.0.3
+  resolution: "@react-hook/latest@npm:1.0.3"
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 2408c9cd35c5cfa7697b6da3bc5eebef254a932ade70955074c474f23be7dd3e2f81bbba12edcc9208bd0f89c6ed366d6b11d4f6d7b1052877a0bac8f74afad4
+  languageName: node
+  linkType: hard
+
 "@repeaterjs/repeater@npm:3.0.4":
   version: 3.0.4
   resolution: "@repeaterjs/repeater@npm:3.0.4"
@@ -12656,6 +12676,7 @@ __metadata:
     "@graphql-tools/schema": ^9.0.10
     "@next/bundle-analyzer": ^13.0.6
     "@prisma/client": ^4.7.1
+    "@react-hook/debounce": ^4.0.0
     "@sentry/browser": ^7.24.2
     "@sentry/node": ^7.24.2
     "@sentry/react": ^7.24.2

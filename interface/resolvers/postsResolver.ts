@@ -1,4 +1,3 @@
-import { container } from "tsyringe"
 import db from "db"
 import {
   LabelNode,
@@ -6,7 +5,6 @@ import {
   QueryResolvers,
   UserNode,
 } from "interface/__generated__/node"
-import { UpdatePostColorsCommand } from "service"
 
 export const postsResolver: QueryResolvers["posts"] = async (_, args) => {
   console.log("args", args)
@@ -35,11 +33,11 @@ export const postsResolver: QueryResolvers["posts"] = async (_, args) => {
       : undefined,
   })
 
-  for (const post of posts) {
-    if (post.webColors.length !== 0) continue
-    const command = container.resolve(UpdatePostColorsCommand)
-    command.execute({ postId: post.id })
-  }
+  // for (const post of posts) {
+  //   if (post.webColors.length !== 0) continue
+  //   const command = container.resolve(UpdatePostColorsCommand)
+  //   command.execute({ postId: post.id })
+  // }
 
   const postEdges = posts.map((post): PostEdge => {
     const user: UserNode = {

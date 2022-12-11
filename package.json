@@ -25,6 +25,7 @@
     "@google-cloud/vision": "^3.0.1",
     "@next/bundle-analyzer": "^13.0.6",
     "@prisma/client": "^4.7.1",
+    "@react-hook/debounce": "^4.0.0",
     "@sentry/browser": "^7.24.2",
     "@sentry/node": "^7.24.2",
     "@sentry/react": "^7.24.2",
