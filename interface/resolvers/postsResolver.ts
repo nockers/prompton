@@ -54,6 +54,7 @@ export const postsResolver: QueryResolvers["posts"] = async (_, args) => {
         annotationRacy: post.annotationRacy,
         annotationSpoof: post.annotationSpoof,
         colors: post.colors,
+        webColors: post.webColors,
         labels: labels,
       },
     }

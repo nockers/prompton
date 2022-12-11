@@ -24,6 +24,7 @@ export default gql`
           annotationRacy
           annotationSpoof
           colors
+          webColors
           labels {
             id
             name

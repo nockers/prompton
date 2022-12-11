@@ -1,6 +1,6 @@
 import vision from "@google-cloud/vision"
 import { captureException } from "@sentry/node"
-import { toHexFromRgb } from "infrastructure/utils/toHexFromRgb"
+import Color from "color"
 
 export class VisionAdapter {
   /**
@@ -72,11 +72,11 @@ export class VisionAdapter {
       }
 
       return colors.map((color) => {
-        return toHexFromRgb(
+        return Color.rgb(
           color.color!.red!,
           color.color!.green!,
           color.color!.blue!,
-        )
+        ).hex()
       })
     } catch (error) {
       captureException(error)

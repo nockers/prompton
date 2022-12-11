@@ -8,6 +8,7 @@ const zProps = z.object({
   prompt: z.string().nullable(),
   userId: z.instanceof(Id),
   colors: z.array(z.string()),
+  webColors: z.array(z.string()),
   annotationAdult: z.string().nullable(),
   annotationMedical: z.string().nullable(),
   annotationRacy: z.string().nullable(),
@@ -45,6 +46,8 @@ export class PostEntity {
   readonly prompt!: Props["prompt"]
 
   readonly colors!: Props["colors"]
+
+  readonly webColors!: Props["webColors"]
 
   readonly annotationAdult!: Props["annotationAdult"]
 

@@ -31,6 +31,7 @@ export const HomePostList: BlitzPage = () => {
               postAnnotationViolence={edge.node.annotationViolence}
               postLabels={edge.node.labels.map((label) => label.name)}
               postColors={edge.node.colors}
+              postWebColors={edge.node.webColors}
               userId={edge.node.user.id}
               userName={edge.node.user.name}
               userAvatarImageURL={edge.node.user.avatarImageURL}

@@ -2,6 +2,7 @@ import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
 import { Id, IdFactory, LabelEntity, PostEntity } from "core"
 import { LabelRepository, PostRepository, VisionAdapter } from "infrastructure"
+import { toWebColor } from "infrastructure/utils/toWebColor"
 
 type Props = {
   userId: string
@@ -27,6 +28,12 @@ export class CreatePostCommand {
       if (colors instanceof Error) {
         return new Error()
       }
+
+      const allWebColors = colors.map((color) => {
+        return toWebColor(color)
+      })
+
+      const webColors = Array.from(new Set(allWebColors))
 
       const annotation = await this.visionAdapter.getSafeSearchAnnotation(
         props.postFileId,
@@ -63,6 +70,7 @@ export class CreatePostCommand {
         userId: new Id(props.userId),
         prompt: null,
         colors: colors,
+        webColors: webColors,
         annotationAdult: annotation.adult,
         annotationMedical: annotation.medical,
         annotationRacy: annotation.racy,

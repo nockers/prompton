@@ -173,6 +173,7 @@ const UserPage: BlitzPage = () => {
                 postAnnotationViolence={edge.node.annotationViolence}
                 postLabels={edge.node.labels.map((label) => label.name)}
                 postColors={edge.node.colors}
+                postWebColors={edge.node.webColors}
                 userId={user.id}
                 userName={user.name}
                 userAvatarImageURL={user.avatarImageURL}

@@ -65,6 +65,7 @@ export const createPostResolver: MutationResolvers["createPost"] = async (
     annotationRacy: post.annotationRacy,
     annotationSpoof: post.annotationSpoof,
     colors: post.colors,
+    webColors: post.webColors,
     labels: labels,
     user: {
       id: post.user.id,

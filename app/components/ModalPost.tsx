@@ -21,6 +21,7 @@ import {
 } from "@chakra-ui/react"
 import { FC, useState } from "react"
 import { BiBookmark, BiEdit, BiHeart } from "react-icons/bi"
+import { TagColor } from "app/components/TagColor"
 import { UserProfile } from "app/components/UserProfile"
 import { useUpdatePostMutation } from "interface/__generated__/react"
 
@@ -35,6 +36,7 @@ type Props = {
   postAnnotationViolence: string | null
   postLabels: string[]
   postColors: string[]
+  postWebColors: string[]
   userId: string
   userName: string
   userAvatarImageURL: string | null
@@ -96,9 +98,9 @@ export const ModalPost: FC<Props> = (props) => {
               ))}
             </Wrap>
             <Wrap>
-              {props.postColors.map((color) => (
+              {props.postWebColors.map((color) => (
                 <WrapItem key={color}>
-                  <Tag bgColor={color}>{color}</Tag>
+                  <TagColor color={color} />
                 </WrapItem>
               ))}
             </Wrap>

@@ -14,6 +14,7 @@ type Props = {
   postAnnotationViolence: string | null
   postLabels: string[]
   postColors: string[]
+  postWebColors: string[]
   userId: string
   userName: string
   userAvatarImageURL: string | null
@@ -57,6 +58,7 @@ export const CardPost: FC<Props> = (props) => {
         postAnnotationViolence={props.postAnnotationViolence}
         postLabels={props.postLabels}
         postColors={props.postColors}
+        postWebColors={props.postWebColors}
         userId={props.userId}
         userName={props.userName}
         userAvatarImageURL={props.userAvatarImageURL}

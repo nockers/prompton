@@ -18,6 +18,7 @@ type PostNode implements Node {
   likeCount: Int!
   user: UserNode!
   colors: [String!]!
+  webColors: [String!]!
   annotationAdult: String
   annotationMedical: String
   annotationRacy: String

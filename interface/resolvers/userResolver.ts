@@ -48,6 +48,7 @@ export const userResolver: QueryResolvers["user"] = async (_, args) => {
         annotationRacy: post.annotationRacy,
         annotationSpoof: post.annotationSpoof,
         colors: post.colors,
+        webColors: post.webColors,
         labels: labels,
         user: {
           id: user.id,
