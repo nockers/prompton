@@ -17,6 +17,13 @@ type PostNode implements Node {
   model: String
   likeCount: Int!
   user: UserNode!
+  colors: [String!]!
+  annotationAdult: String
+  annotationMedical: String
+  annotationRacy: String
+  annotationSpoof: String
+  annotationViolence: String
+  labels: [LabelNode!]!
 }
 
 type PostEdge implements Edge {
@@ -48,6 +55,22 @@ type ReactionNode implements Node {
   count: Int!
   secretCount: Int!
   isConnected: Boolean!
+}
+
+type LabelNode implements Node {
+  id: ID!
+  name: String!
+}
+
+type LabelEdge implements Edge {
+  cursor: String!
+  node: LabelNode!
+}
+
+type LabelsConnection implements Connection {
+  totalCount: Int
+  pageInfo: PageInfo!
+  edges: [LabelEdge!]!
 }
 
 type PageInfo {

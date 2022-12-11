@@ -3658,6 +3658,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@google-cloud/vision@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@google-cloud/vision@npm:3.0.1"
+  dependencies:
+    "@google-cloud/promisify": ^3.0.0
+    google-gax: ^3.3.0
+    is: ^3.3.0
+  checksum: 5ce1c5311d7b918832ca04915d0a626f1e908f86c65b77687669453c77ef39390d139e6b3193d573bdb29563cd17da35e555fc0993e6c72948c0a3435a24bbd7
+  languageName: node
+  linkType: hard
+
 "@graphql-codegen/cli@npm:^2.13.12":
   version: 2.16.1
   resolution: "@graphql-codegen/cli@npm:2.16.1"
@@ -9226,7 +9237,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"google-gax@npm:^3.5.1":
+"google-gax@npm:^3.3.0, google-gax@npm:^3.5.1":
   version: 3.5.2
   resolution: "google-gax@npm:3.5.2"
   dependencies:
@@ -10175,6 +10186,13 @@ __metadata:
   dependencies:
     is-docker: ^2.0.0
   checksum: 20849846ae414997d290b75e16868e5261e86ff5047f104027026fd61d8b5a9b0b3ade16239f35e1a067b3c7cc02f70183cb661010ed16f4b6c7c93dad1b19d8
+  languageName: node
+  linkType: hard
+
+"is@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "is@npm:3.3.0"
+  checksum: 81fad3b40c606984c2d0699207c4c48d2a0d29cc834b274d0b74c172f3eeebdb981301fe0d690ce090a96bf021a8a1f8b1325262ad9870c525e557ac4a559c56
   languageName: node
   linkType: hard
 
@@ -12602,6 +12620,7 @@ __metadata:
     "@chakra-ui/react": ^2.4.3
     "@emotion/react": ^11.10.5
     "@emotion/styled": ^11.10.5
+    "@google-cloud/vision": ^3.0.1
     "@graphql-codegen/cli": ^2.13.12
     "@graphql-codegen/typescript": ^2.8.2
     "@graphql-codegen/typescript-operations": ^2.5.7

@@ -18,6 +18,16 @@ export default gql`
           likeCount
           prompt
           model
+          annotationAdult
+          annotationMedical
+          annotationViolence
+          annotationRacy
+          annotationSpoof
+          colors
+          labels {
+            id
+            name
+          }
           user {
             id
             name

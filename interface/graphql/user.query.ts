@@ -25,6 +25,16 @@ export default gql`
             fileId
             prompt
             likeCount
+            annotationAdult
+            annotationMedical
+            annotationViolence
+            annotationRacy
+            annotationSpoof
+            colors
+            labels {
+              id
+              name
+            }
           }
         }
       }

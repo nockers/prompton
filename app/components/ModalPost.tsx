@@ -16,6 +16,8 @@ import {
   Tag,
   ModalHeader,
   Textarea,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react"
 import { FC, useState } from "react"
 import { BiBookmark, BiEdit, BiHeart } from "react-icons/bi"
@@ -26,6 +28,13 @@ type Props = {
   postId: string
   postFileId: string
   postPrompt: string | null
+  postAnnotationAdult: string | null
+  postAnnotationMedical: string | null
+  postAnnotationRacy: string | null
+  postAnnotationSpoof: string | null
+  postAnnotationViolence: string | null
+  postLabels: string[]
+  postColors: string[]
   userId: string
   userName: string
   userAvatarImageURL: string | null
@@ -79,13 +88,20 @@ export const ModalPost: FC<Props> = (props) => {
               borderRadius={8}
               w={"100%"}
             />
-            <HStack spacing={2}>
-              <HStack spacing={2}>
-                <Tag>{"#Prompt"}</Tag>
-                <Tag>{"#Prompt"}</Tag>
-                <Tag>{"#Prompt"}</Tag>
-              </HStack>
-            </HStack>
+            <Wrap>
+              {props.postLabels.map((label) => (
+                <WrapItem key={label}>
+                  <Tag>{`#${label}`}</Tag>
+                </WrapItem>
+              ))}
+            </Wrap>
+            <Wrap>
+              {props.postColors.map((color) => (
+                <WrapItem key={color}>
+                  <Tag bgColor={color}>{`#${color}`}</Tag>
+                </WrapItem>
+              ))}
+            </Wrap>
             {isEditable && (
               <Textarea
                 value={prompt}

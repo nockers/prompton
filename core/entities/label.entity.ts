@@ -3,22 +3,22 @@ import { Id } from "core/valueObjects"
 
 const zProps = z.object({
   id: z.instanceof(Id),
-  name: z.string().nullable(),
+  name: z.string(),
 })
 
 type Props = z.infer<typeof zProps>
 
 /**
- * 投稿
+ * ラベル
  */
-export class TagEntity {
+export class LabelEntity {
   /**
    * ID
    */
   readonly id!: Props["id"]
 
   /**
-   * タイトル
+   * 名前
    */
   readonly name!: Props["name"]
 

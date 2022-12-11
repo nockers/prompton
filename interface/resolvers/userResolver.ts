@@ -2,6 +2,7 @@ import { ApolloServerErrorCode } from "@apollo/server/errors"
 import { GraphQLError } from "graphql"
 import db from "db"
 import {
+  LabelNode,
   PostEdge,
   QueryResolvers,
   UserNode,
@@ -21,9 +22,16 @@ export const userResolver: QueryResolvers["user"] = async (_, args) => {
   const posts = await db.post.findMany({
     where: { userId: user.id },
     orderBy: { createdAt: "desc" },
+    include: { labels: true },
   })
 
   const postEdges = posts.map((post): PostEdge => {
+    const labels: LabelNode[] = post.labels.map((label) => {
+      return {
+        id: label.id,
+        name: label.name,
+      }
+    })
     return {
       cursor: "",
       node: {
@@ -34,6 +42,13 @@ export const userResolver: QueryResolvers["user"] = async (_, args) => {
         model: post.model,
         prompt: post.prompt,
         likeCount: 0,
+        annotationAdult: post.annotationAdult,
+        annotationMedical: post.annotationMedical,
+        annotationViolence: post.annotationViolence,
+        annotationRacy: post.annotationRacy,
+        annotationSpoof: post.annotationSpoof,
+        colors: post.colors,
+        labels: labels,
         user: {
           id: user.id,
           name: user.name,

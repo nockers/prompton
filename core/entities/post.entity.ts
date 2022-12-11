@@ -7,6 +7,13 @@ const zProps = z.object({
   fileId: z.instanceof(Id),
   prompt: z.string().nullable(),
   userId: z.instanceof(Id),
+  colors: z.array(z.string()),
+  annotationAdult: z.string().nullable(),
+  annotationMedical: z.string().nullable(),
+  annotationRacy: z.string().nullable(),
+  annotationSpoof: z.string().nullable(),
+  annotationViolence: z.string().nullable(),
+  labelIds: z.array(z.instanceof(Id)),
 })
 
 type Props = z.infer<typeof zProps>
@@ -37,6 +44,20 @@ export class PostEntity {
 
   readonly prompt!: Props["prompt"]
 
+  readonly colors!: Props["colors"]
+
+  readonly annotationAdult!: Props["annotationAdult"]
+
+  readonly annotationMedical!: Props["annotationMedical"]
+
+  readonly annotationRacy!: Props["annotationRacy"]
+
+  readonly annotationSpoof!: Props["annotationSpoof"]
+
+  readonly annotationViolence!: Props["annotationViolence"]
+
+  readonly labelIds!: Props["labelIds"]
+
   constructor(public props: Props) {
     zProps.parse(props)
     Object.assign(this, props)
@@ -49,4 +70,17 @@ export class PostEntity {
       prompt,
     })
   }
+}
+
+/**
+ * RGBAをHexに変換する関数
+ */
+export const rgbaToHex = (rgba: string) => {
+  const [r, g, b, a] = rgba
+    .replace("rgba(", "")
+    .replace(")", "")
+    .split(",")
+    .map((v) => parseInt(v))
+
+  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`
 }

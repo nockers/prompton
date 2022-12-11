@@ -66,27 +66,44 @@ model UserToken {
 }
 
 model Post {
-  id        String     @id @map("id")
-  createdAt DateTime   @default(now()) @map("created_at")
-  updatedAt DateTime   @updatedAt @map("updated_at")
-  index     Int        @unique @default(autoincrement()) @map("index")
-  dateText  String     @map("date_text")
-  tags      Tag[]      @relation("post_tags")
-  isDeleted Boolean    @default(false) @map("is_deleted")
-  user      User       @relation("user_posts", fields: [userId], references: [id])
-  userId    String     @map("user_id")
-  fileId    String     @map("file_id")
-  prompt    String?    @map("prompt")
-  model     Model?     @map("model")
-  body      String?    @map("body")
-  title     String?    @map("title")
-  viewCount Int        @default(0) @map("view_count")
-  likes     Like[]     @relation("post_likes")
-  reactions Reaction[] @relation("post_reactions")
-  bookmark  Bookmark[] @relation("post_bookmarks")
-  comments  Comment[]  @relation("post_comments")
+  id                 String     @id @map("id")
+  createdAt          DateTime   @default(now()) @map("created_at")
+  updatedAt          DateTime   @updatedAt @map("updated_at")
+  index              Int        @unique @default(autoincrement()) @map("index")
+  dateText           String     @map("date_text")
+  tags               Tag[]      @relation("post_tags")
+  isDeleted          Boolean    @default(false) @map("is_deleted")
+  user               User       @relation("user_posts", fields: [userId], references: [id])
+  userId             String     @map("user_id")
+  fileId             String     @map("file_id")
+  prompt             String?    @map("prompt")
+  model              Model?     @map("model")
+  body               String?    @map("body")
+  title              String?    @map("title")
+  viewCount          Int        @default(0) @map("view_count")
+  likes              Like[]     @relation("post_likes")
+  reactions          Reaction[] @relation("post_reactions")
+  bookmark           Bookmark[] @relation("post_bookmarks")
+  comments           Comment[]  @relation("post_comments")
+  annotationAdult    String?    @map("annotation_adult")
+  annotationMedical  String?    @map("annotation_medical")
+  annotationRacy     String?    @map("annotation_racy")
+  annotationSpoof    String?    @map("annotation_spoof")
+  annotationViolence String?    @map("annotation_violence")
+  colors             String[]   @map("post_colors")
+  labels             Label[]    @relation("post_labels")
 
   @@map("posts")
+}
+
+model Label {
+  id        String   @id @map("id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  name      String   @unique @map("name")
+  posts     Post[]   @relation("post_labels")
+
+  @@map("labels")
 }
 
 model Like {

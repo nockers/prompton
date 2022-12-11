@@ -7,6 +7,13 @@ type Props = {
   id: string
   postFileId: string
   postPrompt: string | null
+  postAnnotationAdult: string | null
+  postAnnotationMedical: string | null
+  postAnnotationRacy: string | null
+  postAnnotationSpoof: string | null
+  postAnnotationViolence: string | null
+  postLabels: string[]
+  postColors: string[]
   userId: string
   userName: string
   userAvatarImageURL: string | null
@@ -43,6 +50,13 @@ export const CardPost: FC<Props> = (props) => {
         postId={props.id}
         postFileId={props.postFileId}
         postPrompt={props.postPrompt}
+        postAnnotationAdult={props.postAnnotationAdult}
+        postAnnotationMedical={props.postAnnotationMedical}
+        postAnnotationRacy={props.postAnnotationRacy}
+        postAnnotationSpoof={props.postAnnotationSpoof}
+        postAnnotationViolence={props.postAnnotationViolence}
+        postLabels={props.postLabels}
+        postColors={props.postColors}
         userId={props.userId}
         userName={props.userName}
         userAvatarImageURL={props.userAvatarImageURL}

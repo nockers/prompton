@@ -2,7 +2,11 @@ import { ApolloServerErrorCode } from "@apollo/server/errors"
 import { GraphQLError } from "graphql"
 import { container } from "tsyringe"
 import db from "db"
-import { MutationResolvers, PostNode } from "interface/__generated__/node"
+import {
+  LabelNode,
+  MutationResolvers,
+  PostNode,
+} from "interface/__generated__/node"
 import { UpdatePostCommand } from "service"
 
 export const updatePostResolver: MutationResolvers["updatePost"] = async (
@@ -32,7 +36,7 @@ export const updatePostResolver: MutationResolvers["updatePost"] = async (
 
   const post = await db.post.findUnique({
     where: { id: args.input.postId },
-    include: { user: true },
+    include: { user: true, labels: true },
   })
 
   if (post === null) {
@@ -40,6 +44,13 @@ export const updatePostResolver: MutationResolvers["updatePost"] = async (
       extensions: { code: ApolloServerErrorCode.INTERNAL_SERVER_ERROR },
     })
   }
+
+  const labels: LabelNode[] = post.labels.map((label) => {
+    return {
+      id: label.id,
+      name: label.name,
+    }
+  })
 
   const node: PostNode = {
     id: post.id,
@@ -49,6 +60,13 @@ export const updatePostResolver: MutationResolvers["updatePost"] = async (
     model: post.model,
     prompt: post.prompt,
     likeCount: 0,
+    annotationAdult: post.annotationAdult,
+    annotationMedical: post.annotationMedical,
+    annotationViolence: post.annotationViolence,
+    annotationRacy: post.annotationRacy,
+    annotationSpoof: post.annotationSpoof,
+    colors: post.colors,
+    labels: labels,
     user: {
       id: post.user.id,
       name: post.user.name,

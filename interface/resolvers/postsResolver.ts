@@ -1,5 +1,6 @@
 import db from "db"
 import {
+  LabelNode,
   PostEdge,
   QueryResolvers,
   UserNode,
@@ -8,7 +9,7 @@ import {
 export const postsResolver: QueryResolvers["posts"] = async (_, args) => {
   const posts = await db.post.findMany({
     orderBy: { createdAt: "desc" },
-    include: { user: true },
+    include: { user: true, labels: true },
   })
 
   const postEdges = posts.map((post): PostEdge => {
@@ -30,6 +31,12 @@ export const postsResolver: QueryResolvers["posts"] = async (_, args) => {
         },
       },
     }
+    const labels: LabelNode[] = post.labels.map((label) => {
+      return {
+        id: label.id,
+        name: label.name,
+      }
+    })
     return {
       cursor: "",
       node: {
@@ -41,6 +48,13 @@ export const postsResolver: QueryResolvers["posts"] = async (_, args) => {
         model: post.model,
         likeCount: 0,
         user: user,
+        annotationAdult: post.annotationAdult,
+        annotationMedical: post.annotationMedical,
+        annotationViolence: post.annotationViolence,
+        annotationRacy: post.annotationRacy,
+        annotationSpoof: post.annotationSpoof,
+        colors: post.colors,
+        labels: labels,
       },
     }
   })
