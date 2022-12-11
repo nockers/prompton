@@ -1,12 +1,14 @@
 import { BlitzPage } from "@blitzjs/auth"
-import { Box } from "@chakra-ui/react"
+import { Stack } from "@chakra-ui/react"
+import { HomeLabelList } from "app/components/HomeLabelList"
 import { HomePostList } from "app/components/HomePostList"
 
 const RootPage: BlitzPage = () => {
   return (
-    <Box as={"main"} px={4} pb={4}>
+    <Stack as={"main"} px={4} pb={4} spacing={4}>
+      <HomeLabelList />
       <HomePostList />
-    </Box>
+    </Stack>
   )
 }
 

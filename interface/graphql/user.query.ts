@@ -11,32 +11,23 @@ export default gql`
       biography
       createdAt
       posts {
-        totalCount
-        pageInfo {
-          endCursor
-          hasNextPage
-        }
-        edges {
-          cursor
-          node {
-            id
-            createdAt
-            title
-            fileId
-            prompt
-            likeCount
-            annotationAdult
-            annotationMedical
-            annotationViolence
-            annotationRacy
-            annotationSpoof
-            colors
-            webColors
-            labels {
-              id
-              name
-            }
-          }
+        id
+        createdAt
+        title
+        fileId
+        prompt
+        likeCount
+        annotationAdult
+        annotationMedical
+        annotationViolence
+        annotationRacy
+        annotationSpoof
+        colors
+        webColors
+        labels {
+          id
+          name
+          count
         }
       }
     }

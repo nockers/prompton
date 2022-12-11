@@ -30,6 +30,14 @@ export const CardPost: FC<Props> = (props) => {
     router.push(`/${props.userId}`)
   }
 
+  const onLinkColor = (color: string) => {
+    router.push(`/colors/${color}`)
+  }
+
+  const onLinkLabel = (label: string) => {
+    router.push(`/labels/${label}`)
+  }
+
   return (
     <>
       <Button
@@ -67,6 +75,8 @@ export const CardPost: FC<Props> = (props) => {
         isEditable={props.isEditable}
         onOpen={onOpen}
         onClose={onClose}
+        onLinkColor={onLinkColor}
+        onLinkLabel={onLinkLabel}
       />
     </>
   )

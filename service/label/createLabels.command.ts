@@ -8,7 +8,7 @@ type Props = {
 }
 
 @injectable()
-export class CreateTagsCommand {
+export class CreateLabelsCommand {
   constructor(
     private labelRepository: LabelRepository,
     private visionAdapter: VisionAdapter,

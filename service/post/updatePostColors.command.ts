@@ -81,8 +81,6 @@ export class UpdatePostColorsCommand {
         .updateAnnotationViolence(annotation.violence)
         .updateLabelIds(labels.map((label) => label.id))
 
-      console.log(draftPost)
-
       const transaction = await this.postRepository.persist(draftPost)
 
       if (transaction instanceof Error) {
@@ -91,7 +89,6 @@ export class UpdatePostColorsCommand {
 
       return null
     } catch (error) {
-      console.log(error)
       captureException(error)
       return new Error()
     }

@@ -35,7 +35,10 @@ export const createPostResolver: MutationResolvers["createPost"] = async (
 
   const post = await db.post.findUnique({
     where: { id: output.postId },
-    include: { user: true, labels: true },
+    include: {
+      user: true,
+      labels: { include: { _count: { select: { posts: true } } } },
+    },
   })
 
   if (post === null) {
@@ -48,6 +51,8 @@ export const createPostResolver: MutationResolvers["createPost"] = async (
     return {
       id: label.id,
       name: label.name,
+      count: label._count.posts,
+      posts: [],
     }
   })
 
@@ -76,14 +81,7 @@ export const createPostResolver: MutationResolvers["createPost"] = async (
       avatarImageId: post.user.avatarFileId,
       headerImageId: null,
       biography: "",
-      posts: {
-        totalCount: 0,
-        edges: [],
-        pageInfo: {
-          endCursor: null,
-          hasNextPage: false,
-        },
-      },
+      posts: [],
     },
   }
 

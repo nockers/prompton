@@ -13,7 +13,6 @@ import {
   useBreakpointValue,
   IconButton,
   HStack,
-  Tag,
   ModalHeader,
   Textarea,
   Wrap,
@@ -21,7 +20,8 @@ import {
 } from "@chakra-ui/react"
 import { FC, useState } from "react"
 import { BiBookmark, BiEdit, BiHeart } from "react-icons/bi"
-import { TagColor } from "app/components/TagColor"
+import { ButtonLinkColor } from "app/components/ButtonLinkColor"
+import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"
 import { UserProfile } from "app/components/UserProfile"
 import { useUpdatePostMutation } from "interface/__generated__/react"
 
@@ -45,6 +45,8 @@ type Props = {
   onOpenUser(): void
   onOpen(): void
   onClose(): void
+  onLinkColor(color: string): void
+  onLinkLabel(label: string): void
 }
 
 export const ModalPost: FC<Props> = (props) => {
@@ -86,21 +88,31 @@ export const ModalPost: FC<Props> = (props) => {
           <Stack spacing={4}>
             <Image
               alt={""}
-              src={`/api/images/${props.postFileId}?w=1024`}
+              src={`/api/images/${props.postFileId}?w=512`}
               borderRadius={8}
               w={"100%"}
             />
             <Wrap>
               {props.postLabels.map((label) => (
                 <WrapItem key={label}>
-                  <Tag>{`#${label}`}</Tag>
+                  <ButtonLinkLabel
+                    label={label}
+                    onClick={() => {
+                      props.onLinkLabel(label)
+                    }}
+                  />
                 </WrapItem>
               ))}
             </Wrap>
             <Wrap>
               {props.postWebColors.map((color) => (
                 <WrapItem key={color}>
-                  <TagColor color={color} />
+                  <ButtonLinkColor
+                    color={color}
+                    onClick={() => {
+                      props.onLinkColor(color)
+                    }}
+                  />
                 </WrapItem>
               ))}
             </Wrap>

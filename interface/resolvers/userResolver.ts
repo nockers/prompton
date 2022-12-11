@@ -3,7 +3,7 @@ import { GraphQLError } from "graphql"
 import db from "db"
 import {
   LabelNode,
-  PostEdge,
+  PostNode,
   QueryResolvers,
   UserNode,
 } from "interface/__generated__/node"
@@ -22,64 +22,47 @@ export const userResolver: QueryResolvers["user"] = async (_, args) => {
   const posts = await db.post.findMany({
     where: { userId: user.id },
     orderBy: { createdAt: "desc" },
-    include: { labels: true },
+    include: { labels: { include: { _count: { select: { posts: true } } } } },
   })
 
-  const postEdges = posts.map((post): PostEdge => {
+  const postNodes = posts.map((post): PostNode => {
     const labels: LabelNode[] = post.labels.map((label) => {
       return {
         id: label.id,
         name: label.name,
+        posts: [],
+        count: label._count.posts,
       }
     })
     return {
-      cursor: "",
-      node: {
-        id: post.id,
-        createdAt: Math.floor(post.createdAt.getTime() / 1000),
-        fileId: post.fileId,
-        title: post.title,
-        model: post.model,
-        prompt: post.prompt,
-        likeCount: 0,
-        annotationAdult: post.annotationAdult,
-        annotationMedical: post.annotationMedical,
-        annotationViolence: post.annotationViolence,
-        annotationRacy: post.annotationRacy,
-        annotationSpoof: post.annotationSpoof,
-        colors: post.colors,
-        webColors: post.webColors,
-        labels: labels,
-        user: {
-          id: user.id,
-          name: user.name,
-          createdAt: Math.floor(user.createdAt.getTime() / 1000),
-          avatarImageURL: user.avatarImageURL,
-          avatarImageId: user.avatarFileId,
-          login: null,
-          headerImageId: null,
-          biography: "",
-          posts: {
-            totalCount: 0,
-            edges: [],
-            pageInfo: {
-              endCursor: null,
-              hasNextPage: false,
-            },
-          },
-        },
+      id: post.id,
+      createdAt: Math.floor(post.createdAt.getTime() / 1000),
+      fileId: post.fileId,
+      title: post.title,
+      model: post.model,
+      prompt: post.prompt,
+      likeCount: 0,
+      annotationAdult: post.annotationAdult,
+      annotationMedical: post.annotationMedical,
+      annotationViolence: post.annotationViolence,
+      annotationRacy: post.annotationRacy,
+      annotationSpoof: post.annotationSpoof,
+      colors: post.colors,
+      webColors: post.webColors,
+      labels: labels,
+      user: {
+        id: user.id,
+        name: user.name,
+        createdAt: Math.floor(user.createdAt.getTime() / 1000),
+        avatarImageURL: user.avatarImageURL,
+        avatarImageId: user.avatarFileId,
+        login: null,
+        headerImageId: null,
+        biography: "",
+        posts: [],
       },
     }
   })
-
-  const postsConnection = {
-    totalCount: posts.length,
-    edges: postEdges,
-    pageInfo: {
-      endCursor: "",
-      hasNextPage: false,
-    },
-  }
 
   const node: UserNode = {
     id: user.id,
@@ -90,7 +73,7 @@ export const userResolver: QueryResolvers["user"] = async (_, args) => {
     avatarImageId: user.avatarFileId,
     headerImageId: null,
     biography: "",
-    posts: postsConnection,
+    posts: postNodes,
   }
 
   return node

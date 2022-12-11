@@ -160,20 +160,20 @@ const UserPage: BlitzPage = () => {
           maxW={"fit-content"}
           sx={{ columnCount: [1, 2, 3, 4], columnGap: 4 }}
         >
-          {user.posts.edges.map((edge) => (
-            <Box key={edge.node.id} mb={4}>
+          {user.posts.map((post) => (
+            <Box key={post.id} mb={4}>
               <CardPost
-                id={edge.node.id}
-                postFileId={edge.node.fileId}
-                postPrompt={edge.node.prompt}
-                postAnnotationAdult={edge.node.annotationAdult}
-                postAnnotationMedical={edge.node.annotationMedical}
-                postAnnotationRacy={edge.node.annotationRacy}
-                postAnnotationSpoof={edge.node.annotationSpoof}
-                postAnnotationViolence={edge.node.annotationViolence}
-                postLabels={edge.node.labels.map((label) => label.name)}
-                postColors={edge.node.colors}
-                postWebColors={edge.node.webColors}
+                id={post.id}
+                postFileId={post.fileId}
+                postPrompt={post.prompt}
+                postAnnotationAdult={post.annotationAdult}
+                postAnnotationMedical={post.annotationMedical}
+                postAnnotationRacy={post.annotationRacy}
+                postAnnotationSpoof={post.annotationSpoof}
+                postAnnotationViolence={post.annotationViolence}
+                postLabels={post.labels.map((label) => label.name)}
+                postColors={post.colors}
+                postWebColors={post.webColors}
                 userId={user.id}
                 userName={user.name}
                 userAvatarImageURL={user.avatarImageURL}
