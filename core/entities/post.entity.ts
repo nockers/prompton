@@ -73,17 +73,60 @@ export class PostEntity {
       prompt,
     })
   }
-}
 
-/**
- * RGBAをHexに変換する関数
- */
-export const rgbaToHex = (rgba: string) => {
-  const [r, g, b, a] = rgba
-    .replace("rgba(", "")
-    .replace(")", "")
-    .split(",")
-    .map((v) => parseInt(v))
+  updateColors(colors: string[]) {
+    return new PostEntity({
+      ...this.props,
+      colors,
+    })
+  }
 
-  return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`
+  updateWebColors(webColors: string[]) {
+    return new PostEntity({
+      ...this.props,
+      webColors,
+    })
+  }
+
+  updateAnnotationAdult(annotationAdult: string | null) {
+    return new PostEntity({
+      ...this.props,
+      annotationAdult,
+    })
+  }
+
+  updateAnnotationMedical(annotationMedical: string | null) {
+    return new PostEntity({
+      ...this.props,
+      annotationMedical,
+    })
+  }
+
+  updateAnnotationRacy(annotationRacy: string | null) {
+    return new PostEntity({
+      ...this.props,
+      annotationRacy,
+    })
+  }
+
+  updateAnnotationSpoof(annotationSpoof: string | null) {
+    return new PostEntity({
+      ...this.props,
+      annotationSpoof,
+    })
+  }
+
+  updateAnnotationViolence(annotationViolence: string | null) {
+    return new PostEntity({
+      ...this.props,
+      annotationViolence,
+    })
+  }
+
+  updateLabelIds(labelIds: Id[]) {
+    return new PostEntity({
+      ...this.props,
+      labelIds,
+    })
+  }
 }

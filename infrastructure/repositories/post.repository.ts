@@ -63,6 +63,18 @@ export class PostRepository {
         update: {
           title: entity.title,
           prompt: entity.prompt,
+          colors: entity.colors,
+          webColors: entity.webColors,
+          annotationAdult: entity.annotationAdult,
+          annotationMedical: entity.annotationMedical,
+          annotationRacy: entity.annotationRacy,
+          annotationSpoof: entity.annotationSpoof,
+          annotationViolence: entity.annotationViolence,
+          labels: {
+            connect: entity.labelIds.map((labelId) => {
+              return { id: labelId.value }
+            }),
+          },
         },
         where: { id: entity.id.value },
       })

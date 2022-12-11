@@ -12,6 +12,12 @@ export const postsResolver: QueryResolvers["posts"] = async (_, args) => {
     include: { user: true, labels: true },
   })
 
+  // for (const post of posts) {
+  //   if (post.webColors.length !== 0) continue
+  //   const command = container.resolve(UpdatePostColorsCommand)
+  //   command.execute({ postId: post.id })
+  // }
+
   const postEdges = posts.map((post): PostEdge => {
     const user: UserNode = {
       id: post.user.id,
