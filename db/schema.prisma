@@ -90,8 +90,9 @@ model Post {
   annotationRacy     String?    @map("annotation_racy")
   annotationSpoof    String?    @map("annotation_spoof")
   annotationViolence String?    @map("annotation_violence")
-  colors             String[]   @map("post_colors")
+  colors             String[]   @map("colors")
   labels             Label[]    @relation("post_labels")
+  webColors          String[]   @map("web_colors")
 
   @@map("posts")
 }
