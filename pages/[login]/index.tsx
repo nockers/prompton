@@ -1,11 +1,5 @@
 import { BlitzPage } from "@blitzjs/auth"
-import {
-  Box,
-  SimpleGrid,
-  Stack,
-  useDisclosure,
-  useToast,
-} from "@chakra-ui/react"
+import { Box, HStack, Stack, useDisclosure, useToast } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useContext, useState } from "react"
 import { UploadDropzone } from "app/[login]/components/UploadDropzone"
@@ -15,7 +9,6 @@ import UserLayout from "app/[login]/layout"
 import UserLoading from "app/[login]/loading"
 import { CardPost } from "app/components/CardPost"
 import { useFileUpload } from "app/hooks/useFileUpload"
-import { toBlanks } from "app/utils/toBlanks"
 import {
   useCreatePostMutation,
   useUpdateUserMutation,
@@ -162,23 +155,26 @@ const UserPage: BlitzPage = () => {
       {isEditable && (
         <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
       )}
-      <SimpleGrid minChildWidth={"280px"} gap={4}>
-        {user.posts.edges.map((edge) => (
-          <CardPost
-            key={edge.node.id}
-            id={edge.node.id}
-            postFileId={edge.node.fileId}
-            postPrompt={edge.node.prompt}
-            userId={user.id}
-            userName={user.name}
-            userAvatarImageURL={user.avatarImageURL}
-            isEditable={isEditable}
-          />
-        ))}
-        {toBlanks(user.posts.edges).map((_, index) => (
-          <Box key={index} />
-        ))}
-      </SimpleGrid>
+      <HStack justifyContent={"center"}>
+        <Box
+          maxW={"fit-content"}
+          sx={{ columnCount: [1, 2, 3, 4], columnGap: 4 }}
+        >
+          {user.posts.edges.map((edge) => (
+            <Box key={edge.node.id} mb={4}>
+              <CardPost
+                id={edge.node.id}
+                postFileId={edge.node.fileId}
+                postPrompt={edge.node.prompt}
+                userId={user.id}
+                userName={user.name}
+                userAvatarImageURL={user.avatarImageURL}
+                isEditable={isEditable}
+              />
+            </Box>
+          ))}
+        </Box>
+      </HStack>
       <UserModalProfile
         userName={user.name}
         userAvatarFileId={user.avatarImageId}

@@ -25,6 +25,7 @@ export const CardPost: FC<Props> = (props) => {
   return (
     <>
       <Button
+        display={"block"}
         key={props.id}
         h={"auto"}
         colorScheme={isOpen ? "blue" : "gray"}
@@ -34,7 +35,7 @@ export const CardPost: FC<Props> = (props) => {
         <Image
           w={"100%"}
           alt={""}
-          src={`/api/images/${props.postFileId}?w=400&h=400`}
+          src={`/api/images/${props.postFileId}?w=512`}
           borderRadius={4}
         />
       </Button>
