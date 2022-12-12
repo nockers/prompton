@@ -26,7 +26,7 @@ export const UserNodeResolver: NodeResolver<UserNode, User> = {
     return parent.headerImageId
   },
   biography(parent: User) {
-    return parent.biography
+    return parent.biography ?? ""
   },
   posts(parent: User) {
     return db.user.findUnique({ where: { id: parent.id } }).posts()
