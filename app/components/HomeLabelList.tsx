@@ -6,15 +6,18 @@ import { useLabelsQuery } from "interface/__generated__/react"
 export const HomeLabelList: BlitzPage = () => {
   const { data } = useLabelsQuery({
     fetchPolicy: "cache-and-network",
-    variables: { after: null },
+    variables: {
+      offset: 0,
+      limit: 8,
+    },
   })
 
   return (
     <Wrap>
-      {data?.labels.edges.map((edge) => (
-        <WrapItem key={edge.node.id}>
-          <Link href={`/labels/${edge.node.name}`}>
-            <Button size={"sm"}>{`#${edge.node.name}`}</Button>
+      {data?.labels.map((label) => (
+        <WrapItem key={label.id}>
+          <Link href={`/labels/${label.name}`}>
+            <Button size={"sm"}>{`#${label.name}`}</Button>
           </Link>
         </WrapItem>
       ))}

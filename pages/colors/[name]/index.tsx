@@ -16,9 +16,12 @@ const ColorPage: BlitzPage = () => {
     fetchPolicy: "cache-and-network",
     skip: typeof router.query.name === "undefined",
     variables: {
-      after: null,
-      color: router.query.name as string,
-      labelName: null,
+      offset: 0,
+      limit: 8,
+      where: {
+        color: router.query.name as string,
+        labelName: null,
+      },
     },
   })
 
@@ -32,27 +35,27 @@ const ColorPage: BlitzPage = () => {
           maxW={"fit-content"}
           sx={{ columnCount: [1, 2, 3, 4], columnGap: 4 }}
         >
-          {data?.posts.edges.map((edge) => (
-            <Box key={edge.node.id} mb={4}>
+          {data?.posts.map((post) => (
+            <Box key={post.id} mb={4}>
               <CardPost
-                id={edge.node.id}
-                postFileId={edge.node.fileId}
-                postPrompt={edge.node.prompt}
-                postAnnotationAdult={edge.node.annotationAdult}
-                postAnnotationMedical={edge.node.annotationMedical}
-                postAnnotationRacy={edge.node.annotationRacy}
-                postAnnotationSpoof={edge.node.annotationSpoof}
-                postAnnotationViolence={edge.node.annotationViolence}
-                postLabels={edge.node.labels.map((label) => [
+                id={post.id}
+                postFileId={post.fileId}
+                postPrompt={post.prompt}
+                postAnnotationAdult={post.annotationAdult}
+                postAnnotationMedical={post.annotationMedical}
+                postAnnotationRacy={post.annotationRacy}
+                postAnnotationSpoof={post.annotationSpoof}
+                postAnnotationViolence={post.annotationViolence}
+                postLabels={post.labels.map((label) => [
                   label.name,
                   label.count,
                 ])}
-                postColors={edge.node.colors}
-                postWebColors={edge.node.webColors}
-                userId={edge.node.user.id}
-                userName={edge.node.user.name}
-                userAvatarImageURL={edge.node.user.avatarImageURL}
-                isEditable={edge.node.user.id === appContext.currentUser?.uid}
+                postColors={post.colors}
+                postWebColors={post.webColors}
+                userId={post.user.id}
+                userName={post.user.name}
+                userAvatarImageURL={post.user.avatarImageURL}
+                isEditable={post.user.id === appContext.currentUser?.uid}
               />
             </Box>
           ))}

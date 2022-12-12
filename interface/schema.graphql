@@ -1,12 +1,17 @@
 type Query {
   # viewer: Viewer
-  posts(after: ID, labelName: String, color: String): PostsConnection!
+  posts(offset: Int, limit: Int, where: PostsWhereInput): [PostNode!]!
   user(id: ID!): UserNode
-  labels(after: ID): LabelsConnection!
+  labels(offset: Int, limit: Int): [LabelNode!]!
+}
+
+input PostsWhereInput {
+  labelName: String
+  color: String
 }
 
 type Viewer {
-  posts(after: ID): PostsConnection!
+  posts(offset: Int, limit: Int): [PostNode!]!
 }
 
 type PostNode implements Node {
@@ -41,9 +46,9 @@ type PostsConnection implements Connection {
 
 type UserNode implements Node {
   id: ID!
+  createdAt: Int!
   name: String!
   login: String
-  createdAt: Int!
   avatarImageURL: String
   avatarImageId: String
   headerImageId: String

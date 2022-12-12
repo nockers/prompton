@@ -1,6 +1,6 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client"
 import { ContextSetter, setContext } from "@apollo/client/link/context"
-import { relayStylePagination } from "@apollo/client/utilities"
+import { offsetLimitPagination } from "@apollo/client/utilities"
 import { getAuth, getIdToken } from "firebase/auth"
 
 export const createClient = () => {
@@ -33,8 +33,8 @@ export const createClient = () => {
     typePolicies: {
       Query: {
         fields: {
-          posts: relayStylePagination(),
-          threads: relayStylePagination(),
+          posts: offsetLimitPagination(["where"]),
+          labels: offsetLimitPagination(),
         },
       },
     },

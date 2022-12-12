@@ -1,26 +1,23 @@
-import { MutationResolvers, QueryResolvers } from "interface/__generated__/node"
 import { createPostResolver } from "interface/resolvers/createPostResolver"
 import { createUserResolver } from "interface/resolvers/createUserResolver"
-import { labelsResolver } from "interface/resolvers/labelsResolver"
-import { postsResolver } from "interface/resolvers/postsResolver"
+import { LabelNodeResolver } from "interface/resolvers/labelNodeResolver"
+import { PostNodeResolver } from "interface/resolvers/postNodeResolver"
+import { QueryResolver } from "interface/resolvers/queryResolver"
 import { updatePostResolver } from "interface/resolvers/updatePostResolver"
 import { updateUserResolver } from "interface/resolvers/updateUserResolver"
-import { userResolver } from "interface/resolvers/userResolver"
+import { UserNodeResolver } from "interface/resolvers/userNodeResolver"
 
-const Mutation: MutationResolvers = {
+const Mutation = {
   createUser: createUserResolver,
   createPost: createPostResolver,
   updateUser: updateUserResolver,
   updatePost: updatePostResolver,
 }
 
-const Query: QueryResolvers = {
-  user: userResolver,
-  posts: postsResolver,
-  labels: labelsResolver,
-}
-
 export const resolvers = {
   Mutation,
-  Query,
+  Query: QueryResolver,
+  PostNode: PostNodeResolver,
+  UserNode: UserNodeResolver,
+  LabelNode: LabelNodeResolver,
 }
