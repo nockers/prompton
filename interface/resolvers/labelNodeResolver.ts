@@ -20,7 +20,7 @@ export const LabelNodeResolver: NodeResolver<LabelNode, Label> = {
   async posts(parent) {
     const posts = await db.label
       .findUnique({ where: { id: parent.id } })
-      .posts()
+      .posts({ orderBy: { createdAt: "desc" } })
     return posts ?? []
   },
 }

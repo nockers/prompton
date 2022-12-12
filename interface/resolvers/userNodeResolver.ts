@@ -29,6 +29,8 @@ export const UserNodeResolver: NodeResolver<UserNode, User> = {
     return parent.biography ?? ""
   },
   posts(parent: User) {
-    return db.user.findUnique({ where: { id: parent.id } }).posts()
+    return db.user
+      .findUnique({ where: { id: parent.id } })
+      .posts({ orderBy: { createdAt: "desc" } })
   },
 }

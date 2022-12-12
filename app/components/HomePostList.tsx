@@ -2,8 +2,10 @@ import { BlitzPage } from "@blitzjs/auth"
 import { Box, HStack } from "@chakra-ui/react"
 import { useContext } from "react"
 import { CardPost } from "app/components/CardPost"
+import { useColumnCount } from "app/hooks/useColumnCount"
 import { usePostsQuery } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
+import { toColumnArray } from "interface/utils/toColumnArray"
 
 export const HomePostList: BlitzPage = () => {
   const appContext = useContext(AppContext)
@@ -17,13 +19,12 @@ export const HomePostList: BlitzPage = () => {
     },
   })
 
+  const columnCount = useColumnCount()
+
   return (
     <HStack justifyContent={"center"}>
-      <Box
-        maxW={"fit-content"}
-        sx={{ columnCount: [1, 2, 3, 4], columnGap: 4 }}
-      >
-        {data?.posts.map((post) => (
+      <Box maxW={"fit-content"} sx={{ columnCount, columnGap: 4 }}>
+        {toColumnArray(data?.posts ?? [], columnCount).map((post) => (
           <Box key={post.id} mb={4}>
             <CardPost
               id={post.id}

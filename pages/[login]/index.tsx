@@ -8,6 +8,7 @@ import { UserModalProfile } from "app/[login]/components/UserModalProfile"
 import UserLayout from "app/[login]/layout"
 import UserLoading from "app/[login]/loading"
 import { CardPost } from "app/components/CardPost"
+import { useColumnCount } from "app/hooks/useColumnCount"
 import { useFileUpload } from "app/hooks/useFileUpload"
 import {
   useCreatePostMutation,
@@ -15,6 +16,7 @@ import {
   useUserQuery,
 } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
+import { toColumnArray } from "interface/utils/toColumnArray"
 
 const UserPage: BlitzPage = () => {
   const appContext = useContext(AppContext)
@@ -43,6 +45,8 @@ const UserPage: BlitzPage = () => {
   })
 
   const [uploadFile] = useFileUpload()
+
+  const columnCount = useColumnCount()
 
   const toast = useToast()
 
@@ -156,11 +160,8 @@ const UserPage: BlitzPage = () => {
         <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
       )}
       <HStack justifyContent={"center"}>
-        <Box
-          maxW={"fit-content"}
-          sx={{ columnCount: [1, 2, 3, 4], columnGap: 4 }}
-        >
-          {user.posts.map((post) => (
+        <Box maxW={"fit-content"} sx={{ columnCount, columnGap: 4 }}>
+          {toColumnArray(user.posts, columnCount).map((post) => (
             <Box key={post.id} mb={4}>
               <CardPost
                 id={post.id}
