@@ -1,5 +1,5 @@
 import { BlitzPage } from "@blitzjs/auth"
-import { Box, HStack, Stack, Text } from "@chakra-ui/react"
+import { HStack, Stack, Text } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import UserLayout from "app/[login]/layout"
@@ -34,12 +34,13 @@ const ColorPage: BlitzPage = () => {
   return (
     <Stack as={"main"} px={4} spacing={4} pb={4}>
       <Text fontSize={"4xl"} fontWeight={"bold"}>{`#${label}`}</Text>
-      <HStack justifyContent={"center"}>
-        <Box maxW={"fit-content"} sx={{ columnCount, columnGap: 4 }}>
-          {toColumnArray(data?.posts ?? [], columnCount).map((post) => (
-            <Box key={post.id} mb={4}>
+      <HStack maxW={"fit-content"} alignItems={"flex-start"}>
+        {toColumnArray(data?.posts ?? [], columnCount).map((column, index) => (
+          <Stack key={index}>
+            {column.map((post) => (
               <CardPost
                 id={post.id}
+                key={post.id}
                 postFileId={post.fileId}
                 postPrompt={post.prompt}
                 postAnnotationAdult={post.annotationAdult}
@@ -58,9 +59,9 @@ const ColorPage: BlitzPage = () => {
                 userAvatarImageURL={post.user.avatarImageURL}
                 isEditable={post.user.id === appContext.currentUser?.uid}
               />
-            </Box>
-          ))}
-        </Box>
+            ))}
+          </Stack>
+        ))}
       </HStack>
     </Stack>
   )

@@ -160,32 +160,35 @@ const UserPage: BlitzPage = () => {
         <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
       )}
       <HStack justifyContent={"center"}>
-        <Box maxW={"fit-content"} sx={{ columnCount, columnGap: 4 }}>
-          {toColumnArray(user.posts, columnCount).map((post) => (
-            <Box key={post.id} mb={4}>
-              <CardPost
-                id={post.id}
-                postFileId={post.fileId}
-                postPrompt={post.prompt}
-                postAnnotationAdult={post.annotationAdult}
-                postAnnotationMedical={post.annotationMedical}
-                postAnnotationRacy={post.annotationRacy}
-                postAnnotationSpoof={post.annotationSpoof}
-                postAnnotationViolence={post.annotationViolence}
-                postLabels={post.labels.map((label) => [
-                  label.name,
-                  label.count,
-                ])}
-                postColors={post.colors}
-                postWebColors={post.webColors}
-                userId={user.id}
-                userName={user.name}
-                userAvatarImageURL={user.avatarImageURL}
-                isEditable={isEditable}
-              />
-            </Box>
+        <HStack maxW={"fit-content"} alignItems={"flex-start"}>
+          {toColumnArray(user.posts, columnCount).map((column, index) => (
+            <Stack key={index}>
+              {column.map((post) => (
+                <CardPost
+                  id={post.id}
+                  key={post.id}
+                  postFileId={post.fileId}
+                  postPrompt={post.prompt}
+                  postAnnotationAdult={post.annotationAdult}
+                  postAnnotationMedical={post.annotationMedical}
+                  postAnnotationRacy={post.annotationRacy}
+                  postAnnotationSpoof={post.annotationSpoof}
+                  postAnnotationViolence={post.annotationViolence}
+                  postLabels={post.labels.map((label) => [
+                    label.name,
+                    label.count,
+                  ])}
+                  postColors={post.colors}
+                  postWebColors={post.webColors}
+                  userId={user.id}
+                  userName={user.name}
+                  userAvatarImageURL={user.avatarImageURL}
+                  isEditable={user.id === appContext.currentUser?.uid}
+                />
+              ))}
+            </Stack>
           ))}
-        </Box>
+        </HStack>
       </HStack>
       <UserModalProfile
         userName={user.name}

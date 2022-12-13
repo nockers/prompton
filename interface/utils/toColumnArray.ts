@@ -6,9 +6,8 @@ export const toColumnArray = <T>(items: T[], columnCount: number) => {
   ]
 
   items.forEach((item, index) => {
-    console.log(index, index % columnCount)
     columns[index % columnCount].push(item)
   })
 
-  return columns.flat()
+  return columns
 }
