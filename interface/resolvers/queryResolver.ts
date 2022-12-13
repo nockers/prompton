@@ -16,17 +16,24 @@ export const QueryResolver = {
     if (typeof args.where?.labelName === "string") {
       return db.post.findMany({
         orderBy: { createdAt: "desc" },
-        where: { labels: { some: { name: args.where?.labelName! } } },
+        where: {
+          isDeleted: false,
+          labels: { some: { name: args.where?.labelName! } },
+        },
       })
     }
     if (typeof args.where?.color === "string") {
       return db.post.findMany({
         orderBy: { createdAt: "desc" },
-        where: { webColors: { has: `#${args.where?.color}` } },
+        where: {
+          isDeleted: false,
+          webColors: { has: `#${args.where?.color}` },
+        },
       })
     }
     return db.post.findMany({
       orderBy: { createdAt: "desc" },
+      where: { isDeleted: false },
     })
   },
   user(_: unknown, args: Partial<QueryUserArgs>) {

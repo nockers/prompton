@@ -31,6 +31,6 @@ export const UserNodeResolver: NodeResolver<UserNode, User> = {
   posts(parent: User) {
     return db.user
       .findUnique({ where: { id: parent.id } })
-      .posts({ orderBy: { createdAt: "desc" } })
+      .posts({ orderBy: { createdAt: "desc" }, where: { isDeleted: false } })
   },
 }
