@@ -45,6 +45,7 @@
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
     "react-icons": "^4.7.1",
+    "react-markdown": "^8.0.4",
     "reactfire": "^4.2.2",
     "reflect-metadata": "^0.1.13",
     "sharp": "^0.31.2",
