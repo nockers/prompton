@@ -24,29 +24,29 @@ export const HomePostList: BlitzPage = () => {
   return (
     <HStack justifyContent={"center"}>
       <HStack maxW={"fit-content"} alignItems={"flex-start"}>
-        {toColumnArray(data?.posts ?? [], columnCount).map((column, index) => (
+        {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
           <Stack key={index}>
-            {column.map((post) => (
+            {column.map((work) => (
               <CardPost
-                id={post.id}
-                key={post.id}
-                postFileId={post.fileId}
-                postPrompt={post.prompt}
-                postAnnotationAdult={post.annotationAdult}
-                postAnnotationMedical={post.annotationMedical}
-                postAnnotationRacy={post.annotationRacy}
-                postAnnotationSpoof={post.annotationSpoof}
-                postAnnotationViolence={post.annotationViolence}
-                postLabels={post.labels.map((label) => [
+                id={work.id}
+                key={work.id}
+                postFileId={work.fileId}
+                postPrompt={work.prompt}
+                postAnnotationAdult={work.annotationAdult}
+                postAnnotationMedical={work.annotationMedical}
+                postAnnotationRacy={work.annotationRacy}
+                postAnnotationSpoof={work.annotationSpoof}
+                postAnnotationViolence={work.annotationViolence}
+                postLabels={work.labels.map((label) => [
                   label.name,
                   label.count,
                 ])}
-                postColors={post.colors}
-                postWebColors={post.webColors}
-                userId={post.user.id}
-                userName={post.user.name}
-                userAvatarImageURL={post.user.avatarImageURL}
-                isEditable={post.user.id === appContext.currentUser?.uid}
+                postColors={work.colors}
+                postWebColors={work.webColors}
+                userId={work.user.id}
+                userName={work.user.name}
+                userAvatarImageURL={work.user.avatarImageURL}
+                isEditable={work.user.id === appContext.currentUser?.uid}
               />
             ))}
           </Stack>

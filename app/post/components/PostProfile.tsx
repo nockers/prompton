@@ -1,6 +1,6 @@
 import { Stack, Text, Textarea, Box } from "@chakra-ui/react"
 import { FC, useState } from "react"
-import { useUpdatePostMutation } from "interface/__generated__/react"
+import { useUpdateWorkMutation } from "interface/__generated__/react"
 
 type Props = {
   postId: string
@@ -20,17 +20,17 @@ type Props = {
 }
 
 export const PostProfile: FC<Props> = (props) => {
-  const [updatePost] = useUpdatePostMutation()
+  const [updateWork] = useUpdateWorkMutation()
 
   const [isEditable, setIsEditable] = useState(false)
 
   const [prompt, setPrompt] = useState(props.postPrompt ?? "")
 
   const onBlur = async () => {
-    await updatePost({
+    await updateWork({
       variables: {
         input: {
-          postId: props.postId,
+          workId: props.postId,
           prompt: prompt,
         },
       },

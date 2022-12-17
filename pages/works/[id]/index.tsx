@@ -19,7 +19,7 @@ import { HomePostList } from "app/components/HomePostList"
 import { usePostQuery } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
 
-const PostPage: BlitzPage = () => {
+const WorkPage: BlitzPage = () => {
   const appContext = useContext(AppContext)
 
   const [isEditable, markAsEditable] = useState(false)
@@ -46,7 +46,7 @@ const PostPage: BlitzPage = () => {
 
   const label = router.query.id?.toString()
 
-  if (data === null || data.post === null) {
+  if (data === null || data.work === null) {
     return null
   }
 
@@ -63,7 +63,7 @@ const PostPage: BlitzPage = () => {
             <Image
               w={"100%"}
               alt={""}
-              src={`/api/images/${data.post.fileId}?w=1024`}
+              src={`/api/images/${data.work.fileId}?w=1024`}
               borderRadius={4}
             />
           </Box>
@@ -71,11 +71,11 @@ const PostPage: BlitzPage = () => {
             <HStack spacing={4}>
               <Avatar
                 size={"md"}
-                src={data.post.user.avatarImageURL ?? ""}
+                src={data.work.user.avatarImageURL ?? ""}
                 onClick={onOpenUser}
               />
               <Box flex={1} onClick={onOpenUser}>
-                <Text fontWeight={"bold"}>{data.post.user.name}</Text>
+                <Text fontWeight={"bold"}>{data.work.user.name}</Text>
               </Box>
               <Button size={"sm"}>{"フォロー"}</Button>
             </HStack>
@@ -84,11 +84,11 @@ const PostPage: BlitzPage = () => {
               <Button flex={1}>{"いいね"}</Button>
             </HStack>
             <Box bg={"blackAlpha.400"} p={4} rounded={"lg"}>
-              <Text>{data.post.prompt ?? "No prompt"}</Text>
+              <Text>{data.work.prompt ?? "No prompt"}</Text>
             </Box>
             <Stack>
               <Wrap>
-                {data.post.labels.map((label) => (
+                {data.work.labels.map((label) => (
                   <WrapItem key={label.id}>
                     <ButtonLinkLabel
                       label={label.name}
@@ -99,7 +99,7 @@ const PostPage: BlitzPage = () => {
                     />
                   </WrapItem>
                 ))}
-                {data.post.webColors.map((color) => (
+                {data.work.webColors.map((color) => (
                   <WrapItem key={color}>
                     <ButtonLinkColor
                       color={color}
@@ -119,8 +119,8 @@ const PostPage: BlitzPage = () => {
   )
 }
 
-PostPage.getLayout = (page) => {
+WorkPage.getLayout = (page) => {
   return <UserLayout>{page}</UserLayout>
 }
 
-export default PostPage
+export default WorkPage

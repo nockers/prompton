@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client"
 
 export default gql`
-  mutation CreatePost($input: CreatePostInput!) {
-    createPost(input: $input) {
+  mutation CreateWork($input: CreateWorkInput!) {
+    createWork(input: $input) {
       id
       createdAt
       title

@@ -3,15 +3,15 @@ import { GraphQLError } from "graphql"
 import { container } from "tsyringe"
 import db from "db"
 import {
-  MutationUpdatePostArgs,
+  MutationUpdateWorkArgs,
   RequireFields,
 } from "interface/__generated__/node"
 import { UpdatePostCommand } from "service"
 import { Context } from "types"
 
-export const updatePostResolver = async (
+export const updateWorkResolver = async (
   _: unknown,
-  args: RequireFields<MutationUpdatePostArgs, "input">,
+  args: RequireFields<MutationUpdateWorkArgs, "input">,
   ctx: Context,
 ) => {
   if (ctx.currentUser === null) {
@@ -24,7 +24,7 @@ export const updatePostResolver = async (
 
   const output = await command.execute({
     userId: ctx.currentUser.uid,
-    postId: args.input.postId,
+    postId: args.input.workId,
     postPrompt: args.input.prompt,
   })
 
@@ -35,6 +35,6 @@ export const updatePostResolver = async (
   }
 
   return db.post.findUnique({
-    where: { id: args.input.postId },
+    where: { id: args.input.workId },
   })
 }

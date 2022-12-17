@@ -2,7 +2,7 @@ import { gql } from "@apollo/client"
 
 export default gql`
   query Post($id: ID!) {
-    post(id: $id) {
+    work(id: $id) {
       id
       createdAt
       title

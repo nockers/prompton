@@ -1,9 +1,9 @@
 import { Post } from "@prisma/client"
 import db from "db"
-import { PostNode } from "interface/__generated__/node"
+import { WorkNode } from "interface/__generated__/node"
 import { PrismaResolvers } from "interface/resolvers/types/prismaResolvers"
 
-export const PostNodeResolvers: PrismaResolvers<PostNode, Post> = {
+export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
   id(parent: Post) {
     return parent.id
   },

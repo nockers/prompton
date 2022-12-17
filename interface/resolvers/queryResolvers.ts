@@ -4,9 +4,9 @@ import db from "db"
 import {
   QueryLabelArgs,
   QueryLabelsArgs,
-  QueryPostArgs,
-  QueryPostsArgs,
   QueryUserArgs,
+  QueryWorkArgs,
+  QueryWorksArgs,
 } from "interface/__generated__/node"
 
 export const QueryResolvers = {
@@ -27,7 +27,7 @@ export const QueryResolvers = {
       extensions: { code: ApolloServerErrorCode.BAD_REQUEST },
     })
   },
-  posts(_: unknown, args: Partial<QueryPostsArgs>) {
+  works(_: unknown, args: Partial<QueryWorksArgs>) {
     if (typeof args.where?.labelName === "string") {
       return db.post.findMany({
         orderBy: { createdAt: "desc" },
@@ -51,8 +51,7 @@ export const QueryResolvers = {
       where: { isDeleted: false },
     })
   },
-  post(_: unknown, args: Partial<QueryPostArgs>) {
-    console.log("---------------------", args)
+  work(_: unknown, args: Partial<QueryWorkArgs>) {
     return db.post.findUnique({ where: { id: args.id } })
   },
   user(_: unknown, args: Partial<QueryUserArgs>) {

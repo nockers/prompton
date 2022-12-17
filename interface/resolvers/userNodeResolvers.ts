@@ -28,9 +28,10 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
   biography(parent: User) {
     return parent.biography ?? ""
   },
-  posts(parent: User) {
-    return db.user
-      .findUnique({ where: { id: parent.id } })
-      .posts({ orderBy: { createdAt: "desc" }, where: { isDeleted: false } })
+  works(parent: User) {
+    return db.user.findUnique({ where: { id: parent.id } }).posts({
+      orderBy: { createdAt: "desc" },
+      where: { isDeleted: false },
+    })
   },
 }

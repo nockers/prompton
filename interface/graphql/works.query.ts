@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client"
 
 export default gql`
-  query Posts($offset: Int, $limit: Int, $where: PostsWhereInput) {
-    posts(offset: $offset, limit: $limit, where: $where) {
+  query Posts($offset: Int, $limit: Int, $where: WorksWhereInput) {
+    works(offset: $offset, limit: $limit, where: $where) {
       id
       createdAt
       title

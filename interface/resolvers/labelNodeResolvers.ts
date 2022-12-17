@@ -17,7 +17,7 @@ export const LabelNodeResolvers: PrismaResolvers<LabelNode, Label> = {
     })
     return label?._count?.posts ?? 0
   },
-  async posts(parent) {
+  async works(parent) {
     const posts = await db.label
       .findUnique({ where: { id: parent.id } })
       .posts({

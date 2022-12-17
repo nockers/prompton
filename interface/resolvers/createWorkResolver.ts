@@ -3,15 +3,15 @@ import { GraphQLError } from "graphql"
 import { container } from "tsyringe"
 import db from "db"
 import {
-  MutationCreatePostArgs,
+  MutationCreateWorkArgs,
   RequireFields,
 } from "interface/__generated__/node"
 import { CreatePostCommand } from "service"
 import { Context } from "types"
 
-export const createPostResolver = async (
+export const createWorkResolver = async (
   _: unknown,
-  args: RequireFields<MutationCreatePostArgs, "input">,
+  args: RequireFields<MutationCreateWorkArgs, "input">,
   ctx: Context,
 ) => {
   if (ctx.currentUser === null) {

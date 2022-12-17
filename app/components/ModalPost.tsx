@@ -24,7 +24,7 @@ import { BiBookmark, BiEdit, BiExpand, BiHeart } from "react-icons/bi"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
 import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"
 import { UserProfile } from "app/components/UserProfile"
-import { useUpdatePostMutation } from "interface/__generated__/react"
+import { useUpdateWorkMutation } from "interface/__generated__/react"
 
 type Props = {
   postId: string
@@ -53,7 +53,7 @@ type Props = {
 export const ModalPost: FC<Props> = (props) => {
   const margin = useBreakpointValue({ base: 0, md: 4 })
 
-  const [updatePost] = useUpdatePostMutation()
+  const [updatePost] = useUpdateWorkMutation()
 
   const [isEditable, setIsEditable] = useState(false)
 
@@ -67,7 +67,7 @@ export const ModalPost: FC<Props> = (props) => {
     await updatePost({
       variables: {
         input: {
-          postId: props.postId,
+          workId: props.postId,
           prompt: prompt,
         },
       },
@@ -87,7 +87,7 @@ export const ModalPost: FC<Props> = (props) => {
           <HStack justifyContent={"space-between"}>
             <Box></Box>
             <HStack>
-              <Link href={`/posts/${props.postId}`}>
+              <Link href={`/works/${props.postId}`}>
                 <IconButton variant={"link"} aria-label={""}>
                   <Icon as={BiExpand} />
                 </IconButton>

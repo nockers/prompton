@@ -10,7 +10,7 @@ export default gql`
       headerImageId
       biography
       createdAt
-      posts {
+      works {
         id
         createdAt
         title

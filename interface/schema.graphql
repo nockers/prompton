@@ -1,22 +1,22 @@
 type Query {
   # viewer: Viewer
-  posts(offset: Int, limit: Int, where: PostsWhereInput): [PostNode!]!
-  post(id: ID!): PostNode
+  works(offset: Int, limit: Int, where: WorksWhereInput): [WorkNode!]!
+  work(id: ID!): WorkNode
   user(id: ID!): UserNode
   labels(offset: Int, limit: Int): [LabelNode!]!
   label(id: ID, name: String): LabelNode
 }
 
-input PostsWhereInput {
+input WorksWhereInput {
   labelName: String
   color: String
 }
 
 type Viewer {
-  posts(offset: Int, limit: Int): [PostNode!]!
+  works(offset: Int, limit: Int): [WorkNode!]!
 }
 
-type PostNode implements Node {
+type WorkNode implements Node {
   id: ID!
   createdAt: Int!
   title: String
@@ -35,15 +35,15 @@ type PostNode implements Node {
   labels: [LabelNode!]!
 }
 
-type PostEdge implements Edge {
+type WorkEdge implements Edge {
   cursor: String!
-  node: PostNode!
+  node: WorkNode!
 }
 
-type PostsConnection implements Connection {
+type WorksConnection implements Connection {
   totalCount: Int
   pageInfo: PageInfo!
-  edges: [PostEdge!]!
+  edges: [WorkEdge!]!
 }
 
 type UserNode implements Node {
@@ -55,7 +55,7 @@ type UserNode implements Node {
   avatarImageId: String
   headerImageId: String
   biography: String!
-  posts: [PostNode!]!
+  works: [WorkNode!]!
 }
 
 type ReactionNode implements Node {
@@ -69,7 +69,7 @@ type ReactionNode implements Node {
 type LabelNode implements Node {
   id: ID!
   name: String!
-  posts: [PostNode!]!
+  works: [WorkNode!]!
   count: Int!
 }
 
@@ -90,24 +90,24 @@ type PageInfo {
 }
 
 type Mutation {
-  createPost(input: CreatePostInput!): PostNode!
-  updatePost(input: UpdatePostInput!): PostNode!
+  createWork(input: CreateWorkInput!): WorkNode!
+  updateWork(input: UpdateWorkInput!): WorkNode!
   createUser(input: CreateUserInput!): Boolean
   updateUser(input: UpdateUserInput!): Boolean
-  # addReaction(input: AddReactionInput!): PostNode!
+  # addReaction(input: AddReactionInput!): WorkNode!
 }
 
-input CreatePostInput {
+input CreateWorkInput {
   fileId: String!
 }
 
-input UpdatePostInput {
-  postId: String!
+input UpdateWorkInput {
+  workId: String!
   prompt: String
 }
 
 input AddReactionInput {
-  postId: String!
+  workId: String!
   text: String!
 }
 

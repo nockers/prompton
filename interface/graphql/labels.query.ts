@@ -6,7 +6,7 @@ export default gql`
       id
       name
       count
-      posts {
+      works {
         id
         createdAt
         title
