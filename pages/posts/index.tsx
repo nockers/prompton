@@ -44,7 +44,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
     baseURL: "https://promptoncms.up.railway.app/api",
     url: "posts",
     headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+      Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
     },
   })
 
