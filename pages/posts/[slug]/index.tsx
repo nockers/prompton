@@ -81,7 +81,7 @@ export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {
     baseURL: "https://promptoncms.up.railway.app/api",
     url: `posts?filters[slug][$eq]=${context.params.slug}`,
     headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_API_KEY}`,
+      Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
     },
   })
 
