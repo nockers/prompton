@@ -1,8 +1,10 @@
 type Query {
   # viewer: Viewer
   posts(offset: Int, limit: Int, where: PostsWhereInput): [PostNode!]!
+  post(id: ID!): PostNode
   user(id: ID!): UserNode
   labels(offset: Int, limit: Int): [LabelNode!]!
+  label(id: ID, name: String): LabelNode
 }
 
 input PostsWhereInput {

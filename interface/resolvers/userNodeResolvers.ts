@@ -1,9 +1,9 @@
 import { User } from "@sentry/node"
 import db from "db"
 import { UserNode } from "interface/__generated__/node"
-import { NodeResolver } from "interface/resolvers/types/nodeResolver"
+import { PrismaResolvers } from "interface/resolvers/types/prismaResolvers"
 
-export const UserNodeResolver: NodeResolver<UserNode, User> = {
+export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
   id(parent: User) {
     return parent.id
   },

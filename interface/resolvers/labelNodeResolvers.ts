@@ -1,9 +1,9 @@
 import { Label } from "@prisma/client"
 import db from "db"
 import { LabelNode } from "interface/__generated__/node"
-import { NodeResolver } from "interface/resolvers/types/nodeResolver"
+import { PrismaResolvers } from "interface/resolvers/types/prismaResolvers"
 
-export const LabelNodeResolver: NodeResolver<LabelNode, Label> = {
+export const LabelNodeResolvers: PrismaResolvers<LabelNode, Label> = {
   id(parent) {
     return parent.id
   },
@@ -20,7 +20,10 @@ export const LabelNodeResolver: NodeResolver<LabelNode, Label> = {
   async posts(parent) {
     const posts = await db.label
       .findUnique({ where: { id: parent.id } })
-      .posts({ orderBy: { createdAt: "desc" }, where: { isDeleted: false } })
+      .posts({
+        orderBy: { createdAt: "desc" },
+        where: { isDeleted: false },
+      })
     return posts ?? []
   },
 }

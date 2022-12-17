@@ -10,18 +10,16 @@ type Props = {
 
 export const UserProfile: FC<Props> = (props) => {
   return (
-    <Box bg={"blackAlpha.400"} p={4} rounded={"lg"}>
-      <HStack spacing={4}>
-        <Avatar
-          size={"sm"}
-          src={props.userAvatarImageURL ?? ""}
-          onClick={props.onOpenUser}
-        />
-        <Box flex={1} onClick={props.onOpenUser}>
-          <Text fontWeight={"bold"}>{props.userName}</Text>
-        </Box>
-        <Button size={"sm"}>{"フォロー"}</Button>
-      </HStack>
-    </Box>
+    <HStack spacing={4}>
+      <Avatar
+        size={"sm"}
+        src={props.userAvatarImageURL ?? ""}
+        onClick={props.onOpenUser}
+      />
+      <Box flex={1} onClick={props.onOpenUser}>
+        <Text fontWeight={"bold"}>{props.userName}</Text>
+      </Box>
+      <Button size={"sm"}>{"フォロー"}</Button>
+    </HStack>
   )
 }

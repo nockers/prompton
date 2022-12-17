@@ -1,11 +1,11 @@
 import { createPostResolver } from "interface/resolvers/createPostResolver"
 import { createUserResolver } from "interface/resolvers/createUserResolver"
-import { LabelNodeResolver } from "interface/resolvers/labelNodeResolver"
-import { PostNodeResolver } from "interface/resolvers/postNodeResolver"
-import { QueryResolver } from "interface/resolvers/queryResolver"
+import { LabelNodeResolvers } from "interface/resolvers/labelNodeResolvers"
+import { PostNodeResolvers } from "interface/resolvers/postNodeResolvers"
+import { QueryResolvers } from "interface/resolvers/queryResolvers"
 import { updatePostResolver } from "interface/resolvers/updatePostResolver"
 import { updateUserResolver } from "interface/resolvers/updateUserResolver"
-import { UserNodeResolver } from "interface/resolvers/userNodeResolver"
+import { UserNodeResolvers } from "interface/resolvers/userNodeResolvers"
 
 const Mutation = {
   createUser: createUserResolver,
@@ -16,8 +16,8 @@ const Mutation = {
 
 export const resolvers = {
   Mutation,
-  Query: QueryResolver,
-  PostNode: PostNodeResolver,
-  UserNode: UserNodeResolver,
-  LabelNode: LabelNodeResolver,
+  Query: QueryResolvers,
+  PostNode: PostNodeResolvers,
+  UserNode: UserNodeResolvers,
+  LabelNode: LabelNodeResolvers,
 }

@@ -5,7 +5,6 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalCloseButton,
   Text,
   ModalBody,
   ModalFooter,
@@ -17,9 +16,11 @@ import {
   Textarea,
   Wrap,
   WrapItem,
+  Box,
 } from "@chakra-ui/react"
+import Link from "next/link"
 import { FC, useState } from "react"
-import { BiBookmark, BiEdit, BiHeart } from "react-icons/bi"
+import { BiBookmark, BiEdit, BiExpand, BiHeart } from "react-icons/bi"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
 import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"
 import { UserProfile } from "app/components/UserProfile"
@@ -82,8 +83,18 @@ export const ModalPost: FC<Props> = (props) => {
     >
       <ModalOverlay backdropFilter="blur(10px)" />
       <ModalContent mx={margin}>
-        <ModalHeader px={4}>{props.postId}</ModalHeader>
-        <ModalCloseButton top={4} right={4} />
+        <ModalHeader pl={4} pr={2} py={2}>
+          <HStack justifyContent={"space-between"}>
+            <Box></Box>
+            <HStack>
+              <Link href={`/posts/${props.postId}`}>
+                <IconButton variant={"link"} aria-label={""}>
+                  <Icon as={BiExpand} />
+                </IconButton>
+              </Link>
+            </HStack>
+          </HStack>
+        </ModalHeader>
         <ModalBody pb={0} pt={0} px={4}>
           <Stack spacing={4}>
             <Image
@@ -92,73 +103,79 @@ export const ModalPost: FC<Props> = (props) => {
               borderRadius={8}
               w={"100%"}
             />
-            <Wrap>
-              {props.postLabels.map(([label, count]) => (
-                <WrapItem key={label}>
-                  <ButtonLinkLabel
-                    label={label}
-                    count={count}
-                    onClick={() => {
-                      props.onLinkLabel(label)
-                    }}
-                  />
-                </WrapItem>
-              ))}
-            </Wrap>
-            <Wrap>
-              {props.postWebColors.map((color) => (
-                <WrapItem key={color}>
-                  <ButtonLinkColor
-                    color={color}
-                    onClick={() => {
-                      props.onLinkColor(color)
-                    }}
-                  />
-                </WrapItem>
-              ))}
-            </Wrap>
-            {isEditable && (
-              <Textarea
-                value={prompt}
-                onChange={(event) => {
-                  setPrompt(event.target.value)
-                }}
-                onBlur={onBlur}
-              />
-            )}
-            {!isEditable && <Text>{props.postPrompt ?? "no prompt"}</Text>}
+            <Stack spacing={4}>
+              {!isEditable && (
+                <Box bg={"blackAlpha.400"} p={4} rounded={"lg"}>
+                  <Text>{props.postPrompt ?? "no prompt"}</Text>
+                </Box>
+              )}
+              {isEditable && (
+                <Textarea
+                  value={prompt}
+                  onChange={(event) => {
+                    setPrompt(event.target.value)
+                  }}
+                  onBlur={onBlur}
+                />
+              )}
+              <Wrap>
+                {props.postLabels.map(([label, count]) => (
+                  <WrapItem key={label}>
+                    <ButtonLinkLabel
+                      label={label}
+                      count={count}
+                      onClick={() => {
+                        props.onLinkLabel(label)
+                      }}
+                    />
+                  </WrapItem>
+                ))}
+                {props.postWebColors.map((color) => (
+                  <WrapItem key={color}>
+                    <ButtonLinkColor
+                      color={color}
+                      onClick={() => {
+                        props.onLinkColor(color)
+                      }}
+                    />
+                  </WrapItem>
+                ))}
+              </Wrap>
+            </Stack>
+          </Stack>
+        </ModalBody>
+        <ModalFooter px={4}>
+          <HStack justifyContent={"space-between"} w={"100%"}>
             <UserProfile
               userId={props.userId}
               userAvatarImageURL={props.userAvatarImageURL}
               userName={props.userName}
               onOpenUser={props.onOpenUser}
             />
-          </Stack>
-        </ModalBody>
-        <ModalFooter px={4}>
-          <HStack>
-            <IconButton size={"sm"} onClick={props.onClose} aria-label={""}>
-              <Icon as={BiBookmark} />
-            </IconButton>
-            {!props.isEditable && (
-              <Button
-                size={"sm"}
-                leftIcon={<Icon as={BiHeart} />}
-                colorScheme={"blue"}
-              >
-                {"いいね"}
-              </Button>
-            )}
-            {props.isEditable && (
-              <Button
-                size={"sm"}
-                leftIcon={<Icon as={BiEdit} />}
-                colorScheme={"blue"}
-                onClick={onEdit}
-              >
-                {isEditable ? "終了" : "編集"}
-              </Button>
-            )}
+            <HStack>
+              <IconButton size={"sm"} onClick={props.onClose} aria-label={""}>
+                <Icon as={BiBookmark} />
+              </IconButton>
+              {!props.isEditable && (
+                <Button
+                  size={"sm"}
+                  leftIcon={<Icon as={BiHeart} />}
+                  colorScheme={"blue"}
+                >
+                  {"いいね"}
+                </Button>
+              )}
+              {props.isEditable && (
+                <Button
+                  size={"sm"}
+                  leftIcon={<Icon as={BiEdit} />}
+                  colorScheme={"blue"}
+                  onClick={onEdit}
+                >
+                  {isEditable ? "終了" : "編集"}
+                </Button>
+              )}
+            </HStack>
           </HStack>
         </ModalFooter>
       </ModalContent>

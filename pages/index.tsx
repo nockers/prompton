@@ -5,7 +5,7 @@ import { HomePostList } from "app/components/HomePostList"
 
 const RootPage: BlitzPage = () => {
   return (
-    <Stack as={"main"} px={4} pb={4} spacing={4}>
+    <Stack as={"main"} px={4} pb={4} spacing={0}>
       <HomeLabelList />
       <HomePostList />
     </Stack>

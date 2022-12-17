@@ -1,5 +1,5 @@
 import { BlitzPage } from "@blitzjs/auth"
-import { Button, Wrap, WrapItem } from "@chakra-ui/react"
+import { Box, Button, HStack } from "@chakra-ui/react"
 import Link from "next/link"
 import { useLabelsQuery } from "interface/__generated__/react"
 
@@ -13,14 +13,14 @@ export const HomeLabelList: BlitzPage = () => {
   })
 
   return (
-    <Wrap>
-      {data?.labels.map((label) => (
-        <WrapItem key={label.id}>
-          <Link href={`/labels/${label.name}`}>
+    <Box overflowX={"auto"} pb={4}>
+      <HStack>
+        {data?.labels.map((label) => (
+          <Link key={label.id} href={`/labels/${label.name}`}>
             <Button size={"sm"}>{`#${label.name}`}</Button>
           </Link>
-        </WrapItem>
-      ))}
-    </Wrap>
+        ))}
+      </HStack>
+    </Box>
   )
 }
