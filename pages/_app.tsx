@@ -25,7 +25,7 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout ?? ((page) => page)
 
   const description =
-    "Prompton（プロンプトン）は開発中のAIデザイナーを支援するポートフォリオサイトです。AIで生成した画像や動画を投稿したり依頼を引き受けることができます。"
+    "Prompton（プロンプトン）はAIデザイナーを支援するポートフォリオサイトです。AIで生成した画像や動画を投稿したり依頼を引き受けることができます。"
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -53,17 +53,23 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
         />
         <title>{"Prompton - AIデザイナーに制作依頼"}</title>
         <meta name={"description"} content={description} />
-        <meta property="og:title" content={"プロンプトン"} />
+        <meta property="og:title" content={"Prompton"} />
         <meta property="og:description" content={description} />
         <meta property="og:type" content={"website"} />
-        <meta property="og:site_name" content={"プロンプトン"} />
+        <meta
+          property="og:site_name"
+          content={"Prompton - AIデザイナーに制作依頼"}
+        />
         <meta
           property="og:image"
           content={"https://prompton.io/facebook.png"}
         />
         <meta name={"twitter:card"} content={"summary_large_image"} />
         <meta name={"twitter:site"} content="@nockerdev" />
-        <meta name={"twitter:title"} content={"プロンプトン"} />
+        <meta
+          name={"twitter:title"}
+          content={"Prompton - AIデザイナーに制作依頼"}
+        />
         <meta name={"twitter:description"} content={description} />
         <meta
           name={"twitter:image"}
