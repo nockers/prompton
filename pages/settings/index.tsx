@@ -1,7 +1,8 @@
-import { Box, Button, Stack, useToast } from "@chakra-ui/react"
+import { Box, Button, useToast } from "@chakra-ui/react"
 import { getAuth, signOut } from "firebase/auth"
 import { useRouter } from "next/router"
 import { FC } from "react"
+import { MainStack } from "app/components/MainStack"
 
 const SettingsPage: FC = () => {
   const router = useRouter()
@@ -25,11 +26,11 @@ const SettingsPage: FC = () => {
   }
 
   return (
-    <Stack px={4}>
+    <MainStack title={"設定"} description={null} fileId={null}>
       <Box>
         <Button onClick={onLogout}>{"ログアウト"}</Button>
       </Box>
-    </Stack>
+    </MainStack>
   )
 }
 

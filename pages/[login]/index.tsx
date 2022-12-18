@@ -10,6 +10,7 @@ import UserLayout from "app/[login]/layout"
 import UserLoading from "app/[login]/loading"
 import { CardPost } from "app/components/CardPost"
 import { MainFallback } from "app/components/MainFallback"
+import { MainStack } from "app/components/MainStack"
 import { useColumnCount } from "app/hooks/useColumnCount"
 import { useFileUpload } from "app/hooks/useFileUpload"
 import {
@@ -160,7 +161,11 @@ const UserPage: BlitzPage = () => {
   const isEditable = router.query.login === appContext.currentUser?.uid
 
   return (
-    <Stack as={"main"} px={4} spacing={4} pb={4}>
+    <MainStack
+      title={`${user.name}さんの作品`}
+      description={null}
+      fileId={null}
+    >
       <UserHeaderProfile
         avatarImageURL={user.avatarImageURL}
         userId={user.id}
@@ -210,7 +215,7 @@ const UserPage: BlitzPage = () => {
         onChangeAvatarFileId={onChangeAvatarFileId}
         onChangeName={onChangeName}
       />
-    </Stack>
+    </MainStack>
   )
 }
 

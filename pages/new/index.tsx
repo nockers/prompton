@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { FC, useState } from "react"
+import { MainStack } from "app/components/MainStack"
 import { useCreateUserMutation } from "interface/__generated__/react"
 
 const LoginPage: FC = () => {
@@ -41,42 +42,44 @@ const LoginPage: FC = () => {
   }
 
   return (
-    <HStack px={4} pt={16} justifyContent={"center"}>
-      <Box maxW={"sm"} bg={"gray.700"} rounded={"md"} w={"100%"} p={4}>
-        <Stack gap={2}>
-          <Text fontSize={20} fontWeight={"bold"}>
-            {"アカウント作成"}
-          </Text>
-          <Input
-            disabled={loading}
-            placeholder={"ユーザ名"}
-            variant={"filled"}
-            value={username}
-            onChange={(event) => {
-              setUsername(event.target.value)
-            }}
-          />
-          <Stack spacing={0}>
-            <Text fontSize={14}>
-              {"本製品のご利用には、以下に同意する必要があります。"}
+    <MainStack title={"アカウント作成"} description={null} fileId={null}>
+      <HStack px={4} pt={16} justifyContent={"center"}>
+        <Box maxW={"sm"} bg={"gray.700"} rounded={"md"} w={"100%"} p={4}>
+          <Stack gap={2}>
+            <Text fontSize={20} fontWeight={"bold"}>
+              {"アカウント作成"}
             </Text>
-            <Box>
-              <UnorderedList>
-                <ListItem>
-                  <Link fontSize={14}>{"利用規約"}</Link>
-                </ListItem>
-                <ListItem>
-                  <Link fontSize={14}>{"プライバシーポリシー"}</Link>
-                </ListItem>
-              </UnorderedList>
-            </Box>
+            <Input
+              disabled={loading}
+              placeholder={"ユーザ名"}
+              variant={"filled"}
+              value={username}
+              onChange={(event) => {
+                setUsername(event.target.value)
+              }}
+            />
+            <Stack spacing={0}>
+              <Text fontSize={14}>
+                {"本製品のご利用には、以下に同意する必要があります。"}
+              </Text>
+              <Box>
+                <UnorderedList>
+                  <ListItem>
+                    <Link fontSize={14}>{"利用規約"}</Link>
+                  </ListItem>
+                  <ListItem>
+                    <Link fontSize={14}>{"プライバシーポリシー"}</Link>
+                  </ListItem>
+                </UnorderedList>
+              </Box>
+            </Stack>
+            <Button isLoading={loading} onClick={onCreateUser}>
+              {"利用開始"}
+            </Button>
           </Stack>
-          <Button isLoading={loading} onClick={onCreateUser}>
-            {"利用開始"}
-          </Button>
-        </Stack>
-      </Box>
-    </HStack>
+        </Box>
+      </HStack>
+    </MainStack>
   )
 }
 

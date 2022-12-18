@@ -3,6 +3,7 @@ import axios from "axios"
 import { GetStaticProps } from "next"
 import Link from "next/link"
 import { FC } from "react"
+import { MainStack } from "app/components/MainStack"
 import { StrapiPosts } from "interface/types/strapiPosts"
 
 type Props = {
@@ -15,7 +16,7 @@ type Props = {
 
 const PostsPage: FC<Props> = (props) => {
   return (
-    <Stack as={"main"} px={4} spacing={4} pb={4}>
+    <MainStack title={"過去の記事"} description={null} fileId={null}>
       <HStack justifyContent={"center"}>
         <Stack maxW={"xl"} w={"100%"} spacing={4} py={8}>
           {props.posts.map((post) => (
@@ -34,7 +35,7 @@ const PostsPage: FC<Props> = (props) => {
           ))}
         </Stack>
       </HStack>
-    </Stack>
+    </MainStack>
   )
 }
 

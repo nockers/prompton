@@ -37,7 +37,7 @@ const PostPage: FC<Props> = (props) => {
   }
 
   return (
-    <MainStack title={null} description={null} fileId={null}>
+    <MainStack title={props.title} description={props.body} fileId={null}>
       <HStack justifyContent={"center"}>
         <Stack maxW={"xl"} w={"100%"} spacing={8} py={8}>
           <Stack spacing={1}>

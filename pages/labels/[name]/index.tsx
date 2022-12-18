@@ -47,7 +47,7 @@ const LabelPage: BlitzPage<Props> = () => {
   return (
     <MainStack
       title={`#${label}`}
-      description={`ラベル「#${label}」に関連するAI作品があります。`}
+      description={`ラベル「#${label}」に関連する作品があります。`}
       fileId={null}
     >
       <Text fontSize={"4xl"} fontWeight={"bold"}>{`#${label}`}</Text>

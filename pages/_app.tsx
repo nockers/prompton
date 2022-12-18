@@ -49,30 +49,14 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
           name={"viewport"}
           content={"width=device-width, initial-scale=1.0"}
         />
-        <title>{"Prompton - AIデザイナーに制作依頼"}</title>
-        <meta name={"description"} content={description} />
-        <meta property="og:title" content={"Prompton"} />
-        <meta property="og:description" content={description} />
-        <meta property="og:type" content={"website"} />
+        <title>{"Prompton"}</title>
+        <meta property={"og:type"} content={"website"} />
         <meta
-          property="og:site_name"
+          property={"og:site_name"}
           content={"Prompton - AIデザイナーに制作依頼"}
-        />
-        <meta
-          property="og:image"
-          content={"https://prompton.io/facebook.png"}
         />
         <meta name={"twitter:card"} content={"summary_large_image"} />
         <meta name={"twitter:site"} content="@nockerdev" />
-        <meta
-          name={"twitter:title"}
-          content={"Prompton - AIデザイナーに制作依頼"}
-        />
-        <meta name={"twitter:description"} content={description} />
-        <meta
-          name={"twitter:image"}
-          content={"https://prompton.io/twitter.png"}
-        />
       </Head>
       <ChakraProvider theme={theme}>
         <Suspense fallback={<RootLoading />}>
