@@ -23,7 +23,7 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout ?? ((page) => page)
 
   const description =
-    "Prompton（プロンプトン）はAIデザイナーを支援する作品投稿サイトです。AIで生成した作品を投稿したり制作の依頼を引き受けられます。"
+    "Prompton（プロンプトン）はAIアーティストを支援する作品投稿サイトです。AIで生成した作品を投稿したり制作の依頼を引き受けられます。"
 
   useEffect(() => {
     if (typeof window === "undefined") return
@@ -53,7 +53,7 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
         <meta property={"og:type"} content={"website"} />
         <meta
           property={"og:site_name"}
-          content={"Prompton - AIデザイナーに制作依頼"}
+          content={"Prompton - AIアーティストに制作依頼"}
         />
         <meta name={"twitter:card"} content={"summary_large_image"} />
         <meta name={"twitter:site"} content="@nockerdev" />

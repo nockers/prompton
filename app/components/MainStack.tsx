@@ -13,7 +13,7 @@ type Props = {
 export const MainStack: FC<Props> = (props) => {
   const appName = "Prompton"
 
-  const defaultTitle = `${appName} - AIデザイナーに制作依頼`
+  const defaultTitle = `${appName} - AIアーティストに制作依頼`
 
   const title =
     props.title !== null ? `${props.title} - ${appName}` : defaultTitle
@@ -33,7 +33,7 @@ export const MainStack: FC<Props> = (props) => {
       : defaultOgImageURL
 
   const defaultDescription =
-    "Prompton（プロンプトン）はAIデザイナーを支援する作品投稿サイトです。AIで生成した作品を投稿したり制作の依頼を引き受けられます。"
+    "Prompton（プロンプトン）はAIアーティストを支援する作品投稿サイトです。AIで生成した作品を投稿したり制作の依頼を引き受けられます。"
 
   const ogDescription = props.description || defaultDescription
 
