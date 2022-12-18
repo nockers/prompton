@@ -57,7 +57,7 @@ const PostPage: FC<Props> = (props) => {
 export const getStaticPaths: GetStaticPaths<Paths> = async () => {
   const result = await axios<StrapiPosts>({
     method: "GET",
-    baseURL: process.env.STRAPI_URL,
+    baseURL: `${process.env.STRAPI_URL}`,
     url: "posts",
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
@@ -76,20 +76,9 @@ export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {
     throw new Error()
   }
 
-  console.log("process.env.STRAPI_URL", process.env.STRAPI_URL)
-
-  console.log({
-    method: "GET",
-    baseURL: process.env.STRAPI_URL,
-    url: `posts?filters[slug][$eq]=${context.params.slug}`,
-    headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
-    },
-  })
-
   const result = await axios<StrapiPosts>({
     method: "GET",
-    baseURL: process.env.STRAPI_URL,
+    baseURL: `${process.env.STRAPI_URL}`,
     url: `posts?filters[slug][$eq]=${context.params.slug}`,
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
