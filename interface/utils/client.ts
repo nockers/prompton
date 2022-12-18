@@ -5,7 +5,7 @@ import { getApps } from "firebase/app"
 import { getAuth, getIdToken } from "firebase/auth"
 
 const httpLink = createHttpLink({
-  uri: process.env.GRAPHQL_ENDPOINT,
+  uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
   credentials: "same-origin",
 })
 
