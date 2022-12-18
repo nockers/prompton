@@ -100,4 +100,8 @@ if (typeof window !== "undefined" && getApps().length === 0) {
   }
 }
 
+if (typeof window !== "undefined" && location.href.includes("railway.app")) {
+  location.href = location.href.replace("prompt.up.railway.app", "prompton.io")
+}
+
 export default App
