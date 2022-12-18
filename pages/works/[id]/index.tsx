@@ -70,7 +70,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
 
   return (
     <MainStack
-      title={`${data.work.user.name}さんのAI作品`}
+      title={`${data.work.user.name}さんの作品`}
       description={data.work.prompt || `${data.work.id}`}
       fileId={data.work.fileId}
     >

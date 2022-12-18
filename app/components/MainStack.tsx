@@ -43,6 +43,7 @@ export const MainStack: FC<Props> = (props) => {
         <meta property="og:title" content={ogTitle} />
         <meta property="og:description" content={ogDescription} />
         <meta property="og:image" content={ogImageURL} />
+        <meta name={"twitter:title"} content={ogTitle} />
         <meta name={"twitter:description"} content={ogDescription} />
         <meta name={"twitter:image"} content={twitterImageURL} />
       </Head>
