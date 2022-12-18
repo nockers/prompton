@@ -42,7 +42,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
     client.restore({ ...props.cache, ...client.extract() })
   }
 
-  const { data = null, loading } = usePostQuery({
+  const { data = null } = usePostQuery({
     fetchPolicy: "cache-and-network",
     skip: typeof router.query.id === "undefined",
     variables: {
@@ -60,7 +60,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
 
   const onOpenUser = () => {}
 
-  if (router.isFallback || loading) {
+  if (router.isFallback) {
     return <MainFallback />
   }
 
@@ -150,7 +150,7 @@ export const getStaticPaths: GetStaticPaths<Paths> = async (a) => {
     return { params: { id: "" } }
   })
 
-  return { paths, fallback: true }
+  return { paths, fallback: "blocking" }
 }
 
 export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {
