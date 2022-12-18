@@ -3,7 +3,7 @@ import { FC } from "react"
 import { BiEdit } from "react-icons/bi"
 
 type Props = {
-  avatarImageId: string | null
+  avatarImageURL: string | null
   userId: string
   userName: string
   isEditable: boolean
@@ -11,16 +11,11 @@ type Props = {
 }
 
 export const UserHeaderProfile: FC<Props> = (props) => {
-  const src =
-    props.avatarImageId !== null
-      ? `/api/images/${props.avatarImageId}?w=160&h=160`
-      : ""
-
   return (
     <Stack py={4}>
       <HStack spacing={4} alignItems={"flex-start"}>
         <HStack flex={1} spacing={4}>
-          <Avatar size={"lg"} src={src} />
+          <Avatar size={"lg"} src={props.avatarImageURL || ""} />
           <Stack spacing={1}>
             <Text fontSize={"xs"} fontWeight={"bold"} opacity={0.8}>
               {`@${props.userId}`}

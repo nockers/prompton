@@ -1,34 +1,36 @@
-import { User } from "@sentry/node"
-import db from "db"
+import db, { User } from "db"
 import { UserNode } from "interface/__generated__/node"
 import { PrismaResolvers } from "interface/resolvers/types/prismaResolvers"
 
 export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
-  id(parent: User) {
+  id(parent) {
     return parent.id
   },
-  createdAt(parent: User) {
+  createdAt(parent) {
     return Math.floor(parent.createdAt.getTime() / 1000)
   },
-  login(parent: User) {
+  login(parent) {
     return parent.id
   },
-  name(parent: User) {
+  name(parent) {
     return parent.name
   },
-  avatarImageURL(parent: User) {
+  avatarImageURL(parent) {
+    if (parent.avatarFileId !== null) {
+      return `/api/images/${parent.avatarFileId}?w=160&h=160`
+    }
     return parent.avatarImageURL
   },
-  avatarImageId(parent: User) {
-    return parent.avatarImageId
+  avatarImageId(parent) {
+    return parent.avatarFileId
   },
-  headerImageId(parent: User) {
-    return parent.headerImageId
+  headerImageId() {
+    return null
   },
-  biography(parent: User) {
-    return parent.biography ?? ""
+  biography() {
+    return ""
   },
-  works(parent: User) {
+  works(parent) {
     return db.user.findUnique({ where: { id: parent.id } }).posts({
       orderBy: { createdAt: "desc" },
       where: { isDeleted: false },

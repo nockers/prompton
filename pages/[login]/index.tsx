@@ -1,5 +1,6 @@
 import { BlitzPage } from "@blitzjs/auth"
 import { Box, HStack, Stack, useDisclosure, useToast } from "@chakra-ui/react"
+import { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import { useContext, useState } from "react"
 import { UploadDropzone } from "app/[login]/components/UploadDropzone"
@@ -8,6 +9,7 @@ import { UserModalProfile } from "app/[login]/components/UserModalProfile"
 import UserLayout from "app/[login]/layout"
 import UserLoading from "app/[login]/loading"
 import { CardPost } from "app/components/CardPost"
+import { MainFallback } from "app/components/MainFallback"
 import { useColumnCount } from "app/hooks/useColumnCount"
 import { useFileUpload } from "app/hooks/useFileUpload"
 import {
@@ -17,6 +19,12 @@ import {
 } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
 import { toColumnArray } from "interface/utils/toColumnArray"
+
+type Props = {}
+
+type Paths = {
+  login: string
+}
 
 const UserPage: BlitzPage = () => {
   const appContext = useContext(AppContext)
@@ -135,6 +143,10 @@ const UserPage: BlitzPage = () => {
     }
   }
 
+  if (router.isFallback) {
+    return <MainFallback />
+  }
+
   if (typeof router.query.login === "undefined" || loading) {
     return <UserLoading />
   }
@@ -150,7 +162,7 @@ const UserPage: BlitzPage = () => {
   return (
     <Stack as={"main"} px={4} spacing={4} pb={4}>
       <UserHeaderProfile
-        avatarImageId={user.avatarImageId}
+        avatarImageURL={user.avatarImageURL}
         userId={user.id}
         userName={user.name}
         isEditable={isEditable}
@@ -192,7 +204,7 @@ const UserPage: BlitzPage = () => {
       </HStack>
       <UserModalProfile
         userName={user.name}
-        userAvatarFileId={user.avatarImageId}
+        userAvatarFileURL={user.avatarImageURL}
         isOpen={isOpenModalProfile}
         onClose={onCloseModalProfile}
         onChangeAvatarFileId={onChangeAvatarFileId}
@@ -204,6 +216,24 @@ const UserPage: BlitzPage = () => {
 
 UserPage.getLayout = (page) => {
   return <UserLayout>{page}</UserLayout>
+}
+
+export const getStaticPaths: GetStaticPaths<Paths> = async () => {
+  const paths = [].map((_) => {
+    return { params: { login: "" } }
+  })
+
+  return { paths, fallback: "blocking" }
+}
+
+export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {
+  if (typeof context.params?.login === "undefined") {
+    throw new Error()
+  }
+
+  return {
+    props: {},
+  }
 }
 
 export default UserPage

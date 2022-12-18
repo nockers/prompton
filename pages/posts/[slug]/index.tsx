@@ -10,9 +10,12 @@ import {
 import axios from "axios"
 import { GetStaticPaths, GetStaticProps } from "next"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import { FC } from "react"
 import { BiChevronLeft } from "react-icons/bi"
 import { BoxMarkdown } from "app/components/BoxMarkdown"
+import { MainFallback } from "app/components/MainFallback"
+import { MainStack } from "app/components/MainStack"
 import { StrapiPosts } from "interface/types/strapiPosts"
 
 type Props = {
@@ -27,8 +30,14 @@ type Paths = {
 }
 
 const PostPage: FC<Props> = (props) => {
+  const router = useRouter()
+
+  if (router.isFallback) {
+    return <MainFallback />
+  }
+
   return (
-    <Stack as={"main"} px={4} spacing={4} pb={4}>
+    <MainStack title={null} description={null} fileId={null}>
       <HStack justifyContent={"center"}>
         <Stack maxW={"xl"} w={"100%"} spacing={8} py={8}>
           <Stack spacing={1}>
@@ -50,7 +59,7 @@ const PostPage: FC<Props> = (props) => {
           </HStack>
         </Stack>
       </HStack>
-    </Stack>
+    </MainStack>
   )
 }
 
@@ -68,7 +77,7 @@ export const getStaticPaths: GetStaticPaths<Paths> = async () => {
     return { params: { slug: post.attributes.slug + "" } }
   })
 
-  return { paths, fallback: false }
+  return { paths, fallback: "blocking" }
 }
 
 export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {

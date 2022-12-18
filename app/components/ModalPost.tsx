@@ -18,7 +18,6 @@ import {
   WrapItem,
   Box,
 } from "@chakra-ui/react"
-import Link from "next/link"
 import { FC, useState } from "react"
 import { BiBookmark, BiEdit, BiExpand, BiHeart } from "react-icons/bi"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
@@ -48,6 +47,7 @@ type Props = {
   onClose(): void
   onLinkColor(color: string): void
   onLinkLabel(label: string): void
+  onLinkWork(): void
 }
 
 export const ModalPost: FC<Props> = (props) => {
@@ -83,15 +83,17 @@ export const ModalPost: FC<Props> = (props) => {
     >
       <ModalOverlay backdropFilter="blur(10px)" />
       <ModalContent mx={margin}>
-        <ModalHeader pl={4} pr={2} py={2}>
+        <ModalHeader pl={4} pr={2} py={4}>
           <HStack justifyContent={"space-between"}>
             <Box></Box>
             <HStack>
-              <Link href={`/works/${props.postId}`}>
-                <IconButton variant={"link"} aria-label={""}>
-                  <Icon as={BiExpand} />
-                </IconButton>
-              </Link>
+              <IconButton
+                variant={"link"}
+                aria-label={""}
+                onClick={props.onLinkWork}
+              >
+                <Icon as={BiExpand} />
+              </IconButton>
             </HStack>
           </HStack>
         </ModalHeader>

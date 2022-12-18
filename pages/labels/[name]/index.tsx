@@ -1,15 +1,24 @@
 import { BlitzPage } from "@blitzjs/auth"
 import { HStack, Stack, Text } from "@chakra-ui/react"
+import { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import UserLayout from "app/[login]/layout"
 import { CardPost } from "app/components/CardPost"
+import { MainFallback } from "app/components/MainFallback"
+import { MainStack } from "app/components/MainStack"
 import { useColumnCount } from "app/hooks/useColumnCount"
 import { usePostsQuery } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
 import { toColumnArray } from "interface/utils/toColumnArray"
 
-const LabelPage: BlitzPage = () => {
+type Props = {}
+
+type Paths = {
+  name: string
+}
+
+const LabelPage: BlitzPage<Props> = () => {
   const appContext = useContext(AppContext)
 
   const router = useRouter()
@@ -31,8 +40,16 @@ const LabelPage: BlitzPage = () => {
 
   const label = router.query.name?.toString()
 
+  if (router.isFallback) {
+    return <MainFallback />
+  }
+
   return (
-    <Stack as={"main"} px={4} spacing={4} pb={4}>
+    <MainStack
+      title={`#${label}`}
+      description={`ラベル「#${label}」に関連するAI作品があります。`}
+      fileId={null}
+    >
       <Text fontSize={"4xl"} fontWeight={"bold"}>{`#${label}`}</Text>
       <HStack maxW={"fit-content"} alignItems={"flex-start"}>
         {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
@@ -63,12 +80,30 @@ const LabelPage: BlitzPage = () => {
           </Stack>
         ))}
       </HStack>
-    </Stack>
+    </MainStack>
   )
 }
 
 LabelPage.getLayout = (page) => {
   return <UserLayout>{page}</UserLayout>
+}
+
+export const getStaticPaths: GetStaticPaths<Paths> = async () => {
+  const paths = [].map((_) => {
+    return { params: { name: "" } }
+  })
+
+  return { paths, fallback: "blocking" }
+}
+
+export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {
+  if (typeof context.params?.name === "undefined") {
+    throw new Error()
+  }
+
+  return {
+    props: {},
+  }
 }
 
 export default LabelPage

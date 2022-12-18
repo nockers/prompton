@@ -17,15 +17,13 @@ import { HomeHeader } from "app/components/HomeHeader"
 import RootError from "app/error"
 import RootLoading from "app/loading"
 import { theme } from "interface/theme"
-import { createClient } from "interface/utils/createClient"
-
-const client = createClient()
+import { client } from "interface/utils/client"
 
 export const App: FC<AppProps> = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout ?? ((page) => page)
 
   const description =
-    "Prompton（プロンプトン）はAIデザイナーを支援するポートフォリオサイトです。AIで生成した画像や動画を投稿したり依頼を引き受けることができます。"
+    "Prompton（プロンプトン）はAIデザイナーを支援する作品投稿サイトです。AIで生成した作品を投稿したり制作の依頼を引き受けられます。"
 
   useEffect(() => {
     if (typeof window === "undefined") return

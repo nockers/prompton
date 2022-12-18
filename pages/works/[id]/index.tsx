@@ -1,3 +1,4 @@
+import { NormalizedCacheObject } from "@apollo/client"
 import { BlitzPage } from "@blitzjs/auth"
 import {
   Stack,
@@ -10,23 +11,40 @@ import {
   Box,
   Button,
 } from "@chakra-ui/react"
+import { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
-import { useContext, useState } from "react"
 import UserLayout from "app/[login]/layout"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
 import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"
 import { HomePostList } from "app/components/HomePostList"
-import { usePostQuery } from "interface/__generated__/react"
-import { AppContext } from "interface/contexts/appContext"
+import { MainFallback } from "app/components/MainFallback"
+import { MainStack } from "app/components/MainStack"
+import {
+  PostDocument,
+  PostQuery,
+  PostQueryVariables,
+  usePostQuery,
+} from "interface/__generated__/react"
+import { client } from "interface/utils/client"
 
-const WorkPage: BlitzPage = () => {
-  const appContext = useContext(AppContext)
+type Props = {
+  cache: NormalizedCacheObject
+}
 
-  const [isEditable, markAsEditable] = useState(false)
+type Paths = {
+  id: string
+}
 
+const WorkPage: BlitzPage<Props> = (props) => {
   const router = useRouter()
 
-  const { data = null } = usePostQuery({
+  client.cache.restore({
+    ...client.cache.extract(),
+    ...props.cache,
+  })
+
+  const { data = null, loading } = usePostQuery({
+    canonizeResults: true,
     fetchPolicy: "cache-and-network",
     skip: typeof router.query.id === "undefined",
     variables: {
@@ -44,14 +62,20 @@ const WorkPage: BlitzPage = () => {
 
   const onOpenUser = () => {}
 
-  const label = router.query.id?.toString()
+  if (router.isFallback || loading) {
+    return <MainFallback />
+  }
 
   if (data === null || data.work === null) {
     return null
   }
 
   return (
-    <Stack as={"main"} px={4} spacing={4} pb={4}>
+    <MainStack
+      title={`${data.work.user.name}さんのAI作品`}
+      description={data.work.prompt || `${data.work.id}`}
+      fileId={data.work.fileId}
+    >
       <HStack justifyContent={"center"}>
         <Stack
           maxW={"8xl"}
@@ -115,12 +139,36 @@ const WorkPage: BlitzPage = () => {
         </Stack>
       </HStack>
       <HomePostList />
-    </Stack>
+    </MainStack>
   )
 }
 
 WorkPage.getLayout = (page) => {
   return <UserLayout>{page}</UserLayout>
+}
+
+export const getStaticPaths: GetStaticPaths<Paths> = async (a) => {
+  const paths = [].map((_) => {
+    return { params: { id: "" } }
+  })
+
+  return { paths, fallback: "blocking" }
+}
+
+export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {
+  if (typeof context.params?.id === "undefined") {
+    throw new Error()
+  }
+
+  await client.query<PostQuery, PostQueryVariables>({
+    query: PostDocument,
+    variables: { id: context.params!.id },
+  })
+
+  return {
+    props: { cache: client.cache.extract() },
+    revalidate: 60,
+  }
 }
 
 export default WorkPage

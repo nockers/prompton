@@ -41,6 +41,11 @@ export const CardPost: FC<Props> = (props) => {
     router.push(`/labels/${label}`)
   }
 
+  const onLinkWork = () => {
+    onClose()
+    router.push(`/works/${props.id}`, undefined, { scroll: true })
+  }
+
   return (
     <>
       <Button
@@ -80,6 +85,7 @@ export const CardPost: FC<Props> = (props) => {
         onClose={onClose}
         onLinkColor={onLinkColor}
         onLinkLabel={onLinkLabel}
+        onLinkWork={onLinkWork}
       />
     </>
   )

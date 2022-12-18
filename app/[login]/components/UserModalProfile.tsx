@@ -15,7 +15,7 @@ import { UserAvatarDropzone } from "app/[login]/components/UserAvatarDropzone"
 
 type Props = {
   userName: string
-  userAvatarFileId: string | null
+  userAvatarFileURL: string | null
   isOpen: boolean
   onClose(): void
   onChangeName(name: string): void
@@ -44,7 +44,7 @@ export const UserModalProfile: FC<Props> = (props) => {
           <Stack spacing={4}>
             <HStack spacing={4}>
               <UserAvatarDropzone
-                userAvatarFileId={props.userAvatarFileId}
+                avatarImageURL={props.userAvatarFileURL}
                 isLoading={false}
                 onChange={onChange}
               />

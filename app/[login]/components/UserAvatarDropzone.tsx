@@ -3,7 +3,7 @@ import { FC } from "react"
 import { useDropzone } from "react-dropzone"
 
 type Props = {
-  userAvatarFileId: string | null
+  avatarImageURL: string | null
   isLoading: boolean
   onChange(file: File): void
 }
@@ -20,11 +20,6 @@ export const UserAvatarDropzone: FC<Props> = (props) => {
     maxFiles: 1,
   })
 
-  const src =
-    props.userAvatarFileId !== null
-      ? `/api/images/${props.userAvatarFileId}?w=160&h=160`
-      : ""
-
   return (
     <Box
       {...getRootProps()}
@@ -36,7 +31,7 @@ export const UserAvatarDropzone: FC<Props> = (props) => {
       _hover={{ opacity: 0.9 }}
     >
       <input {...getInputProps()} />
-      <Avatar size={"lg"} src={src} />
+      <Avatar size={"lg"} src={props.avatarImageURL || ""} />
     </Box>
   )
 }
