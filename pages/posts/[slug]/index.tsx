@@ -57,7 +57,7 @@ const PostPage: FC<Props> = (props) => {
 export const getStaticPaths: GetStaticPaths<Paths> = async () => {
   const result = await axios<StrapiPosts>({
     method: "GET",
-    baseURL: "https://promptoncms.up.railway.app/api",
+    baseURL: process.env.STRAPI_URL,
     url: "posts",
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
@@ -78,7 +78,7 @@ export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {
 
   const result = await axios<StrapiPosts>({
     method: "GET",
-    baseURL: "https://promptoncms.up.railway.app/api",
+    baseURL: process.env.STRAPI_URL,
     url: `posts?filters[slug][$eq]=${context.params.slug}`,
     headers: {
       Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
