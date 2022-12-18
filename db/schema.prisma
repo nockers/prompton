@@ -9,27 +9,32 @@ generator client {
 }
 
 model User {
-  id              String      @id @map("id")
-  createdAt       DateTime    @default(now()) @map("created_at")
-  updatedAt       DateTime    @updatedAt @map("updated_at")
-  index           Int         @unique @default(autoincrement()) @map("index")
-  login           String?     @unique @map("login")
-  name            String      @map("name")
-  description     String      @default("") @map("description")
-  email           String?     @unique @map("email")
-  avatarFileId    String?     @map("avatar_file_id")
-  avatarImageURL  String?     @map("avatar_image_url")
-  role            UserRole    @default(USER) @map("role")
-  isDeleted       Boolean     @default(false) @map("is_deleted")
-  posts           Post[]      @relation("user_posts")
-  tokens          UserToken[] @relation("user_tokens")
-  sessions        Session[]   @relation("user_sessions")
-  configLanguage  Language    @default(EN) @map("config_language")
-  configColorMode ColorMode   @default(LIGHT) @map("config_color_mode")
-  likes           Like[]      @relation("user_likes")
-  reactions       Reaction[]  @relation("user_reactions")
-  bookmarks       Bookmark[]  @relation("user_bookmarks")
-  comments        Comment[]   @relation("user_comments")
+  id              String         @id @map("id")
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+  index           Int            @unique @default(autoincrement()) @map("index")
+  login           String?        @unique @map("login")
+  name            String         @map("name")
+  description     String         @default("") @map("description")
+  email           String?        @unique @map("email")
+  avatarFileId    String?        @map("avatar_file_id")
+  avatarImageURL  String?        @map("avatar_image_url")
+  role            UserRole       @default(USER) @map("role")
+  isDeleted       Boolean        @default(false) @map("is_deleted")
+  posts           Post[]         @relation("user_posts")
+  tokens          UserToken[]    @relation("user_tokens")
+  sessions        Session[]      @relation("user_sessions")
+  configLanguage  Language       @default(EN) @map("config_language")
+  configColorMode ColorMode      @default(LIGHT) @map("config_color_mode")
+  followees       Friendship[]   @relation("user_followers")
+  followeesCount  Int            @default(0) @map("followees_count")
+  followers       Friendship[]   @relation("user_followees")
+  followersCount  Int            @default(0) @map("followers_count")
+  likes           Like[]         @relation("user_likes")
+  reactions       Reaction[]     @relation("user_reactions")
+  bookmarks       Bookmark[]     @relation("user_bookmarks")
+  comments        Comment[]      @relation("user_comments")
+  notifications   Notification[] @relation("user_notifications")
 
   @@map("users")
 }
@@ -65,37 +70,72 @@ model UserToken {
   @@map("user_tokens")
 }
 
+model Friendship {
+  id            String         @id @map("id")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  followee      User           @relation("user_followees", fields: [followeeId], references: [id])
+  followeeId    String         @map("followee_id")
+  follower      User           @relation("user_followers", fields: [followerId], references: [id])
+  followerId    String         @map("follower_id")
+  notifications Notification[] @relation("notifications_friendship")
+
+  @@unique([followerId, followeeId])
+  @@index([followerId, createdAt])
+  @@map("friendships")
+}
+
 model Post {
-  id                 String     @id @map("id")
-  createdAt          DateTime   @default(now()) @map("created_at")
-  updatedAt          DateTime   @updatedAt @map("updated_at")
-  index              Int        @unique @default(autoincrement()) @map("index")
-  dateText           String     @map("date_text")
-  tags               Tag[]      @relation("post_tags")
-  isDeleted          Boolean    @default(false) @map("is_deleted")
-  user               User       @relation("user_posts", fields: [userId], references: [id])
-  userId             String     @map("user_id")
-  fileId             String     @map("file_id")
-  prompt             String?    @map("prompt")
-  model              Model?     @map("model")
-  body               String?    @map("body")
-  title              String?    @map("title")
-  viewCount          Int        @default(0) @map("view_count")
-  likeCount          Int        @default(0) @map("like_count")
-  likes              Like[]     @relation("post_likes")
-  reactions          Reaction[] @relation("post_reactions")
-  bookmark           Bookmark[] @relation("post_bookmarks")
-  comments           Comment[]  @relation("post_comments")
-  annotationAdult    String?    @map("annotation_adult")
-  annotationMedical  String?    @map("annotation_medical")
-  annotationRacy     String?    @map("annotation_racy")
-  annotationSpoof    String?    @map("annotation_spoof")
-  annotationViolence String?    @map("annotation_violence")
-  colors             String[]   @map("colors")
-  labels             Label[]    @relation("post_labels")
-  webColors          String[]   @map("web_colors")
+  id                 String         @id @map("id")
+  createdAt          DateTime       @default(now()) @map("created_at")
+  updatedAt          DateTime       @updatedAt @map("updated_at")
+  index              Int            @unique @default(autoincrement()) @map("index")
+  dateText           String         @map("date_text")
+  tags               Tag[]          @relation("post_tags")
+  isDeleted          Boolean        @default(false) @map("is_deleted")
+  user               User           @relation("user_posts", fields: [userId], references: [id])
+  userId             String         @map("user_id")
+  fileId             String         @map("file_id")
+  prompt             String?        @map("prompt")
+  model              Model?         @map("model")
+  body               String?        @map("body")
+  title              String?        @map("title")
+  viewCount          Int            @default(0) @map("view_count")
+  likeCount          Int            @default(0) @map("like_count")
+  likes              Like[]         @relation("post_likes")
+  reactions          Reaction[]     @relation("post_reactions")
+  bookmarks          Bookmark[]     @relation("post_bookmarks")
+  comments           Comment[]      @relation("post_comments")
+  annotationAdult    String?        @map("annotation_adult")
+  annotationMedical  String?        @map("annotation_medical")
+  annotationRacy     String?        @map("annotation_racy")
+  annotationSpoof    String?        @map("annotation_spoof")
+  annotationViolence String?        @map("annotation_violence")
+  colors             String[]       @map("colors")
+  labels             Label[]        @relation("post_labels")
+  webColors          String[]       @map("web_colors")
+  notifications      Notification[] @relation("notifications_post")
 
   @@map("posts")
+}
+
+model Notification {
+  createdAt    DateTime         @default(now()) @map("created_at")
+  friendship   Friendship?      @relation("notifications_friendship", fields: [friendshipId], references: [id])
+  friendshipId String?          @map("friendship_id")
+  id           String           @id @map("id")
+  isRead       Boolean          @default(false) @map("is_read")
+  like         Like?            @relation("notifications_like", fields: [likeId], references: [id])
+  likeId       String?          @map("like_id")
+  post         Post?            @relation("notifications_post", fields: [postId], references: [id])
+  postId       String?          @map("post_id")
+  type         NotificationType @map("type")
+  uniqueId     String           @map("unique_id")
+  user         User?            @relation("user_notifications", fields: [userId], references: [id])
+  userId       String?          @map("user_id")
+
+  @@unique([userId, type, uniqueId])
+  @@index([userId, createdAt])
+  @@map("notifications")
 }
 
 model Label {
@@ -109,12 +149,13 @@ model Label {
 }
 
 model Like {
-  id        String   @id @map("id")
-  createdAt DateTime @default(now()) @map("created_at")
-  post      Post     @relation("post_likes", fields: [postId], references: [id])
-  postId    String   @map("post_id")
-  user      User     @relation("user_likes", fields: [userId], references: [id])
-  userId    String   @map("user_id")
+  id            String         @id @map("id")
+  createdAt     DateTime       @default(now()) @map("created_at")
+  post          Post           @relation("post_likes", fields: [postId], references: [id])
+  postId        String         @map("post_id")
+  user          User           @relation("user_likes", fields: [userId], references: [id])
+  userId        String         @map("user_id")
+  notifications Notification[] @relation("notifications_like")
 
   @@unique([userId, postId])
   @@index([userId, createdAt])
@@ -185,6 +226,16 @@ model Event {
   userId       String?  @map("user_id")
 
   @@map("events")
+}
+
+enum NotificationType {
+  FOLLOW
+  FRIENDSHIP
+  LIKE
+  REPLY
+  QUOTATION
+
+  @@map("notification_type")
 }
 
 enum UserRole {
