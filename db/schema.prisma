@@ -81,6 +81,7 @@ model Post {
   body               String?    @map("body")
   title              String?    @map("title")
   viewCount          Int        @default(0) @map("view_count")
+  likeCount          Int        @default(0) @map("like_count")
   likes              Like[]     @relation("post_likes")
   reactions          Reaction[] @relation("post_reactions")
   bookmark           Bookmark[] @relation("post_bookmarks")
