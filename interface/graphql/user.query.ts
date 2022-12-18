@@ -16,7 +16,7 @@ export default gql`
         title
         fileId
         prompt
-        likeCount
+        likesCount
         annotationAdult
         annotationMedical
         annotationViolence

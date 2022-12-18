@@ -36,4 +36,10 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
       where: { isDeleted: false },
     })
   },
+  followersCount(parent) {
+    return db.friendship.count({ where: { followeeId: parent.id } })
+  },
+  followeesCount(parent) {
+    return db.friendship.count({ where: { followerId: parent.id } })
+  },
 }

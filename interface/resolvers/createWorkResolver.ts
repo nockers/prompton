@@ -7,12 +7,12 @@ import {
   RequireFields,
 } from "interface/__generated__/node"
 import { CreatePostCommand } from "service"
-import { Context } from "types"
+import { ApolloContext } from "types"
 
 export const createWorkResolver = async (
   _: unknown,
   args: RequireFields<MutationCreateWorkArgs, "input">,
-  ctx: Context,
+  ctx: ApolloContext,
 ) => {
   if (ctx.currentUser === null) {
     throw new GraphQLError("ERROR", {

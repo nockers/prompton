@@ -6,6 +6,7 @@ import { loadSchemaSync } from "@graphql-tools/load"
 import { addResolversToSchema } from "@graphql-tools/schema"
 import { cert, getApps, initializeApp } from "firebase-admin/app"
 import { getAuth } from "firebase-admin/auth"
+import { sentryPlugin } from "interface/plugins/sentryPlugin"
 import { resolvers } from "interface/resolvers/resolver"
 
 if (getApps().length === 0) {
@@ -29,6 +30,7 @@ const schema = loadSchemaSync("interface/schema.graphql", {
 const server = new ApolloServer({
   schema: addResolversToSchema({ schema, resolvers }),
   introspection: true,
+  plugins: [sentryPlugin],
 })
 
 if (getApps().length === 0) {

@@ -3,15 +3,15 @@ import { GraphQLError } from "graphql"
 import { container } from "tsyringe"
 import db from "db"
 import {
-  MutationUpdateWorkArgs,
+  MutationCreatePostLikeArgs,
   RequireFields,
 } from "interface/__generated__/node"
-import { UpdatePostCommand } from "service"
+import { CreatePostLikeCommand } from "service"
 import { ApolloContext } from "types"
 
-export const updateWorkResolver = async (
+export const createPostLikeResolver = async (
   _: unknown,
-  args: RequireFields<MutationUpdateWorkArgs, "input">,
+  args: RequireFields<MutationCreatePostLikeArgs, "input">,
   ctx: ApolloContext,
 ) => {
   if (ctx.currentUser === null) {
@@ -20,12 +20,11 @@ export const updateWorkResolver = async (
     })
   }
 
-  const command = container.resolve(UpdatePostCommand)
+  const command = container.resolve(CreatePostLikeCommand)
 
   const output = await command.execute({
     userId: ctx.currentUser.uid,
     postId: args.input.workId,
-    postPrompt: args.input.prompt,
   })
 
   if (output instanceof Error) {
@@ -34,7 +33,5 @@ export const updateWorkResolver = async (
     })
   }
 
-  return db.post.findUnique({
-    where: { id: args.input.workId },
-  })
+  return db.post.findUnique({ where: { id: args.input.workId } })
 }

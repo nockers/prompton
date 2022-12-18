@@ -24,6 +24,9 @@ import {
   PostDocument,
   PostQuery,
   PostQueryVariables,
+  useCreatePostLikeMutation,
+  useDeletePostLikeMutation,
+  useFollowUserMutation,
   usePostQuery,
 } from "interface/__generated__/react"
 import { client } from "interface/utils/client"
@@ -50,6 +53,12 @@ const WorkPage: BlitzPage<Props> = (props) => {
       id: router.query.id?.toString() ?? "",
     },
   })
+
+  const [createPostLike] = useCreatePostLikeMutation()
+
+  const [deletePostLike] = useDeletePostLikeMutation()
+
+  const [followUser] = useFollowUserMutation()
 
   const onLinkColor = (color: string) => {
     router.push(`/colors/${color.replace("#", "")}`)
@@ -79,6 +88,36 @@ const WorkPage: BlitzPage<Props> = (props) => {
       "sharewindow",
       "width=550, height=450, personalbar=0, toolbar=0, scrollbars=1, resizable=!",
     )
+  }
+
+  const onCreateLike = async () => {
+    try {
+      await createPostLike({
+        variables: { input: { workId: data!.work!.id } },
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const onDeleteLike = async () => {
+    try {
+      await deletePostLike({
+        variables: { input: { workId: data!.work!.id } },
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const onFollowUser = async () => {
+    try {
+      await followUser({
+        variables: { input: { userId: data!.work!.user!.id } },
+      })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   if (router.isFallback) {
@@ -120,11 +159,17 @@ const WorkPage: BlitzPage<Props> = (props) => {
               <Box flex={1} onClick={onOpenUser}>
                 <Text fontWeight={"bold"}>{data.work.user.name}</Text>
               </Box>
-              <Button size={"sm"}>{"フォロー"}</Button>
+              <Button size={"sm"} onClick={onFollowUser}>
+                {"フォロー"}
+              </Button>
             </HStack>
             <HStack spacing={4}>
               <Button flex={1}>{"ブックマーク"}</Button>
-              <Button flex={1}>{"いいね"}</Button>
+              <Button flex={1} onClick={onCreateLike}>
+                {0 < data.work.likesCount
+                  ? `いいね +${data.work.likesCount}`
+                  : "いいね"}
+              </Button>
             </HStack>
             <Box bg={"blackAlpha.400"} p={4} rounded={"lg"}>
               <Text>{data.work.prompt ?? "No prompt"}</Text>

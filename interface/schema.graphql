@@ -23,7 +23,7 @@ type WorkNode implements Node {
   fileId: String!
   prompt: String
   model: String
-  likeCount: Int!
+  likesCount: Int!
   user: UserNode!
   colors: [String!]!
   webColors: [String!]!
@@ -56,6 +56,8 @@ type UserNode implements Node {
   headerImageId: String
   biography: String!
   works: [WorkNode!]!
+  followersCount: Int
+  followeesCount: Int
 }
 
 type ReactionNode implements Node {
@@ -94,7 +96,10 @@ type Mutation {
   updateWork(input: UpdateWorkInput!): WorkNode!
   createUser(input: CreateUserInput!): Boolean
   updateUser(input: UpdateUserInput!): Boolean
-  # addReaction(input: AddReactionInput!): WorkNode!
+  createPostLike(input: CreatePostLikeInput!): WorkNode
+  deletePostLike(input: DeletePostLikeInput!): WorkNode
+  followUser(input: FollowUserInput!): UserNode
+  unfollowUser(input: UnfollowUserInput!): UserNode
 }
 
 input CreateWorkInput {
@@ -104,6 +109,22 @@ input CreateWorkInput {
 input UpdateWorkInput {
   workId: String!
   prompt: String
+}
+
+input CreatePostLikeInput {
+  workId: String!
+}
+
+input DeletePostLikeInput {
+  workId: String!
+}
+
+input FollowUserInput {
+  userId: String!
+}
+
+input UnfollowUserInput {
+  userId: String!
 }
 
 input AddReactionInput {

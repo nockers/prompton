@@ -26,6 +26,6 @@
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "cSpell.words": ["followee", "prompton"],
+  "cSpell.words": ["followee", "followees", "prompton", "unfollow"],
   "typescript.enablePromptUseWorkspaceTsdk": true
 }

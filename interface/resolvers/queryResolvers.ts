@@ -27,7 +27,7 @@ export const QueryResolvers = {
       extensions: { code: ApolloServerErrorCode.BAD_REQUEST },
     })
   },
-  works(_: unknown, args: Partial<QueryWorksArgs>) {
+  async works(_: unknown, args: Partial<QueryWorksArgs>) {
     if (typeof args.where?.labelName === "string") {
       return db.post.findMany({
         orderBy: { createdAt: "desc" },

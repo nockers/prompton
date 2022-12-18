@@ -7,7 +7,7 @@ export default gql`
       createdAt
       title
       fileId
-      likeCount
+      likesCount
     }
   }
 `

@@ -4,52 +4,52 @@ import { WorkNode } from "interface/__generated__/node"
 import { PrismaResolvers } from "interface/resolvers/types/prismaResolvers"
 
 export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
-  id(parent: Post) {
+  id(parent) {
     return parent.id
   },
-  createdAt(parent: Post) {
+  createdAt(parent) {
     return Math.floor(parent.createdAt.getTime() / 1000)
   },
-  title(parent: Post) {
+  title(parent) {
     return parent.title
   },
-  fileId(parent: Post) {
+  fileId(parent) {
     return parent.fileId
   },
-  prompt(parent: Post) {
+  prompt(parent) {
     return parent.prompt
   },
-  model(parent: Post) {
+  model(parent) {
     return parent.model
   },
-  likeCount() {
-    return 0
+  likesCount(parent) {
+    return parent.likesCount
   },
-  colors(parent: Post) {
+  colors(parent) {
     return parent.colors
   },
-  webColors(parent: Post) {
+  webColors(parent) {
     return parent.webColors
   },
-  annotationAdult(parent: Post) {
+  annotationAdult(parent) {
     return parent.annotationAdult
   },
-  annotationMedical(parent: Post) {
+  annotationMedical(parent) {
     return parent.annotationMedical
   },
-  annotationRacy(parent: Post) {
+  annotationRacy(parent) {
     return parent.annotationRacy
   },
-  annotationSpoof(parent: Post) {
+  annotationSpoof(parent) {
     return parent.annotationSpoof
   },
-  annotationViolence(parent: Post) {
+  annotationViolence(parent) {
     return parent.annotationViolence
   },
-  async user(parent: Post) {
+  user(parent) {
     return db.post.findUnique({ where: { id: parent.id } }).user()
   },
-  async labels(parent: Post) {
+  labels(parent) {
     return db.post.findUnique({ where: { id: parent.id } }).labels()
   },
 }

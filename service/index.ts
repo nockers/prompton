@@ -1,4 +1,6 @@
+export * from "./friendship"
+export * from "./label"
+export * from "./like"
 export * from "./post"
 export * from "./storage"
-export * from "./label"
 export * from "./user"
