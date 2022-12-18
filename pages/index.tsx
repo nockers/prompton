@@ -5,7 +5,7 @@ import { MainStack } from "app/components/MainStack"
 
 const RootPage: BlitzPage = () => {
   return (
-    <MainStack title={null} description={null} fileId={null}>
+    <MainStack spacing={0} title={null} description={null} fileId={null}>
       <HomeLabelList />
       <HomePostList />
     </MainStack>

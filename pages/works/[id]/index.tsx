@@ -19,6 +19,7 @@ import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"
 import { HomePostList } from "app/components/HomePostList"
 import { MainFallback } from "app/components/MainFallback"
 import { MainStack } from "app/components/MainStack"
+import { ShareButtonTwitter } from "app/components/ShareButtonTwitter"
 import {
   PostDocument,
   PostQuery,
@@ -59,6 +60,26 @@ const WorkPage: BlitzPage<Props> = (props) => {
   }
 
   const onOpenUser = () => {}
+
+  const onShareWithTwitter = async () => {
+    const text = `${data?.work?.user.name}さんの作品`
+    if (window.navigator.share) {
+      await window.navigator.share({
+        title: text,
+        url: location.href,
+      })
+      return
+    }
+    const search = new URLSearchParams([
+      ["text", text],
+      ["url", location.href],
+    ])
+    window.open(
+      "http://twitter.com/share?" + search.toString(),
+      "sharewindow",
+      "width=550, height=450, personalbar=0, toolbar=0, scrollbars=1, resizable=!",
+    )
+  }
 
   if (router.isFallback) {
     return <MainFallback />
@@ -133,6 +154,9 @@ const WorkPage: BlitzPage<Props> = (props) => {
                 ))}
               </Wrap>
             </Stack>
+            <Box>
+              <ShareButtonTwitter onClick={onShareWithTwitter} />
+            </Box>
           </Stack>
         </Stack>
       </HStack>

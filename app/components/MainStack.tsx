@@ -6,6 +6,7 @@ type Props = {
   title: string | null
   description: string | null
   fileId: string | null
+  spacing?: number
   children: ReactNode
 }
 
@@ -48,7 +49,7 @@ export const MainStack: FC<Props> = (props) => {
         <meta name={"twitter:description"} content={ogDescription} />
         <meta name={"twitter:image"} content={twitterImageURL} />
       </Head>
-      <Stack as={"main"} px={4} spacing={4} pb={4}>
+      <Stack as={"main"} px={4} spacing={props.spacing ?? 4} pb={4}>
         {props.children}
       </Stack>
     </>
