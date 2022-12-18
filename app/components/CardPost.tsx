@@ -1,4 +1,12 @@
-import { Image, useDisclosure, Button } from "@chakra-ui/react"
+import {
+  Image,
+  useDisclosure,
+  Button,
+  Box,
+  Avatar,
+  Text,
+  HStack,
+} from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { FC } from "react"
 import { ModalPost } from "app/components/ModalPost"
@@ -56,12 +64,37 @@ export const CardPost: FC<Props> = (props) => {
         p={1}
         onClick={onOpen}
       >
-        <Image
-          w={"100%"}
-          alt={""}
-          src={`/api/images/${props.postFileId}?w=512`}
-          borderRadius={4}
-        />
+        <Box position={"relative"}>
+          <Image
+            w={"100%"}
+            alt={""}
+            src={`/api/images/${props.postFileId}?w=512`}
+            borderRadius={4}
+          />
+          <Box
+            position={"absolute"}
+            bottom={0}
+            left={0}
+            w={"100%"}
+            maxW={40}
+            p={2}
+            backdropFilter={"blur(16px) saturate(2) brightness(0.8)"}
+            borderBottomLeftRadius={"sm"}
+            borderTopRightRadius={"lg"}
+            overflow={"hidden"}
+          >
+            <HStack spacing={2}>
+              <Avatar src={props.userAvatarImageURL ?? ""} size={"sm"} />
+              <Text
+                fontSize={"sm"}
+                overflow={"hidden"}
+                textOverflow={"ellipsis"}
+              >
+                {props.userName}
+              </Text>
+            </HStack>
+          </Box>
+        </Box>
       </Button>
       <ModalPost
         postId={props.id}
