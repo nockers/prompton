@@ -3,10 +3,15 @@ import { AppProps } from "@blitzjs/next"
 import { ChakraProvider } from "@chakra-ui/react"
 import { init } from "@sentry/browser"
 import { ErrorBoundary } from "@sentry/react"
-import { getAnalytics, setAnalyticsCollectionEnabled } from "firebase/analytics"
+import {
+  getAnalytics,
+  logEvent,
+  setAnalyticsCollectionEnabled,
+} from "firebase/analytics"
 import { getApps, initializeApp } from "firebase/app"
 import Head from "next/head"
-import { FC, Suspense } from "react"
+import { Router } from "next/router"
+import { FC, Suspense, useEffect } from "react"
 import { AppContextProvider } from "app/components/AuthContextProvider"
 import { HomeHeader } from "app/components/HomeHeader"
 import RootError from "app/error"
@@ -21,6 +26,23 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
 
   const description =
     "Prompton（プロンプトン）は開発中のAIデザイナーを支援するポートフォリオサイトです。AIで生成した画像や動画を投稿したり依頼を引き受けることができます。"
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    if (process.env.NODE_ENV !== "production") return
+    const routeChangeComplete = () => {
+      if (getApps().length === 0) return
+      logEvent(getAnalytics(), "page_view", {
+        page_path: location.pathname,
+        page_title: location.pathname,
+      })
+    }
+    Router.events.on("routeChangeComplete", routeChangeComplete)
+    routeChangeComplete()
+    return () => {
+      Router.events.off("routeChangeComplete", routeChangeComplete)
+    }
+  }, [])
 
   return (
     <ApolloProvider client={client}>
