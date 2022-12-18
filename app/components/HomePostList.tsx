@@ -1,6 +1,6 @@
 import { BlitzPage } from "@blitzjs/auth"
 import { HStack, Stack } from "@chakra-ui/react"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { CardPost } from "app/components/CardPost"
 import { useColumnCount } from "app/hooks/useColumnCount"
 import { usePostsQuery } from "interface/__generated__/react"
@@ -10,7 +10,7 @@ import { toColumnArray } from "interface/utils/toColumnArray"
 export const HomePostList: BlitzPage = () => {
   const appContext = useContext(AppContext)
 
-  const { data } = usePostsQuery({
+  const { data, refetch } = usePostsQuery({
     fetchPolicy: "cache-and-network",
     variables: {
       offset: 0,
@@ -20,6 +20,18 @@ export const HomePostList: BlitzPage = () => {
   })
 
   const columnCount = useColumnCount()
+
+  /**
+   * https://github.com/apollographql/apollo-client/issues/9819
+   */
+  useEffect(() => {
+    const refetchQueryInterval = setInterval(() => {
+      refetch()
+    }, 8000)
+    return () => {
+      clearInterval(refetchQueryInterval)
+    }
+  }, [])
 
   return (
     <HStack justifyContent={"center"}>

@@ -5,6 +5,7 @@ export default gql`
     deletePostLike(input: $input) {
       id
       likesCount
+      isLike
     }
   }
 `

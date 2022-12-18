@@ -5,6 +5,7 @@ export default gql`
     createPostLike(input: $input) {
       id
       likesCount
+      isLike
     }
   }
 `

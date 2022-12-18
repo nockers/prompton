@@ -48,6 +48,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
 
   const { data = null } = usePostQuery({
     fetchPolicy: "cache-and-network",
+    pollInterval: 4000,
     skip: typeof router.query.id === "undefined",
     variables: {
       id: router.query.id?.toString() ?? "",
@@ -165,7 +166,11 @@ const WorkPage: BlitzPage<Props> = (props) => {
             </HStack>
             <HStack spacing={4}>
               <Button flex={1}>{"ブックマーク"}</Button>
-              <Button flex={1} onClick={onCreateLike}>
+              <Button
+                flex={1}
+                onClick={data.work.isLike ? onDeleteLike : onCreateLike}
+                colorScheme={data.work.isLike ? "blue" : "gray"}
+              >
                 {0 < data.work.likesCount
                   ? `いいね +${data.work.likesCount}`
                   : "いいね"}

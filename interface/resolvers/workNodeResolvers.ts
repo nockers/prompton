@@ -52,4 +52,16 @@ export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
   labels(parent) {
     return db.post.findUnique({ where: { id: parent.id } }).labels()
   },
+  async isLike(parent, _, ctx) {
+    if (ctx.currentUser === null) return false
+    const like = await db.like.findUnique({
+      where: {
+        userId_postId: {
+          userId: ctx.currentUser!.uid,
+          postId: parent.id,
+        },
+      },
+    })
+    return like !== null
+  },
 }

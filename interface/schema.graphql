@@ -1,5 +1,4 @@
 type Query {
-  # viewer: Viewer
   works(offset: Int, limit: Int, where: WorksWhereInput): [WorkNode!]!
   work(id: ID!): WorkNode
   user(id: ID!): UserNode
@@ -33,6 +32,7 @@ type WorkNode implements Node {
   annotationSpoof: String
   annotationViolence: String
   labels: [LabelNode!]!
+  isLike: Boolean!
 }
 
 type WorkEdge implements Edge {
@@ -58,6 +58,8 @@ type UserNode implements Node {
   works: [WorkNode!]!
   followersCount: Int
   followeesCount: Int
+  isFollower: Boolean!
+  isFollowee: Boolean!
 }
 
 type ReactionNode implements Node {

@@ -42,4 +42,28 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
   followeesCount(parent) {
     return db.friendship.count({ where: { followerId: parent.id } })
   },
+  async isFollower(parent, _, ctx) {
+    if (ctx.currentUser === null) return false
+    const friendships = await db.friendship.findUnique({
+      where: {
+        followerId_followeeId: {
+          followerId: ctx.currentUser!.uid,
+          followeeId: parent.id,
+        },
+      },
+    })
+    return friendships !== null
+  },
+  async isFollowee(parent, _, ctx) {
+    if (ctx.currentUser === null) return false
+    const friendships = await db.friendship.findUnique({
+      where: {
+        followerId_followeeId: {
+          followerId: parent.id,
+          followeeId: ctx.currentUser!.uid,
+        },
+      },
+    })
+    return friendships !== null
+  },
 }
