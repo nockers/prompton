@@ -5,7 +5,7 @@ import { getApps } from "firebase/app"
 import { getAuth, getIdToken } from "firebase/auth"
 
 const httpLink = createHttpLink({
-  uri: "http://localhost:3000/api/graphql",
+  uri: process.env.GRAPHQL_ENDPOINT,
   credentials: "same-origin",
 })
 
