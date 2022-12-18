@@ -17,16 +17,18 @@ export const MainStack: FC<Props> = (props) => {
   const title =
     props.title !== null ? `${props.title} - ${appName}` : defaultTitle
 
-  const defaultOgImageURL = "https://prompton.io/facebook.png"
+  const ogTitle = props.title !== null ? props.title : defaultTitle
+
+  const defaultOgImageURL = `${process.env.NEXT_PUBLIC_URL}/facebook.png`
 
   const ogImageURL =
     props.fileId !== null
-      ? `/api/images/${props.fileId}?w=1024&h=630`
+      ? `${process.env.NEXT_PUBLIC_URL}/api/images/${props.fileId}?w=1024&h=630`
       : defaultOgImageURL
 
   const twitterImageURL =
     props.fileId !== null
-      ? `/api/images/${props.fileId}?w=300&h=157`
+      ? `${process.env.NEXT_PUBLIC_URL}/api/images/${props.fileId}?w=300&h=157`
       : defaultOgImageURL
 
   const defaultDescription =
@@ -38,7 +40,7 @@ export const MainStack: FC<Props> = (props) => {
     <>
       <Head>
         <title>{title}</title>
-        <meta property="og:title" content={title} />
+        <meta property="og:title" content={ogTitle} />
         <meta property="og:description" content={ogDescription} />
         <meta property="og:image" content={ogImageURL} />
         <meta name={"twitter:description"} content={ogDescription} />
