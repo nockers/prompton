@@ -12,6 +12,8 @@ export const Document: FC = () => {
       <Head>
         <link rel={"preconnect"} href={"https://fonts.gstatic.com"} />
         <link href={href} rel={"stylesheet"} />
+        <link rel={"icon"} href={"/favicon.ico"} />
+        <link rel={"manifest"} href={"/manifest.json"} />
       </Head>
       <body>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
