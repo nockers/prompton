@@ -38,13 +38,11 @@ type Paths = {
 const WorkPage: BlitzPage<Props> = (props) => {
   const router = useRouter()
 
-  client.cache.restore({
-    ...client.cache.extract(),
-    ...props.cache,
-  })
+  if (typeof window !== "undefined") {
+    client.restore({ ...props.cache, ...client.extract() })
+  }
 
   const { data = null, loading } = usePostQuery({
-    canonizeResults: true,
     fetchPolicy: "cache-and-network",
     skip: typeof router.query.id === "undefined",
     variables: {
@@ -152,7 +150,7 @@ export const getStaticPaths: GetStaticPaths<Paths> = async (a) => {
     return { params: { id: "" } }
   })
 
-  return { paths, fallback: "blocking" }
+  return { paths, fallback: true }
 }
 
 export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {

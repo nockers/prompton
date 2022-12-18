@@ -93,7 +93,7 @@ export const getStaticPaths: GetStaticPaths<Paths> = async () => {
     return { params: { name: "" } }
   })
 
-  return { paths, fallback: "blocking" }
+  return { paths, fallback: true }
 }
 
 export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {

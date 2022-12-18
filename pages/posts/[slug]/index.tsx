@@ -77,7 +77,7 @@ export const getStaticPaths: GetStaticPaths<Paths> = async () => {
     return { params: { slug: post.attributes.slug + "" } }
   })
 
-  return { paths, fallback: "blocking" }
+  return { paths, fallback: true }
 }
 
 export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {
