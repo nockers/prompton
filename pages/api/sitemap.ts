@@ -26,7 +26,7 @@ const apiHandler: NextApiHandler = async (req, resp) => {
     })
 
     const labelURLs = labels.map((label) => {
-      return `${process.env.NEXT_PUBLIC_APP_URL}/labels/${label.id}`
+      return `${process.env.NEXT_PUBLIC_APP_URL}/labels/${label.name}`
     })
 
     const userURLs = users.map((user) => {
