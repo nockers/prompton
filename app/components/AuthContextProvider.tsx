@@ -1,6 +1,8 @@
 "use client"
-import { getAuth, onAuthStateChanged, User } from "firebase/auth"
-import { FC, ReactNode, useEffect, useState } from "react"
+import type { User } from "firebase/auth"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
+import type { FC, ReactNode } from "react"
+import { useEffect, useState } from "react"
 import { AppContext } from "interface/contexts/appContext"
 
 type Props = {

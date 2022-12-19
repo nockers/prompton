@@ -1,5 +1,5 @@
 import { Button, Icon } from "@chakra-ui/react"
-import { FC } from "react"
+import type { FC } from "react"
 import { SiTwitter } from "react-icons/si"
 
 type Props = {

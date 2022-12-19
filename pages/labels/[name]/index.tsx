@@ -1,6 +1,6 @@
-import { BlitzPage } from "@blitzjs/auth"
+import type { BlitzPage } from "@blitzjs/auth"
 import { HStack, Stack, Text } from "@chakra-ui/react"
-import { GetStaticPaths, GetStaticProps } from "next"
+import type { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import UserLayout from "app/[login]/layout"
@@ -89,7 +89,7 @@ LabelPage.getLayout = (page) => {
 }
 
 export const getStaticPaths: GetStaticPaths<Paths> = async () => {
-  const paths = [].map((_) => {
+  const paths = [].map(() => {
     return { params: { name: "" } }
   })
 

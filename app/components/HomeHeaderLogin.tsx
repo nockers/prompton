@@ -1,6 +1,7 @@
 import { Button, HStack, Icon, IconButton } from "@chakra-ui/react"
 import Link from "next/link"
-import { FC, useContext } from "react"
+import type { FC } from "react"
+import { useContext } from "react"
 import { BiCog } from "react-icons/bi"
 import { FcGoogle } from "react-icons/fc"
 import { AppContext } from "interface/contexts/appContext"

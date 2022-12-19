@@ -8,15 +8,15 @@ import {
   Text,
 } from "@chakra-ui/react"
 import axios from "axios"
-import { GetStaticPaths, GetStaticProps } from "next"
+import type { GetStaticPaths, GetStaticProps } from "next"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { FC } from "react"
+import type { FC } from "react"
 import { BiChevronLeft } from "react-icons/bi"
 import { BoxMarkdown } from "app/components/BoxMarkdown"
 import { MainFallback } from "app/components/MainFallback"
 import { MainStack } from "app/components/MainStack"
-import { StrapiPosts } from "interface/types/strapiPosts"
+import type { StrapiPosts } from "interface/types/strapiPosts"
 
 type Props = {
   title: string

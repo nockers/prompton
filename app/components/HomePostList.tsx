@@ -1,4 +1,4 @@
-import { BlitzPage } from "@blitzjs/auth"
+import type { BlitzPage } from "@blitzjs/auth"
 import { HStack, Stack } from "@chakra-ui/react"
 import { useContext, useEffect } from "react"
 import { CardPost } from "app/components/CardPost"
@@ -31,6 +31,7 @@ export const HomePostList: BlitzPage = () => {
     return () => {
       clearInterval(refetchQueryInterval)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

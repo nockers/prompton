@@ -1,5 +1,5 @@
 import { Stack, Text, HStack, Avatar, Button } from "@chakra-ui/react"
-import { FC } from "react"
+import type { FC } from "react"
 import { BiEdit } from "react-icons/bi"
 
 type Props = {

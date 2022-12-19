@@ -1,10 +1,10 @@
 import { Button, HStack, Stack, Text } from "@chakra-ui/react"
 import axios from "axios"
-import { GetStaticProps } from "next"
+import type { GetStaticProps } from "next"
 import Link from "next/link"
-import { FC } from "react"
+import type { FC } from "react"
 import { MainStack } from "app/components/MainStack"
-import { StrapiPosts } from "interface/types/strapiPosts"
+import type { StrapiPosts } from "interface/types/strapiPosts"
 
 type Props = {
   posts: {

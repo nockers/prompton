@@ -1,7 +1,7 @@
 import { Box, Button, useToast } from "@chakra-ui/react"
 import { getAuth, signOut } from "firebase/auth"
 import { useRouter } from "next/router"
-import { FC } from "react"
+import type { FC } from "react"
 import { MainStack } from "app/components/MainStack"
 
 const SettingsPage: FC = () => {

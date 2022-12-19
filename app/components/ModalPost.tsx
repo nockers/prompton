@@ -18,7 +18,8 @@ import {
   WrapItem,
   Box,
 } from "@chakra-ui/react"
-import { FC, useState } from "react"
+import type { FC } from "react"
+import { useState } from "react"
 import { BiBookmark, BiEdit, BiExpand, BiHeart } from "react-icons/bi"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
 import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"

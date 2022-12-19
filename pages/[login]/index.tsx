@@ -1,6 +1,6 @@
-import { BlitzPage } from "@blitzjs/auth"
+import type { BlitzPage } from "@blitzjs/auth"
 import { Box, HStack, Stack, useDisclosure, useToast } from "@chakra-ui/react"
-import { GetStaticPaths, GetStaticProps } from "next"
+import type { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import { useContext, useState } from "react"
 import { UploadDropzone } from "app/[login]/components/UploadDropzone"
@@ -224,7 +224,7 @@ UserPage.getLayout = (page) => {
 }
 
 export const getStaticPaths: GetStaticPaths<Paths> = async () => {
-  const paths = [].map((_) => {
+  const paths = [].map(() => {
     return { params: { login: "" } }
   })
 

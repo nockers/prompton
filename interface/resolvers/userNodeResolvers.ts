@@ -1,6 +1,7 @@
-import db, { User } from "db"
-import { UserNode } from "interface/__generated__/node"
-import { PrismaResolvers } from "interface/resolvers/types/prismaResolvers"
+import type { User } from "db"
+import db from "db"
+import type { UserNode } from "interface/__generated__/node"
+import type { PrismaResolvers } from "interface/resolvers/types/prismaResolvers"
 
 export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
   id(parent) {

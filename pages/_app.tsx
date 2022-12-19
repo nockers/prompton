@@ -1,5 +1,5 @@
 import { ApolloProvider } from "@apollo/client"
-import { AppProps } from "@blitzjs/next"
+import type { AppProps } from "@blitzjs/next"
 import { ChakraProvider } from "@chakra-ui/react"
 import { init } from "@sentry/browser"
 import { ErrorBoundary } from "@sentry/react"
@@ -11,7 +11,8 @@ import {
 import { getApps, initializeApp } from "firebase/app"
 import Head from "next/head"
 import { Router } from "next/router"
-import { FC, Suspense, useEffect } from "react"
+import type { FC } from "react"
+import { Suspense, useEffect } from "react"
 import { AppContextProvider } from "app/components/AuthContextProvider"
 import { HomeHeader } from "app/components/HomeHeader"
 import RootError from "app/error"
@@ -21,9 +22,6 @@ import { client } from "interface/utils/client"
 
 export const App: FC<AppProps> = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout ?? ((page) => page)
-
-  const description =
-    "Prompton（プロンプトン）はAIアーティストを支援する作品投稿サイトです。AIで生成した作品を投稿したり制作の依頼を引き受けられます。"
 
   useEffect(() => {
     if (typeof window === "undefined") return

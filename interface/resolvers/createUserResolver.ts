@@ -2,7 +2,7 @@ import { ApolloServerErrorCode } from "@apollo/server/errors"
 import { getAuth } from "firebase-admin/auth"
 import { GraphQLError } from "graphql"
 import { container } from "tsyringe"
-import { MutationResolvers } from "interface/__generated__/node"
+import type { MutationResolvers } from "interface/__generated__/node"
 import { CreateUserCommand } from "service"
 
 export const createUserResolver: MutationResolvers["createUser"] = async (

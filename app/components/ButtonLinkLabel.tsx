@@ -1,5 +1,5 @@
 import { Button, Text } from "@chakra-ui/react"
-import { FC } from "react"
+import type { FC } from "react"
 
 type Props = {
   label: string

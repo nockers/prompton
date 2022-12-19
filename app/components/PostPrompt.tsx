@@ -1,8 +1,8 @@
 import { Text } from "@chakra-ui/react"
-import { FC } from "react"
+import type { FC } from "react"
 
 type Props = {}
 
-export const PostPrompt: FC<Props> = (props) => {
+export const PostPrompt: FC<Props> = () => {
   return <Text>{"Made in Abyss, comic, Ocean, Kelp, full body"}</Text>
 }

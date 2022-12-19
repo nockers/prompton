@@ -1,4 +1,4 @@
-import { NotificationEntity } from "core"
+import type { NotificationEntity } from "core"
 import db from "db"
 import { catchError } from "interface/utils/catchError"
 

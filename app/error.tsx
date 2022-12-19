@@ -1,5 +1,5 @@
 "use client"
-import { FC } from "react"
+import type { FC } from "react"
 import { HomeLogin } from "app/components/HomeLogin"
 import { UnauthorizedException } from "infrastructure/exceptions"
 

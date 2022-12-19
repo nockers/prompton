@@ -1,5 +1,5 @@
 import { Box, Text, HStack, Icon, Spinner } from "@chakra-ui/react"
-import { FC } from "react"
+import type { FC } from "react"
 import { useDropzone } from "react-dropzone"
 import { BiCloudSnow, BiCloudUpload } from "react-icons/bi"
 

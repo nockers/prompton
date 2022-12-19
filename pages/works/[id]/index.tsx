@@ -1,5 +1,5 @@
-import { NormalizedCacheObject } from "@apollo/client"
-import { BlitzPage } from "@blitzjs/auth"
+import type { NormalizedCacheObject } from "@apollo/client"
+import type { BlitzPage } from "@blitzjs/auth"
 import {
   Stack,
   Image,
@@ -11,7 +11,7 @@ import {
   Box,
   Button,
 } from "@chakra-ui/react"
-import { GetStaticPaths, GetStaticProps } from "next"
+import type { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import UserLayout from "app/[login]/layout"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
@@ -20,10 +20,12 @@ import { HomePostList } from "app/components/HomePostList"
 import { MainFallback } from "app/components/MainFallback"
 import { MainStack } from "app/components/MainStack"
 import { ShareButtonTwitter } from "app/components/ShareButtonTwitter"
-import {
-  PostDocument,
+import type {
   PostQuery,
   PostQueryVariables,
+} from "interface/__generated__/react"
+import {
+  PostDocument,
   useCreatePostLikeMutation,
   useDeletePostLikeMutation,
   useFollowUserMutation,
@@ -219,8 +221,8 @@ WorkPage.getLayout = (page) => {
   return <UserLayout>{page}</UserLayout>
 }
 
-export const getStaticPaths: GetStaticPaths<Paths> = async (a) => {
-  const paths = [].map((_) => {
+export const getStaticPaths: GetStaticPaths<Paths> = async () => {
+  const paths = [].map(() => {
     return { params: { id: "" } }
   })
 

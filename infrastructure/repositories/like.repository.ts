@@ -1,4 +1,4 @@
-import { Id, LikeEntity } from "core"
+import type { Id, LikeEntity } from "core"
 import db from "db"
 import { catchError } from "interface/utils/catchError"
 

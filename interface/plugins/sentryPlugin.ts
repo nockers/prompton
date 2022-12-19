@@ -1,5 +1,5 @@
 import { ApolloError } from "@apollo/client"
-import { ApolloServerPlugin } from "@apollo/server"
+import type { ApolloServerPlugin } from "@apollo/server"
 import { captureException, withScope } from "@sentry/node"
 
 export const sentryPlugin: ApolloServerPlugin = {

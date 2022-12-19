@@ -1,5 +1,5 @@
 import "reflect-metadata"
-import { NextApiHandler } from "next"
+import type { NextApiHandler } from "next"
 import { container } from "tsyringe"
 import { ReadImageQuery } from "service"
 

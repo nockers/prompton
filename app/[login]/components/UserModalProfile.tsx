@@ -10,7 +10,8 @@ import {
   ModalBody,
   ModalCloseButton,
 } from "@chakra-ui/react"
-import { FC, useState } from "react"
+import type { FC } from "react"
+import { useState } from "react"
 import { UserAvatarDropzone } from "app/[login]/components/UserAvatarDropzone"
 
 type Props = {

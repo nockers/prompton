@@ -11,7 +11,8 @@ import {
   useToast,
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
-import { FC, useState } from "react"
+import type { FC } from "react"
+import { useState } from "react"
 import { MainStack } from "app/components/MainStack"
 import { useCreateUserMutation } from "interface/__generated__/react"
 

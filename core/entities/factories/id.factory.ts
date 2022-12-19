@@ -9,7 +9,7 @@ export class IdFactory {
   static createUsername() {
     const customNanoid = customAlphabet(
       "01234567890abcdefghijklmnopqrstuvwxyz",
-      8
+      8,
     )
 
     return new Id(customNanoid())

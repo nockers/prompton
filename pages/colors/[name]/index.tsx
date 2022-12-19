@@ -1,6 +1,6 @@
-import { BlitzPage } from "@blitzjs/auth"
+import type { BlitzPage } from "@blitzjs/auth"
 import { HStack, Stack, Text } from "@chakra-ui/react"
-import { GetStaticPaths, GetStaticProps } from "next"
+import type { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import UserLayout from "app/[login]/layout"
@@ -8,12 +8,11 @@ import { CardPost } from "app/components/CardPost"
 import { MainFallback } from "app/components/MainFallback"
 import { MainStack } from "app/components/MainStack"
 import { useColumnCount } from "app/hooks/useColumnCount"
-import {
-  PostsDocument,
+import type {
   PostsQuery,
   PostsQueryVariables,
-  usePostsQuery,
 } from "interface/__generated__/react"
+import { PostsDocument, usePostsQuery } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
 import { client } from "interface/utils/client"
 import { toColumnArray } from "interface/utils/toColumnArray"
@@ -95,7 +94,7 @@ ColorPage.getLayout = (page) => {
 }
 
 export const getStaticPaths: GetStaticPaths<Paths> = async () => {
-  const paths = [].map((_) => {
+  const paths = [].map(() => {
     return { params: { name: "" } }
   })
 

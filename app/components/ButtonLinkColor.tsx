@@ -1,6 +1,6 @@
 import { Button } from "@chakra-ui/react"
 import Color from "color"
-import { FC } from "react"
+import type { FC } from "react"
 import { findWebColor } from "infrastructure/utils/findWebColor"
 
 type Props = {

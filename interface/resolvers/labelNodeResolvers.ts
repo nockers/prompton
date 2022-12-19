@@ -1,7 +1,7 @@
-import { Label } from "@prisma/client"
+import type { Label } from "@prisma/client"
 import db from "db"
-import { LabelNode } from "interface/__generated__/node"
-import { PrismaResolvers } from "interface/resolvers/types/prismaResolvers"
+import type { LabelNode } from "interface/__generated__/node"
+import type { PrismaResolvers } from "interface/resolvers/types/prismaResolvers"
 
 export const LabelNodeResolvers: PrismaResolvers<LabelNode, Label> = {
   id(parent) {

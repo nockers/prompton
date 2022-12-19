@@ -8,7 +8,8 @@ import {
   Text,
   UnorderedList,
 } from "@chakra-ui/react"
-import React, { FC, ReactNode } from "react"
+import type { FC, ReactNode } from "react"
+import React from "react"
 import ReactMarkdown from "react-markdown"
 
 type Props = {

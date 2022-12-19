@@ -1,6 +1,6 @@
 import { Spinner, Stack } from "@chakra-ui/react"
 import Head from "next/head"
-import { FC } from "react"
+import type { FC } from "react"
 
 export const MainFallback: FC = () => {
   const defaultOgImageURL = "https://prompton.io/facebook.png"

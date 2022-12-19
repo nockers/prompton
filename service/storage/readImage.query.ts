@@ -27,7 +27,9 @@ export class ReadImageQuery {
       try {
         const buffer = await sharp(tmpPath).toBuffer()
         return buffer
-      } catch (error) {}
+      } catch (error) {
+        error
+      }
 
       const bucket = getStorage().bucket()
 

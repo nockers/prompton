@@ -26,6 +26,15 @@
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.preferences.importModuleSpecifier": "non-relative",
-  "cSpell.words": ["followee", "followees", "prompton", "unfollow"],
+  "cSpell.words": [
+    "blitzjs",
+    "chakra",
+    "codegen",
+    "followee",
+    "followees",
+    "prompton",
+    "tsyringe",
+    "unfollow"
+  ],
   "typescript.enablePromptUseWorkspaceTsdk": true
 }

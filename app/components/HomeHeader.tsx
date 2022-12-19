@@ -15,7 +15,8 @@ import {
 } from "firebase/auth"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { FC, useState } from "react"
+import type { FC } from "react"
+import { useState } from "react"
 import { BiParagraph } from "react-icons/bi"
 import { HomeHeaderLogin } from "app/components/HomeHeaderLogin"
 
@@ -24,7 +25,7 @@ export const HomeHeader: FC = () => {
 
   const [searchText, setSearchText] = useState("")
 
-  const [search, setSearch] = useDebounce(searchText, 1000)
+  const [, setSearch] = useDebounce(searchText, 1000)
 
   const toast = useToast()
 

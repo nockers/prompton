@@ -1,5 +1,6 @@
 import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client"
-import { ContextSetter, setContext } from "@apollo/client/link/context"
+import type { ContextSetter } from "@apollo/client/link/context"
+import { setContext } from "@apollo/client/link/context"
 import { offsetLimitPagination } from "@apollo/client/utilities"
 import { getApps } from "firebase/app"
 import { getAuth, getIdToken } from "firebase/auth"

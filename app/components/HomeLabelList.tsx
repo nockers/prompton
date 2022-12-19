@@ -1,4 +1,4 @@
-import { BlitzPage } from "@blitzjs/auth"
+import type { BlitzPage } from "@blitzjs/auth"
 import { Box, Button, HStack } from "@chakra-ui/react"
 import Link from "next/link"
 import { useLabelsQuery } from "interface/__generated__/react"

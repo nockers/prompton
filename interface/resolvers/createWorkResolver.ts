@@ -2,12 +2,12 @@ import { ApolloServerErrorCode } from "@apollo/server/errors"
 import { GraphQLError } from "graphql"
 import { container } from "tsyringe"
 import db from "db"
-import {
+import type {
   MutationCreateWorkArgs,
   RequireFields,
 } from "interface/__generated__/node"
 import { CreatePostCommand } from "service"
-import { ApolloContext } from "types"
+import type { ApolloContext } from "types"
 
 export const createWorkResolver = async (
   _: unknown,

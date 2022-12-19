@@ -1,4 +1,4 @@
-import { BlitzPage } from "@blitzjs/auth"
+import type { BlitzPage } from "@blitzjs/auth"
 import { HomeLabelList } from "app/components/HomeLabelList"
 import { HomePostList } from "app/components/HomePostList"
 import { MainStack } from "app/components/MainStack"

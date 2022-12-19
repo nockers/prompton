@@ -1,16 +1,15 @@
 import { ApolloServerErrorCode } from "@apollo/server/errors"
 import { GraphQLError } from "graphql"
 import db from "db"
-import {
+import type {
   QueryLabelArgs,
-  QueryLabelsArgs,
   QueryUserArgs,
   QueryWorkArgs,
   QueryWorksArgs,
 } from "interface/__generated__/node"
 
 export const QueryResolvers = {
-  labels(_: unknown, args: Partial<QueryLabelsArgs>) {
+  labels() {
     return db.label.findMany({
       orderBy: { posts: { _count: "desc" } },
       take: 16,
@@ -33,7 +32,7 @@ export const QueryResolvers = {
         orderBy: { createdAt: "desc" },
         where: {
           isDeleted: false,
-          labels: { some: { name: args.where?.labelName! } },
+          labels: { some: { name: args.where.labelName! } },
         },
       })
     }
