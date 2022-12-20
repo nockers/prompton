@@ -17,7 +17,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import type { FC } from "react"
 import { useState } from "react"
-import { BiParagraph } from "react-icons/bi"
+import { BiHome } from "react-icons/bi"
 import { HomeHeaderLogin } from "app/components/HomeHeaderLogin"
 
 export const HomeHeader: FC = () => {
@@ -62,7 +62,7 @@ export const HomeHeader: FC = () => {
         <HStack spacing={4}>
           <Link href={"/"}>
             <IconButton aria-label={"Home"}>
-              <Icon as={BiParagraph} />
+              <Icon as={BiHome} />
             </IconButton>
           </Link>
           <Input

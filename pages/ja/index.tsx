@@ -1,17 +1,14 @@
 import type { BlitzPage } from "@blitzjs/auth"
-import { Stack } from "@chakra-ui/react"
 import { HomeLabelList } from "app/components/HomeLabelList"
 import { HomePostList } from "app/components/HomePostList"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJa } from "app/components/MainStackJa"
 
 const RootPage: BlitzPage = () => {
   return (
-    <MainStack title={null} description={null} fileId={null}>
-      <Stack spacing={0}>
-        <HomeLabelList />
-        <HomePostList />
-      </Stack>
-    </MainStack>
+    <MainStackJa title={null} description={null} fileId={null}>
+      <HomeLabelList />
+      <HomePostList />
+    </MainStackJa>
   )
 }
 

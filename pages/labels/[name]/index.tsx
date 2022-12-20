@@ -50,36 +50,44 @@ const LabelPage: BlitzPage<Props> = () => {
       description={`ラベル「#${label}」に関連する作品があります。`}
       fileId={null}
     >
-      <Text fontSize={"4xl"} fontWeight={"bold"}>{`#${label}`}</Text>
-      <HStack maxW={"fit-content"} alignItems={"flex-start"}>
-        {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
-          <Stack key={index}>
-            {column.map((work) => (
-              <CardPost
-                id={work.id}
-                key={work.id}
-                postFileId={work.fileId}
-                postPrompt={work.prompt}
-                postAnnotationAdult={work.annotationAdult}
-                postAnnotationMedical={work.annotationMedical}
-                postAnnotationRacy={work.annotationRacy}
-                postAnnotationSpoof={work.annotationSpoof}
-                postAnnotationViolence={work.annotationViolence}
-                postLabels={work.labels.map((label) => [
-                  label.name,
-                  label.count,
-                ])}
-                postColors={work.colors}
-                postWebColors={work.webColors}
-                userId={work.user.id}
-                userName={work.user.name}
-                userAvatarImageURL={work.user.avatarImageURL}
-                isEditable={work.user.id === appContext.currentUser?.uid}
-              />
-            ))}
-          </Stack>
-        ))}
-      </HStack>
+      <Stack spacing={4} justifyContent={"center"} alignItems={"center"} px={4}>
+        <HStack px={4}>
+          <Text lineHeight={1} fontSize={"4xl"} fontWeight={"bold"}>
+            {`#${label}`}
+          </Text>
+        </HStack>
+        <HStack maxW={"container.xl"} alignItems={"flex-start"}>
+          {toColumnArray(data?.works ?? [], columnCount).map(
+            (column, index) => (
+              <Stack key={index}>
+                {column.map((work) => (
+                  <CardPost
+                    id={work.id}
+                    key={work.id}
+                    postFileId={work.fileId}
+                    postPrompt={work.prompt}
+                    postAnnotationAdult={work.annotationAdult}
+                    postAnnotationMedical={work.annotationMedical}
+                    postAnnotationRacy={work.annotationRacy}
+                    postAnnotationSpoof={work.annotationSpoof}
+                    postAnnotationViolence={work.annotationViolence}
+                    postLabels={work.labels.map((label) => [
+                      label.name,
+                      label.count,
+                    ])}
+                    postColors={work.colors}
+                    postWebColors={work.webColors}
+                    userId={work.user.id}
+                    userName={work.user.name}
+                    userAvatarImageURL={work.user.avatarImageURL}
+                    isEditable={work.user.id === appContext.currentUser?.uid}
+                  />
+                ))}
+              </Stack>
+            ),
+          )}
+        </HStack>
+      </Stack>
     </MainStack>
   )
 }

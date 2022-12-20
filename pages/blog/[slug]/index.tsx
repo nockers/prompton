@@ -29,7 +29,7 @@ type Paths = {
   slug: string
 }
 
-const PostPage: FC<Props> = (props) => {
+const BlogPostPage: FC<Props> = (props) => {
   const router = useRouter()
 
   if (router.isFallback) {
@@ -39,7 +39,7 @@ const PostPage: FC<Props> = (props) => {
   return (
     <MainStack title={props.title} description={props.body} fileId={null}>
       <HStack justifyContent={"center"}>
-        <Stack maxW={"xl"} w={"100%"} spacing={8} py={8}>
+        <Stack maxW={"xl"} w={"100%"} spacing={8} py={4}>
           <Stack spacing={1}>
             <Text opacity={"0.8"} fontWeight="bold">
               {props.publishedAt}
@@ -51,7 +51,7 @@ const PostPage: FC<Props> = (props) => {
           </Stack>
           <Divider />
           <HStack>
-            <Link href={"/posts"}>
+            <Link href={"/blog"}>
               <Button leftIcon={<Icon as={BiChevronLeft} />}>
                 {"過去の記事"}
               </Button>
@@ -110,4 +110,4 @@ export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {
   }
 }
 
-export default PostPage
+export default BlogPostPage

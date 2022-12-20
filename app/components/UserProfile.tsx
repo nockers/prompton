@@ -17,7 +17,9 @@ export const UserProfile: FC<Props> = (props) => {
         onClick={props.onOpenUser}
       />
       <Box flex={1} onClick={props.onOpenUser}>
-        <Text fontWeight={"bold"}>{props.userName}</Text>
+        <Text fontWeight={"bold"} fontSize={"md"}>
+          {props.userName}
+        </Text>
       </Box>
       <Button size={"sm"}>{"フォロー"}</Button>
     </HStack>

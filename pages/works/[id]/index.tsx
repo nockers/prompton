@@ -137,7 +137,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
       description={data.work.prompt || `${data.work.id}`}
       fileId={data.work.fileId}
     >
-      <HStack justifyContent={"center"}>
+      <HStack justifyContent={"center"} px={4}>
         <Stack
           maxW={"8xl"}
           direction={{ base: "column", lg: "row" }}

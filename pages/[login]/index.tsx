@@ -166,17 +166,21 @@ const UserPage: BlitzPage = () => {
       description={null}
       fileId={null}
     >
-      <UserHeaderProfile
-        avatarImageURL={user.avatarImageURL}
-        userId={user.id}
-        userName={user.name}
-        isEditable={isEditable}
-        onEdit={onEditProfile}
-      />
-      {isEditable && (
-        <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
-      )}
-      <HStack justifyContent={"center"}>
+      <Box px={4}>
+        <UserHeaderProfile
+          avatarImageURL={user.avatarImageURL}
+          userId={user.id}
+          userName={user.name}
+          isEditable={isEditable}
+          onEdit={onEditProfile}
+        />
+      </Box>
+      <Box px={4}>
+        {isEditable && (
+          <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
+        )}
+      </Box>
+      <HStack px={4} justifyContent={"center"}>
         <HStack maxW={"fit-content"} alignItems={"flex-start"}>
           {toColumnArray(user.works, columnCount).map((column, index) => (
             <Stack key={index}>

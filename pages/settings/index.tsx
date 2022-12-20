@@ -27,7 +27,7 @@ const SettingsPage: FC = () => {
 
   return (
     <MainStack title={"設定"} description={null} fileId={null}>
-      <Box>
+      <Box px={4}>
         <Button onClick={onLogout}>{"ログアウト"}</Button>
       </Box>
     </MainStack>

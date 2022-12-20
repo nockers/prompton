@@ -35,8 +35,8 @@ export const HomePostList: BlitzPage = () => {
   }, [])
 
   return (
-    <HStack justifyContent={"center"}>
-      <HStack maxW={"6xl"} alignItems={"flex-start"}>
+    <HStack justifyContent={"center"} px={4}>
+      <HStack maxW={"container.xl"} alignItems={"flex-start"}>
         {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
           <Stack key={index}>
             {column.map((work) => (

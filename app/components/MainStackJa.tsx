@@ -12,10 +12,10 @@ type Props = {
   children: ReactNode
 }
 
-export const MainStack: FC<Props> = (props) => {
+export const MainStackJa: FC<Props> = (props) => {
   const appName = Config.siteName
 
-  const defaultTitle = `${appName} - ${Config.siteCatchphraseEN}`
+  const defaultTitle = `${appName} - ${Config.siteCatchphraseJA}`
 
   const title =
     props.title !== null ? `${props.title} - ${appName}` : defaultTitle
@@ -34,7 +34,7 @@ export const MainStack: FC<Props> = (props) => {
       ? `${process.env.NEXT_PUBLIC_URL}/api/images/${props.fileId}?w=300&h=157`
       : defaultOgImageURL
 
-  const defaultDescription = Config.siteDescriptionEN
+  const defaultDescription = Config.siteDescriptionJA
 
   const ogDescription = props.description || defaultDescription
 
@@ -52,7 +52,7 @@ export const MainStack: FC<Props> = (props) => {
       </Head>
       <Stack as={"main"} spacing={props.spacing ?? 4} pb={4}>
         <Box px={4}>
-          <PageNotification isJA={false} />
+          <PageNotification isJA={true} />
         </Box>
         {props.children}
       </Stack>

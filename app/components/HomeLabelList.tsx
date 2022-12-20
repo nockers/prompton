@@ -13,13 +13,15 @@ export const HomeLabelList: BlitzPage = () => {
   })
 
   return (
-    <Box overflowX={"auto"} pb={4}>
+    <Box overflowX={"auto"} pb={4} px={4}>
       <HStack>
         {data?.labels.map((label) => (
           <Link key={label.id} href={`/labels/${label.name}`}>
             <Button size={"sm"}>{`#${label.name}`}</Button>
           </Link>
         ))}
+        {/** for right-side padding */}
+        <Box opacity={0}>{"a"}</Box>
       </HStack>
     </Box>
   )

@@ -16,6 +16,7 @@ import {
   Wrap,
   WrapItem,
   Box,
+  ModalHeader,
 } from "@chakra-ui/react"
 import type { FC } from "react"
 import { useState } from "react"
@@ -77,12 +78,24 @@ export const ModalPost: FC<Props> = (props) => {
     <Modal
       isOpen={props.isOpen}
       size={{ base: "full", md: "xl" }}
-      scrollBehavior={"inside"}
       onClose={props.onClose}
     >
-      <ModalOverlay backdropFilter="blur(10px)" />
+      <ModalOverlay backdropFilter="blur(6px)" />
       <ModalContent mx={margin}>
-        <ModalBody pb={0} pt={4} px={4}>
+        <ModalHeader px={4} py={4}>
+          <HStack justifyContent={"space-between"}>
+            <Text fontSize={"md"}>{props.postId}</Text>
+            <Button
+              size={"sm"}
+              colorScheme={"blue"}
+              aria-label={""}
+              onClick={props.onLinkWork}
+            >
+              {"詳細ページ"}
+            </Button>
+          </HStack>
+        </ModalHeader>
+        <ModalBody pb={0} pt={0} px={4}>
           <Stack spacing={4}>
             <Image
               alt={""}
@@ -157,14 +170,6 @@ export const ModalPost: FC<Props> = (props) => {
                   {isEditable ? "終了" : "編集"}
                 </Button>
               )}
-              <Button
-                size={"sm"}
-                colorScheme={"blue"}
-                aria-label={""}
-                onClick={props.onLinkWork}
-              >
-                {"詳細"}
-              </Button>
             </HStack>
           </HStack>
         </ModalFooter>
