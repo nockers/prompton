@@ -1,6 +1,7 @@
 import { Stack } from "@chakra-ui/react"
 import Head from "next/head"
 import type { FC, ReactNode } from "react"
+import { Config } from "interface/config"
 
 type Props = {
   title: string | null
@@ -11,9 +12,9 @@ type Props = {
 }
 
 export const MainStack: FC<Props> = (props) => {
-  const appName = "Prompton"
+  const appName = Config.siteName
 
-  const defaultTitle = `${appName} - AIアーティストに制作依頼`
+  const defaultTitle = `${appName} - ${Config.siteCatchphraseEN}`
 
   const title =
     props.title !== null ? `${props.title} - ${appName}` : defaultTitle
@@ -32,10 +33,11 @@ export const MainStack: FC<Props> = (props) => {
       ? `${process.env.NEXT_PUBLIC_URL}/api/images/${props.fileId}?w=300&h=157`
       : defaultOgImageURL
 
-  const defaultDescription =
-    "Prompton（プロンプトン）はAIアーティストを支援する作品投稿サイトです。AIで生成した作品を投稿したり制作の依頼を引き受けられます。"
+  const defaultDescriptionJA = Config.siteDescriptionJA
 
-  const ogDescription = props.description || defaultDescription
+  // const defaultDescription = Config.siteDescriptionEN
+
+  const ogDescription = props.description || defaultDescriptionJA
 
   return (
     <>

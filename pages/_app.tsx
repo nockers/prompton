@@ -17,6 +17,7 @@ import { AppContextProvider } from "app/components/AuthContextProvider"
 import { HomeHeader } from "app/components/HomeHeader"
 import RootError from "app/error"
 import RootLoading from "app/loading"
+import { Config } from "interface/config"
 import { theme } from "interface/theme"
 import { client } from "interface/utils/client"
 
@@ -51,10 +52,10 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
         <meta property={"og:type"} content={"website"} />
         <meta
           property={"og:site_name"}
-          content={"Prompton - AIアーティストに制作依頼"}
+          content={`${Config.siteName} - ${Config.siteCatchphraseEN}`}
         />
         <meta name={"twitter:card"} content={"summary_large_image"} />
-        <meta name={"twitter:site"} content="@nockerdev" />
+        <meta name={"twitter:site"} content="@promptonio" />
       </Head>
       <ChakraProvider theme={theme}>
         <Suspense fallback={<RootLoading />}>
