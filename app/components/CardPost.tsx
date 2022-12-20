@@ -81,14 +81,13 @@ export const CardPost: FC<Props> = (props) => {
           />
           <Box
             position={"absolute"}
-            bottom={0}
-            left={0}
-            w={"100%"}
-            maxW={40}
-            p={2}
+            bottom={2}
+            left={2}
+            py={2}
+            pl={2}
+            pr={4}
             backdropFilter={"blur(16px) saturate(2) brightness(0.8)"}
-            borderBottomLeftRadius={"sm"}
-            borderTopRightRadius={"lg"}
+            borderRadius={40}
             overflow={"hidden"}
           >
             <HStack spacing={2}>
