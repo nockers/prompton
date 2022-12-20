@@ -12,7 +12,6 @@ import {
   useBreakpointValue,
   IconButton,
   HStack,
-  ModalHeader,
   Textarea,
   Wrap,
   WrapItem,
@@ -20,7 +19,7 @@ import {
 } from "@chakra-ui/react"
 import type { FC } from "react"
 import { useState } from "react"
-import { BiBookmark, BiEdit, BiExpand, BiHeart } from "react-icons/bi"
+import { BiBookmark, BiEdit, BiHeart } from "react-icons/bi"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
 import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"
 import { UserProfile } from "app/components/UserProfile"
@@ -44,7 +43,6 @@ type Props = {
   isOpen: boolean
   isEditable: boolean
   onOpenUser(): void
-  onOpen(): void
   onClose(): void
   onLinkColor(color: string): void
   onLinkLabel(label: string): void
@@ -84,21 +82,7 @@ export const ModalPost: FC<Props> = (props) => {
     >
       <ModalOverlay backdropFilter="blur(10px)" />
       <ModalContent mx={margin}>
-        <ModalHeader pl={4} pr={2} py={4}>
-          <HStack justifyContent={"space-between"}>
-            <Box></Box>
-            <HStack>
-              <IconButton
-                variant={"link"}
-                aria-label={""}
-                onClick={props.onLinkWork}
-              >
-                <Icon as={BiExpand} />
-              </IconButton>
-            </HStack>
-          </HStack>
-        </ModalHeader>
-        <ModalBody pb={0} pt={0} px={4}>
+        <ModalBody pb={0} pt={4} px={4}>
           <Stack spacing={4}>
             <Image
               alt={""}
@@ -160,11 +144,7 @@ export const ModalPost: FC<Props> = (props) => {
                 <Icon as={BiBookmark} />
               </IconButton>
               {!props.isEditable && (
-                <Button
-                  size={"sm"}
-                  leftIcon={<Icon as={BiHeart} />}
-                  colorScheme={"blue"}
-                >
+                <Button size={"sm"} leftIcon={<Icon as={BiHeart} />}>
                   {"いいね"}
                 </Button>
               )}
@@ -172,12 +152,19 @@ export const ModalPost: FC<Props> = (props) => {
                 <Button
                   size={"sm"}
                   leftIcon={<Icon as={BiEdit} />}
-                  colorScheme={"blue"}
                   onClick={onEdit}
                 >
                   {isEditable ? "終了" : "編集"}
                 </Button>
               )}
+              <Button
+                size={"sm"}
+                colorScheme={"blue"}
+                aria-label={""}
+                onClick={props.onLinkWork}
+              >
+                {"詳細"}
+              </Button>
             </HStack>
           </HStack>
         </ModalFooter>
