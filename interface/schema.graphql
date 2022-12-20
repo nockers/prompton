@@ -9,6 +9,7 @@ type Query {
 input WorksWhereInput {
   labelName: String
   color: String
+  userId: String
 }
 
 type Viewer {

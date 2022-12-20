@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client"
 
 export default gql`
-  query Post($id: ID!) {
+  query Work($id: ID!) {
     work(id: $id) {
       id
       createdAt

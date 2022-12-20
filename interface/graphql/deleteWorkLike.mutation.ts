@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client"
 
 export default gql`
-  mutation DeletePostLike($input: DeletePostLikeInput!) {
+  mutation DeleteWorkLike($input: DeletePostLikeInput!) {
     deletePostLike(input: $input) {
       id
       likesCount

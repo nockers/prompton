@@ -27,9 +27,24 @@ export const QueryResolvers = {
     })
   },
   async works(_: unknown, args: Partial<QueryWorksArgs>) {
+    const take = args.limit || 2 * 9
+    const skip = args.offset || 0
+    if (typeof args.where?.userId === "string") {
+      return db.post.findMany({
+        orderBy: { createdAt: "desc" },
+        take: take,
+        skip: skip,
+        where: {
+          isDeleted: false,
+          userId: args.where.userId!,
+        },
+      })
+    }
     if (typeof args.where?.labelName === "string") {
       return db.post.findMany({
         orderBy: { createdAt: "desc" },
+        take: take,
+        skip: skip,
         where: {
           isDeleted: false,
           labels: { some: { name: args.where.labelName! } },
@@ -39,6 +54,8 @@ export const QueryResolvers = {
     if (typeof args.where?.color === "string") {
       return db.post.findMany({
         orderBy: { createdAt: "desc" },
+        take: take,
+        skip: skip,
         where: {
           isDeleted: false,
           webColors: { has: `#${args.where?.color}` },
@@ -47,6 +64,8 @@ export const QueryResolvers = {
     }
     return db.post.findMany({
       orderBy: { createdAt: "desc" },
+      take: take,
+      skip: skip,
       where: { isDeleted: false },
     })
   },

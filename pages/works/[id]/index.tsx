@@ -16,20 +16,21 @@ import { useRouter } from "next/router"
 import UserLayout from "app/[login]/layout"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
 import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"
-import { HomePostList } from "app/components/HomePostList"
 import { MainFallback } from "app/components/MainFallback"
 import { MainStack } from "app/components/MainStack"
 import { ShareButtonTwitter } from "app/components/ShareButtonTwitter"
+import { UserWorkList } from "app/components/WorkList"
 import type {
-  PostQuery,
-  PostQueryVariables,
+  WorkQuery,
+  WorkQueryVariables,
 } from "interface/__generated__/react"
+import { useWorksQuery } from "interface/__generated__/react"
 import {
-  PostDocument,
-  useCreatePostLikeMutation,
-  useDeletePostLikeMutation,
+  WorkDocument,
+  useCreateWorkLikeMutation,
+  useDeleteWorkLikeMutation,
   useFollowUserMutation,
-  usePostQuery,
+  useWorkQuery,
 } from "interface/__generated__/react"
 import { client } from "interface/utils/client"
 
@@ -48,18 +49,31 @@ const WorkPage: BlitzPage<Props> = (props) => {
     client.restore({ ...props.cache, ...client.extract() })
   }
 
-  const { data = null } = usePostQuery({
+  const { data = null } = useWorkQuery({
     fetchPolicy: "cache-and-network",
-    pollInterval: 4000,
     skip: typeof router.query.id === "undefined",
     variables: {
       id: router.query.id?.toString() ?? "",
     },
   })
 
-  const [createPostLike] = useCreatePostLikeMutation()
+  const { data: { works } = { works: [] } } = useWorksQuery({
+    fetchPolicy: "cache-and-network",
+    skip: typeof router.query.id === "undefined",
+    variables: {
+      offset: 0,
+      limit: 2 * 9,
+      where: {
+        color: null,
+        labelName: null,
+        userId: router.query.id?.toString() ?? "",
+      },
+    },
+  })
 
-  const [deletePostLike] = useDeletePostLikeMutation()
+  const [createWorkLike] = useCreateWorkLikeMutation()
+
+  const [deleteWorkLike] = useDeleteWorkLikeMutation()
 
   const [followUser] = useFollowUserMutation()
 
@@ -95,7 +109,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
 
   const onCreateLike = async () => {
     try {
-      await createPostLike({
+      await createWorkLike({
         variables: { input: { workId: data!.work!.id } },
       })
     } catch (error) {
@@ -105,7 +119,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
 
   const onDeleteLike = async () => {
     try {
-      await deletePostLike({
+      await deleteWorkLike({
         variables: { input: { workId: data!.work!.id } },
       })
     } catch (error) {
@@ -139,7 +153,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
     >
       <HStack justifyContent={"center"} px={4}>
         <Stack
-          maxW={"8xl"}
+          maxW={"container.lg"}
           direction={{ base: "column", lg: "row" }}
           w={"100%"}
           spacing={4}
@@ -212,7 +226,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
           </Stack>
         </Stack>
       </HStack>
-      <HomePostList />
+      <UserWorkList excludedWorkId={data.work.id} userId={data.work.user.id} />
     </MainStack>
   )
 }
@@ -234,8 +248,8 @@ export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {
     throw new Error()
   }
 
-  await client.query<PostQuery, PostQueryVariables>({
-    query: PostDocument,
+  await client.query<WorkQuery, WorkQueryVariables>({
+    query: WorkDocument,
     variables: { id: context.params!.id },
   })
 

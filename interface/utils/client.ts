@@ -43,7 +43,7 @@ const cache = new InMemoryCache({
   typePolicies: {
     Query: {
       fields: {
-        posts: offsetLimitPagination(["where"]),
+        works: offsetLimitPagination(["where"]),
         labels: offsetLimitPagination(),
       },
     },
