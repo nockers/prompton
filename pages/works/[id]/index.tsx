@@ -151,9 +151,10 @@ const WorkPage: BlitzPage<Props> = (props) => {
       description={data.work.prompt || `${data.work.id}`}
       fileId={data.work.fileId}
     >
-      <HStack justifyContent={"center"} px={4}>
+      <HStack justifyContent={"center"}>
         <Stack
-          maxW={"container.lg"}
+          px={4}
+          maxW={"container.xl"}
           direction={{ base: "column", lg: "row" }}
           w={"100%"}
           spacing={4}
@@ -226,7 +227,12 @@ const WorkPage: BlitzPage<Props> = (props) => {
           </Stack>
         </Stack>
       </HStack>
-      <UserWorkList excludedWorkId={data.work.id} userId={data.work.user.id} />
+      <Box px={4} maxW={"container.xl"}>
+        <UserWorkList
+          excludedWorkId={data.work.id}
+          userId={data.work.user.id}
+        />
+      </Box>
     </MainStack>
   )
 }

@@ -166,7 +166,7 @@ const UserPage: BlitzPage = () => {
       description={null}
       fileId={null}
     >
-      <Box px={4}>
+      <Box maxW={"container.xl"} px={4} w={"100%"}>
         <UserHeaderProfile
           avatarImageURL={user.avatarImageURL}
           userId={user.id}
@@ -175,13 +175,13 @@ const UserPage: BlitzPage = () => {
           onEdit={onEditProfile}
         />
       </Box>
-      <Box px={4}>
+      <Box px={4} maxW={"container.xl"} w={"100%"}>
         {isEditable && (
           <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
         )}
       </Box>
-      <HStack px={4} justifyContent={"center"}>
-        <HStack maxW={"fit-content"} alignItems={"flex-start"}>
+      <HStack justifyContent={"center"}>
+        <HStack px={4} maxW={"container.xl"} alignItems={"flex-start"}>
           {toColumnArray(user.works, columnCount).map((column, index) => (
             <Stack key={index}>
               {column.map((work) => (

@@ -12,7 +12,7 @@ export const PageNotification: FC<Props> = (props) => {
 
   return (
     <HStack justifyContent={"center"}>
-      <Alert status="warning" maxW={"container.xl"} rounded={"md"}>
+      <Alert status={"warning"} rounded={"md"}>
         <AlertIcon />
         {text}
       </Alert>

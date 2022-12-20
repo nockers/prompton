@@ -40,43 +40,39 @@ export const HomePostList: BlitzPage = () => {
   // }, [])
 
   return (
-    <HStack justifyContent={"center"} px={4}>
-      <Stack maxW={"container.xl"}>
-        <HStack alignItems={"flex-start"}>
-          {toColumnArray(data?.works ?? [], columnCount).map(
-            (column, index) => (
-              <Stack key={index}>
-                {column.map((work) => (
-                  <CardPost
-                    id={work.id}
-                    key={work.id}
-                    postFileId={work.fileId}
-                    postPrompt={work.prompt}
-                    postAnnotationAdult={work.annotationAdult}
-                    postAnnotationMedical={work.annotationMedical}
-                    postAnnotationRacy={work.annotationRacy}
-                    postAnnotationSpoof={work.annotationSpoof}
-                    postAnnotationViolence={work.annotationViolence}
-                    postLabels={work.labels.map((label) => [
-                      label.name,
-                      label.count,
-                    ])}
-                    postColors={work.colors}
-                    postWebColors={work.webColors}
-                    userId={work.user.id}
-                    userName={work.user.name}
-                    userAvatarImageURL={work.user.avatarImageURL}
-                    isEditable={work.user.id === appContext.currentUser?.uid}
-                  />
-                ))}
-              </Stack>
-            ),
-          )}
-        </HStack>
-        <Button isLoading={loading} onClick={onFetchMore}>
-          {"MORE"}
-        </Button>
-      </Stack>
-    </HStack>
+    <Stack maxW={"container.xl"} px={4}>
+      <HStack alignItems={"flex-start"}>
+        {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
+          <Stack key={index}>
+            {column.map((work) => (
+              <CardPost
+                id={work.id}
+                key={work.id}
+                postFileId={work.fileId}
+                postPrompt={work.prompt}
+                postAnnotationAdult={work.annotationAdult}
+                postAnnotationMedical={work.annotationMedical}
+                postAnnotationRacy={work.annotationRacy}
+                postAnnotationSpoof={work.annotationSpoof}
+                postAnnotationViolence={work.annotationViolence}
+                postLabels={work.labels.map((label) => [
+                  label.name,
+                  label.count,
+                ])}
+                postColors={work.colors}
+                postWebColors={work.webColors}
+                userId={work.user.id}
+                userName={work.user.name}
+                userAvatarImageURL={work.user.avatarImageURL}
+                isEditable={work.user.id === appContext.currentUser?.uid}
+              />
+            ))}
+          </Stack>
+        ))}
+      </HStack>
+      <Button isLoading={loading} onClick={onFetchMore}>
+        {"MORE"}
+      </Button>
+    </Stack>
   )
 }

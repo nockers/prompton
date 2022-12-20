@@ -51,7 +51,7 @@ export const MainStack: FC<Props> = (props) => {
         <meta name={"twitter:image"} content={twitterImageURL} />
       </Head>
       <Stack as={"main"} spacing={4} alignItems={"center"} pb={8}>
-        <Box px={4} w={"100%"}>
+        <Box px={4} w={"100%"} maxW={"container.xl"}>
           <PageNotification isJA={false} />
         </Box>
         {props.children}

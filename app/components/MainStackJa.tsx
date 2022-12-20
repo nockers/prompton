@@ -50,10 +50,16 @@ export const MainStackJa: FC<Props> = (props) => {
         <meta name={"twitter:description"} content={ogDescription} />
         <meta name={"twitter:image"} content={twitterImageURL} />
       </Head>
-      <Stack as={"main"} spacing={props.spacing ?? 4} pb={4}>
-        <Box px={4}>
-          <PageNotification isJA={true} />
-        </Box>
+      <Box px={4}>
+        <PageNotification isJA={true} />
+      </Box>
+      <Stack
+        as={"main"}
+        spacing={props.spacing ?? 4}
+        pb={4}
+        w={"100%"}
+        overflow={"hidden"}
+      >
         {props.children}
       </Stack>
     </>

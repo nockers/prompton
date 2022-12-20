@@ -36,7 +36,7 @@ export const UserWorkList: FC<Props> = (props) => {
   })
 
   return (
-    <Stack maxW={"container.xl"}>
+    <Stack>
       <HStack alignItems={"flex-start"}>
         {toColumnArray(works ?? [], columnCount).map((column, index) => (
           <Stack key={index}>

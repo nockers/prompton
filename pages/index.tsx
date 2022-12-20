@@ -7,7 +7,7 @@ import { MainStack } from "app/components/MainStack"
 const RootPage: BlitzPage = () => {
   return (
     <MainStack title={null} description={null} fileId={null}>
-      <Stack spacing={0}>
+      <Stack spacing={0} w={"100%"} alignItems={"center"}>
         <HomeLabelList />
         <HomePostList />
       </Stack>

@@ -66,7 +66,7 @@ const ColorPage: BlitzPage<Props> = () => {
           {`#${label}`}
         </Text>
       </HStack>
-      <HStack maxW={"container.xl"} alignItems={"flex-start"}>
+      <HStack px={4} maxW={"container.xl"} alignItems={"flex-start"}>
         {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
           <Stack key={index}>
             {column.map((work) => (
@@ -95,7 +95,7 @@ const ColorPage: BlitzPage<Props> = () => {
           </Stack>
         ))}
       </HStack>
-      <Box w={"100%"} maxW={"container.xl"}>
+      <Box px={4} w={"100%"} maxW={"container.xl"}>
         <Button w={"100%"} isLoading={loading} onClick={onFetchMore}>
           {"MORE"}
         </Button>
