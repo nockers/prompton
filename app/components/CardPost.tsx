@@ -54,6 +54,14 @@ export const CardPost: FC<Props> = (props) => {
     router.push(`/works/${props.id}`, undefined, { scroll: true })
   }
 
+  const onOpenWork = () => {
+    if (window.innerWidth < 768) {
+      router.push(`/works/${props.id}`, undefined, { scroll: true })
+      return
+    }
+    onOpen()
+  }
+
   return (
     <>
       <Button
@@ -62,7 +70,7 @@ export const CardPost: FC<Props> = (props) => {
         h={"auto"}
         colorScheme={isOpen ? "blue" : "gray"}
         p={1}
-        onClick={onOpen}
+        onClick={onOpenWork}
       >
         <Box position={"relative"}>
           <Image
@@ -114,7 +122,6 @@ export const CardPost: FC<Props> = (props) => {
         onOpenUser={onOpenUser}
         isOpen={isOpen}
         isEditable={props.isEditable}
-        onOpen={onOpen}
         onClose={onClose}
         onLinkColor={onLinkColor}
         onLinkLabel={onLinkLabel}

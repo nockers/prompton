@@ -27,7 +27,7 @@ export const HomePostList: BlitzPage = () => {
   useEffect(() => {
     const refetchQueryInterval = setInterval(() => {
       refetch()
-    }, 8000)
+    }, 2 * 60 * 1000)
     return () => {
       clearInterval(refetchQueryInterval)
     }
