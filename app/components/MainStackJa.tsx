@@ -26,12 +26,12 @@ export const MainStackJa: FC<Props> = (props) => {
 
   const ogImageURL =
     props.fileId !== null
-      ? `${process.env.NEXT_PUBLIC_URL}/api/images/${props.fileId}?w=1024&h=630`
+      ? `${process.env.NEXT_PUBLIC_IMAGE_URL}/${props.fileId}?w=1024&h=630`
       : defaultOgImageURL
 
   const twitterImageURL =
     props.fileId !== null
-      ? `${process.env.NEXT_PUBLIC_URL}/api/images/${props.fileId}?w=300&h=157`
+      ? `${process.env.NEXT_PUBLIC_IMAGE_URL}/${props.fileId}?w=300&h=157`
       : defaultOgImageURL
 
   const defaultDescription = Config.siteDescriptionJA

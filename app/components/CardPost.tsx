@@ -76,7 +76,7 @@ export const CardPost: FC<Props> = (props) => {
           <Image
             w={"100%"}
             alt={""}
-            src={`/api/images/${props.postFileId}?w=512`}
+            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${props.postFileId}?w=512`}
             borderRadius={4}
           />
           <Box

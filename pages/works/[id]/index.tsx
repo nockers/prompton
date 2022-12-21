@@ -163,7 +163,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
             <Image
               w={"100%"}
               alt={""}
-              src={`/api/images/${data.work.fileId}?w=1024`}
+              src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${data.work.fileId}?w=1024`}
               borderRadius={4}
             />
           </Box>

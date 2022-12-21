@@ -18,7 +18,7 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
   },
   avatarImageURL(parent) {
     if (parent.avatarFileId !== null) {
-      return `/api/images/${parent.avatarFileId}?w=160&h=160`
+      return `${process.env.NEXT_PUBLIC_IMAGE_URL}/${parent.avatarFileId}?w=160&h=160`
     }
     return parent.avatarImageURL
   },
