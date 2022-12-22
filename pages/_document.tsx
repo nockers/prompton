@@ -5,12 +5,17 @@ import { theme } from "interface/theme"
 
 export const Document: FC = () => {
   const href =
-    "https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap"
+    "https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500;700&display=swap"
 
   return (
     <Html>
       <Head>
-        <link rel={"preconnect"} href={"https://fonts.gstatic.com"} />
+        <link rel={"preconnect"} href={"https://fonts.googleapis.com"} />
+        <link
+          rel={"preconnect"}
+          href={"https://fonts.gstatic.com"}
+          crossOrigin={""}
+        />
         <link href={href} rel={"stylesheet"} />
         <link rel={"icon"} href={"/favicon.ico"} />
         <link rel={"manifest"} href={"/manifest.json"} />

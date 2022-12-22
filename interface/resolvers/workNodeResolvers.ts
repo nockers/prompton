@@ -22,8 +22,12 @@ export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
   model(parent) {
     return parent.model
   },
-  likesCount(parent) {
-    return parent.likesCount
+  async likesCount(parent) {
+    const post = await db.post.findUnique({
+      where: { id: parent.id },
+      select: { _count: { select: { likes: true } } },
+    })
+    return post?._count.likes ?? 0
   },
   colors(parent) {
     return parent.colors
@@ -52,9 +56,21 @@ export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
   labels(parent) {
     return db.post.findUnique({ where: { id: parent.id } }).labels()
   },
-  async isLike(parent, _, ctx) {
+  async isLiked(parent, _, ctx) {
     if (ctx.currentUser === null) return false
     const like = await db.like.findUnique({
+      where: {
+        userId_postId: {
+          userId: ctx.currentUser!.uid,
+          postId: parent.id,
+        },
+      },
+    })
+    return like !== null
+  },
+  async isBookmarked(parent, _, ctx) {
+    if (ctx.currentUser === null) return false
+    const like = await db.bookmark.findUnique({
       where: {
         userId_postId: {
           userId: ctx.currentUser!.uid,

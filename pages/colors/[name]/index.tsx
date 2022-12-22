@@ -34,7 +34,7 @@ const ColorPage: BlitzPage<Props> = () => {
     skip: typeof router.query.name === "undefined",
     variables: {
       offset: 0,
-      limit: 2 * 9,
+      limit: 9 * 4,
       where: {
         color: router.query.name as string,
         labelName: null,

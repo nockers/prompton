@@ -5,7 +5,7 @@ export default gql`
     deleteWorkLike(input: $input) {
       id
       likesCount
-      isLike
+      isLiked
     }
   }
 `

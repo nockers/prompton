@@ -5,7 +5,7 @@ export default gql`
     createWorkLike(input: $input) {
       id
       likesCount
-      isLike
+      isLiked
     }
   }
 `

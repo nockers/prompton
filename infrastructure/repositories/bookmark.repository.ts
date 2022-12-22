@@ -1,11 +1,12 @@
-import { Id, LikeEntity } from "core"
+import type { LikeEntity } from "core"
+import { BookmarkEntity, Id } from "core"
 import db from "db"
 import { catchError } from "interface/utils/catchError"
 
-export class LikeRepository {
+export class BookmarkRepository {
   async find(userId: Id, postId: Id) {
     try {
-      const like = await db.like.findUnique({
+      const bookmark = await db.bookmark.findUnique({
         where: {
           userId_postId: {
             userId: userId.value,
@@ -14,14 +15,14 @@ export class LikeRepository {
         },
       })
 
-      if (like === null) {
+      if (bookmark === null) {
         return null
       }
 
-      return new LikeEntity({
-        id: new Id(like.id),
-        postId: new Id(like.postId),
-        userId: new Id(like.userId),
+      return new BookmarkEntity({
+        id: new Id(bookmark.id),
+        postId: new Id(bookmark.postId),
+        userId: new Id(bookmark.userId),
       })
     } catch (error) {
       return catchError(error)
@@ -32,7 +33,7 @@ export class LikeRepository {
     try {
       await db.post.update({
         data: {
-          likes: {
+          bookmarks: {
             create: {
               id: like.id.value,
               userId: like.userId.value,
@@ -54,7 +55,7 @@ export class LikeRepository {
       await db.post.update({
         where: { id: like.postId.value },
         data: {
-          likes: {
+          bookmarks: {
             delete: {
               userId_postId: {
                 userId: like.userId.value,

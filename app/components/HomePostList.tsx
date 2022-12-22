@@ -15,7 +15,7 @@ export const HomePostList: BlitzPage = () => {
     notifyOnNetworkStatusChange: true,
     variables: {
       offset: 0,
-      limit: 2 * 9,
+      limit: 9 * 4,
       where: null,
     },
   })

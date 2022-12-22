@@ -3,6 +3,7 @@ import type { User } from "firebase/auth"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import type { FC, ReactNode } from "react"
 import { useEffect, useState } from "react"
+import { Config } from "interface/config"
 import { AppContext } from "interface/contexts/appContext"
 
 type Props = {
@@ -17,7 +18,7 @@ export const AppContextProvider: FC<Props> = (props) => {
   const [currentUser, setCurrentUser] = useState<User | null>(null)
 
   useEffect(() => {
-    if (typeof window === "undefined") return
+    if (Config.isNotClient) return
     onAuthStateChanged(getAuth(), (user) => {
       setLoadingState(false)
       setCurrentUser(user)

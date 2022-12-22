@@ -10,9 +10,12 @@ import {
   Avatar,
   Box,
   Button,
+  Icon,
 } from "@chakra-ui/react"
 import type { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
+import { useContext, useEffect } from "react"
+import { BiBookmark, BiStar } from "react-icons/bi"
 import UserLayout from "app/[login]/layout"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
 import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"
@@ -24,7 +27,10 @@ import type {
   WorkQuery,
   WorkQueryVariables,
 } from "interface/__generated__/react"
-import { useWorksQuery } from "interface/__generated__/react"
+import {
+  useCreateWorkBookmarkMutation,
+  useDeleteWorkBookmarkMutation,
+} from "interface/__generated__/react"
 import {
   WorkDocument,
   useCreateWorkLikeMutation,
@@ -33,6 +39,7 @@ import {
   useWorkQuery,
 } from "interface/__generated__/react"
 import { Config } from "interface/config"
+import { AppContext } from "interface/contexts/appContext"
 import { client } from "interface/utils/client"
 
 type Props = {
@@ -44,13 +51,15 @@ type Paths = {
 }
 
 const WorkPage: BlitzPage<Props> = (props) => {
+  const appContext = useContext(AppContext)
+
   const router = useRouter()
 
   if (typeof window !== "undefined") {
     client.restore({ ...props.cache, ...client.extract() })
   }
 
-  const { data = null } = useWorkQuery({
+  const { data = null, refetch: refetchWork } = useWorkQuery({
     fetchPolicy: "cache-and-network",
     skip: typeof router.query.id === "undefined",
     variables: {
@@ -58,25 +67,27 @@ const WorkPage: BlitzPage<Props> = (props) => {
     },
   })
 
-  const { data: { works } = { works: [] } } = useWorksQuery({
-    fetchPolicy: "cache-and-network",
-    skip: typeof router.query.id === "undefined",
-    variables: {
-      offset: 0,
-      limit: 2 * 9,
-      where: {
-        color: null,
-        labelName: null,
-        userId: router.query.id?.toString() ?? "",
-      },
-    },
-  })
+  const [createWorkLike, { loading: isCreatingLike }] =
+    useCreateWorkLikeMutation()
 
-  const [createWorkLike] = useCreateWorkLikeMutation()
+  const [deleteWorkLike, { loading: isDeletingLike }] =
+    useDeleteWorkLikeMutation()
 
-  const [deleteWorkLike] = useDeleteWorkLikeMutation()
+  const [createWorkBookmark, { loading: isCreatingBookmark }] =
+    useCreateWorkBookmarkMutation()
+
+  const [deleteWorkBookmark, { loading: isDeletingBookmark }] =
+    useDeleteWorkBookmarkMutation()
 
   const [followUser] = useFollowUserMutation()
+
+  // ログイン情報が取得できたら再度データを取得する
+  useEffect(() => {
+    if (appContext.isLoading) return
+    refetchWork()
+    console.log("refetchWork")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appContext.isLoading])
 
   const onLinkColor = (color: string) => {
     router.push(`/colors/${color.replace("#", "")}`)
@@ -128,6 +139,26 @@ const WorkPage: BlitzPage<Props> = (props) => {
     }
   }
 
+  const onCreateBookmark = async () => {
+    try {
+      await createWorkBookmark({
+        variables: { input: { workId: data!.work!.id } },
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const onDeleteBookmark = async () => {
+    try {
+      await deleteWorkBookmark({
+        variables: { input: { workId: data!.work!.id } },
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   const onFollowUser = async () => {
     try {
       await followUser({
@@ -137,6 +168,10 @@ const WorkPage: BlitzPage<Props> = (props) => {
       console.error(error)
     }
   }
+
+  const isLoadingLike = isCreatingLike || isDeletingLike
+
+  const isLoadingBookmark = isCreatingBookmark || isDeletingBookmark
 
   if (router.isFallback) {
     return <MainFallback />
@@ -152,6 +187,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
       description={data.work.prompt || `${data.work.id}`}
       fileId={data.work.fileId}
     >
+      {appContext.isLoading ? "foo" : "bar"}
       <HStack justifyContent={"center"}>
         <Stack
           px={4}
@@ -183,15 +219,27 @@ const WorkPage: BlitzPage<Props> = (props) => {
               </Button>
             </HStack>
             <HStack spacing={4}>
-              <Button flex={1}>{"ブックマーク"}</Button>
               <Button
                 flex={1}
-                onClick={data.work.isLike ? onDeleteLike : onCreateLike}
-                colorScheme={data.work.isLike ? "blue" : "gray"}
+                isLoading={isLoadingBookmark}
+                leftIcon={<Icon as={BiBookmark} />}
+                onClick={
+                  data.work.isBookmarked ? onDeleteBookmark : onCreateBookmark
+                }
+                colorScheme={data.work.isBookmarked ? "blue" : "gray"}
+              >
+                {"ブックマーク"}
+              </Button>
+              <Button
+                flex={1}
+                isLoading={isLoadingLike}
+                leftIcon={<Icon as={BiStar} />}
+                onClick={data.work.isLiked ? onDeleteLike : onCreateLike}
+                colorScheme={data.work.isLiked ? "blue" : "gray"}
               >
                 {0 < data.work.likesCount
-                  ? `いいね +${data.work.likesCount}`
-                  : "いいね"}
+                  ? `スキ +${data.work.likesCount}`
+                  : "スキ"}
               </Button>
             </HStack>
             <Box bg={"blackAlpha.400"} p={4} rounded={"lg"}>

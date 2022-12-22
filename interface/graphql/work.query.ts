@@ -17,7 +17,8 @@ export default gql`
       annotationSpoof
       colors
       webColors
-      isLike
+      isLiked
+      isBookmarked
       labels {
         id
         name

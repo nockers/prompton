@@ -1,3 +1,4 @@
+export * from "./bookmark.repository"
 export * from "./friendship.repository"
 export * from "./label.repository"
 export * from "./like.repository"

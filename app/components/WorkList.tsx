@@ -16,7 +16,7 @@ export const UserWorkList: FC<Props> = (props) => {
     notifyOnNetworkStatusChange: true,
     variables: {
       offset: 0,
-      limit: 2 * 9,
+      limit: 9 * 4,
       where: {
         color: null,
         labelName: null,

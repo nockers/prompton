@@ -27,7 +27,7 @@ export const QueryResolvers = {
     })
   },
   async works(_: unknown, args: Partial<QueryWorksArgs>) {
-    const take = args.limit || 2 * 9
+    const take = args.limit || 9 * 4
     const skip = args.offset || 0
     if (typeof args.where?.userId === "string") {
       return db.post.findMany({

@@ -85,7 +85,11 @@ type WorkNode implements Node {
   """
   ログインしているユーザが作品に対していいね済みかどうか
   """
-  isLike: Boolean!
+  isLiked: Boolean!
+  """
+  ログインしているユーザが作品に対してブックマーク済みかどうか
+  """
+  isBookmarked: Boolean!
 }
 
 type WorkEdge implements Edge {
@@ -214,6 +218,14 @@ type Mutation {
   """
   deleteWorkLike(input: DeleteWorkLikeInput!): WorkNode
   """
+  作品のブックマークを作成する
+  """
+  createWorkBookmark(input: CreateWorkBookmarkInput!): WorkNode
+  """
+  作品のブックマークを削除する
+  """
+  deleteWorkBookmark(input: DeleteWorkBookmarkInput!): WorkNode
+  """
   ユーザをフォローする
   """
   followUser(input: FollowUserInput!): UserNode
@@ -237,6 +249,14 @@ input CreateWorkLikeInput {
 }
 
 input DeleteWorkLikeInput {
+  workId: String!
+}
+
+input CreateWorkBookmarkInput {
+  workId: String!
+}
+
+input DeleteWorkBookmarkInput {
   workId: String!
 }
 
