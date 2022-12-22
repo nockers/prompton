@@ -17,6 +17,8 @@ export default gql`
       annotationSpoof
       colors
       webColors
+      isLiked
+      isBookmarked
       labels {
         id
         name
@@ -26,6 +28,7 @@ export default gql`
         id
         name
         avatarImageURL
+        isFollower
       }
     }
   }

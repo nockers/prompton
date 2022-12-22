@@ -1,4 +1,4 @@
-import { Text, HStack, Avatar, Box, Button } from "@chakra-ui/react"
+import { Text, HStack, Avatar, Box } from "@chakra-ui/react"
 import type { FC } from "react"
 
 type Props = {
@@ -21,7 +21,6 @@ export const UserProfile: FC<Props> = (props) => {
           {props.userName}
         </Text>
       </Box>
-      <Button size={"sm"}>{"フォロー"}</Button>
     </HStack>
   )
 }

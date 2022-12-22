@@ -75,6 +75,7 @@ const ColorPage: BlitzPage<Props> = () => {
                 key={work.id}
                 postFileId={work.fileId}
                 postPrompt={work.prompt}
+                postLikeCount={work.likesCount}
                 postAnnotationAdult={work.annotationAdult}
                 postAnnotationMedical={work.annotationMedical}
                 postAnnotationRacy={work.annotationRacy}
@@ -89,6 +90,9 @@ const ColorPage: BlitzPage<Props> = () => {
                 userId={work.user.id}
                 userName={work.user.name}
                 userAvatarImageURL={work.user.avatarImageURL}
+                isLiked={work.isLiked}
+                isBookmarked={work.isBookmarked}
+                isFollower={work.user.isFollower}
                 isEditable={work.user.id === appContext.currentUser?.uid}
               />
             ))}

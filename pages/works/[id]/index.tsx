@@ -9,14 +9,15 @@ import {
   Wrap,
   Avatar,
   Box,
-  Button,
-  Icon,
+  useToast,
 } from "@chakra-ui/react"
 import type { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import { useContext, useEffect } from "react"
-import { BiBookmark, BiStar } from "react-icons/bi"
 import UserLayout from "app/[login]/layout"
+import { ButtonBookmark } from "app/components/ButtonBookmark"
+import { ButtonFollow } from "app/components/ButtonFollow"
+import { ButtonLike } from "app/components/ButtonLike"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
 import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"
 import { MainFallback } from "app/components/MainFallback"
@@ -86,6 +87,8 @@ const WorkPage: BlitzPage<Props> = (props) => {
   const [deleteWorkBookmark, { loading: isDeletingBookmark }] =
     useDeleteWorkBookmarkMutation()
 
+  const toast = useToast()
+
   // ログイン情報が取得できたら再度データを取得する
   useEffect(() => {
     if (appContext.isLoading) return
@@ -129,8 +132,11 @@ const WorkPage: BlitzPage<Props> = (props) => {
       await followUser({
         variables: { input: { userId: data!.work!.user.id } },
       })
+      toast({ status: "error", description: "フォローしました" })
     } catch (error) {
-      console.error(error)
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
     }
   }
 
@@ -140,7 +146,9 @@ const WorkPage: BlitzPage<Props> = (props) => {
         variables: { input: { userId: data!.work!.user.id } },
       })
     } catch (error) {
-      console.error(error)
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
     }
   }
 
@@ -150,7 +158,9 @@ const WorkPage: BlitzPage<Props> = (props) => {
         variables: { input: { workId: data!.work!.id } },
       })
     } catch (error) {
-      console.error(error)
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
     }
   }
 
@@ -160,7 +170,9 @@ const WorkPage: BlitzPage<Props> = (props) => {
         variables: { input: { workId: data!.work!.id } },
       })
     } catch (error) {
-      console.error(error)
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
     }
   }
 
@@ -170,7 +182,9 @@ const WorkPage: BlitzPage<Props> = (props) => {
         variables: { input: { workId: data!.work!.id } },
       })
     } catch (error) {
-      console.error(error)
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
     }
   }
 
@@ -180,7 +194,9 @@ const WorkPage: BlitzPage<Props> = (props) => {
         variables: { input: { workId: data!.work!.id } },
       })
     } catch (error) {
-      console.error(error)
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
     }
   }
 
@@ -197,6 +213,8 @@ const WorkPage: BlitzPage<Props> = (props) => {
   if (data === null || data.work === null) {
     return null
   }
+
+  const isSelf = data.work.user.id === appContext.currentUser?.uid
 
   return (
     <MainStack
@@ -231,41 +249,31 @@ const WorkPage: BlitzPage<Props> = (props) => {
               <Box flex={1} onClick={onOpenUser}>
                 <Text fontWeight={"bold"}>{data.work.user.name}</Text>
               </Box>
-              <Button
-                size={"sm"}
-                leftIcon={<Icon as={BiBookmark} />}
-                isLoading={isLoadingFriendship}
-                colorScheme={data.work.user.isFollower ? "pink" : "gray"}
-                onClick={
-                  data.work.user.isFollower ? onUnfollowUser : onFollowUser
-                }
-              >
-                {"フォロー"}
-              </Button>
+              {!isSelf && (
+                <ButtonFollow
+                  isLoading={isLoadingFriendship}
+                  isActive={data.work.user.isFollower}
+                  onFollow={onFollowUser}
+                  onUnfollow={onUnfollowUser}
+                />
+              )}
             </HStack>
             <HStack spacing={4}>
-              <Button
+              <ButtonBookmark
                 flex={1}
                 isLoading={isLoadingBookmark}
-                leftIcon={<Icon as={BiBookmark} />}
-                colorScheme={data.work.isBookmarked ? "blue" : "gray"}
-                onClick={
-                  data.work.isBookmarked ? onDeleteBookmark : onCreateBookmark
-                }
-              >
-                {"ブックマーク"}
-              </Button>
-              <Button
+                isActive={data.work.isBookmarked}
+                onCreate={onCreateBookmark}
+                onDelete={onDeleteBookmark}
+              />
+              <ButtonLike
                 flex={1}
+                count={data.work.likesCount}
                 isLoading={isLoadingLike}
-                leftIcon={<Icon as={BiStar} />}
-                colorScheme={data.work.isLiked ? "blue" : "gray"}
-                onClick={data.work.isLiked ? onDeleteLike : onCreateLike}
-              >
-                {0 < data.work.likesCount
-                  ? `スキ +${data.work.likesCount}`
-                  : "スキ"}
-              </Button>
+                isActive={data.work.isLiked}
+                onCreate={onCreateLike}
+                onDelete={onDeleteLike}
+              />
             </HStack>
             <Box bg={"blackAlpha.400"} p={4} rounded={"lg"}>
               <Text>{data.work.prompt ?? "No prompt"}</Text>

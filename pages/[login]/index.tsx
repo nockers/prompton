@@ -190,6 +190,7 @@ const UserPage: BlitzPage = () => {
                   key={work.id}
                   postFileId={work.fileId}
                   postPrompt={work.prompt}
+                  postLikeCount={work.likesCount}
                   postAnnotationAdult={work.annotationAdult}
                   postAnnotationMedical={work.annotationMedical}
                   postAnnotationRacy={work.annotationRacy}
@@ -204,6 +205,9 @@ const UserPage: BlitzPage = () => {
                   userId={user.id}
                   userName={user.name}
                   userAvatarImageURL={user.avatarImageURL}
+                  isLiked={false}
+                  isBookmarked={false}
+                  isFollower={false}
                   isEditable={user.id === appContext.currentUser?.uid}
                 />
               ))}

@@ -17,20 +17,34 @@ import {
   WrapItem,
   Box,
   ModalHeader,
+  useToast,
 } from "@chakra-ui/react"
 import type { FC } from "react"
+import { useContext } from "react"
 import { useState } from "react"
-import { BiBookmark, BiEdit, BiHeart } from "react-icons/bi"
+import { BiBookmark } from "react-icons/bi"
+import { ButtonFollow } from "app/components/ButtonFollow"
+import { ButtonLike } from "app/components/ButtonLike"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
 import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"
 import { UserProfile } from "app/components/UserProfile"
-import { useUpdateWorkMutation } from "interface/__generated__/react"
+import {
+  useCreateWorkBookmarkMutation,
+  useCreateWorkLikeMutation,
+  useDeleteWorkBookmarkMutation,
+  useDeleteWorkLikeMutation,
+  useFollowUserMutation,
+  useUnfollowUserMutation,
+  useUpdateWorkMutation,
+} from "interface/__generated__/react"
 import { Config } from "interface/config"
+import { AppContext } from "interface/contexts/appContext"
 
 type Props = {
   postId: string
   postFileId: string
   postPrompt: string | null
+  postLikeCount: number
   postAnnotationAdult: string | null
   postAnnotationMedical: string | null
   postAnnotationRacy: string | null
@@ -42,6 +56,9 @@ type Props = {
   userId: string
   userName: string
   userAvatarImageURL: string | null
+  isLiked: boolean
+  isBookmarked: boolean
+  isFollower: boolean
   isOpen: boolean
   isEditable: boolean
   onOpenUser(): void
@@ -52,6 +69,8 @@ type Props = {
 }
 
 export const ModalPost: FC<Props> = (props) => {
+  const appContext = useContext(AppContext)
+
   const margin = useBreakpointValue({ base: 0, md: 4 })
 
   const [updatePost] = useUpdateWorkMutation()
@@ -59,6 +78,26 @@ export const ModalPost: FC<Props> = (props) => {
   const [isEditable, setIsEditable] = useState(false)
 
   const [prompt, setPrompt] = useState(props.postPrompt ?? "")
+
+  const [followUser, { loading: isCreatingFriendship }] =
+    useFollowUserMutation()
+
+  const [unfollowUser, { loading: isDeletingFriendship }] =
+    useUnfollowUserMutation()
+
+  const [createWorkLike, { loading: isCreatingLike }] =
+    useCreateWorkLikeMutation()
+
+  const [deleteWorkLike, { loading: isDeletingLike }] =
+    useDeleteWorkLikeMutation()
+
+  const [createWorkBookmark, { loading: isCreatingBookmark }] =
+    useCreateWorkBookmarkMutation()
+
+  const [deleteWorkBookmark, { loading: isDeletingBookmark }] =
+    useDeleteWorkBookmarkMutation()
+
+  const toast = useToast()
 
   const onEdit = () => {
     setIsEditable((state) => !state)
@@ -74,6 +113,87 @@ export const ModalPost: FC<Props> = (props) => {
       },
     })
   }
+
+  const onFollowUser = async () => {
+    try {
+      await followUser({
+        variables: { input: { userId: props.userId } },
+      })
+      toast({ status: "error", description: "フォローしました" })
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
+    }
+  }
+
+  const onUnfollowUser = async () => {
+    try {
+      await unfollowUser({
+        variables: { input: { userId: props.userId } },
+      })
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
+    }
+  }
+
+  const onCreateLike = async () => {
+    try {
+      await createWorkLike({
+        variables: { input: { workId: props.postId } },
+      })
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
+    }
+  }
+
+  const onDeleteLike = async () => {
+    try {
+      await deleteWorkLike({
+        variables: { input: { workId: props.postId } },
+      })
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
+    }
+  }
+
+  const onCreateBookmark = async () => {
+    try {
+      await createWorkBookmark({
+        variables: { input: { workId: props.postId } },
+      })
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
+    }
+  }
+
+  const onDeleteBookmark = async () => {
+    try {
+      await deleteWorkBookmark({
+        variables: { input: { workId: props.postId } },
+      })
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
+    }
+  }
+
+  const isLoadingFriendship = isCreatingFriendship || isDeletingFriendship
+
+  const isLoadingLike = isCreatingLike || isDeletingLike
+
+  const isLoadingBookmark = isCreatingBookmark || isDeletingBookmark
+
+  const isSelf = props.userId === appContext.currentUser?.uid
 
   return (
     <Modal
@@ -147,29 +267,43 @@ export const ModalPost: FC<Props> = (props) => {
         </ModalBody>
         <ModalFooter px={4}>
           <HStack justifyContent={"space-between"} w={"100%"}>
-            <UserProfile
-              userId={props.userId}
-              userAvatarImageURL={props.userAvatarImageURL}
-              userName={props.userName}
-              onOpenUser={props.onOpenUser}
-            />
+            <HStack spacing={4}>
+              <UserProfile
+                userId={props.userId}
+                userAvatarImageURL={props.userAvatarImageURL}
+                userName={props.userName}
+                onOpenUser={props.onOpenUser}
+              />
+              {!isSelf && (
+                <ButtonFollow
+                  isLoading={isLoadingFriendship}
+                  isActive={props.isFollower}
+                  onFollow={onFollowUser}
+                  onUnfollow={onUnfollowUser}
+                />
+              )}
+            </HStack>
             <HStack>
-              <IconButton size={"sm"} onClick={props.onClose} aria-label={""}>
+              <IconButton
+                size={"sm"}
+                isLoading={isLoadingBookmark}
+                colorScheme={props.isBookmarked ? "blue" : "gray"}
+                onClick={
+                  props.isBookmarked ? onDeleteBookmark : onCreateBookmark
+                }
+                aria-label={""}
+              >
                 <Icon as={BiBookmark} />
               </IconButton>
               {!props.isEditable && (
-                <Button size={"sm"} leftIcon={<Icon as={BiHeart} />}>
-                  {"いいね"}
-                </Button>
-              )}
-              {props.isEditable && (
-                <Button
+                <ButtonLike
                   size={"sm"}
-                  leftIcon={<Icon as={BiEdit} />}
-                  onClick={onEdit}
-                >
-                  {isEditable ? "終了" : "編集"}
-                </Button>
+                  count={props.postLikeCount}
+                  isLoading={isLoadingLike}
+                  isActive={props.isLiked}
+                  onCreate={onCreateLike}
+                  onDelete={onDeleteLike}
+                />
               )}
             </HStack>
           </HStack>

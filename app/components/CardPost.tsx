@@ -16,6 +16,7 @@ type Props = {
   id: string
   postFileId: string
   postPrompt: string | null
+  postLikeCount: number
   postAnnotationAdult: string | null
   postAnnotationMedical: string | null
   postAnnotationRacy: string | null
@@ -27,6 +28,9 @@ type Props = {
   userId: string
   userName: string
   userAvatarImageURL: string | null
+  isLiked: boolean
+  isBookmarked: boolean
+  isFollower: boolean
   isEditable: boolean
 }
 
@@ -108,6 +112,7 @@ export const CardPost: FC<Props> = (props) => {
         postId={props.id}
         postFileId={props.postFileId}
         postPrompt={props.postPrompt}
+        postLikeCount={props.postLikeCount}
         postAnnotationAdult={props.postAnnotationAdult}
         postAnnotationMedical={props.postAnnotationMedical}
         postAnnotationRacy={props.postAnnotationRacy}
@@ -121,6 +126,9 @@ export const CardPost: FC<Props> = (props) => {
         userAvatarImageURL={props.userAvatarImageURL}
         onOpenUser={onOpenUser}
         isOpen={isOpen}
+        isLiked={props.isLiked}
+        isBookmarked={props.isBookmarked}
+        isFollower={props.isFollower}
         isEditable={props.isEditable}
         onClose={onClose}
         onLinkColor={onLinkColor}
