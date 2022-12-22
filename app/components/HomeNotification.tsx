@@ -5,7 +5,7 @@ type Props = {
   isJA: boolean
 }
 
-export const PageNotification: FC<Props> = (props) => {
+export const HomeNotification: FC<Props> = (props) => {
   const text = props.isJA
     ? "このサイトは現在、開発中のものです。"
     : "The website is currently under development."

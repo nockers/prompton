@@ -1,7 +1,6 @@
-import { Box, Stack } from "@chakra-ui/react"
+import { Stack } from "@chakra-ui/react"
 import Head from "next/head"
 import type { FC, ReactNode } from "react"
-import { PageNotification } from "app/components/PageNotification"
 import { Config } from "interface/config"
 
 type Props = {
@@ -51,9 +50,6 @@ export const MainStack: FC<Props> = (props) => {
         <meta name={"twitter:image"} content={twitterImageURL} />
       </Head>
       <Stack as={"main"} spacing={4} alignItems={"center"} pb={8}>
-        <Box px={4} w={"100%"} maxW={"container.xl"}>
-          <PageNotification isJA={false} />
-        </Box>
         {props.children}
       </Stack>
     </>
