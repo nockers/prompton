@@ -28,7 +28,7 @@ export default gql`
         id
         name
         avatarImageURL
-        isFollowee
+        isFollower
       }
     }
   }

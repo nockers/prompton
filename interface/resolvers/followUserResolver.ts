@@ -23,8 +23,8 @@ export const followUserResolver = async (
   const command = container.resolve(CreateFriendshipCommand)
 
   const output = await command.execute({
-    followeeId: args.input.userId,
-    followerId: ctx.currentUser.uid,
+    followeeId: ctx.currentUser.uid,
+    followerId: args.input.userId,
   })
 
   if (output instanceof Error) {

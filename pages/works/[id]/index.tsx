@@ -27,6 +27,8 @@ import type {
   WorkQuery,
   WorkQueryVariables,
 } from "interface/__generated__/react"
+import { useFollowUserMutation } from "interface/__generated__/react"
+import { useUnfollowUserMutation } from "interface/__generated__/react"
 import {
   useCreateWorkBookmarkMutation,
   useDeleteWorkBookmarkMutation,
@@ -35,7 +37,6 @@ import {
   WorkDocument,
   useCreateWorkLikeMutation,
   useDeleteWorkLikeMutation,
-  useFollowUserMutation,
   useWorkQuery,
 } from "interface/__generated__/react"
 import { Config } from "interface/config"
@@ -67,6 +68,12 @@ const WorkPage: BlitzPage<Props> = (props) => {
     },
   })
 
+  const [followUser, { loading: isCreatingFriendship }] =
+    useFollowUserMutation()
+
+  const [unfollowUser, { loading: isDeletingFriendship }] =
+    useUnfollowUserMutation()
+
   const [createWorkLike, { loading: isCreatingLike }] =
     useCreateWorkLikeMutation()
 
@@ -78,8 +85,6 @@ const WorkPage: BlitzPage<Props> = (props) => {
 
   const [deleteWorkBookmark, { loading: isDeletingBookmark }] =
     useDeleteWorkBookmarkMutation()
-
-  const [followUser] = useFollowUserMutation()
 
   // ログイン情報が取得できたら再度データを取得する
   useEffect(() => {
@@ -117,6 +122,26 @@ const WorkPage: BlitzPage<Props> = (props) => {
       "sharewindow",
       "width=550, height=450, personalbar=0, toolbar=0, scrollbars=1, resizable=!",
     )
+  }
+
+  const onFollowUser = async () => {
+    try {
+      await followUser({
+        variables: { input: { userId: data!.work!.user.id } },
+      })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const onUnfollowUser = async () => {
+    try {
+      await unfollowUser({
+        variables: { input: { userId: data!.work!.user.id } },
+      })
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   const onCreateLike = async () => {
@@ -159,15 +184,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
     }
   }
 
-  const onFollowUser = async () => {
-    try {
-      await followUser({
-        variables: { input: { userId: data!.work!.user!.id } },
-      })
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  const isLoadingFriendship = isCreatingFriendship || isDeletingFriendship
 
   const isLoadingLike = isCreatingLike || isDeletingLike
 
@@ -214,7 +231,15 @@ const WorkPage: BlitzPage<Props> = (props) => {
               <Box flex={1} onClick={onOpenUser}>
                 <Text fontWeight={"bold"}>{data.work.user.name}</Text>
               </Box>
-              <Button size={"sm"} onClick={onFollowUser}>
+              <Button
+                size={"sm"}
+                leftIcon={<Icon as={BiBookmark} />}
+                isLoading={isLoadingFriendship}
+                colorScheme={data.work.user.isFollower ? "pink" : "gray"}
+                onClick={
+                  data.work.user.isFollower ? onUnfollowUser : onFollowUser
+                }
+              >
                 {"フォロー"}
               </Button>
             </HStack>
@@ -223,10 +248,10 @@ const WorkPage: BlitzPage<Props> = (props) => {
                 flex={1}
                 isLoading={isLoadingBookmark}
                 leftIcon={<Icon as={BiBookmark} />}
+                colorScheme={data.work.isBookmarked ? "blue" : "gray"}
                 onClick={
                   data.work.isBookmarked ? onDeleteBookmark : onCreateBookmark
                 }
-                colorScheme={data.work.isBookmarked ? "blue" : "gray"}
               >
                 {"ブックマーク"}
               </Button>
@@ -234,8 +259,8 @@ const WorkPage: BlitzPage<Props> = (props) => {
                 flex={1}
                 isLoading={isLoadingLike}
                 leftIcon={<Icon as={BiStar} />}
-                onClick={data.work.isLiked ? onDeleteLike : onCreateLike}
                 colorScheme={data.work.isLiked ? "blue" : "gray"}
+                onClick={data.work.isLiked ? onDeleteLike : onCreateLike}
               >
                 {0 < data.work.likesCount
                   ? `スキ +${data.work.likesCount}`
