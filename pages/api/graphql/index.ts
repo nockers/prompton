@@ -4,22 +4,16 @@ import { startServerAndCreateNextHandler } from "@as-integrations/next"
 import { GraphQLFileLoader } from "@graphql-tools/graphql-file-loader"
 import { loadSchemaSync } from "@graphql-tools/load"
 import { addResolversToSchema } from "@graphql-tools/schema"
-import { cert, getApps, initializeApp } from "firebase-admin/app"
+import { getApps, initializeApp } from "firebase-admin/app"
 import { getAuth } from "firebase-admin/auth"
+import { Env } from "infrastructure/env"
 import { sentryPlugin } from "interface/plugins/sentryPlugin"
 import { resolvers } from "interface/resolvers/resolver"
 
 if (getApps().length === 0) {
-  const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!
-  const clientEmail = process.env.GOOGLE_CLIENT_EMAIL!
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY!
   initializeApp({
-    credential: cert({
-      clientEmail,
-      privateKey: privateKey.replace(/\\n/g, "\n").replace(/\\/g, ""),
-      projectId,
-    }),
-    storageBucket: `${projectId}.appspot.com`,
+    credential: Env.googleCredential,
+    storageBucket: Env.googleStorageBucket,
   })
 }
 
@@ -32,20 +26,6 @@ const server = new ApolloServer({
   introspection: true,
   plugins: [sentryPlugin],
 })
-
-if (getApps().length === 0) {
-  const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!
-  const clientEmail = process.env.GOOGLE_CLIENT_EMAIL!
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY!
-  initializeApp({
-    credential: cert({
-      clientEmail,
-      privateKey: privateKey.replace(/\\n/g, "\n").replace(/\\/g, ""),
-      projectId,
-    }),
-    storageBucket: `${projectId}.appspot.com`,
-  })
-}
 
 export default startServerAndCreateNextHandler(server, {
   async context(req) {

@@ -4,6 +4,7 @@ import type { GetStaticProps } from "next"
 import Link from "next/link"
 import type { FC } from "react"
 import { MainStack } from "app/components/MainStack"
+import { Env } from "infrastructure/env"
 import type { StrapiPosts } from "interface/types/strapiPosts"
 
 type Props = {
@@ -42,10 +43,10 @@ const BlogPage: FC<Props> = (props) => {
 export const getStaticProps: GetStaticProps<Props> = async () => {
   const result = await axios<StrapiPosts>({
     method: "GET",
-    baseURL: process.env.STRAPI_URL,
+    baseURL: Env.strapiApiUrl,
     url: "posts",
     headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
+      Authorization: `Bearer ${Env.strapiApiKey}`,
     },
   })
 

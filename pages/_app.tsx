@@ -25,8 +25,8 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout ?? ((page) => page)
 
   useEffect(() => {
-    if (typeof window === "undefined") return
-    if (process.env.NODE_ENV !== "production") return
+    if (Config.isNotClient) return
+    if (Config.isNotProduction) return
     const routeChangeComplete = () => {
       if (getApps().length === 0) return
       logEvent(getAnalytics(), "page_view", {
@@ -74,32 +74,21 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
 /**
  * Sentry
  */
-if (typeof window !== "undefined" && process.env.NODE_ENV === "production") {
-  init({
-    dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-    tracesSampleRate: 1.0,
-  })
+if (Config.isClient && Config.isProduction) {
+  init({ dsn: Config.sentryDSN, tracesSampleRate: 1.0 })
 }
 
 /**
  * Firebase
  */
-if (typeof window !== "undefined" && getApps().length === 0) {
-  initializeApp({
-    apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
-  })
-  if (process.env.NODE_ENV !== "production") {
+if (Config.isClient && getApps().length === 0) {
+  initializeApp(Config.firebaseOptions)
+  if (Config.isNotProduction) {
     setAnalyticsCollectionEnabled(getAnalytics(), false)
   }
 }
 
-if (typeof window !== "undefined" && location.href.includes("railway.app")) {
+if (Config.isClient && location.href.includes("railway.app")) {
   location.href = location.href.replace("prompt.up.railway.app", "prompton.io")
 }
 

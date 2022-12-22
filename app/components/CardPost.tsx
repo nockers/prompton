@@ -10,6 +10,7 @@ import {
 import { useRouter } from "next/router"
 import type { FC } from "react"
 import { ModalPost } from "app/components/ModalPost"
+import { Config } from "interface/config"
 
 type Props = {
   id: string
@@ -76,7 +77,7 @@ export const CardPost: FC<Props> = (props) => {
           <Image
             w={"100%"}
             alt={""}
-            src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${props.postFileId}?w=512`}
+            src={`${Config.imageUrl}/${props.postFileId}?w=512`}
             borderRadius={4}
           />
           <Box

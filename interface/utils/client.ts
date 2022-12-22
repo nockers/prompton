@@ -4,9 +4,10 @@ import { setContext } from "@apollo/client/link/context"
 import { offsetLimitPagination } from "@apollo/client/utilities"
 import { getApps } from "firebase/app"
 import { getAuth, getIdToken } from "firebase/auth"
+import { Config } from "interface/config"
 
 const httpLink = createHttpLink({
-  uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
+  uri: Config.graphqlEndpoint,
   credentials: "same-origin",
 })
 

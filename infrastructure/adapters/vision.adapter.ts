@@ -1,6 +1,7 @@
 import vision from "@google-cloud/vision"
 import { captureException } from "@sentry/node"
 import Color from "color"
+import { Env } from "infrastructure/env"
 
 export class VisionAdapter {
   /**
@@ -8,20 +9,14 @@ export class VisionAdapter {
    */
   async getLabels(fileId: string) {
     try {
-      const clientEmail = process.env.GOOGLE_CLIENT_EMAIL!
-
-      const privateKey = process.env.GOOGLE_PRIVATE_KEY!
-
       const client = new vision.ImageAnnotatorClient({
         credentials: {
-          client_email: clientEmail,
-          private_key: privateKey.replace(/\\n/g, "\n"),
+          client_email: Env.googleClientEmail,
+          private_key: Env.googlePrivateKey,
         },
       })
 
-      const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!
-
-      const filePath = `gs://${projectId}.appspot.com/${fileId}`
+      const filePath = `${Env.storageURL}/${fileId}`
 
       const [result] = await client.labelDetection(filePath)
 
@@ -50,20 +45,14 @@ export class VisionAdapter {
    */
   async getProperties(fileId: string) {
     try {
-      const clientEmail = process.env.GOOGLE_CLIENT_EMAIL!
-
-      const privateKey = process.env.GOOGLE_PRIVATE_KEY!
-
       const client = new vision.ImageAnnotatorClient({
         credentials: {
-          client_email: clientEmail,
-          private_key: privateKey.replace(/\\n/g, "\n"),
+          client_email: Env.googleClientEmail,
+          private_key: Env.googlePrivateKey,
         },
       })
 
-      const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!
-
-      const filePath = `gs://${projectId}.appspot.com/${fileId}`
+      const filePath = `${Env.storageURL}/${fileId}`
 
       const [result] = await client.imageProperties(filePath)
 
@@ -89,20 +78,14 @@ export class VisionAdapter {
 
   async getSafeSearchAnnotation(fileId: string) {
     try {
-      const clientEmail = process.env.GOOGLE_CLIENT_EMAIL!
-
-      const privateKey = process.env.GOOGLE_PRIVATE_KEY!
-
       const client = new vision.ImageAnnotatorClient({
         credentials: {
-          client_email: clientEmail,
-          private_key: privateKey.replace(/\\n/g, "\n"),
+          client_email: Env.googleClientEmail,
+          private_key: Env.googlePrivateKey,
         },
       })
 
-      const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!
-
-      const filePath = `gs://${projectId}.appspot.com/${fileId}`
+      const filePath = `${Env.storageURL}/${fileId}`
 
       const [result] = await client.safeSearchDetection(filePath)
 

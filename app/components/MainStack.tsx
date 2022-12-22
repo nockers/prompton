@@ -21,16 +21,16 @@ export const MainStack: FC<Props> = (props) => {
 
   const ogTitle = props.title !== null ? props.title : defaultTitle
 
-  const defaultOgImageURL = `${process.env.NEXT_PUBLIC_URL}/facebook.png`
+  const defaultOgImageURL = `${Config.imageUrl}/facebook.png`
 
   const ogImageURL =
     props.fileId !== null
-      ? `${process.env.NEXT_PUBLIC_IMAGE_URL}/${props.fileId}?w=1024&h=630`
+      ? `${Config.imageUrl}/${props.fileId}?w=1024&h=630`
       : defaultOgImageURL
 
   const twitterImageURL =
     props.fileId !== null
-      ? `${process.env.NEXT_PUBLIC_IMAGE_URL}/${props.fileId}?w=300&h=157`
+      ? `${Config.imageUrl}/${props.fileId}?w=300&h=157`
       : defaultOgImageURL
 
   const defaultDescription = Config.siteDescriptionEN

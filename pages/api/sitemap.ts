@@ -1,6 +1,7 @@
 import "reflect-metadata"
 import type { NextApiHandler } from "next"
 import db from "db"
+import { Env } from "infrastructure/env"
 
 const apiHandler: NextApiHandler = async (req, resp) => {
   try {
@@ -22,23 +23,18 @@ const apiHandler: NextApiHandler = async (req, resp) => {
     })
 
     const workURLs = posts.map((post) => {
-      return `${process.env.NEXT_PUBLIC_APP_URL}/works/${post.id}`
+      return `${Env.appURL}/works/${post.id}`
     })
 
     const labelURLs = labels.map((label) => {
-      return `${process.env.NEXT_PUBLIC_APP_URL}/labels/${label.name}`
+      return `${Env.appURL}/labels/${label.name}`
     })
 
     const userURLs = users.map((user) => {
-      return `${process.env.NEXT_PUBLIC_APP_URL}/${user.id}`
+      return `${Env.appURL}/${user.id}`
     })
 
-    const text = [
-      process.env.NEXT_PUBLIC_APP_URL,
-      ...workURLs,
-      ...labelURLs,
-      ...userURLs,
-    ].join("\n")
+    const text = [Env.appURL, ...workURLs, ...labelURLs, ...userURLs].join("\n")
 
     resp.end(text)
   } catch (error) {

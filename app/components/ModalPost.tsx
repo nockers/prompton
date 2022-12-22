@@ -25,6 +25,7 @@ import { ButtonLinkColor } from "app/components/ButtonLinkColor"
 import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"
 import { UserProfile } from "app/components/UserProfile"
 import { useUpdateWorkMutation } from "interface/__generated__/react"
+import { Config } from "interface/config"
 
 type Props = {
   postId: string
@@ -99,7 +100,7 @@ export const ModalPost: FC<Props> = (props) => {
           <Stack spacing={4}>
             <Image
               alt={""}
-              src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${props.postFileId}?w=512`}
+              src={`${Config.imageUrl}/${props.postFileId}?w=512`}
               borderRadius={8}
               w={"100%"}
             />

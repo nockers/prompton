@@ -1,5 +1,6 @@
 import type { User } from "db"
 import db from "db"
+import { Env } from "infrastructure/env"
 import type { UserNode } from "interface/__generated__/node"
 import type { PrismaResolvers } from "interface/resolvers/types/prismaResolvers"
 
@@ -18,7 +19,7 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
   },
   avatarImageURL(parent) {
     if (parent.avatarFileId !== null) {
-      return `${process.env.NEXT_PUBLIC_IMAGE_URL}/${parent.avatarFileId}?w=160&h=160`
+      return `${Env.imageUrl}/${parent.avatarFileId}?w=160&h=160`
     }
     return parent.avatarImageURL
   },

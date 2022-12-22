@@ -32,6 +32,7 @@ import {
   useFollowUserMutation,
   useWorkQuery,
 } from "interface/__generated__/react"
+import { Config } from "interface/config"
 import { client } from "interface/utils/client"
 
 type Props = {
@@ -163,7 +164,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
             <Image
               w={"100%"}
               alt={""}
-              src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${data.work.fileId}?w=1024`}
+              src={`${Config.imageUrl}/${data.work.fileId}?w=1024`}
               borderRadius={4}
             />
           </Box>

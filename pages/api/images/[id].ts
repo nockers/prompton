@@ -1,23 +1,17 @@
 import "reflect-metadata"
 import { tmpdir } from "os"
-import { cert, getApps, initializeApp } from "firebase-admin/app"
+import { getApps, initializeApp } from "firebase-admin/app"
 import { getStorage } from "firebase-admin/storage"
 import type { NextApiHandler } from "next"
 import sharp from "sharp"
+import { Env } from "infrastructure/env"
 
 const apiHandler: NextApiHandler = async (req, resp) => {
   try {
     if (getApps().length === 0) {
-      const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID!
-      const clientEmail = process.env.GOOGLE_CLIENT_EMAIL!
-      const privateKey = process.env.GOOGLE_PRIVATE_KEY!
       initializeApp({
-        credential: cert({
-          clientEmail,
-          privateKey: privateKey.replace(/\\n/g, "\n").replace(/\\/g, ""),
-          projectId,
-        }),
-        storageBucket: `${projectId}.appspot.com`,
+        credential: Env.googleCredential,
+        storageBucket: Env.googleStorageBucket,
       })
     }
 

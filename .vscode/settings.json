@@ -27,12 +27,14 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "cSpell.words": [
+    "appspot",
     "blitzjs",
     "chakra",
     "codegen",
     "followee",
     "followees",
     "prompton",
+    "strapi",
     "tsyringe",
     "unfollow"
   ],

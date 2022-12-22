@@ -16,6 +16,7 @@ import { BiChevronLeft } from "react-icons/bi"
 import { BoxMarkdown } from "app/components/BoxMarkdown"
 import { MainFallback } from "app/components/MainFallback"
 import { MainStack } from "app/components/MainStack"
+import { Env } from "infrastructure/env"
 import type { StrapiPosts } from "interface/types/strapiPosts"
 
 type Props = {
@@ -66,10 +67,10 @@ const BlogPostPage: FC<Props> = (props) => {
 export const getStaticPaths: GetStaticPaths<Paths> = async () => {
   const result = await axios<StrapiPosts>({
     method: "GET",
-    baseURL: process.env.STRAPI_URL,
+    baseURL: Env.strapiApiUrl,
     url: "posts",
     headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
+      Authorization: `Bearer ${Env.strapiApiKey}`,
     },
   })
 
@@ -87,10 +88,10 @@ export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {
 
   const result = await axios<StrapiPosts>({
     method: "GET",
-    baseURL: process.env.STRAPI_URL,
+    baseURL: Env.strapiApiUrl,
     url: `posts?filters[slug][$eq]=${context.params.slug}`,
     headers: {
-      Authorization: `Bearer ${process.env.STRAPI_API_KEY}`,
+      Authorization: `Bearer ${Env.strapiApiKey}`,
     },
   })
 
