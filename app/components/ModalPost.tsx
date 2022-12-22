@@ -278,6 +278,7 @@ export const ModalPost: FC<Props> = (props) => {
                 <ButtonFollow
                   isLoading={isLoadingFriendship}
                   isActive={props.isFollower}
+                  isDisabled={isSelf || appContext.currentUser === null}
                   onFollow={onFollowUser}
                   onUnfollow={onUnfollowUser}
                 />
@@ -287,6 +288,7 @@ export const ModalPost: FC<Props> = (props) => {
               <IconButton
                 size={"sm"}
                 isLoading={isLoadingBookmark}
+                isDisabled={appContext.currentUser === null}
                 colorScheme={props.isBookmarked ? "blue" : "gray"}
                 onClick={
                   props.isBookmarked ? onDeleteBookmark : onCreateBookmark
@@ -301,6 +303,7 @@ export const ModalPost: FC<Props> = (props) => {
                   count={props.postLikeCount}
                   isLoading={isLoadingLike}
                   isActive={props.isLiked}
+                  isDisabled={isSelf || appContext.currentUser === null}
                   onCreate={onCreateLike}
                   onDelete={onDeleteLike}
                 />

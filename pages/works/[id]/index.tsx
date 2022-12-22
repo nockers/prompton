@@ -253,6 +253,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
                 <ButtonFollow
                   isLoading={isLoadingFriendship}
                   isActive={data.work.user.isFollower}
+                  isDisabled={appContext.currentUser === null}
                   onFollow={onFollowUser}
                   onUnfollow={onUnfollowUser}
                 />
@@ -263,6 +264,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
                 flex={1}
                 isLoading={isLoadingBookmark}
                 isActive={data.work.isBookmarked}
+                isDisabled={appContext.currentUser === null}
                 onCreate={onCreateBookmark}
                 onDelete={onDeleteBookmark}
               />
@@ -271,6 +273,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
                 count={data.work.likesCount}
                 isLoading={isLoadingLike}
                 isActive={data.work.isLiked}
+                isDisabled={isSelf || appContext.currentUser === null}
                 onCreate={onCreateLike}
                 onDelete={onDeleteLike}
               />

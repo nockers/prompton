@@ -1,7 +1,8 @@
+import type { ButtonProps } from "@chakra-ui/react"
 import { Button } from "@chakra-ui/react"
 import type { FC } from "react"
 
-type Props = {
+type Props = ButtonProps & {
   isLoading: boolean
   isActive: boolean
   onFollow(): void
@@ -11,7 +12,7 @@ type Props = {
 export const ButtonFollow: FC<Props> = (props) => {
   return (
     <Button
-      size={"sm"}
+      {...props}
       isLoading={props.isLoading}
       colorScheme={props.isActive ? "pink" : "gray"}
       onClick={props.isActive ? props.onUnfollow : props.onFollow}
