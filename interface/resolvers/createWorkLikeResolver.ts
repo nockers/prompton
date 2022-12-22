@@ -3,15 +3,15 @@ import { GraphQLError } from "graphql"
 import { container } from "tsyringe"
 import db from "db"
 import type {
-  MutationCreatePostLikeArgs,
+  MutationCreateWorkLikeArgs,
   RequireFields,
 } from "interface/__generated__/node"
 import { CreatePostLikeCommand } from "service"
 import type { ApolloContext } from "types"
 
-export const createPostLikeResolver = async (
+export const createWorkLikeResolver = async (
   _: unknown,
-  args: RequireFields<MutationCreatePostLikeArgs, "input">,
+  args: RequireFields<MutationCreateWorkLikeArgs, "input">,
   ctx: ApolloContext,
 ) => {
   if (ctx.currentUser === null) {

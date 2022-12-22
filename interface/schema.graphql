@@ -12,27 +12,79 @@ input WorksWhereInput {
   userId: String
 }
 
+"""
+ログインしているユーザ
+"""
 type Viewer {
   works(offset: Int, limit: Int): [WorkNode!]!
 }
 
+"""
+作品
+"""
 type WorkNode implements Node {
   id: ID!
   createdAt: Int!
+  """
+  タイトル
+  """
   title: String
+  """
+  ファイルのID
+  """
   fileId: String!
+  """
+  プロンプト
+  """
   prompt: String
+  """
+  学習モデル
+  """
   model: String
+  """
+  いいね数
+  """
   likesCount: Int!
+  """
+  ユーザ
+  """
   user: UserNode!
+  """
+  関連する色
+  """
   colors: [String!]!
+  """
+  関連するWebカラー
+  """
   webColors: [String!]!
-  annotationAdult: String
-  annotationMedical: String
-  annotationRacy: String
-  annotationSpoof: String
-  annotationViolence: String
+  """
+  関連するラベル
+  """
   labels: [LabelNode!]!
+  """
+  セーフサーチ・アダルト関連の内容である可能性
+  """
+  annotationAdult: String
+  """
+  セーフサーチ・悪ふざけの内容である可能性
+  """
+  annotationSpoof: String
+  """
+  セーフサーチ・医療関連の内容である可能性
+  """
+  annotationMedical: String
+  """
+  セーフサーチ・性的な内容である可能性
+  """
+  annotationRacy: String
+
+  """
+  セーフサーチ・暴力的な内容である可能性
+  """
+  annotationViolence: String
+  """
+  ログインしているユーザが作品に対していいね済みかどうか
+  """
   isLike: Boolean!
 }
 
@@ -47,22 +99,61 @@ type WorksConnection implements Connection {
   edges: [WorkEdge!]!
 }
 
+"""
+ユーザ
+"""
 type UserNode implements Node {
   id: ID!
   createdAt: Int!
+  """
+  名前（日本語の使用が可能）
+  """
   name: String!
+  """
+  ログイン名（英数字のみ）
+  """
   login: String
+  """
+  アイコンのURL
+  """
   avatarImageURL: String
+  """
+  アイコンのファイルID
+  """
   avatarImageId: String
+  """
+  ヘッダー画像のURL
+  """
   headerImageId: String
+  """
+  自己紹介
+  """
   biography: String!
+  """
+  関連する作品
+  """
   works: [WorkNode!]!
+  """
+  フォローされている数
+  """
   followersCount: Int
+  """
+  フォローしている数
+  """
   followeesCount: Int
+  """
+  ログインしているユーザのフォローされているかどうか
+  """
   isFollower: Boolean!
+  """
+  ログインしているユーザがフォローしているかどうか
+  """
   isFollowee: Boolean!
 }
 
+"""
+リアクション
+"""
 type ReactionNode implements Node {
   id: ID!
   text: String!
@@ -71,6 +162,9 @@ type ReactionNode implements Node {
   isConnected: Boolean!
 }
 
+"""
+ラベル
+"""
 type LabelNode implements Node {
   id: ID!
   name: String!
@@ -95,13 +189,37 @@ type PageInfo {
 }
 
 type Mutation {
-  createWork(input: CreateWorkInput!): WorkNode!
-  updateWork(input: UpdateWorkInput!): WorkNode!
+  """
+  ユーザを作成する
+  """
   createUser(input: CreateUserInput!): Boolean
+  """
+  ユーザを更新する
+  """
   updateUser(input: UpdateUserInput!): Boolean
-  createPostLike(input: CreatePostLikeInput!): WorkNode
-  deletePostLike(input: DeletePostLikeInput!): WorkNode
+  """
+  作品を作成する
+  """
+  createWork(input: CreateWorkInput!): WorkNode!
+  """
+  作品を更新する
+  """
+  updateWork(input: UpdateWorkInput!): WorkNode!
+  """
+  作品のスキを作成する
+  """
+  createWorkLike(input: CreateWorkLikeInput!): WorkNode
+  """
+  作品のスキを削除する
+  """
+  deleteWorkLike(input: DeleteWorkLikeInput!): WorkNode
+  """
+  ユーザをフォローする
+  """
   followUser(input: FollowUserInput!): UserNode
+  """
+  ユーザのフォローは解除する
+  """
   unfollowUser(input: UnfollowUserInput!): UserNode
 }
 
@@ -114,11 +232,11 @@ input UpdateWorkInput {
   prompt: String
 }
 
-input CreatePostLikeInput {
+input CreateWorkLikeInput {
   workId: String!
 }
 
-input DeletePostLikeInput {
+input DeleteWorkLikeInput {
   workId: String!
 }
 
@@ -130,7 +248,12 @@ input UnfollowUserInput {
   userId: String!
 }
 
-input AddReactionInput {
+input CreateReactionInput {
+  workId: String!
+  text: String!
+}
+
+input DeleteReactionInput {
   workId: String!
   text: String!
 }

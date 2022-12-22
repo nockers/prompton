@@ -3,15 +3,15 @@ import { GraphQLError } from "graphql"
 import { container } from "tsyringe"
 import db from "db"
 import type {
-  MutationDeletePostLikeArgs,
+  MutationDeleteWorkLikeArgs,
   RequireFields,
 } from "interface/__generated__/node"
 import { DeletePostLikeCommand } from "service"
 import type { ApolloContext } from "types"
 
-export const deletePostLikeResolver = async (
+export const deleteWorkLikeResolver = async (
   _: unknown,
-  args: RequireFields<MutationDeletePostLikeArgs, "input">,
+  args: RequireFields<MutationDeleteWorkLikeArgs, "input">,
   ctx: ApolloContext,
 ) => {
   if (ctx.currentUser === null) {

@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client"
 
 export default gql`
-  mutation CreateWorkLike($input: CreatePostLikeInput!) {
-    createPostLike(input: $input) {
+  mutation CreateWorkLike($input: CreateWorkLikeInput!) {
+    createWorkLike(input: $input) {
       id
       likesCount
       isLike
