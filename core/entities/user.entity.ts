@@ -4,7 +4,7 @@ import { Biography, Email, Id, Name, Url, Username } from "core/valueObjects"
 const zProps = z.object({
   id: z.instanceof(Id),
   email: z.instanceof(Email).nullable(),
-  username: z.instanceof(Username).nullable(),
+  login: z.instanceof(Username).nullable(),
   name: z.instanceof(Name),
   biography: z.instanceof(Biography),
   headerImageId: z.instanceof(Id).nullable(),
@@ -31,7 +31,7 @@ export class UserEntity {
   /**
    * ユーザーID
    */
-  readonly username!: Props["username"]
+  readonly login!: Props["login"]
 
   /**
    * 表示名
@@ -69,7 +69,7 @@ export class UserEntity {
   }
 
   updateUsername(username: Username) {
-    return new UserEntity({ ...this.props, username })
+    return new UserEntity({ ...this.props, login: username })
   }
 
   update(input: {

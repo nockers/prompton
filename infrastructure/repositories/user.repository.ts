@@ -16,7 +16,7 @@ export class UserRepository {
       return new UserEntity({
         id: new Id(user.id),
         email: user.email ? new Email(user.email) : null,
-        username: user.login !== null ? new Username(user.login) : null,
+        login: user.login !== null ? new Username(user.login) : null,
         name: new Name(user.name),
         biography: new Biography(""),
         headerImageId: null,
@@ -43,7 +43,7 @@ export class UserRepository {
       return new UserEntity({
         id: new Id(user.id),
         email: user.email ? new Email(user.email) : null,
-        username: user.login !== null ? new Username(user.login) : null,
+        login: user.login !== null ? new Username(user.login) : null,
         name: new Name(user.name),
         biography: new Biography(""),
         headerImageId: null,
@@ -63,7 +63,7 @@ export class UserRepository {
         create: {
           id: entity.id.value,
           email: entity.email?.value,
-          login: entity.username?.value,
+          login: entity.login?.value,
           name: entity.name.value,
           avatarImageURL: entity.avatarImageURL?.value,
           avatarFileId: entity.avatarImageId?.value,
@@ -71,7 +71,7 @@ export class UserRepository {
         },
         update: {
           email: entity.email?.value,
-          login: entity.username?.value,
+          login: entity.login?.value,
           name: entity.name.value,
           avatarImageURL: entity.avatarImageURL?.value,
           avatarFileId: entity.avatarImageId?.value,

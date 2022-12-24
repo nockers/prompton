@@ -25,7 +25,7 @@ export class CreateUserCommand {
         avatarImageURL:
           props.userAvatarURL !== null ? new Url(props.userAvatarURL) : null,
         name: new Name(props.userName),
-        username: null,
+        login: null,
       })
 
       const transaction = await this.userRepository.persist(draftUser)

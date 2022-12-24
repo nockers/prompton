@@ -1,6 +1,6 @@
 import type { NotificationEntity } from "core"
 import db from "db"
-import { catchError } from "interface/utils/catchError"
+import { catchError } from "infrastructure/utils/catchError"
 
 export class NotificationRepository {
   async upsert(notification: NotificationEntity) {

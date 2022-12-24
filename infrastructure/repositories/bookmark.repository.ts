@@ -1,7 +1,7 @@
 import type { LikeEntity } from "core"
 import { BookmarkEntity, Id } from "core"
 import db from "db"
-import { catchError } from "interface/utils/catchError"
+import { catchError } from "infrastructure/utils/catchError"
 
 export class BookmarkRepository {
   async find(userId: Id, postId: Id) {

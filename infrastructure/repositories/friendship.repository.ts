@@ -1,7 +1,7 @@
 import { FriendshipEntity } from "core"
 import { Id } from "core/valueObjects"
 import db from "db"
-import { catchError } from "interface/utils/catchError"
+import { catchError } from "infrastructure/utils/catchError"
 
 export class FriendshipRepository {
   async find(followerId: Id, followeeId: Id) {
