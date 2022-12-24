@@ -20,8 +20,7 @@ import {
   useToast,
 } from "@chakra-ui/react"
 import type { FC } from "react"
-import { useContext } from "react"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { BiBookmark } from "react-icons/bi"
 import { ButtonFollow } from "app/components/ButtonFollow"
 import { ButtonLike } from "app/components/ButtonLike"
@@ -75,7 +74,7 @@ export const ModalPost: FC<Props> = (props) => {
 
   const [updatePost] = useUpdateWorkMutation()
 
-  const [isEditable, setIsEditable] = useState(false)
+  const [isEditable] = useState(false)
 
   const [prompt, setPrompt] = useState(props.postPrompt ?? "")
 
@@ -99,9 +98,9 @@ export const ModalPost: FC<Props> = (props) => {
 
   const toast = useToast()
 
-  const onEdit = () => {
-    setIsEditable((state) => !state)
-  }
+  // const onEdit = () => {
+  //   setIsEditable((state) => !state)
+  // }
 
   const onBlur = async () => {
     await updatePost({

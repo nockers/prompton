@@ -1,21 +1,36 @@
 import { injectable } from "tsyringe"
-import { UserCreatedEvent, Biography, UserEntity } from "core"
+import type { UserEvent } from "core"
+import {
+  UserCreatedEvent,
+  Biography,
+  UserEntity,
+  UserLoginUpdatedEvent,
+  UserProfileUpdatedEvent,
+} from "core"
 import { UserRepository } from "infrastructure/repositories"
 
 @injectable()
 export class UserEventStore {
-  constructor(private userRepository: UserRepository) {}
+  constructor(private repository: UserRepository) {}
 
-  execute(event: UserCreatedEvent) {
+  execute(event: UserEvent) {
     if (event.type === UserCreatedEvent.type) {
       return this.created(event)
+    }
+
+    if (event.type === UserLoginUpdatedEvent.type) {
+      return this.loginUpdated(event)
+    }
+
+    if (event.type === UserProfileUpdatedEvent.type) {
+      return this.profileUpdated(event)
     }
 
     return null
   }
 
   async created(event: UserCreatedEvent) {
-    const user = new UserEntity({
+    const draftUser = new UserEntity({
       id: event.userId,
       email: event.email,
       biography: new Biography(""),
@@ -26,8 +41,30 @@ export class UserEventStore {
       login: null,
     })
 
-    await this.userRepository.persist(user)
+    return this.repository.persist(draftUser)
+  }
 
+  async loginUpdated(event: UserLoginUpdatedEvent) {
+    event
     return null
+  }
+
+  async profileUpdated(event: UserProfileUpdatedEvent) {
+    const user = await this.repository.find(event.userId)
+
+    if (user === null) {
+      return new Error()
+    }
+
+    if (user instanceof Error) {
+      return new Error()
+    }
+
+    const draftUser = user.update({
+      avatarImageId: event.avatarImageId ? event.avatarImageId : null,
+      name: event.name,
+    })
+
+    return this.repository.persist(draftUser)
   }
 }

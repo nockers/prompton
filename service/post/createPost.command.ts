@@ -1,8 +1,12 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
-import { Id, IdFactory, LabelEntity, PostEntity } from "core"
-import { LabelRepository, PostRepository, VisionAdapter } from "infrastructure"
-import { toWebColor } from "infrastructure/utils/toWebColor"
+import { Id, IdFactory, PostCreatedEvent } from "core"
+import {
+  EventStore,
+  LabelRepository,
+  PostRepository,
+  VisionAdapter,
+} from "infrastructure"
 
 type Props = {
   userId: string
@@ -12,6 +16,7 @@ type Props = {
 @injectable()
 export class CreatePostCommand {
   constructor(
+    private eventStore: EventStore,
     private labelRepository: LabelRepository,
     private visionAdapter: VisionAdapter,
     private postRepository: PostRepository,
@@ -19,75 +24,18 @@ export class CreatePostCommand {
 
   async execute(props: Props) {
     try {
-      const colors = await this.visionAdapter.getProperties(props.postFileId)
+      const postId = IdFactory.create()
 
-      if (colors instanceof Error) {
-        return new Error()
-      }
-
-      if (colors instanceof Error) {
-        return new Error()
-      }
-
-      const allWebColors = colors.map((color) => {
-        return toWebColor(color)
-      })
-
-      const webColors = Array.from(new Set(allWebColors))
-
-      const annotation = await this.visionAdapter.getSafeSearchAnnotation(
-        props.postFileId,
-      )
-
-      if (annotation instanceof Error) {
-        return new Error()
-      }
-
-      const labelTexts = await this.visionAdapter.getLabels(props.postFileId)
-
-      if (labelTexts instanceof Error) {
-        return new Error()
-      }
-
-      for (const labelText of labelTexts) {
-        const label = new LabelEntity({
-          id: IdFactory.create(),
-          name: labelText,
-        })
-        await this.labelRepository.persist(label)
-      }
-
-      const labels = await this.labelRepository.findManyByNames(labelTexts)
-
-      if (labels instanceof Error) {
-        return new Error()
-      }
-
-      const draftPost = new PostEntity({
+      const event = new PostCreatedEvent({
         id: IdFactory.create(),
-        title: null,
+        postId: postId,
         fileId: new Id(props.postFileId),
         userId: new Id(props.userId),
-        prompt: null,
-        colors: colors,
-        webColors: webColors,
-        annotationAdult: annotation.adult,
-        annotationMedical: annotation.medical,
-        annotationRacy: annotation.racy,
-        annotationSpoof: annotation.spoof,
-        annotationViolence: annotation.violence,
-        labelIds: labels.map((label) => {
-          return label.id
-        }),
       })
 
-      const transaction = await this.postRepository.persist(draftPost)
+      await this.eventStore.commit(event)
 
-      if (transaction instanceof Error) {
-        return new Error()
-      }
-
-      return { postId: draftPost.id.value }
+      return { postId }
     } catch (error) {
       captureException(error)
       return new Error()

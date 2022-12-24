@@ -34,6 +34,6 @@ export const createWorkResolver = async (
   }
 
   return db.post.findUnique({
-    where: { id: output.postId },
+    where: { id: output.postId.value },
   })
 }

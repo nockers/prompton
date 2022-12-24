@@ -50,6 +50,10 @@ export class Env {
     })
   }
 
+  static get eventToken() {
+    return process.env.EVENT_TOKEN
+  }
+
   static get appURL() {
     return process.env.NEXT_PUBLIC_APP_URL!
   }

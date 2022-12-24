@@ -1,6 +1,5 @@
 import { injectable } from "tsyringe"
 import type { Id } from "core"
-
 import type { DomainEvent } from "core/events/domainEvent"
 import db from "db"
 import { EventConverter } from "infrastructure/converters"
@@ -42,6 +41,7 @@ export class EventRepository {
 
       return EventConverter.toEntity(event)
     } catch (error) {
+      console.log(error)
       return catchError(error)
     }
   }

@@ -6,15 +6,15 @@ import type { NextApiHandler } from "next"
 import sharp from "sharp"
 import { Env } from "infrastructure/env"
 
+if (getApps().length === 0) {
+  initializeApp({
+    credential: Env.googleCredential,
+    storageBucket: Env.googleStorageBucket,
+  })
+}
+
 const apiHandler: NextApiHandler = async (req, resp) => {
   try {
-    if (getApps().length === 0) {
-      initializeApp({
-        credential: Env.googleCredential,
-        storageBucket: Env.googleStorageBucket,
-      })
-    }
-
     if (typeof req.query.id !== "string") {
       resp.status(500).end()
       return

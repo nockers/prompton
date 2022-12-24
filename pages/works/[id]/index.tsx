@@ -28,13 +28,11 @@ import type {
   WorkQuery,
   WorkQueryVariables,
 } from "interface/__generated__/react"
-import { useFollowUserMutation } from "interface/__generated__/react"
-import { useUnfollowUserMutation } from "interface/__generated__/react"
 import {
+  useFollowUserMutation,
+  useUnfollowUserMutation,
   useCreateWorkBookmarkMutation,
   useDeleteWorkBookmarkMutation,
-} from "interface/__generated__/react"
-import {
   WorkDocument,
   useCreateWorkLikeMutation,
   useDeleteWorkLikeMutation,

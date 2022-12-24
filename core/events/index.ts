@@ -1,4 +1,5 @@
 export * from "./bookmark"
+export * from "./domainEvent"
 export * from "./friendship"
 export * from "./label"
 export * from "./like"

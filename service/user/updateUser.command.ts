@@ -1,7 +1,7 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
-import { Id, Name } from "core"
-import { UserRepository } from "infrastructure"
+import { Biography, Id, IdFactory, Name, UserProfileUpdatedEvent } from "core"
+import { EventStore, UserRepository } from "infrastructure"
 
 type Props = {
   userId: string
@@ -11,7 +11,10 @@ type Props = {
 
 @injectable()
 export class UpdateUserCommand {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private eventStore: EventStore,
+    private userRepository: UserRepository,
+  ) {}
 
   async execute(props: Props) {
     try {
@@ -25,18 +28,19 @@ export class UpdateUserCommand {
         return new Error()
       }
 
-      const draftUser = user.update({
+      const event = new UserProfileUpdatedEvent({
+        id: IdFactory.create(),
+        userId: user.id,
+        name: new Name(props.userName),
+        biography: new Biography(""),
+        headerImageId: null,
+        avatarImageURL: null,
         avatarImageId: props.userAvatarFileId
           ? new Id(props.userAvatarFileId)
           : null,
-        name: new Name(props.userName),
       })
 
-      const transaction = await this.userRepository.persist(draftUser)
-
-      if (transaction instanceof Error) {
-        return new Error()
-      }
+      await this.eventStore.commit(event)
 
       return null
     } catch (error) {
