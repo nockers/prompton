@@ -18,7 +18,7 @@ export const HomeLabelList: BlitzPage = () => {
         <HStack>
           {data?.labels.map((label) => (
             <Link key={label.id} href={`/labels/${label.name}`}>
-              <Button size={"sm"}>{`#${label.name}`}</Button>
+              <Button size={"sm"}>{`#${label.nameJA || label.name}`}</Button>
             </Link>
           ))}
           {/** for right-side padding */}

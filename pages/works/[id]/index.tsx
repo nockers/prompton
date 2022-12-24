@@ -91,7 +91,6 @@ const WorkPage: BlitzPage<Props> = (props) => {
   useEffect(() => {
     if (appContext.isLoading) return
     refetchWork()
-    console.log("refetchWork")
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appContext.isLoading])
 

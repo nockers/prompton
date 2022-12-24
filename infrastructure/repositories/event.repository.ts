@@ -41,7 +41,6 @@ export class EventRepository {
 
       return EventConverter.toEntity(event)
     } catch (error) {
-      console.log(error)
       return catchError(error)
     }
   }

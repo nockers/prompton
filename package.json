@@ -23,6 +23,7 @@
     "@chakra-ui/react": "^2.4.4",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@google-cloud/translate": "^7.0.5",
     "@google-cloud/vision": "^3.0.1",
     "@next/bundle-analyzer": "^13.0.7",
     "@prisma/client": "^4.7.1",

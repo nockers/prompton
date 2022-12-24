@@ -16,6 +16,7 @@ export class LabelRepository {
       return new LabelEntity({
         id: new Id(label.id),
         name: label.name,
+        nameJA: label.nameJA,
       })
     } catch (error) {
       captureException(error)
@@ -33,6 +34,7 @@ export class LabelRepository {
         return new LabelEntity({
           id: new Id(label.id),
           name: label.name,
+          nameJA: label.nameJA,
         })
       })
     } catch (error) {
@@ -48,7 +50,9 @@ export class LabelRepository {
           id: entity.id.value,
           name: entity.name,
         },
-        update: {},
+        update: {
+          nameJA: entity.nameJA,
+        },
         where: { name: entity.name },
       })
 

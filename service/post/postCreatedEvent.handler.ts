@@ -1,7 +1,7 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
 import type { PostCreatedEvent } from "core"
-import { IdFactory, LabelEntity, PostAnnotationsUpdatedEvent } from "core"
+import { LabelCreatedEvent, IdFactory, PostAnnotationsUpdatedEvent } from "core"
 import {
   EventStore,
   LabelRepository,
@@ -59,11 +59,13 @@ export class PostCreatedEventHandler {
       }
 
       for (const labelText of labelTexts) {
-        const label = new LabelEntity({
+        const event = new LabelCreatedEvent({
           id: IdFactory.create(),
+          labelId: IdFactory.create(),
           name: labelText,
+          nameJA: null,
         })
-        await this.labelRepository.persist(label)
+        await this.eventStore.commit(event)
       }
 
       const labels = await this.labelRepository.findManyByNames(labelTexts)

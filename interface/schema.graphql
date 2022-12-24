@@ -172,6 +172,7 @@ type ReactionNode implements Node {
 type LabelNode implements Node {
   id: ID!
   name: String!
+  nameJA: String
   works: [WorkNode!]!
   count: Int!
 }

@@ -5,32 +5,8 @@ export default gql`
     labels(offset: $offset, limit: $limit) {
       id
       name
+      nameJA
       count
-      works {
-        id
-        createdAt
-        title
-        fileId
-        likesCount
-        prompt
-        model
-        annotationAdult
-        annotationMedical
-        annotationViolence
-        annotationRacy
-        annotationSpoof
-        colors
-        webColors
-        labels {
-          id
-          name
-        }
-        user {
-          id
-          name
-          avatarImageURL
-        }
-      }
     }
   }
 `
