@@ -1,11 +1,21 @@
 import type { BlitzPage } from "@blitzjs/auth"
-import { Box, HStack, Stack, useDisclosure, useToast } from "@chakra-ui/react"
+import {
+  Box,
+  HStack,
+  Stack,
+  useDisclosure,
+  useToast,
+  Text,
+  Input,
+  Button,
+  Avatar,
+} from "@chakra-ui/react"
 import type { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import { useContext, useState } from "react"
+import { BiEdit } from "react-icons/bi"
 import { UploadDropzone } from "app/[login]/components/UploadDropzone"
-import { UserHeaderProfile } from "app/[login]/components/UserHeaderProfile"
-import { UserModalProfile } from "app/[login]/components/UserModalProfile"
+import { UserAvatarDropzone } from "app/[login]/components/UserAvatarDropzone"
 import UserLayout from "app/[login]/layout"
 import UserLoading from "app/[login]/loading"
 import { CardPost } from "app/components/CardPost"
@@ -116,6 +126,10 @@ const UserPage: BlitzPage = () => {
   }
 
   const onEditProfile = () => {
+    if (isOpenModalProfile) {
+      onCloseModalProfile()
+      return
+    }
     onOpenModalProfile()
   }
 
@@ -167,19 +181,68 @@ const UserPage: BlitzPage = () => {
       fileId={null}
     >
       <Box maxW={"container.xl"} px={4} w={"100%"}>
-        <UserHeaderProfile
-          avatarImageURL={user.avatarImageURL}
-          userId={user.id}
-          userName={user.name}
-          isEditable={isEditable}
-          onEdit={onEditProfile}
-        />
+        <HStack
+          spacing={4}
+          py={4}
+          px={isOpenModalProfile ? 4 : 0}
+          borderRadius={"lg"}
+          justifyContent={"space-between"}
+          alignItems={"flex-start"}
+          background={isOpenModalProfile ? "blackAlpha.400" : "transparent"}
+        >
+          {isOpenModalProfile && (
+            <Stack flex={1} borderRadius={"lg"}>
+              <Text>{"プロフィール更新"}</Text>
+              <HStack spacing={4} flex={1}>
+                <UserAvatarDropzone
+                  avatarImageURL={user.avatarImageURL}
+                  isLoading={false}
+                  onChange={onChangeAvatarFileId}
+                />
+                <Stack w={"100%"} maxW={"sm"}>
+                  <Input
+                    placeholder={"ユーザ名"}
+                    defaultValue={user.name}
+                    onBlur={(event) => {
+                      onChangeName(event.target.value)
+                    }}
+                  />
+                </Stack>
+              </HStack>
+            </Stack>
+          )}
+          {!isOpenModalProfile && (
+            <Stack flex={1}>
+              <HStack flex={1} spacing={4}>
+                <Avatar size={"lg"} src={user.avatarImageURL || ""} />
+                <Stack spacing={1}>
+                  <Text fontSize={"xs"} fontWeight={"bold"} opacity={0.8}>
+                    {`@${user.id}`}
+                  </Text>
+                  <Text fontSize={"2xl"} lineHeight={1} fontWeight={"bold"}>
+                    {user.name}
+                  </Text>
+                </Stack>
+              </HStack>
+            </Stack>
+          )}
+          <Stack alignItems={"flex-start"}>
+            <Button
+              aria-label={""}
+              size={"sm"}
+              rightIcon={<BiEdit />}
+              onClick={onEditProfile}
+            >
+              {isOpenModalProfile ? "閉じる" : "編集"}
+            </Button>
+          </Stack>
+        </HStack>
       </Box>
-      <Box px={4} maxW={"container.xl"} w={"100%"}>
-        {isEditable && (
+      {isEditable && (
+        <Box px={4} maxW={"container.xl"} w={"100%"}>
           <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
-        )}
-      </Box>
+        </Box>
+      )}
       <HStack justifyContent={"center"}>
         <HStack px={4} maxW={"container.xl"} alignItems={"flex-start"}>
           {toColumnArray(user.works, columnCount).map((column, index) => (
@@ -215,14 +278,6 @@ const UserPage: BlitzPage = () => {
           ))}
         </HStack>
       </HStack>
-      <UserModalProfile
-        userName={user.name}
-        userAvatarFileURL={user.avatarImageURL}
-        isOpen={isOpenModalProfile}
-        onClose={onCloseModalProfile}
-        onChangeAvatarFileId={onChangeAvatarFileId}
-        onChangeName={onChangeName}
-      />
     </MainStack>
   )
 }
