@@ -37,6 +37,7 @@ export class CreateLabelsCommand {
         const label = new LabelEntity({
           id: IdFactory.create(),
           name: labelText,
+          nameJA: null,
         })
         await this.labelRepository.persist(label)
       }

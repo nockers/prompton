@@ -10,6 +10,9 @@ export const LabelNodeResolvers: PrismaResolvers<LabelNode, Label> = {
   name(parent) {
     return parent.name
   },
+  nameJA(parent) {
+    return parent.nameJA
+  },
   async count(parent) {
     const label = await db.label.findUnique({
       where: { id: parent.id },
