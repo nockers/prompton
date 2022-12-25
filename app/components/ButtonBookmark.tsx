@@ -11,13 +11,15 @@ type Props = ButtonProps & {
 }
 
 export const ButtonBookmark: FC<Props> = (props) => {
+  const { isLoading, isActive, onCreate, onDelete, ...others } = props
+
   return (
     <Button
-      {...props}
+      {...others}
       leftIcon={<Icon as={BiBookmark} />}
-      isLoading={props.isLoading}
-      colorScheme={props.isActive ? "blue" : "gray"}
-      onClick={props.isActive ? props.onDelete : props.onCreate}
+      isLoading={isLoading}
+      colorScheme={isActive ? "blue" : "gray"}
+      onClick={isActive ? onDelete : onCreate}
     >
       {"ブックマーク"}
     </Button>

@@ -1,4 +1,4 @@
-import { Button, HStack, Icon, IconButton } from "@chakra-ui/react"
+import { Button, HStack, Icon, IconButton, Tooltip } from "@chakra-ui/react"
 import Link from "next/link"
 import type { FC } from "react"
 import { useContext } from "react"
@@ -36,9 +36,11 @@ export const HomeHeaderLogin: FC<Props> = (props) => {
         <Button fontSize={14}>{"マイページ"}</Button>
       </Link>
       <Link href={"/settings"}>
-        <IconButton aria-label={""}>
-          <Icon as={BiCog} />
-        </IconButton>
+        <Tooltip label={"設定"}>
+          <IconButton aria-label={""}>
+            <Icon as={BiCog} />
+          </IconButton>
+        </Tooltip>
       </Link>
     </HStack>
   )
