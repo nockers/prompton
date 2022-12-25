@@ -8,7 +8,7 @@ export const HomeLabelList: BlitzPage = () => {
     fetchPolicy: "cache-and-network",
     variables: {
       offset: 0,
-      limit: 8,
+      limit: 40,
     },
   })
 

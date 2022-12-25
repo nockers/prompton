@@ -3,16 +3,20 @@ import { GraphQLError } from "graphql"
 import db from "db"
 import type {
   QueryLabelArgs,
+  QueryLabelsArgs,
   QueryUserArgs,
   QueryWorkArgs,
   QueryWorksArgs,
 } from "interface/__generated__/node"
 
 export const QueryResolvers = {
-  labels() {
+  labels(_: unknown, args: Partial<QueryLabelsArgs>) {
+    const take = args.limit || 9 * 4
+    const skip = args.offset || 0
     return db.label.findMany({
       orderBy: { posts: { _count: "desc" } },
-      take: 16,
+      take: take,
+      skip: skip,
     })
   },
   label(_: unknown, args: Partial<QueryLabelArgs>) {

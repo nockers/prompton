@@ -73,8 +73,7 @@ export const CardPost: FC<Props> = (props) => {
         display={"block"}
         key={props.id}
         h={"auto"}
-        colorScheme={isOpen ? "blue" : "gray"}
-        p={1}
+        p={0}
         onClick={onOpenWork}
       >
         <Box position={"relative"}>

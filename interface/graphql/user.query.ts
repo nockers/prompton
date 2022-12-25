@@ -28,6 +28,7 @@ export default gql`
         labels {
           id
           name
+          nameJA
           count
         }
       }

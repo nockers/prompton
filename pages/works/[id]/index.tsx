@@ -220,7 +220,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
       fileId={data.work.fileId}
     >
       {appContext.isLoading ? "foo" : "bar"}
-      <HStack justifyContent={"center"}>
+      <HStack justifyContent={"center"} w={"100%"}>
         <Stack
           px={4}
           maxW={"container.xl"}
@@ -228,11 +228,12 @@ const WorkPage: BlitzPage<Props> = (props) => {
           w={"100%"}
           spacing={4}
         >
-          <Box flex={1}>
+          <Box flex={1} w={"100%"}>
             <Image
               w={"100%"}
               alt={""}
               src={`${Config.imageUrl}/${data.work.fileId}?w=1024`}
+              fallbackSrc={`${Config.imageUrl}/${data.work.fileId}?w=512`}
               borderRadius={4}
             />
           </Box>
@@ -284,7 +285,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
                 {data.work.labels.map((label) => (
                   <WrapItem key={label.id}>
                     <ButtonLinkLabel
-                      label={label.name}
+                      label={label.nameJA || label.name}
                       count={label.count}
                       onClick={() => {
                         onLinkLabel(label.name)

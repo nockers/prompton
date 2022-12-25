@@ -226,16 +226,18 @@ const UserPage: BlitzPage = () => {
               </HStack>
             </Stack>
           )}
-          <Stack alignItems={"flex-start"}>
-            <Button
-              aria-label={""}
-              size={"sm"}
-              rightIcon={<BiEdit />}
-              onClick={onEditProfile}
-            >
-              {isOpenModalProfile ? "閉じる" : "編集"}
-            </Button>
-          </Stack>
+          {isEditable && (
+            <Stack alignItems={"flex-start"}>
+              <Button
+                aria-label={""}
+                size={"sm"}
+                rightIcon={<BiEdit />}
+                onClick={onEditProfile}
+              >
+                {isOpenModalProfile ? "閉じる" : "プロフィール編集"}
+              </Button>
+            </Stack>
+          )}
         </HStack>
       </Box>
       {isEditable && (
@@ -243,7 +245,7 @@ const UserPage: BlitzPage = () => {
           <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
         </Box>
       )}
-      <HStack justifyContent={"center"}>
+      <HStack w={"100%"} justifyContent={"center"}>
         <HStack px={4} maxW={"container.xl"} alignItems={"flex-start"}>
           {toColumnArray(user.works, columnCount).map((column, index) => (
             <Stack key={index}>
@@ -260,7 +262,7 @@ const UserPage: BlitzPage = () => {
                   postAnnotationSpoof={work.annotationSpoof}
                   postAnnotationViolence={work.annotationViolence}
                   postLabels={work.labels.map((label) => [
-                    label.name,
+                    label.nameJA || label.name,
                     label.count,
                   ])}
                   postColors={work.colors}

@@ -8,9 +8,7 @@ import {
   Text,
   ModalBody,
   ModalFooter,
-  Icon,
   useBreakpointValue,
-  IconButton,
   HStack,
   Textarea,
   Wrap,
@@ -21,11 +19,11 @@ import {
 } from "@chakra-ui/react"
 import type { FC } from "react"
 import { useContext, useState } from "react"
-import { BiBookmark } from "react-icons/bi"
 import { ButtonFollow } from "app/components/ButtonFollow"
 import { ButtonLike } from "app/components/ButtonLike"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
 import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"
+import { IconButtonBookmark } from "app/components/IconButtonBookmark"
 import { UserProfile } from "app/components/UserProfile"
 import {
   useCreateWorkBookmarkMutation,
@@ -35,6 +33,7 @@ import {
   useFollowUserMutation,
   useUnfollowUserMutation,
   useUpdateWorkMutation,
+  useWorkQuery,
 } from "interface/__generated__/react"
 import { Config } from "interface/config"
 import { AppContext } from "interface/contexts/appContext"
@@ -70,6 +69,15 @@ type Props = {
 export const ModalPost: FC<Props> = (props) => {
   const appContext = useContext(AppContext)
 
+  /**
+   * データを更新する
+   */
+  useWorkQuery({
+    fetchPolicy: "cache-and-network",
+    skip: !props.isOpen,
+    variables: { id: props.postId },
+  })
+
   const margin = useBreakpointValue({ base: 0, md: 4 })
 
   const [updatePost] = useUpdateWorkMutation()
@@ -97,10 +105,6 @@ export const ModalPost: FC<Props> = (props) => {
     useDeleteWorkBookmarkMutation()
 
   const toast = useToast()
-
-  // const onEdit = () => {
-  //   setIsEditable((state) => !state)
-  // }
 
   const onBlur = async () => {
     await updatePost({
@@ -197,7 +201,7 @@ export const ModalPost: FC<Props> = (props) => {
   return (
     <Modal
       isOpen={props.isOpen}
-      size={{ base: "full", md: "xl" }}
+      size={{ base: "full", md: "xl", lg: "4xl" }}
       onClose={props.onClose}
     >
       <ModalOverlay backdropFilter="blur(6px)" />
@@ -216,7 +220,7 @@ export const ModalPost: FC<Props> = (props) => {
           </HStack>
         </ModalHeader>
         <ModalBody pb={0} pt={0} px={4}>
-          <Stack spacing={4}>
+          <Stack direction={{ base: "column", lg: "row" }} spacing={4}>
             <Image
               alt={""}
               src={`${Config.imageUrl}/${props.postFileId}?w=512`}
@@ -224,43 +228,45 @@ export const ModalPost: FC<Props> = (props) => {
               w={"100%"}
             />
             <Stack spacing={4}>
-              {!isEditable && (
-                <Box bg={"blackAlpha.400"} p={4} rounded={"lg"}>
-                  <Text>{props.postPrompt ?? "no prompt"}</Text>
-                </Box>
-              )}
-              {isEditable && (
-                <Textarea
-                  value={prompt}
-                  onChange={(event) => {
-                    setPrompt(event.target.value)
-                  }}
-                  onBlur={onBlur}
-                />
-              )}
-              <Wrap>
-                {props.postLabels.map(([label, count]) => (
-                  <WrapItem key={label}>
-                    <ButtonLinkLabel
-                      label={label}
-                      count={count}
-                      onClick={() => {
-                        props.onLinkLabel(label)
-                      }}
-                    />
-                  </WrapItem>
-                ))}
-                {props.postWebColors.map((color) => (
-                  <WrapItem key={color}>
-                    <ButtonLinkColor
-                      color={color}
-                      onClick={() => {
-                        props.onLinkColor(color)
-                      }}
-                    />
-                  </WrapItem>
-                ))}
-              </Wrap>
+              <Stack spacing={4}>
+                {!isEditable && (
+                  <Box bg={"blackAlpha.400"} p={4} rounded={"lg"}>
+                    <Text>{props.postPrompt ?? "no prompt"}</Text>
+                  </Box>
+                )}
+                {isEditable && (
+                  <Textarea
+                    value={prompt}
+                    onChange={(event) => {
+                      setPrompt(event.target.value)
+                    }}
+                    onBlur={onBlur}
+                  />
+                )}
+                <Wrap>
+                  {props.postLabels.map(([label, count]) => (
+                    <WrapItem key={label}>
+                      <ButtonLinkLabel
+                        label={label}
+                        count={count}
+                        onClick={() => {
+                          props.onLinkLabel(label)
+                        }}
+                      />
+                    </WrapItem>
+                  ))}
+                  {props.postWebColors.map((color) => (
+                    <WrapItem key={color}>
+                      <ButtonLinkColor
+                        color={color}
+                        onClick={() => {
+                          props.onLinkColor(color)
+                        }}
+                      />
+                    </WrapItem>
+                  ))}
+                </Wrap>
+              </Stack>
             </Stack>
           </Stack>
         </ModalBody>
@@ -284,18 +290,15 @@ export const ModalPost: FC<Props> = (props) => {
               )}
             </HStack>
             <HStack>
-              <IconButton
+              <IconButtonBookmark
+                aria-label={"Bookmark"}
                 size={"sm"}
                 isLoading={isLoadingBookmark}
                 isDisabled={appContext.currentUser === null}
-                colorScheme={props.isBookmarked ? "blue" : "gray"}
-                onClick={
-                  props.isBookmarked ? onDeleteBookmark : onCreateBookmark
-                }
-                aria-label={""}
-              >
-                <Icon as={BiBookmark} />
-              </IconButton>
+                isActive={props.isBookmarked}
+                onCreate={onCreateBookmark}
+                onDelete={onDeleteBookmark}
+              />
               {!props.isEditable && (
                 <ButtonLike
                   size={"sm"}

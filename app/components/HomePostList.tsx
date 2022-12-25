@@ -1,6 +1,6 @@
 import type { BlitzPage } from "@blitzjs/auth"
 import { Button, HStack, Stack } from "@chakra-ui/react"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { CardPost } from "app/components/CardPost"
 import { useColumnCount } from "app/hooks/useColumnCount"
 import { useWorksQuery } from "interface/__generated__/react"
@@ -10,7 +10,7 @@ import { toColumnArray } from "interface/utils/toColumnArray"
 export const HomePostList: BlitzPage = () => {
   const appContext = useContext(AppContext)
 
-  const { data, fetchMore, loading } = useWorksQuery({
+  const { data, fetchMore, loading, refetch } = useWorksQuery({
     fetchPolicy: "cache-and-network",
     notifyOnNetworkStatusChange: true,
     variables: {
@@ -39,6 +39,13 @@ export const HomePostList: BlitzPage = () => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
 
+  // ログイン情報が取得できたら再度データを取得する
+  useEffect(() => {
+    if (appContext.isLoading) return
+    refetch()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appContext.isLoading])
+
   return (
     <Stack maxW={"container.xl"} px={4}>
       <HStack alignItems={"flex-start"}>
@@ -57,7 +64,7 @@ export const HomePostList: BlitzPage = () => {
                 postAnnotationSpoof={work.annotationSpoof}
                 postAnnotationViolence={work.annotationViolence}
                 postLabels={work.labels.map((label) => [
-                  label.name,
+                  label.nameJA || label.name,
                   label.count,
                 ])}
                 postColors={work.colors}

@@ -10,12 +10,14 @@ type Props = ButtonProps & {
 }
 
 export const ButtonFollow: FC<Props> = (props) => {
+  const { isLoading, isActive, onFollow, onUnfollow, ...others } = props
+
   return (
     <Button
-      {...props}
-      isLoading={props.isLoading}
-      colorScheme={props.isActive ? "blue" : "gray"}
-      onClick={props.isActive ? props.onUnfollow : props.onFollow}
+      {...others}
+      isLoading={isLoading}
+      colorScheme={isActive ? "blue" : "gray"}
+      onClick={isActive ? onUnfollow : onFollow}
     >
       {"フォロー"}
     </Button>
