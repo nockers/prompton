@@ -2,30 +2,30 @@ import type { Event } from "@prisma/client"
 import type { z } from "zod"
 import type { FriendshipEvent } from "core"
 import { FriendshipDeletedEvent, FriendshipCreatedEvent, Id } from "core"
-import type { PrismaFriendshipEvent } from "infrastructure/validations"
+import type { FriendshipEventData } from "infrastructure/validations"
 import {
-  zPrismaFriendshipDeletedEvent,
-  zPrismaFriendshipCreatedEvent,
+  zFriendshipDeletedEventData,
+  zFriendshipCreatedEventData,
 } from "infrastructure/validations"
 
 export class FriendshipEventConverter {
-  static toData(event: FriendshipEvent): PrismaFriendshipEvent {
+  static toData(event: FriendshipEvent): FriendshipEventData {
     if (event.type === FriendshipCreatedEvent.type) {
-      const data: z.infer<typeof zPrismaFriendshipCreatedEvent> = {
+      const data: z.infer<typeof zFriendshipCreatedEventData> = {
         friendshipId: event.friendshipId.value,
         userId: event.userId.value,
         followerId: event.followerId.value,
       }
-      return zPrismaFriendshipCreatedEvent.parse(data)
+      return zFriendshipCreatedEventData.parse(data)
     }
 
     if (event.type === FriendshipDeletedEvent.type) {
-      const data: z.infer<typeof zPrismaFriendshipDeletedEvent> = {
+      const data: z.infer<typeof zFriendshipDeletedEventData> = {
         friendshipId: event.friendshipId.value,
         userId: event.userId.value,
         followerId: event.followerId.value,
       }
-      return zPrismaFriendshipDeletedEvent.parse(data)
+      return zFriendshipDeletedEventData.parse(data)
     }
 
     return event
@@ -33,7 +33,7 @@ export class FriendshipEventConverter {
 
   static toEntity(event: Event): FriendshipEvent {
     if (event.type === FriendshipCreatedEvent.type) {
-      const data = zPrismaFriendshipCreatedEvent.parse(event.data)
+      const data = zFriendshipCreatedEventData.parse(event.data)
       return new FriendshipCreatedEvent({
         id: new Id(event.id),
         friendshipId: new Id(data.friendshipId),
@@ -43,7 +43,7 @@ export class FriendshipEventConverter {
     }
 
     if (event.type === FriendshipDeletedEvent.type) {
-      const data = zPrismaFriendshipDeletedEvent.parse(event.data)
+      const data = zFriendshipDeletedEventData.parse(event.data)
       return new FriendshipDeletedEvent({
         id: new Id(event.id),
         friendshipId: new Id(data.friendshipId),

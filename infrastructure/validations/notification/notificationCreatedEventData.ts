@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const zPrismaNotificationCreatedEvent = z.object({
+export const zNotificationCreatedEventData = z.object({
   notificationId: z.string(),
   userId: z.string(),
 })

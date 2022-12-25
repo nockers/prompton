@@ -1,4 +1,4 @@
-export * from "./prismaUserCreatedEvent"
-export * from "./prismaUserEvent "
-export * from "./prismaUserLoginUpdatedEvent"
-export * from "./prismaUserProfileUpdatedEvent"
+export * from "./userCreatedEventData"
+export * from "./userEvent"
+export * from "./userLoginUpdatedEventData"
+export * from "./userProfileUpdatedEventData"

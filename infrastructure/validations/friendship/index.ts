@@ -1,3 +1,3 @@
-export * from "./prismaFriendshipCreatedEvent"
-export * from "./prismaFriendshipDeletedEvent"
-export * from "./prismaFriendshipEvent"
+export * from "./friendshipCreatedEventData"
+export * from "./friendshipDeletedEventData"
+export * from "./friendshipEventData"

@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const zPrismaLabelCreatedEvent = z.object({
+export const zLabelNameUpdatedEventData = z.object({
   labelId: z.string(),
   name: z.string(),
   nameJA: z.string().nullable(),

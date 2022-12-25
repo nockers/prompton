@@ -1,3 +1,3 @@
-export * from "./prismaBookmarkCreatedEvent"
-export * from "./prismaBookmarkDeletedEvent"
-export * from "./prismaBookmarkEvent"
+export * from "./bookmarkCreatedEventData"
+export * from "./bookmarkDeletedEventData"
+export * from "./bookmarkEventData"

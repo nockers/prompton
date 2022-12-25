@@ -1,1 +1,1 @@
-export * from "./prismaEvent"
+export * from "./eventData"

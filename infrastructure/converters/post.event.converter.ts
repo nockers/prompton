@@ -9,16 +9,16 @@ import {
   Id,
 } from "core"
 import {
-  zPrismaPostAnnotationsUpdatedEvent,
-  zPrismaPostDeletedEvent,
-  zPrismaPostUpdatedEvent,
-  zPrismaPostCreatedEvent,
+  zPostAnnotationsUpdatedEventData,
+  zPostDeletedEventData,
+  zPostUpdatedEventData,
+  zPostCreatedEventData,
 } from "infrastructure/validations"
 
 export class PostEventConverter {
   static toData(event: PostEvent) {
     if (event.type === PostAnnotationsUpdatedEvent.type) {
-      const data: z.infer<typeof zPrismaPostAnnotationsUpdatedEvent> = {
+      const data: z.infer<typeof zPostAnnotationsUpdatedEventData> = {
         postId: event.postId.value,
         userId: event.userId.value,
         colors: event.colors,
@@ -30,34 +30,34 @@ export class PostEventConverter {
         annotationViolence: event.annotationViolence,
         labelIds: event.labelIds.map((id) => id.value),
       }
-      return zPrismaPostAnnotationsUpdatedEvent.parse(data)
+      return zPostAnnotationsUpdatedEventData.parse(data)
     }
 
     if (event.type === PostCreatedEvent.type) {
-      const data: z.infer<typeof zPrismaPostCreatedEvent> = {
+      const data: z.infer<typeof zPostCreatedEventData> = {
         postId: event.postId.value,
         userId: event.userId.value,
         fileId: event.fileId.value,
       }
-      return zPrismaPostCreatedEvent.parse(data)
+      return zPostCreatedEventData.parse(data)
     }
 
     if (event.type === PostDeletedEvent.type) {
-      const data: z.infer<typeof zPrismaPostDeletedEvent> = {
+      const data: z.infer<typeof zPostDeletedEventData> = {
         postId: event.postId.value,
         userId: event.userId.value,
       }
-      return zPrismaPostDeletedEvent.parse(data)
+      return zPostDeletedEventData.parse(data)
     }
 
     if (event.type === PostUpdatedEvent.type) {
-      const data: z.infer<typeof zPrismaPostUpdatedEvent> = {
+      const data: z.infer<typeof zPostUpdatedEventData> = {
         postId: event.postId.value,
         userId: event.userId.value,
         title: event.title,
         prompt: event.prompt,
       }
-      return zPrismaPostUpdatedEvent.parse(data)
+      return zPostUpdatedEventData.parse(data)
     }
 
     return event
@@ -65,7 +65,7 @@ export class PostEventConverter {
 
   static toEntity(event: Event): PostEvent {
     if (event.type === PostAnnotationsUpdatedEvent.type) {
-      const data = zPrismaPostAnnotationsUpdatedEvent.parse(event.data)
+      const data = zPostAnnotationsUpdatedEventData.parse(event.data)
       return new PostAnnotationsUpdatedEvent({
         id: new Id(event.id),
         postId: new Id(data.postId),
@@ -82,7 +82,7 @@ export class PostEventConverter {
     }
 
     if (event.type === PostCreatedEvent.type) {
-      const data = zPrismaPostCreatedEvent.parse(event.data)
+      const data = zPostCreatedEventData.parse(event.data)
       return new PostCreatedEvent({
         id: new Id(event.id),
         postId: new Id(data.postId),
@@ -92,7 +92,7 @@ export class PostEventConverter {
     }
 
     if (event.type === PostDeletedEvent.type) {
-      const data = zPrismaPostDeletedEvent.parse(event.data)
+      const data = zPostDeletedEventData.parse(event.data)
       return new PostDeletedEvent({
         id: new Id(event.id),
         postId: new Id(data.postId),
@@ -101,7 +101,7 @@ export class PostEventConverter {
     }
 
     if (event.type === PostUpdatedEvent.type) {
-      const data = zPrismaPostUpdatedEvent.parse(event.data)
+      const data = zPostUpdatedEventData.parse(event.data)
       return new PostUpdatedEvent({
         id: new Id(event.id),
         postId: new Id(data.postId),

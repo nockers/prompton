@@ -1,3 +1,3 @@
-export * from "./prismaLikeCreatedEvent"
-export * from "./prismaLikeDeletedEvent"
-export * from "./prismaLikeEvent"
+export * from "./likeCreatedEventData"
+export * from "./likeDeletedEventData"
+export * from "./likeEventData"

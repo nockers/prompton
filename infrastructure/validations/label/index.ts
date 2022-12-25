@@ -1,3 +1,3 @@
-export * from "./prismaLabelCreatedEvent"
-export * from "./prismaLabelEvent"
-export * from "./prismaLabelNameUpdatedEvent"
+export * from "./labelCreatedEventData"
+export * from "./labelEventData"
+export * from "./labelNameUpdatedEventData"

@@ -25,10 +25,10 @@ import { LikeEventConverter } from "infrastructure/converters/like.event.convert
 import { NotificationEventConverter } from "infrastructure/converters/notification.event.converter"
 import { PostEventConverter } from "infrastructure/converters/post.event.converter"
 import { UserEventConverter } from "infrastructure/converters/user.event.converter"
-import type { PrismaEvent } from "infrastructure/validations"
+import type { EventData } from "infrastructure/validations"
 
 export class EventConverter {
-  static toData(event: DomainEvent): PrismaEvent {
+  static toData(event: DomainEvent): EventData {
     if (
       event.type === BookmarkCreatedEvent.type ||
       event.type === BookmarkDeletedEvent.type

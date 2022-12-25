@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const zPrismaLikeCreatedEvent = z.object({
+export const zLikeCreatedEventData = z.object({
   likeId: z.string(),
   userId: z.string(),
   postId: z.string(),

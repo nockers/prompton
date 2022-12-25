@@ -12,35 +12,35 @@ import {
   Id,
   UserCreatedEvent,
 } from "core"
-import type { PrismaUserEvent } from "infrastructure/validations"
+import type { UserEventData } from "infrastructure/validations"
 import {
-  zPrismaUserLoginUpdatedEvent,
-  zPrismaUserProfileUpdatedEvent,
-  zPrismaUserCreatedEvent,
+  zUserLoginUpdatedEventData,
+  zUserProfileUpdatedEventData,
+  zUserCreatedEventData,
 } from "infrastructure/validations"
 
 export class UserEventConverter {
-  static toData(event: UserEvent): PrismaUserEvent {
+  static toData(event: UserEvent): UserEventData {
     if (event.type === UserCreatedEvent.type) {
-      const data: z.infer<typeof zPrismaUserCreatedEvent> = {
+      const data: z.infer<typeof zUserCreatedEventData> = {
         userId: event.userId.value,
         email: event.email.value,
         name: event.name.value,
         avatarImageURL: event.avatarImageURL?.value ?? null,
       }
-      return zPrismaUserCreatedEvent.parse(data)
+      return zUserCreatedEventData.parse(data)
     }
 
     if (event.type === UserLoginUpdatedEvent.type) {
-      const data: z.infer<typeof zPrismaUserLoginUpdatedEvent> = {
+      const data: z.infer<typeof zUserLoginUpdatedEventData> = {
         userId: event.userId.value,
         login: event.login.value,
       }
-      return zPrismaUserLoginUpdatedEvent.parse(data)
+      return zUserLoginUpdatedEventData.parse(data)
     }
 
     if (event.type === UserProfileUpdatedEvent.type) {
-      const data: z.infer<typeof zPrismaUserProfileUpdatedEvent> = {
+      const data: z.infer<typeof zUserProfileUpdatedEventData> = {
         userId: event.userId.value,
         name: event.name.value,
         biography: event.biography.value,
@@ -48,7 +48,7 @@ export class UserEventConverter {
         avatarImageURL: event.avatarImageURL?.value ?? null,
         avatarImageId: event.avatarImageId?.value ?? null,
       }
-      return zPrismaUserProfileUpdatedEvent.parse(data)
+      return zUserProfileUpdatedEventData.parse(data)
     }
 
     return event
@@ -56,7 +56,7 @@ export class UserEventConverter {
 
   static toEntity(event: Event): UserEvent {
     if (event.type === UserCreatedEvent.type) {
-      const data = zPrismaUserCreatedEvent.parse(event.data)
+      const data = zUserCreatedEventData.parse(event.data)
       return new UserCreatedEvent({
         id: new Id(event.id),
         userId: new Id(data.userId),
@@ -69,7 +69,7 @@ export class UserEventConverter {
     }
 
     if (event.type === UserLoginUpdatedEvent.type) {
-      const data = zPrismaUserLoginUpdatedEvent.parse(event.data)
+      const data = zUserLoginUpdatedEventData.parse(event.data)
       return new UserLoginUpdatedEvent({
         id: new Id(event.id),
         userId: new Id(data.userId),
@@ -78,7 +78,7 @@ export class UserEventConverter {
     }
 
     if (event.type === UserProfileUpdatedEvent.type) {
-      const data = zPrismaUserProfileUpdatedEvent.parse(event.data)
+      const data = zUserProfileUpdatedEventData.parse(event.data)
       return new UserProfileUpdatedEvent({
         id: new Id(event.id),
         userId: new Id(data.userId),

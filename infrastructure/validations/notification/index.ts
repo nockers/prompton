@@ -1,2 +1,2 @@
-export * from "./prismaNotificationCreatedEvent"
-export * from "./prismaNotificationEvent"
+export * from "./notificationCreatedEventData"
+export * from "./notificationEventData"
