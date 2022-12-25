@@ -1,7 +1,7 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
-import { Id } from "core"
-import { PostRepository } from "infrastructure"
+import { Id, IdFactory, PostUpdatedEvent } from "core"
+import { EventStore, PostRepository } from "infrastructure"
 
 type Props = {
   userId: string
@@ -11,7 +11,10 @@ type Props = {
 
 @injectable()
 export class UpdatePostCommand {
-  constructor(private readonly postRepository: PostRepository) {}
+  constructor(
+    private eventStore: EventStore,
+    private postRepository: PostRepository,
+  ) {}
 
   async execute(props: Props) {
     try {
@@ -25,13 +28,15 @@ export class UpdatePostCommand {
         return new Error()
       }
 
-      const draftPost = post.updatePrompt(props.postPrompt)
+      const event = new PostUpdatedEvent({
+        id: IdFactory.create(),
+        postId: new Id(props.postId),
+        userId: new Id(props.userId),
+        prompt: props.postPrompt,
+        title: post.title,
+      })
 
-      const transaction = await this.postRepository.persist(draftPost)
-
-      if (transaction instanceof Error) {
-        return new Error()
-      }
+      await this.eventStore.commit(event)
 
       return null
     } catch (error) {

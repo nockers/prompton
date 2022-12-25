@@ -1,7 +1,7 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
-import { Id, IdFactory, LikeEntity } from "core"
-import { LikeRepository, PostRepository } from "infrastructure"
+import { Id, IdFactory, LikeCreatedEvent } from "core"
+import { EventStore, PostRepository } from "infrastructure"
 
 type Props = {
   postId: string
@@ -11,8 +11,8 @@ type Props = {
 @injectable()
 export class CreatePostLikeCommand {
   constructor(
+    private eventStore: EventStore,
     private postRepository: PostRepository,
-    private likeRepository: LikeRepository,
   ) {}
 
   async execute(props: Props) {
@@ -32,17 +32,14 @@ export class CreatePostLikeCommand {
         return new Error("自分の投稿にはイイネできない。")
       }
 
-      const draftLike = new LikeEntity({
+      const event = new LikeCreatedEvent({
         id: IdFactory.create(),
+        likeId: IdFactory.create(),
         postId: new Id(props.postId),
         userId: new Id(props.userId),
       })
 
-      const transaction = await this.likeRepository.upsert(draftLike)
-
-      if (transaction instanceof Error) {
-        return new Error()
-      }
+      await this.eventStore.commit(event)
 
       return null
     } catch (error) {

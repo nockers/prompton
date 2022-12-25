@@ -1,7 +1,7 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
-import { FriendshipEntity, Id, IdFactory } from "core"
-import { FriendshipRepository } from "infrastructure"
+import { FriendshipCreatedEvent, Id, IdFactory } from "core"
+import { EventStore } from "infrastructure"
 
 type Props = {
   followeeId: string
@@ -10,7 +10,7 @@ type Props = {
 
 @injectable()
 export class CreateFriendshipCommand {
-  constructor(private friendshipRepository: FriendshipRepository) {}
+  constructor(private eventStore: EventStore) {}
 
   async execute(props: Props) {
     try {
@@ -18,19 +18,14 @@ export class CreateFriendshipCommand {
         return new Error("自分自身をフォローすることは出来ません。")
       }
 
-      const draftFriendship = new FriendshipEntity({
-        followeeId: new Id(props.followeeId),
-        followerId: new Id(props.followerId),
+      const event = new FriendshipCreatedEvent({
         id: IdFactory.create(),
+        friendshipId: IdFactory.create(),
+        userId: new Id(props.followeeId),
+        followerId: new Id(props.followerId),
       })
 
-      const transaction = await this.friendshipRepository.follow(
-        draftFriendship,
-      )
-
-      if (transaction instanceof Error) {
-        return new Error()
-      }
+      await this.eventStore.commit(event)
 
       return null
     } catch (error) {

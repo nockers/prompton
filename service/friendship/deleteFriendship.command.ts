@@ -1,7 +1,7 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
-import { Id } from "core"
-import { FriendshipRepository } from "infrastructure"
+import { FriendshipDeletedEvent, Id, IdFactory } from "core"
+import { EventStore, FriendshipRepository } from "infrastructure"
 
 type Props = {
   followeeId: string
@@ -10,7 +10,10 @@ type Props = {
 
 @injectable()
 export class DeleteFriendshipCommand {
-  constructor(private friendshipRepository: FriendshipRepository) {}
+  constructor(
+    private eventStore: EventStore,
+    private friendshipRepository: FriendshipRepository,
+  ) {}
 
   async execute(props: Props) {
     try {
@@ -18,7 +21,7 @@ export class DeleteFriendshipCommand {
         return new Error("自分自身をフォローすることは出来ません。")
       }
 
-      const friendship = await this.friendshipRepository.find(
+      const friendship = await this.friendshipRepository.findByUserId(
         new Id(props.followerId),
         new Id(props.followeeId),
       )
@@ -32,11 +35,14 @@ export class DeleteFriendshipCommand {
         return new Error()
       }
 
-      const transaction = await this.friendshipRepository.unfollow(friendship)
+      const event = new FriendshipDeletedEvent({
+        id: IdFactory.create(),
+        friendshipId: friendship.id,
+        userId: friendship.followeeId,
+        followerId: friendship.followerId,
+      })
 
-      if (transaction instanceof Error) {
-        return new Error()
-      }
+      await this.eventStore.commit(event)
 
       return null
     } catch (error) {

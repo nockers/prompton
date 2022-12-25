@@ -1,12 +1,7 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
 import { Id, IdFactory, PostCreatedEvent } from "core"
-import {
-  EventStore,
-  LabelRepository,
-  PostRepository,
-  VisionAdapter,
-} from "infrastructure"
+import { EventStore } from "infrastructure"
 
 type Props = {
   userId: string
@@ -15,12 +10,7 @@ type Props = {
 
 @injectable()
 export class CreatePostCommand {
-  constructor(
-    private eventStore: EventStore,
-    private labelRepository: LabelRepository,
-    private visionAdapter: VisionAdapter,
-    private postRepository: PostRepository,
-  ) {}
+  constructor(private eventStore: EventStore) {}
 
   async execute(props: Props) {
     try {

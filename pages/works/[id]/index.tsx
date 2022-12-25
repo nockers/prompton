@@ -129,7 +129,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
       await followUser({
         variables: { input: { userId: data!.work!.user.id } },
       })
-      toast({ status: "error", description: "フォローしました" })
+      toast({ status: "success", description: "フォローしました" })
     } catch (error) {
       if (error instanceof Error) {
         toast({ status: "error", description: error.message })
@@ -248,6 +248,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
               </Box>
               {!isSelf && (
                 <ButtonFollow
+                  size={"sm"}
                   isLoading={isLoadingFriendship}
                   isActive={data.work.user.isFollower}
                   isDisabled={appContext.currentUser === null}

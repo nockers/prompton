@@ -4,7 +4,27 @@ import db from "db"
 import { catchError } from "infrastructure/utils/catchError"
 
 export class FriendshipRepository {
-  async find(followerId: Id, followeeId: Id) {
+  async find(friendshipId: Id) {
+    try {
+      const friendship = await db.friendship.findUnique({
+        where: { id: friendshipId.value },
+      })
+
+      if (friendship === null) {
+        return null
+      }
+
+      return new FriendshipEntity({
+        id: new Id(friendship.id),
+        followeeId: new Id(friendship.followeeId),
+        followerId: new Id(friendship.followerId),
+      })
+    } catch (error) {
+      return catchError(error)
+    }
+  }
+
+  async findByUserId(followerId: Id, followeeId: Id) {
     try {
       const friendship = await db.friendship.findUnique({
         where: {
@@ -79,6 +99,11 @@ export class FriendshipRepository {
 
   async unfollow(friendship: FriendshipEntity) {
     try {
+      await db.friendship.delete({
+        where: {
+          id: friendship.id.value,
+        },
+      })
       await db.$transaction([
         db.user.update({
           data: {

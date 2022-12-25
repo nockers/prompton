@@ -3,7 +3,29 @@ import db from "db"
 import { catchError } from "infrastructure/utils/catchError"
 
 export class LikeRepository {
-  async find(userId: Id, postId: Id) {
+  async find(likeId: Id) {
+    try {
+      const like = await db.like.findUnique({
+        where: {
+          id: likeId.value,
+        },
+      })
+
+      if (like === null) {
+        return null
+      }
+
+      return new LikeEntity({
+        id: new Id(like.id),
+        postId: new Id(like.postId),
+        userId: new Id(like.userId),
+      })
+    } catch (error) {
+      return catchError(error)
+    }
+  }
+
+  async findByPostId(userId: Id, postId: Id) {
     try {
       const like = await db.like.findUnique({
         where: {

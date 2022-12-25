@@ -1,4 +1,3 @@
-import type { LikeEntity } from "core"
 import { BookmarkEntity, Id } from "core"
 import db from "db"
 import { catchError } from "infrastructure/utils/catchError"
@@ -29,19 +28,18 @@ export class BookmarkRepository {
     }
   }
 
-  async upsert(like: LikeEntity) {
+  async upsert(bookmark: BookmarkEntity) {
     try {
       await db.post.update({
         data: {
           bookmarks: {
             create: {
-              id: like.id.value,
-              userId: like.userId.value,
+              id: bookmark.id.value,
+              userId: bookmark.userId.value,
             },
           },
-          likesCount: { increment: 1 },
         },
-        where: { id: like.postId.value },
+        where: { id: bookmark.postId.value },
       })
 
       return null
@@ -50,21 +48,10 @@ export class BookmarkRepository {
     }
   }
 
-  async delete(like: LikeEntity) {
+  async delete(id: Id) {
     try {
-      await db.post.update({
-        where: { id: like.postId.value },
-        data: {
-          bookmarks: {
-            delete: {
-              userId_postId: {
-                userId: like.userId.value,
-                postId: like.postId.value,
-              },
-            },
-          },
-          likesCount: { decrement: 1 },
-        },
+      await db.bookmark.delete({
+        where: { id: id.value },
       })
 
       return null

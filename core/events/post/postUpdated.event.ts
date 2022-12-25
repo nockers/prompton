@@ -6,8 +6,8 @@ import { Id } from "core/valueObjects"
 const zProps = z.object({
   postId: z.instanceof(Id),
   userId: z.instanceof(Id),
-  title: z.string(),
-  prompt: z.string(),
+  title: z.string().nullable(),
+  prompt: z.string().nullable(),
 })
 
 type Props = inferEventProps<typeof zProps>

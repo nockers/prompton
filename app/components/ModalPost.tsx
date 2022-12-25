@@ -118,7 +118,7 @@ export const ModalPost: FC<Props> = (props) => {
       await followUser({
         variables: { input: { userId: props.userId } },
       })
-      toast({ status: "error", description: "フォローしました" })
+      toast({ status: "success", description: "フォローしました" })
     } catch (error) {
       if (error instanceof Error) {
         toast({ status: "error", description: error.message })

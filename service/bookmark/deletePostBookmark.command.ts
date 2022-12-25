@@ -1,7 +1,7 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
-import { Id } from "core"
-import { BookmarkRepository } from "infrastructure"
+import { BookmarkDeletedEvent, Id, IdFactory } from "core"
+import { BookmarkRepository, EventStore } from "infrastructure"
 
 type Props = {
   userId: string
@@ -10,7 +10,10 @@ type Props = {
 
 @injectable()
 export class DeletePostBookmarkCommand {
-  constructor(private bookmarkRepository: BookmarkRepository) {}
+  constructor(
+    private eventStore: EventStore,
+    private bookmarkRepository: BookmarkRepository,
+  ) {}
 
   async execute(props: Props) {
     try {
@@ -28,11 +31,14 @@ export class DeletePostBookmarkCommand {
         return new Error()
       }
 
-      const transaction = await this.bookmarkRepository.delete(bookmark)
+      const event = new BookmarkDeletedEvent({
+        id: IdFactory.create(),
+        bookmarkId: bookmark.id,
+        postId: bookmark.postId,
+        userId: bookmark.userId,
+      })
 
-      if (transaction instanceof Error) {
-        return new Error()
-      }
+      await this.eventStore.commit(event)
 
       return null
     } catch (error) {

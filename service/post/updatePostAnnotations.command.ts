@@ -1,7 +1,12 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
-import { Id, IdFactory, LabelEntity } from "core"
-import { LabelRepository, PostRepository, VisionAdapter } from "infrastructure"
+import { Id, IdFactory, LabelEntity, PostAnnotationsUpdatedEvent } from "core"
+import {
+  EventStore,
+  LabelRepository,
+  PostRepository,
+  VisionAdapter,
+} from "infrastructure"
 import { toWebColor } from "infrastructure/utils/toWebColor"
 
 type Props = {
@@ -9,8 +14,9 @@ type Props = {
 }
 
 @injectable()
-export class UpdatePostColorsCommand {
+export class UpdatePostAnnotationsCommand {
   constructor(
+    private eventStore: EventStore,
     private labelRepository: LabelRepository,
     private visionAdapter: VisionAdapter,
     private postRepository: PostRepository,
@@ -73,20 +79,23 @@ export class UpdatePostColorsCommand {
         return new Error()
       }
 
-      const draftPost = post
-        .updateColors(colors)
-        .updateWebColors(webColors)
-        .updateAnnotationAdult(annotation.adult)
-        .updateAnnotationSpoof(annotation.spoof)
-        .updateAnnotationMedical(annotation.medical)
-        .updateAnnotationViolence(annotation.violence)
-        .updateLabelIds(labels.map((label) => label.id))
+      const event = new PostAnnotationsUpdatedEvent({
+        id: IdFactory.create(),
+        postId: post.id,
+        userId: post.userId,
+        colors: colors,
+        webColors: webColors,
+        annotationAdult: annotation.adult,
+        annotationMedical: annotation.medical,
+        annotationRacy: annotation.racy,
+        annotationSpoof: annotation.spoof,
+        annotationViolence: annotation.violence,
+        labelIds: labels.map((label) => {
+          return label.id
+        }),
+      })
 
-      const transaction = await this.postRepository.persist(draftPost)
-
-      if (transaction instanceof Error) {
-        return new Error()
-      }
+      await this.eventStore.commit(event)
 
       return null
     } catch (error) {
