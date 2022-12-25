@@ -1,7 +1,6 @@
-import { Box, Stack } from "@chakra-ui/react"
+import { Stack } from "@chakra-ui/react"
 import Head from "next/head"
 import type { FC, ReactNode } from "react"
-import { HomeNotification } from "app/components/HomeNotification"
 import { Config } from "interface/config"
 
 type Props = {
@@ -50,16 +49,7 @@ export const MainStackJa: FC<Props> = (props) => {
         <meta name={"twitter:description"} content={ogDescription} />
         <meta name={"twitter:image"} content={twitterImageURL} />
       </Head>
-      <Box px={4}>
-        <HomeNotification isJA={true} />
-      </Box>
-      <Stack
-        as={"main"}
-        spacing={props.spacing ?? 4}
-        pb={4}
-        w={"100%"}
-        overflow={"hidden"}
-      >
+      <Stack as={"main"} spacing={4} alignItems={"center"} pb={8}>
         {props.children}
       </Stack>
     </>

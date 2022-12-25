@@ -2,7 +2,7 @@ import type { BlitzPage } from "@blitzjs/auth"
 import { Button, HStack, Stack } from "@chakra-ui/react"
 import { useContext, useEffect } from "react"
 import { CardPost } from "app/components/CardPost"
-import { useColumnCount } from "app/hooks/useColumnCount"
+import { useHomeColumnCount } from "app/hooks/useHomeColumnCount"
 import { useWorksQuery } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
 import { toColumnArray } from "interface/utils/toColumnArray"
@@ -15,12 +15,12 @@ export const HomePostList: BlitzPage = () => {
     notifyOnNetworkStatusChange: true,
     variables: {
       offset: 0,
-      limit: 9 * 4,
+      limit: 9 * 6,
       where: null,
     },
   })
 
-  const columnCount = useColumnCount()
+  const columnCount = useHomeColumnCount()
 
   const onFetchMore = () => {
     fetchMore({ variables: { offset: data!.works.length ?? 0 } })
@@ -47,10 +47,10 @@ export const HomePostList: BlitzPage = () => {
   }, [appContext.isLoading])
 
   return (
-    <Stack maxW={"container.xl"} px={4}>
-      <HStack alignItems={"flex-start"}>
+    <Stack px={4}>
+      <HStack alignItems={"flex-start"} spacing={4}>
         {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
-          <Stack key={index}>
+          <Stack key={index} spacing={4}>
             {column.map((work) => (
               <CardPost
                 id={work.id}
