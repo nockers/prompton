@@ -1,6 +1,5 @@
 import { injectable } from "tsyringe"
 import type { BookmarkEvent } from "core"
-
 import { BookmarkRepository } from "infrastructure/repositories"
 
 @injectable()

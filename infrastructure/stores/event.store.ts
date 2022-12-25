@@ -96,8 +96,8 @@ export class EventStore {
 
     axios.request({
       method: "POST",
-      baseURL: process.env.APP_URL,
-      url: `${Env.appURL}/api/events/${event.id.value}`,
+      baseURL: Env.appURL,
+      url: `api/events/${event.id.value}`,
       data: { eventToken: Env.eventToken },
     })
 
