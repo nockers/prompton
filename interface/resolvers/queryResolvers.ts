@@ -17,6 +17,7 @@ export const QueryResolvers = {
       orderBy: { posts: { _count: "desc" } },
       take: take,
       skip: skip,
+      where: { name: { notIn: ["art"] } },
     })
   },
   label(_: unknown, args: Partial<QueryLabelArgs>) {

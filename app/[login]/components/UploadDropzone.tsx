@@ -28,7 +28,7 @@ export const UploadDropzone: FC<Props> = (props) => {
   return (
     <Box
       {...getRootProps()}
-      bg={"gray.700"}
+      bg={"blackAlpha.200"}
       p={4}
       rounded={"md"}
       w={"100%"}
