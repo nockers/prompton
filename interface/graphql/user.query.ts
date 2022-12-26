@@ -11,27 +11,6 @@ export default gql`
       biography
       createdAt
       isFollower
-      works {
-        id
-        createdAt
-        title
-        fileId
-        prompt
-        likesCount
-        annotationAdult
-        annotationMedical
-        annotationViolence
-        annotationRacy
-        annotationSpoof
-        colors
-        webColors
-        labels {
-          id
-          name
-          nameJA
-          count
-        }
-      }
     }
   }
 `

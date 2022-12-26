@@ -7,9 +7,9 @@ type Query {
 }
 
 input WorksWhereInput {
+  userId: String
   labelName: String
   color: String
-  userId: String
   search: String
 }
 

@@ -1,12 +1,4 @@
-import {
-  Image,
-  useDisclosure,
-  Button,
-  Box,
-  Avatar,
-  Text,
-  HStack,
-} from "@chakra-ui/react"
+import { Image, useDisclosure, Button, Box } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import type { FC } from "react"
 import { ModalPost } from "app/components/ModalPost"
@@ -25,23 +17,17 @@ type Props = {
   postLabels: [string, number][]
   postColors: string[]
   postWebColors: string[]
-  userId: string
-  userName: string
-  userAvatarImageURL: string | null
   isLiked: boolean
   isBookmarked: boolean
   isFollower: boolean
 }
 
-export const CardPost: FC<Props> = (props) => {
+export const CardUserWork: FC<Props> = (props) => {
   const router = useRouter()
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const onOpenUser = () => {
-    onClose()
-    router.push(`/${props.userId}`)
-  }
+  const onOpenUser = () => {}
 
   const onLinkColor = (color: string) => {
     onClose()
@@ -84,28 +70,6 @@ export const CardPost: FC<Props> = (props) => {
             alt={""}
             src={`${Config.imageUrl}/${props.postFileId}?w=512`}
           />
-          <Box
-            position={"absolute"}
-            bottom={2}
-            left={2}
-            py={2}
-            pl={2}
-            pr={4}
-            backdropFilter={"blur(16px) saturate(2) brightness(0.8)"}
-            borderRadius={40}
-            overflow={"hidden"}
-          >
-            <HStack spacing={2}>
-              <Avatar src={props.userAvatarImageURL ?? ""} size={"sm"} />
-              <Text
-                fontSize={"sm"}
-                overflow={"hidden"}
-                textOverflow={"ellipsis"}
-              >
-                {props.userName}
-              </Text>
-            </HStack>
-          </Box>
         </Box>
       </Button>
       <ModalPost
@@ -121,15 +85,15 @@ export const CardPost: FC<Props> = (props) => {
         postLabels={props.postLabels}
         postColors={props.postColors}
         postWebColors={props.postWebColors}
-        userId={props.userId}
-        userName={props.userName}
-        userAvatarImageURL={props.userAvatarImageURL}
+        userId={"-"}
+        userName={"-"}
+        userAvatarImageURL={"-"}
         onOpenUser={onOpenUser}
         isOpen={isOpen}
         isLiked={props.isLiked}
         isBookmarked={props.isBookmarked}
         isFollower={props.isFollower}
-        isEditable={false}
+        isEditable={props.isEditable}
         onClose={onClose}
         onLinkColor={onLinkColor}
         onLinkLabel={onLinkLabel}
