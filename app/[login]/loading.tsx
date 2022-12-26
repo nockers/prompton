@@ -1,12 +1,12 @@
 "use client"
-import { Box, Spinner } from "@chakra-ui/react"
+import { HStack, Spinner } from "@chakra-ui/react"
 import type { FC } from "react"
 
 const UserLoading: FC = () => {
   return (
-    <Box>
-      <Spinner />
-    </Box>
+    <HStack pt={40} justifyContent={"center"}>
+      <Spinner size={"xl"} />
+    </HStack>
   )
 }
 

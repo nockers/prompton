@@ -1,11 +1,11 @@
-import type { BlitzPage } from "@blitzjs/auth"
 import { Box, Button, HStack } from "@chakra-ui/react"
 import Link from "next/link"
+import type { FC } from "react"
 import { useLabelsQuery } from "interface/__generated__/react"
 
-export const HomeLabelList: BlitzPage = () => {
+export const HomeLabelList: FC = () => {
   const { data } = useLabelsQuery({
-    fetchPolicy: "cache-and-network",
+    notifyOnNetworkStatusChange: true,
     variables: {
       offset: 0,
       limit: 40,

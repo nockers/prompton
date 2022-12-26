@@ -2,7 +2,7 @@ type Query {
   works(offset: Int, limit: Int, where: WorksWhereInput): [WorkNode!]!
   work(id: ID!): WorkNode
   user(id: ID!): UserNode
-  labels(offset: Int, limit: Int): [LabelNode!]!
+  labels(offset: Int, limit: Int, where: LabelsWhereInput): [LabelNode!]!
   label(id: ID, name: String): LabelNode
 }
 
@@ -10,6 +10,11 @@ input WorksWhereInput {
   labelName: String
   color: String
   userId: String
+  search: String
+}
+
+input LabelsWhereInput {
+  search: String
 }
 
 """

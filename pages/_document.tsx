@@ -5,7 +5,7 @@ import { theme } from "interface/theme"
 
 export const Document: FC = () => {
   const href =
-    "https://fonts.googleapis.com/css2?family=M+PLUS+1+Code:wght@500;700&display=swap"
+    "https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@500;700&display=swap"
 
   return (
     <Html>

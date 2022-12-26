@@ -26,6 +26,7 @@ export const LabelNodeResolvers: PrismaResolvers<LabelNode, Label> = {
       .posts({
         orderBy: { createdAt: "desc" },
         where: { isDeleted: false },
+        take: 4,
       })
     return posts ?? []
   },

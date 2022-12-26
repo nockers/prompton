@@ -19,7 +19,6 @@ import { UserAvatarDropzone } from "app/[login]/components/UserAvatarDropzone"
 import UserLayout from "app/[login]/layout"
 import UserLoading from "app/[login]/loading"
 import { CardPost } from "app/components/CardPost"
-import { MainFallback } from "app/components/MainFallback"
 import { MainStack } from "app/components/MainStack"
 import { useColumnCount } from "app/hooks/useColumnCount"
 import { useFileUpload } from "app/hooks/useFileUpload"
@@ -88,6 +87,7 @@ const UserPage: BlitzPage = () => {
       setLoading(false)
       await refetch()
     } catch (error) {
+      console.error(error)
       setLoading(false)
       if (error instanceof Error) {
         toast({
@@ -158,11 +158,11 @@ const UserPage: BlitzPage = () => {
     }
   }
 
-  if (router.isFallback) {
-    return <MainFallback />
-  }
-
-  if (typeof router.query.login === "undefined" || loading) {
+  if (
+    router.isFallback ||
+    typeof router.query.login === "undefined" ||
+    loading
+  ) {
     return <UserLoading />
   }
 
@@ -180,75 +180,77 @@ const UserPage: BlitzPage = () => {
       description={null}
       fileId={null}
     >
-      <Box maxW={"container.xl"} px={4} w={"100%"}>
-        <HStack
-          spacing={4}
-          py={4}
-          px={isOpenModalProfile ? 4 : 0}
-          borderRadius={"lg"}
-          justifyContent={"space-between"}
-          alignItems={"flex-start"}
-          background={isOpenModalProfile ? "blackAlpha.400" : "transparent"}
-        >
-          {isOpenModalProfile && (
-            <Stack flex={1} borderRadius={"lg"}>
-              <Text>{"プロフィール更新"}</Text>
-              <HStack spacing={4} flex={1}>
-                <UserAvatarDropzone
-                  avatarImageURL={user.avatarImageURL}
-                  isLoading={false}
-                  onChange={onChangeAvatarFileId}
-                />
-                <Stack w={"100%"} maxW={"sm"}>
-                  <Input
-                    placeholder={"ユーザ名"}
-                    defaultValue={user.name}
-                    onBlur={(event) => {
-                      onChangeName(event.target.value)
-                    }}
+      <HStack justifyContent={"center"}>
+        <Box px={4} w={"100%"}>
+          <HStack
+            spacing={4}
+            py={4}
+            px={isOpenModalProfile ? 4 : 0}
+            borderRadius={"lg"}
+            justifyContent={"space-between"}
+            alignItems={"flex-start"}
+            background={isOpenModalProfile ? "blackAlpha.200" : "transparent"}
+          >
+            {isOpenModalProfile && (
+              <Stack flex={1} borderRadius={"lg"}>
+                <Text>{"プロフィール更新"}</Text>
+                <HStack spacing={4} flex={1}>
+                  <UserAvatarDropzone
+                    avatarImageURL={user.avatarImageURL}
+                    isLoading={false}
+                    onChange={onChangeAvatarFileId}
                   />
-                </Stack>
-              </HStack>
-            </Stack>
-          )}
-          {!isOpenModalProfile && (
-            <Stack flex={1}>
-              <HStack flex={1} spacing={4}>
-                <Avatar size={"lg"} src={user.avatarImageURL || ""} />
-                <Stack spacing={1}>
-                  <Text fontSize={"xs"} fontWeight={"bold"} opacity={0.8}>
-                    {`@${user.id}`}
-                  </Text>
-                  <Text fontSize={"2xl"} lineHeight={1} fontWeight={"bold"}>
-                    {user.name}
-                  </Text>
-                </Stack>
-              </HStack>
-            </Stack>
-          )}
-          {isEditable && (
-            <Stack alignItems={"flex-start"}>
-              <Button
-                aria-label={""}
-                size={"sm"}
-                rightIcon={<BiEdit />}
-                onClick={onEditProfile}
-              >
-                {isOpenModalProfile ? "閉じる" : "プロフィール編集"}
-              </Button>
-            </Stack>
-          )}
-        </HStack>
-      </Box>
-      {isEditable && (
-        <Box px={4} maxW={"container.xl"} w={"100%"}>
-          <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
+                  <Stack w={"100%"} maxW={"sm"}>
+                    <Input
+                      placeholder={"ユーザ名"}
+                      defaultValue={user.name}
+                      onBlur={(event) => {
+                        onChangeName(event.target.value)
+                      }}
+                    />
+                  </Stack>
+                </HStack>
+              </Stack>
+            )}
+            {!isOpenModalProfile && (
+              <Stack flex={1}>
+                <HStack flex={1} spacing={4}>
+                  <Avatar size={"lg"} src={user.avatarImageURL || ""} />
+                  <Stack spacing={1}>
+                    <Text fontSize={"xs"} fontWeight={"bold"} opacity={0.8}>
+                      {`@${user.id}`}
+                    </Text>
+                    <Text fontSize={"2xl"} lineHeight={1} fontWeight={"bold"}>
+                      {user.name}
+                    </Text>
+                  </Stack>
+                </HStack>
+              </Stack>
+            )}
+            {isEditable && (
+              <Stack alignItems={"flex-start"}>
+                <Button
+                  aria-label={""}
+                  size={"sm"}
+                  rightIcon={<BiEdit />}
+                  onClick={onEditProfile}
+                >
+                  {isOpenModalProfile ? "閉じる" : "プロフィール編集"}
+                </Button>
+              </Stack>
+            )}
+          </HStack>
         </Box>
+      </HStack>
+      {isEditable && (
+        <HStack justifyContent={"center"} px={4} w={"100%"}>
+          <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
+        </HStack>
       )}
       <HStack w={"100%"} justifyContent={"center"}>
-        <HStack px={4} maxW={"container.xl"} alignItems={"flex-start"}>
+        <HStack px={4} alignItems={"flex-start"} spacing={4}>
           {toColumnArray(user.works, columnCount).map((column, index) => (
-            <Stack key={index}>
+            <Stack key={index} spacing={4}>
               {column.map((work) => (
                 <CardPost
                   id={work.id}

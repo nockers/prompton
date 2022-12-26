@@ -13,6 +13,18 @@ export const QueryResolvers = {
   labels(_: unknown, args: Partial<QueryLabelsArgs>) {
     const take = args.limit || 9 * 4
     const skip = args.offset || 0
+    if (typeof args.where?.search === "string") {
+      return db.label.findMany({
+        take: 16,
+        where: {
+          OR: [
+            { name: { contains: args.where.search } },
+            { nameJA: { contains: args.where.search } },
+          ],
+        },
+      })
+    }
+
     return db.label.findMany({
       orderBy: { posts: { _count: "desc" } },
       take: take,
@@ -34,6 +46,27 @@ export const QueryResolvers = {
   async works(_: unknown, args: Partial<QueryWorksArgs>) {
     const take = args.limit || 9 * 4
     const skip = args.offset || 0
+    if (typeof args.where?.search === "string") {
+      return db.post.findMany({
+        orderBy: { createdAt: "desc" },
+        take: take,
+        skip: skip,
+        where: {
+          isDeleted: false,
+          OR: [
+            {
+              labels: { some: { name: { search: args.where.search } } },
+            },
+            {
+              title: { search: args.where.search },
+            },
+            {
+              prompt: { search: args.where.search },
+            },
+          ],
+        },
+      })
+    }
     if (typeof args.where?.userId === "string") {
       return db.post.findMany({
         orderBy: { createdAt: "desc" },

@@ -1,5 +1,5 @@
 import type { BlitzPage } from "@blitzjs/auth"
-import { Box, Button, HStack, Stack, Text } from "@chakra-ui/react"
+import { Button, HStack, Spinner, Stack, Text } from "@chakra-ui/react"
 import type { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import { useContext } from "react"
@@ -28,7 +28,11 @@ const ColorPage: BlitzPage<Props> = () => {
 
   const router = useRouter()
 
-  const { data, fetchMore, loading } = useWorksQuery({
+  const {
+    data = null,
+    fetchMore,
+    loading,
+  } = useWorksQuery({
     fetchPolicy: "cache-and-network",
     notifyOnNetworkStatusChange: true,
     skip: typeof router.query.name === "undefined",
@@ -55,6 +59,14 @@ const ColorPage: BlitzPage<Props> = () => {
     return <MainFallback />
   }
 
+  if (loading && data === null) {
+    return (
+      <HStack pt={40} justifyContent={"center"}>
+        <Spinner size={"xl"} />
+      </HStack>
+    )
+  }
+
   return (
     <MainStack
       title={`#${label}`}
@@ -66,9 +78,9 @@ const ColorPage: BlitzPage<Props> = () => {
           {`#${label}`}
         </Text>
       </HStack>
-      <HStack px={4} maxW={"container.xl"} alignItems={"flex-start"}>
+      <HStack px={4} alignItems={"flex-start"} spacing={4}>
         {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
-          <Stack key={index}>
+          <Stack key={index} spacing={4}>
             {column.map((work) => (
               <CardPost
                 id={work.id}
@@ -99,11 +111,16 @@ const ColorPage: BlitzPage<Props> = () => {
           </Stack>
         ))}
       </HStack>
-      <Box px={4} w={"100%"} maxW={"container.xl"}>
-        <Button w={"100%"} isLoading={loading} onClick={onFetchMore}>
+      <HStack justifyContent={"center"} px={4} w={"100%"}>
+        <Button
+          w={"100%"}
+          maxW={"xs"}
+          isLoading={loading}
+          onClick={onFetchMore}
+        >
           {"MORE"}
         </Button>
-      </Box>
+      </HStack>
     </MainStack>
   )
 }

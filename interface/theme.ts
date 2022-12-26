@@ -14,8 +14,8 @@ export const theme = extendTheme({
     },
   },
   fonts: {
-    body: ["'M PLUS 1 Code'", "system-ui", "sans-serif"].join(","),
-    heading: ["'M PLUS 1 Code'", "system-ui", "sans-serif"].join(","),
+    body: ["'M PLUS 1p'", "system-ui", "sans-serif"].join(","),
+    heading: ["'M PLUS 1p'", "system-ui", "sans-serif"].join(","),
     mono: ["Menlo", "monospace"].join(","),
   },
   styles: {

@@ -1,22 +1,39 @@
-import type { BlitzPage } from "@blitzjs/auth"
-import { Button, HStack, Stack } from "@chakra-ui/react"
-import { useContext, useEffect } from "react"
+import {
+  Box,
+  Button,
+  Divider,
+  HStack,
+  Spinner,
+  Stack,
+  Text,
+} from "@chakra-ui/react"
+import type { FC } from "react"
+import { useContext } from "react"
 import { CardPost } from "app/components/CardPost"
 import { useHomeColumnCount } from "app/hooks/useHomeColumnCount"
 import { useWorksQuery } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
 import { toColumnArray } from "interface/utils/toColumnArray"
 
-export const HomePostList: BlitzPage = () => {
+type Props = {
+  searchText?: string
+}
+
+export const HomePostList: FC<Props> = (props) => {
   const appContext = useContext(AppContext)
 
-  const { data, fetchMore, loading, refetch } = useWorksQuery({
-    fetchPolicy: "cache-and-network",
+  const {
+    data = null,
+    fetchMore,
+    loading,
+  } = useWorksQuery({
     notifyOnNetworkStatusChange: true,
     variables: {
       offset: 0,
       limit: 9 * 6,
-      where: null,
+      where: {
+        search: props.searchText || null,
+      },
     },
   })
 
@@ -39,15 +56,27 @@ export const HomePostList: BlitzPage = () => {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [])
 
-  // ログイン情報が取得できたら再度データを取得する
-  useEffect(() => {
-    if (appContext.isLoading) return
-    refetch()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appContext.isLoading])
+  if (loading && data === null) {
+    return (
+      <HStack pt={40} justifyContent={"center"}>
+        <Spinner size={"xl"} />
+      </HStack>
+    )
+  }
+
+  if (data === null || data.works.length === 0) {
+    return (
+      <HStack justifyContent={"center"}>
+        <Text>{"関連するデータは見つかりませんでした。"}</Text>
+      </HStack>
+    )
+  }
 
   return (
-    <Stack px={4}>
+    <Stack px={4} spacing={4}>
+      <Box w={"100%"}>
+        <Divider />
+      </Box>
       <HStack alignItems={"flex-start"} spacing={4}>
         {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
           <Stack key={index} spacing={4}>
@@ -81,9 +110,16 @@ export const HomePostList: BlitzPage = () => {
           </Stack>
         ))}
       </HStack>
-      <Button isLoading={loading} onClick={onFetchMore}>
-        {"MORE"}
-      </Button>
+      <HStack justifyContent={"center"} px={4} w={"100%"}>
+        <Button
+          w={"100%"}
+          maxW={"xs"}
+          isLoading={loading}
+          onClick={onFetchMore}
+        >
+          {"MORE"}
+        </Button>
+      </HStack>
     </Stack>
   )
 }

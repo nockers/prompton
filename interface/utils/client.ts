@@ -45,7 +45,8 @@ const cache = new InMemoryCache({
     Query: {
       fields: {
         works: offsetLimitPagination(["where"]),
-        labels: offsetLimitPagination(),
+        labels: offsetLimitPagination(["where"]),
+        users: offsetLimitPagination(["where"]),
       },
     },
   },

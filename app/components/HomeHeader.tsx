@@ -18,7 +18,7 @@ import {
 import Link from "next/link"
 import { useRouter } from "next/router"
 import type { FC } from "react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { BiHome } from "react-icons/bi"
 import { ButtonDarkMode } from "app/components/ButtonDarkMode"
 import { HomeHeaderLogin } from "app/components/HomeHeaderLogin"
@@ -32,9 +32,21 @@ export const HomeHeader: FC = () => {
 
   const [searchText, setSearchText] = useState("")
 
-  const [, setSearch] = useDebounce(searchText, 1000)
+  const [search, setSearch] = useDebounce(searchText, 1000)
 
   const toast = useToast()
+
+  const query = router.query.q?.toString() ?? ""
+
+  useEffect(() => {
+    setSearchText(query)
+  }, [query])
+
+  useEffect(() => {
+    if (search.trim() === "") return
+    router.replace(`/search?q=${search}`)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search])
 
   const onLogin = async () => {
     try {
