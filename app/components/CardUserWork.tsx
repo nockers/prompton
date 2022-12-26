@@ -93,7 +93,7 @@ export const CardUserWork: FC<Props> = (props) => {
         isLiked={props.isLiked}
         isBookmarked={props.isBookmarked}
         isFollower={props.isFollower}
-        isEditable={props.isEditable}
+        isEditable={false}
         onClose={onClose}
         onLinkColor={onLinkColor}
         onLinkLabel={onLinkLabel}

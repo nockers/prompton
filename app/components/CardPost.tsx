@@ -31,6 +31,7 @@ type Props = {
   isLiked: boolean
   isBookmarked: boolean
   isFollower: boolean
+  isEditable: boolean
 }
 
 export const CardPost: FC<Props> = (props) => {
@@ -129,7 +130,7 @@ export const CardPost: FC<Props> = (props) => {
         isLiked={props.isLiked}
         isBookmarked={props.isBookmarked}
         isFollower={props.isFollower}
-        isEditable={false}
+        isEditable={props.isEditable}
         onClose={onClose}
         onLinkColor={onLinkColor}
         onLinkLabel={onLinkLabel}
