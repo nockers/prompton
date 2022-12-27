@@ -1,4 +1,5 @@
 import { Stack, useToast } from "@chakra-ui/react"
+import { useRouter } from "next/router"
 import type { FC } from "react"
 import { useContext, useEffect } from "react"
 import UserLoading from "app/[login]/loading"
@@ -12,6 +13,8 @@ import { AppContext } from "interface/contexts/appContext"
 
 export const HomeUserList: FC = () => {
   const appContext = useContext(AppContext)
+
+  const router = useRouter()
 
   const {
     data = null,
@@ -64,6 +67,10 @@ export const HomeUserList: FC = () => {
     }
   }
 
+  const onRoute = (userId: string) => {
+    router.push(`/${userId}`)
+  }
+
   return (
     <Stack w={"100%"} px={4}>
       {data.users.map((user) => (
@@ -78,6 +85,9 @@ export const HomeUserList: FC = () => {
           }}
           onUnfollow={() => {
             onUnfollow(user.id)
+          }}
+          onRoute={() => {
+            onRoute(user.id)
           }}
         />
       ))}

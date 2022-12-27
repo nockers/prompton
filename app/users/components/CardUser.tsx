@@ -1,4 +1,12 @@
-import { Avatar, Button, Card, HStack, Stack, Text } from "@chakra-ui/react"
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  HStack,
+  Stack,
+  Text,
+} from "@chakra-ui/react"
 import type { FC } from "react"
 
 type Props = {
@@ -8,6 +16,7 @@ type Props = {
   isFollowee: boolean
   onFollow(): void
   onUnfollow(): void
+  onRoute(): void
 }
 
 export const CardUser: FC<Props> = (props) => {
@@ -15,7 +24,11 @@ export const CardUser: FC<Props> = (props) => {
     <Card variant={"filled"} borderRadius={"lg"} p={4}>
       <Stack spacing={4}>
         <HStack alignItems={"center"} spacing={4}>
-          <Avatar src={props.userAvatarURL ?? ""} />
+          <Avatar
+            src={props.userAvatarURL ?? ""}
+            cursor={"pointer"}
+            onClick={props.onRoute}
+          />
           <Stack flex={1}>
             <Text
               opacity={0.8}
@@ -25,9 +38,11 @@ export const CardUser: FC<Props> = (props) => {
             >
               {`@${props.userId.slice(0, 8)}`}
             </Text>
-            <Text fontWeight={"bold"} lineHeight={1}>
-              {props.userName}
-            </Text>
+            <Box cursor={"pointer"} onClick={props.onRoute}>
+              <Text fontWeight={"bold"} lineHeight={1}>
+                {props.userName}
+              </Text>
+            </Box>
           </Stack>
           <Button
             colorScheme={props.isFollowee ? "pink" : "blue"}

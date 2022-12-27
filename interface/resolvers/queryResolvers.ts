@@ -123,7 +123,7 @@ export const QueryResolvers: Resolvers = {
     const skip = args.offset || 0
     if (typeof args.where?.search === "string") {
       return db.user.findMany({
-        orderBy: { updatedAt: "desc" },
+        orderBy: { createdAt: "desc" },
         take: take,
         skip: skip,
         where: {
@@ -141,7 +141,7 @@ export const QueryResolvers: Resolvers = {
       })
     }
     return db.user.findMany({
-      orderBy: { updatedAt: "desc" },
+      orderBy: { createdAt: "desc" },
       take: take,
       skip: skip,
       where: {
