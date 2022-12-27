@@ -193,6 +193,7 @@ model Label {
   name      String   @unique @map("name")
   nameJA    String?  @map("name_ja")
   posts     Post[]   @relation("post_labels")
+  isDeleted Boolean  @default(false) @map("is_deleted")
 
   @@map("labels")
 }

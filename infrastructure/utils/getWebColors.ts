@@ -56,7 +56,7 @@ export const getWebColors = () => {
     { name: "sandybrown", colorCode: "#f4a460" },
     { name: "lightpink", colorCode: "#ffb6c1" },
     { name: "floralwhite", colorCode: "#fffaf0" },
-    { name: "blue", colorCode: "#0000ff" },
+    { name: "pink", colorCode: "#0000ff" },
     { name: "palegreen", colorCode: "#98fb98" },
     { name: "darkorange", colorCode: "#ff8c00" },
     { name: "thistle", colorCode: "#d8bfd8" },

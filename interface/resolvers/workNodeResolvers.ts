@@ -54,7 +54,9 @@ export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
     return db.post.findUnique({ where: { id: parent.id } }).user()
   },
   labels(parent) {
-    return db.post.findUnique({ where: { id: parent.id } }).labels()
+    return db.post
+      .findUnique({ where: { id: parent.id } })
+      .labels({ where: { isDeleted: false } })
   },
   async isLiked(parent, _, ctx) {
     if (ctx.currentUser === null) return false

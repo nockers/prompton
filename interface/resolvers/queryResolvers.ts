@@ -33,7 +33,7 @@ export const QueryResolvers: Resolvers = {
       orderBy: { posts: { _count: "desc" } },
       take: take,
       skip: skip,
-      where: { name: { notIn: ["art"] } },
+      where: { isDeleted: false },
     })
   },
   label(_: unknown, args: Partial<QueryLabelArgs>) {

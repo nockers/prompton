@@ -16,7 +16,7 @@ export const ButtonFollow: FC<Props> = (props) => {
     <Button
       {...others}
       isLoading={isLoading}
-      colorScheme={isActive ? "blue" : "gray"}
+      colorScheme={isActive ? "pink" : "gray"}
       onClick={isActive ? onUnfollow : onFollow}
     >
       {"フォロー"}

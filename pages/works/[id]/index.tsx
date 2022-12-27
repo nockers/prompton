@@ -102,7 +102,9 @@ const WorkPage: BlitzPage<Props> = (props) => {
     router.push(`/labels/${label}`)
   }
 
-  const onOpenUser = () => {}
+  const onOpenUser = () => {
+    router.push(`/${data?.work?.user.id?.toString()}`)
+  }
 
   const onShareWithTwitter = async () => {
     const text = `${data?.work?.user.name}さんの作品`
@@ -242,10 +244,13 @@ const WorkPage: BlitzPage<Props> = (props) => {
               <Avatar
                 size={"md"}
                 src={data.work.user.avatarImageURL ?? ""}
+                cursor={"pointer"}
                 onClick={onOpenUser}
               />
-              <Box flex={1} onClick={onOpenUser}>
-                <Text fontWeight={"bold"}>{data.work.user.name}</Text>
+              <Box flex={1}>
+                <Box onClick={onOpenUser} cursor={"pointer"}>
+                  <Text fontWeight={"bold"}>{data.work.user.name}</Text>
+                </Box>
               </Box>
               {!isSelf && (
                 <ButtonFollow

@@ -7,6 +7,7 @@ import { UserProfileHeader } from "app/[login]/components/UserProfileHeader"
 import { UserWorks } from "app/[login]/components/UserWorks"
 import { ViewerBookmarkedWorkList } from "app/[login]/components/ViewerBookmarkedWorkList"
 import { ViewerLikedWorkList } from "app/[login]/components/ViewerLikedWorkList"
+import { ViewerUserProfileHeader } from "app/[login]/components/ViewerUserProfileHeader"
 import { ViewerWorkList } from "app/[login]/components/ViewerWorkList"
 import UserLayout from "app/[login]/layout"
 import { MainStack } from "app/components/MainStack"
@@ -46,7 +47,7 @@ const UserPage: BlitzPage = () => {
 
   return (
     <MainStack title={null} description={null} fileId={null}>
-      <UserProfileHeader userId={userId} />
+      <ViewerUserProfileHeader userId={userId} />
       <Divider />
       <Box overflowX={"auto"}>
         <Tabs
