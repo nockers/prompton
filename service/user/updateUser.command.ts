@@ -7,6 +7,7 @@ type Props = {
   userId: string
   userName: string
   userAvatarFileId: string | null
+  userBiography: string
 }
 
 @injectable()
@@ -32,7 +33,7 @@ export class UpdateUserCommand {
         id: IdFactory.create(),
         userId: user.id,
         name: new Name(props.userName),
-        biography: new Biography(""),
+        biography: new Biography(props.userBiography),
         headerImageId: null,
         avatarImageURL: null,
         avatarImageId: props.userAvatarFileId

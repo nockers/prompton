@@ -63,6 +63,7 @@ export class UserEventStore {
     const draftUser = user.update({
       avatarImageId: event.avatarImageId ? event.avatarImageId : null,
       name: event.name,
+      biography: event.biography,
     })
 
     return this.repository.persist(draftUser)

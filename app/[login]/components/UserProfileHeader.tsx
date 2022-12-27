@@ -1,5 +1,4 @@
 import {
-  Box,
   HStack,
   Stack,
   Text,
@@ -10,6 +9,7 @@ import {
   Button,
 } from "@chakra-ui/react"
 import type { FC } from "react"
+import { CardUserCommission } from "app/components/CardUserCommission"
 import {
   useFollowUserMutation,
   useUnfollowUserMutation,
@@ -63,49 +63,43 @@ export const UserProfileHeader: FC<Props> = (props) => {
   const isLoadingFriendship = isCreatingFriendship || isDeletingFriendship
 
   return (
-    <HStack justifyContent={"center"}>
-      <Box px={4} w={"100%"}>
-        <HStack
-          spacing={4}
-          py={4}
-          px={0}
-          borderRadius={"lg"}
-          justifyContent={"space-between"}
-          alignItems={"flex-start"}
+    <Stack px={4}>
+      <HStack
+        spacing={4}
+        py={4}
+        px={0}
+        borderRadius={"lg"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+      >
+        <SkeletonCircle size={"16"} isLoaded={!loading && user !== null}>
+          <Avatar size={"lg"} src={user?.avatarImageURL || ""} />
+        </SkeletonCircle>
+        <Stack flex={1} spacing={1}>
+          <Skeleton isLoaded={!loading && user !== null}>
+            <Text fontSize={"xs"} fontWeight={"bold"} opacity={0.8} minW={40}>
+              {`@${user?.id.slice(0, 8)}`}
+            </Text>
+          </Skeleton>
+          <Skeleton isLoaded={!loading && user !== null}>
+            <Text fontSize={"2xl"} lineHeight={1} fontWeight={"bold"}>
+              {user?.name ?? "-"}
+            </Text>
+          </Skeleton>
+        </Stack>
+        <Button
+          size={"sm"}
+          isLoading={isLoadingFriendship}
+          colorScheme={data?.user?.isFollowee ? "pink" : "gray"}
+          onClick={data?.user?.isFollowee ? onUnfollowUser : onFollowUser}
         >
-          <Stack flex={1}>
-            <HStack flex={1} spacing={4}>
-              <SkeletonCircle size={"16"} isLoaded={!loading && user !== null}>
-                <Avatar size={"lg"} src={user?.avatarImageURL || ""} />
-              </SkeletonCircle>
-              <Stack flex={1} spacing={1}>
-                <Skeleton isLoaded={!loading && user !== null}>
-                  <Text
-                    fontSize={"xs"}
-                    fontWeight={"bold"}
-                    opacity={0.8}
-                    minW={40}
-                  >
-                    {`@${user?.id.slice(0, 8)}`}
-                  </Text>
-                </Skeleton>
-                <Skeleton isLoaded={!loading && user !== null}>
-                  <Text fontSize={"2xl"} lineHeight={1} fontWeight={"bold"}>
-                    {user?.name ?? "-"}
-                  </Text>
-                </Skeleton>
-              </Stack>
-              <Button
-                isLoading={isLoadingFriendship}
-                colorScheme={data?.user?.isFollowee ? "pink" : "gray"}
-                onClick={data?.user?.isFollowee ? onUnfollowUser : onFollowUser}
-              >
-                {data?.user?.isFollowee ? "フォロー中" : "フォロー"}
-              </Button>
-            </HStack>
-          </Stack>
-        </HStack>
-      </Box>
-    </HStack>
+          {data?.user?.isFollowee ? "フォロー中" : "フォロー"}
+        </Button>
+      </HStack>
+      <CardUserCommission
+        userId={props.userId}
+        isRequestable={data?.user?.isRequestable ?? false}
+      />
+    </Stack>
   )
 }

@@ -1,8 +1,15 @@
-import { Button, HStack, Icon, IconButton, Tooltip } from "@chakra-ui/react"
+import {
+  Button,
+  HStack,
+  Icon,
+  IconButton,
+  Tooltip,
+  useBreakpointValue,
+} from "@chakra-ui/react"
 import Link from "next/link"
 import type { FC } from "react"
 import { useContext } from "react"
-import { BiCog } from "react-icons/bi"
+import { BiCog, BiUser } from "react-icons/bi"
 import { FcGoogle } from "react-icons/fc"
 import { AppContext } from "interface/contexts/appContext"
 
@@ -12,6 +19,8 @@ type Props = {
 
 export const HomeHeaderLogin: FC<Props> = (props) => {
   const appContext = useContext(AppContext)
+
+  const isMobile = useBreakpointValue({ base: true, md: false })
 
   if (appContext.isLoading) {
     return <Button isLoading={true} fontSize={14} />
@@ -32,9 +41,20 @@ export const HomeHeaderLogin: FC<Props> = (props) => {
 
   return (
     <HStack>
-      <Link href={`/${appContext.currentUser.uid}`}>
-        <Button fontSize={14}>{"マイページ"}</Button>
-      </Link>
+      {isMobile && (
+        <Link href={"/settings"}>
+          <Tooltip label={"設定"}>
+            <IconButton aria-label={""}>
+              <Icon as={BiUser} />
+            </IconButton>
+          </Tooltip>
+        </Link>
+      )}
+      {!isMobile && (
+        <Link href={`/${appContext.currentUser.uid}`}>
+          <Button fontSize={14}>{"マイページ"}</Button>
+        </Link>
+      )}
       <Link href={"/settings"}>
         <Tooltip label={"設定"}>
           <IconButton aria-label={""}>

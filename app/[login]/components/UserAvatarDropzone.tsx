@@ -26,7 +26,7 @@ export const UserAvatarDropzone: FC<Props> = (props) => {
       bg={"gray.700"}
       rounded={"100"}
       borderStyle={"dashed"}
-      borderWidth={4}
+      borderWidth={2}
       cursor={"pointer"}
       _hover={{ opacity: 0.9 }}
     >

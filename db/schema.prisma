@@ -35,11 +35,12 @@ model User {
   bookmarks        Bookmark[]     @relation("user_bookmarks")
   comments         Comment[]      @relation("user_comments")
   notifications    Notification[] @relation("user_notifications")
-  commissions      Commission[]   @relation("user_commissions")
-  receivedRequests Commission[]   @relation("user_received_commissions")
+  requests         Request[]      @relation("user_requests")
+  receivedRequests Request[]      @relation("user_received_requests")
   folders          Folder[]       @relation("user_folders")
+  plans            Plan[]         @relation("user_plans")
   files            File[]         @relation("user_files")
-  isCommissionable Boolean        @default(false) @map("is_commissionable")
+  isRequestable    Boolean        @default(false) @map("is_requestable")
   isPublic         Boolean        @default(true) @map("is_public")
 
   @@map("users")
@@ -123,47 +124,57 @@ model Post {
   notifications      Notification[] @relation("notifications_post")
   folder             Folder?        @relation("folder_posts", fields: [folderId], references: [id])
   folderId           String?        @map("folder_id")
-  commission         Commission?    @relation("commission_posts", fields: [commissionId], references: [id])
-  commissionId       String?        @map("commission_id")
+  request            Request?       @relation("request_posts", fields: [requestId], references: [id])
+  requestId          String?        @map("request_id")
 
   @@map("posts")
 }
 
 model Folder {
-  id          String       @id @map("id")
-  createdAt   DateTime     @default(now()) @map("created_at")
-  updatedAt   DateTime     @updatedAt @map("updated_at")
-  name        String       @map("name")
-  description String?      @map("description")
-  user        User         @relation("user_folders", fields: [userId], references: [id])
-  userId      String       @map("user_id")
-  posts       Post[]       @relation("folder_posts")
-  likes       Like[]       @relation("folder_likes")
-  bookmarks   Bookmark[]   @relation("folder_bookmarks")
-  commission  Commission[] @relation("folder_commissions")
-  color       String?      @map("color")
-  isPublic    Boolean      @default(true) @map("is_public")
+  id          String     @id @map("id")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  name        String     @map("name")
+  description String?    @map("description")
+  user        User       @relation("user_folders", fields: [userId], references: [id])
+  userId      String     @map("user_id")
+  posts       Post[]     @relation("folder_posts")
+  likes       Like[]     @relation("folder_likes")
+  bookmarks   Bookmark[] @relation("folder_bookmarks")
+  request     Request[]  @relation("folder_requests")
+  color       String?    @map("color")
+  isPublic    Boolean    @default(true) @map("is_public")
 
   @@map("folders")
 }
 
-model Commission {
-  id          String   @id @map("id")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
-  user        User     @relation("user_commissions", fields: [userId], references: [id])
-  userId      String   @map("user_id")
-  type        String   @map("type")
-  status      String   @map("status")
-  folder      Folder?  @relation("folder_commissions", fields: [folderId], references: [id])
-  folderId    String?  @map("folder_id")
-  recipient   User     @relation("user_received_commissions", fields: [recipientId], references: [id])
-  recipientId String   @map("recipient_id")
-  posts       Post[]   @relation("commission_posts")
-  file        File[]   @relation("commission_files")
-  note        String?  @map("note")
+model Request {
+  id         String   @id @map("id")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  user       User     @relation("user_requests", fields: [userId], references: [id])
+  userId     String   @map("user_id")
+  status     String   @map("status")
+  folder     Folder?  @relation("folder_requests", fields: [folderId], references: [id])
+  folderId   String?  @map("folder_id")
+  creator    User     @relation("user_received_requests", fields: [creatorId], references: [id])
+  creatorId  String   @map("creator_id")
+  posts      Post[]   @relation("request_posts")
+  files      File[]   @relation("request_files")
+  note       String?  @map("note")
+  price      Int      @map("price")
+  commission Int      @map("commission")
 
-  @@map("commissions")
+  @@map("requests")
+}
+
+model Plan {
+  id        String   @id @map("id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation("user_plans", fields: [userId], references: [id])
+  userId    String   @map("user_id")
+  price     Int      @map("price")
 }
 
 model Notification {
@@ -286,15 +297,15 @@ model Event {
 }
 
 model File {
-  id           String      @id @map("id")
-  createdAt    DateTime    @default(now()) @map("created_at")
-  updatedAt    DateTime    @updatedAt @map("updated_at")
-  name         String      @map("name")
-  type         String      @map("type")
-  user         User?       @relation("user_files", fields: [userId], references: [id])
-  userId       String?     @map("user_id")
-  commission   Commission? @relation("commission_files", fields: [commissionId], references: [id])
-  commissionId String?     @map("commission_id")
+  id        String   @id @map("id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  name      String   @map("name")
+  type      String   @map("type")
+  user      User?    @relation("user_files", fields: [userId], references: [id])
+  userId    String?  @map("user_id")
+  request   Request? @relation("request_files", fields: [requestId], references: [id])
+  requestId String?  @map("request_id")
 
   @@map("files")
 }
@@ -339,12 +350,12 @@ enum Model {
   DALL_E_2
 }
 
-enum CommissionStatus {
+enum RequestStatus {
   PENDING
   ACCEPTED
   REJECTED
   IN_PROGRESS
   COMPLETED
 
-  @@map("commission_status")
+  @@map("request_status")
 }

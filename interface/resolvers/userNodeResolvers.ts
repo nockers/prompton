@@ -29,8 +29,8 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
   headerImageId() {
     return null
   },
-  biography() {
-    return ""
+  biography(parent) {
+    return parent.description
   },
   works(parent) {
     return db.user.findUnique({ where: { id: parent.id } }).posts({
@@ -43,6 +43,9 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
   },
   followeesCount(parent) {
     return db.friendship.count({ where: { followerId: parent.id } })
+  },
+  isRequestable(parent) {
+    return parent.isRequestable
   },
   /**
    * 自分がフォローされているかどうか

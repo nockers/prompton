@@ -4,7 +4,6 @@ import {
   Icon,
   IconButton,
   Input,
-  useColorMode,
   useColorModeValue,
   useToast,
 } from "@chakra-ui/react"
@@ -20,13 +19,11 @@ import { useRouter } from "next/router"
 import type { FC } from "react"
 import { useEffect, useState } from "react"
 import { BiHome } from "react-icons/bi"
-import { ButtonDarkMode } from "app/components/ButtonDarkMode"
 import { HomeHeaderLogin } from "app/components/HomeHeaderLogin"
+import { HomeHeaderUtilities } from "app/components/HomeHeaderUtilities"
 
 export const HomeHeader: FC = () => {
   const router = useRouter()
-
-  const { colorMode, toggleColorMode } = useColorMode()
 
   const backgroundColor = useColorModeValue("gray.50", "gray.900")
 
@@ -93,10 +90,12 @@ export const HomeHeader: FC = () => {
               setSearch(event.target.value)
             }}
           />
-          <HStack>
-            <HomeHeaderLogin onLogin={onLogin} />
-            <ButtonDarkMode colorMode={colorMode} onClick={toggleColorMode} />
-          </HStack>
+          {searchText.trim() === "" && (
+            <HStack>
+              <HomeHeaderLogin onLogin={onLogin} />
+              <HomeHeaderUtilities />
+            </HStack>
+          )}
         </HStack>
       </Box>
       <Box h={"4.5rem"} />

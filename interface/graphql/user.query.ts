@@ -11,6 +11,7 @@ export default gql`
       biography
       createdAt
       isFollowee
+      isRequestable
     }
   }
 `

@@ -22,6 +22,7 @@ export const updateUserResolver: MutationResolvers["updateUser"] = async (
     userId: ctx.currentUser.uid,
     userAvatarFileId: args.input.avatarFileId,
     userName: args.input.name,
+    userBiography: args.input.biography,
   })
 
   if (output instanceof Error) {

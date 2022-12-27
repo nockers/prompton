@@ -48,6 +48,46 @@ type BookmarkNode implements Node {
   folder: FolderNode
 }
 
+type Request implements Node {
+  id: ID!
+  """
+  作成日
+  """
+  createdAt: Int!
+  """
+  状態
+  """
+  status: String!
+  """
+  作品
+  """
+  works: [WorkNode!]!
+  """
+  フォルダ
+  """
+  folders: [FolderNode!]!
+  """
+  ノート
+  """
+  note: String
+  """
+  依頼者
+  """
+  user: UserNode!
+  """
+  製作者
+  """
+  creator: UserNode!
+  """
+  値段
+  """
+  price: Int!
+  """
+  手数料
+  """
+  commission: Int!
+}
+
 """
 フォルダ
 """
@@ -217,6 +257,10 @@ type UserNode implements Node {
   ログインしているユーザをフォローしているかどうか
   """
   isFollowee: Boolean!
+  """
+  制作依頼を受け付けているかどうか
+  """
+  isRequestable: Boolean!
 }
 
 """

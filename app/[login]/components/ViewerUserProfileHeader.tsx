@@ -11,11 +11,12 @@ import {
   Skeleton,
   SkeletonCircle,
   useColorModeValue,
+  Textarea,
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import type { FC } from "react"
 import { useContext } from "react"
-import { BiEdit } from "react-icons/bi"
+import { BiCheck, BiPaint } from "react-icons/bi"
 import { UserAvatarDropzone } from "app/[login]/components/UserAvatarDropzone"
 import { useFileUpload } from "app/hooks/useFileUpload"
 import {
@@ -94,8 +95,33 @@ export const ViewerUserProfileHeader: FC<Props> = (props) => {
           input: {
             avatarFileId: data?.user?.avatarImageId ?? null,
             headerImageId: data?.user?.headerImageId ?? null,
-            biography: "",
+            biography: data?.user?.biography ?? "",
             name: name,
+          },
+        },
+      })
+      await refetch()
+      toast({ title: "プロフィールを更新しました" })
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          title: "ERROR",
+          description: error.message,
+          status: "error",
+        })
+      }
+    }
+  }
+
+  const onChangeBiography = async (biography: string) => {
+    try {
+      await updateUser({
+        variables: {
+          input: {
+            avatarFileId: data?.user?.avatarImageId ?? null,
+            headerImageId: data?.user?.headerImageId ?? null,
+            biography: biography,
+            name: data?.user?.name ?? "",
           },
         },
       })
@@ -114,84 +140,81 @@ export const ViewerUserProfileHeader: FC<Props> = (props) => {
 
   const user = data?.user ?? null
 
-  const isEditable = router.query.login === appContext.currentUser?.uid
-
   return (
-    <HStack justifyContent={"center"}>
-      <Box px={4} w={"100%"}>
-        <HStack
-          spacing={4}
-          py={4}
-          px={isEditMode ? 4 : 0}
-          borderRadius={"lg"}
-          justifyContent={"space-between"}
-          alignItems={"flex-start"}
-          background={isEditMode ? backgroundColor : "transparent"}
+    <Stack px={4} w={"100%"} spacing={4}>
+      <HStack>
+        <Button
+          aria-label={""}
+          size={"sm"}
+          rightIcon={isEditMode ? <BiCheck /> : <BiPaint />}
+          onClick={onEditProfile}
         >
-          {isEditMode && user && (
-            <Stack flex={1} borderRadius={"lg"}>
-              <Text>{"プロフィール更新"}</Text>
-              <HStack spacing={4} flex={1}>
-                <UserAvatarDropzone
-                  avatarImageURL={user.avatarImageURL}
-                  isLoading={false}
-                  onChange={onChangeAvatarFileId}
+          {isEditMode ? "編集を終了する" : "このページを編集する"}
+        </Button>
+      </HStack>
+      <HStack
+        spacing={4}
+        justifyContent={"space-between"}
+        alignItems={"flex-start"}
+      >
+        {isEditMode && (
+          <Stack flex={1} borderRadius={"lg"}>
+            <HStack spacing={4} flex={1}>
+              <UserAvatarDropzone
+                avatarImageURL={user!.avatarImageURL}
+                isLoading={false}
+                onChange={onChangeAvatarFileId}
+              />
+              <Stack w={"100%"} maxW={"sm"}>
+                <Input
+                  placeholder={"ユーザ名"}
+                  defaultValue={user!.name}
+                  onBlur={(event) => {
+                    onChangeName(event.target.value)
+                  }}
                 />
-                <Stack w={"100%"} maxW={"sm"}>
-                  <Input
-                    placeholder={"ユーザ名"}
-                    defaultValue={user.name}
-                    onBlur={(event) => {
-                      onChangeName(event.target.value)
-                    }}
-                  />
-                </Stack>
-              </HStack>
-            </Stack>
-          )}
-          {!isEditMode && (
-            <Stack flex={1}>
-              <HStack flex={1} spacing={4}>
-                <SkeletonCircle
-                  size={"16"}
-                  isLoaded={!loading && user !== null}
+              </Stack>
+            </HStack>
+          </Stack>
+        )}
+        {!isEditMode && (
+          <HStack flex={1} spacing={4}>
+            <SkeletonCircle size={"16"} isLoaded={!loading && user !== null}>
+              <Avatar size={"lg"} src={user?.avatarImageURL || ""} />
+            </SkeletonCircle>
+            <Stack spacing={1}>
+              <Skeleton isLoaded={!loading && user !== null}>
+                <Text
+                  fontSize={"xs"}
+                  fontWeight={"bold"}
+                  opacity={0.8}
+                  minW={40}
                 >
-                  <Avatar size={"lg"} src={user?.avatarImageURL || ""} />
-                </SkeletonCircle>
-                <Stack spacing={1}>
-                  <Skeleton isLoaded={!loading && user !== null}>
-                    <Text
-                      fontSize={"xs"}
-                      fontWeight={"bold"}
-                      opacity={0.8}
-                      minW={40}
-                    >
-                      {`@${user?.id.slice(0, 8)}`}
-                    </Text>
-                  </Skeleton>
-                  <Skeleton isLoaded={!loading && user !== null}>
-                    <Text fontSize={"2xl"} lineHeight={1} fontWeight={"bold"}>
-                      {user?.name ?? "-"}
-                    </Text>
-                  </Skeleton>
-                </Stack>
-              </HStack>
+                  {`@${user?.id.slice(0, 8)}`}
+                </Text>
+              </Skeleton>
+              <Skeleton isLoaded={!loading && user !== null}>
+                <Text fontSize={"2xl"} lineHeight={1} fontWeight={"bold"}>
+                  {user?.name ?? "-"}
+                </Text>
+              </Skeleton>
             </Stack>
-          )}
-          {isEditable && (
-            <Stack alignItems={"flex-start"}>
-              <Button
-                aria-label={""}
-                size={"sm"}
-                rightIcon={<BiEdit />}
-                onClick={onEditProfile}
-              >
-                {isEditMode ? "閉じる" : "編集"}
-              </Button>
-            </Stack>
-          )}
-        </HStack>
-      </Box>
-    </HStack>
+          </HStack>
+        )}
+      </HStack>
+      {!isEditMode && data?.user?.biography?.length !== 0 && (
+        <Box>
+          <Text>{data?.user?.biography}</Text>
+        </Box>
+      )}
+      {isEditMode && (
+        <Textarea
+          defaultValue={data?.user?.biography}
+          onBlur={(event) => {
+            onChangeBiography(event.target.value)
+          }}
+        />
+      )}
+    </Stack>
   )
 }
