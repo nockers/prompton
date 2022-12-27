@@ -1,29 +1,25 @@
 import type { BlitzPage } from "@blitzjs/auth"
-import { Divider, HStack, Stack } from "@chakra-ui/react"
-import { HomeLabelList } from "app/components/HomeLabelList"
+import { Divider, HStack } from "@chakra-ui/react"
 import { HomeNotification } from "app/components/HomeNotification"
-import { HomePostList } from "app/components/HomePostList"
 import { HomeTabs } from "app/components/HomeTabs"
 import { MainStack } from "app/components/MainStack"
+import { HomeUserList } from "app/users/components/HomeUserList"
 
-const RootPage: BlitzPage = () => {
+const UsersPage: BlitzPage = () => {
   return (
     <MainStack title={null} description={null} fileId={null}>
       <HStack justifyContent={"flex-start"} w={"100%"} px={4}>
         <HomeNotification isJA={false} />
       </HStack>
-      <HomeTabs index={0} />
+      <HomeTabs index={2} />
       <Divider />
-      <Stack spacing={0} w={"100%"} alignItems={"center"}>
-        <HomeLabelList />
-        <HomePostList />
-      </Stack>
+      <HomeUserList />
     </MainStack>
   )
 }
 
-RootPage.getLayout = (page) => {
+UsersPage.getLayout = (page) => {
   return <>{page}</>
 }
 
-export default RootPage
+export default UsersPage

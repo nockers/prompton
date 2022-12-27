@@ -1,4 +1,4 @@
-import { Button, HStack, Spinner, Stack } from "@chakra-ui/react"
+import { Box, Button, Divider, HStack, Spinner, Stack } from "@chakra-ui/react"
 import type { FC } from "react"
 import { useContext } from "react"
 import { CardPost } from "app/components/CardPost"
@@ -7,7 +7,11 @@ import { useWorksQuery } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
 import { toColumnArray } from "interface/utils/toColumnArray"
 
-export const HomePostList: FC = () => {
+type Props = {
+  searchText?: string
+}
+
+export const SearchPostList: FC<Props> = (props) => {
   const appContext = useContext(AppContext)
 
   const {
@@ -19,7 +23,9 @@ export const HomePostList: FC = () => {
     variables: {
       offset: 0,
       limit: 9 * 6,
-      where: null,
+      where: {
+        search: props.searchText || null,
+      },
     },
   })
 
@@ -28,19 +34,6 @@ export const HomePostList: FC = () => {
   const onFetchMore = () => {
     fetchMore({ variables: { offset: data!.works.length ?? 0 } })
   }
-
-  /**
-   * https://github.com/apollographql/apollo-client/issues/9819
-   */
-  // useEffect(() => {
-  //   const refetchQueryInterval = setInterval(() => {
-  //     refetch()
-  //   }, 2 * 60 * 1000)
-  //   return () => {
-  //     clearInterval(refetchQueryInterval)
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
 
   if (loading && data === null) {
     return (
@@ -56,6 +49,9 @@ export const HomePostList: FC = () => {
 
   return (
     <Stack px={4} spacing={4}>
+      <Box w={"100%"}>
+        <Divider />
+      </Box>
       <HStack alignItems={"flex-start"} spacing={4}>
         {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
           <Stack key={index} spacing={4}>

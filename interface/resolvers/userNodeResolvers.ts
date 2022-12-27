@@ -15,7 +15,7 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
     return parent.id
   },
   name(parent) {
-    return parent.name
+    return parent.name || "-"
   },
   avatarImageURL(parent) {
     if (parent.avatarFileId !== null) {
@@ -30,7 +30,7 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
     return null
   },
   biography(parent) {
-    return parent.description
+    return parent.description || ""
   },
   works(parent) {
     return db.user.findUnique({ where: { id: parent.id } }).posts({
@@ -43,6 +43,15 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
   },
   followeesCount(parent) {
     return db.friendship.count({ where: { followerId: parent.id } })
+  },
+  requestsCount(parent) {
+    return db.request.count({ where: { userId: parent.id } })
+  },
+  receivedRequestsCount(parent) {
+    return db.request.count({ where: { creatorId: parent.id } })
+  },
+  worksCount(parent) {
+    return db.post.count({ where: { userId: parent.id, isDeleted: false } })
   },
   isRequestable(parent) {
     return parent.isRequestable

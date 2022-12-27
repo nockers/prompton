@@ -7,6 +7,7 @@ import type {
   QueryLabelArgs,
   QueryLabelsArgs,
   QueryUserArgs,
+  QueryUsersArgs,
   QueryWorkArgs,
   QueryWorksArgs,
 } from "interface/__generated__/node"
@@ -116,6 +117,38 @@ export const QueryResolvers: Resolvers = {
   },
   user(_: unknown, args: Partial<QueryUserArgs>) {
     return db.user.findUnique({ where: { id: args.id } })
+  },
+  async users(_: unknown, args: Partial<QueryUsersArgs>, context) {
+    const take = args.limit || 9 * 4
+    const skip = args.offset || 0
+    if (typeof args.where?.search === "string") {
+      return db.user.findMany({
+        orderBy: { updatedAt: "desc" },
+        take: take,
+        skip: skip,
+        where: {
+          isDeleted: false,
+          id: { not: context.currentUser?.uid },
+          OR: [
+            {
+              name: { search: args.where.search },
+            },
+            {
+              id: { search: args.where.search },
+            },
+          ],
+        },
+      })
+    }
+    return db.user.findMany({
+      orderBy: { updatedAt: "desc" },
+      take: take,
+      skip: skip,
+      where: {
+        isDeleted: false,
+        id: { not: context.currentUser?.uid },
+      },
+    })
   },
   viewer(_: unknown, __: unknown, context) {
     if (context.currentUser === null) {

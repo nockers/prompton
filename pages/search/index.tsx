@@ -1,8 +1,8 @@
 import type { BlitzPage } from "@blitzjs/auth"
 import { useRouter } from "next/router"
-import { HomePostList } from "app/components/HomePostList"
 import { MainStack } from "app/components/MainStack"
 import { SearchLabelList } from "app/components/SearchLabelList"
+import { SearchPostList } from "app/components/SearchPostList"
 
 const SearchPage: BlitzPage = () => {
   const router = useRouter()
@@ -16,7 +16,7 @@ const SearchPage: BlitzPage = () => {
   return (
     <MainStack title={null} description={null} fileId={null}>
       <SearchLabelList searchText={searchText} />
-      <HomePostList searchText={searchText} />
+      <SearchPostList searchText={searchText} />
     </MainStack>
   )
 }

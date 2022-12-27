@@ -4,6 +4,7 @@ type Query {
   labels(offset: Int, limit: Int, where: LabelsWhereInput): [LabelNode!]!
   label(id: ID, name: String): LabelNode
   user(id: ID!): UserNode
+  users(offset: Int, limit: Int, where: UsersWhereInput): [UserNode!]!
   viewer: Viewer!
 }
 
@@ -15,6 +16,10 @@ input WorksWhereInput {
 }
 
 input LabelsWhereInput {
+  search: String
+}
+
+input UsersWhereInput {
   search: String
 }
 
@@ -249,6 +254,18 @@ type UserNode implements Node {
   フォローしている数
   """
   followeesCount: Int
+  """
+  依頼した数
+  """
+  requestsCount: Int!
+  """
+  依頼された数
+  """
+  receivedRequestsCount: Int!
+  """
+  作品の数
+  """
+  worksCount: Int!
   """
   ログインしているユーザにフォローされているかどうか
   """
