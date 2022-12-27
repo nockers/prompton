@@ -251,7 +251,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
                 <ButtonFollow
                   size={"sm"}
                   isLoading={isLoadingFriendship}
-                  isActive={data.work.user.isFollower}
+                  isActive={data.work.user.isFollowee}
                   isDisabled={appContext.currentUser === null}
                   onFollow={onFollowUser}
                   onUnfollow={onUnfollowUser}

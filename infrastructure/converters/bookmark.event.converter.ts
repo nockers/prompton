@@ -36,6 +36,7 @@ export class BookmarkEventConverter {
       const data = zBookmarkCreatedEventData.parse(event.data)
       return new BookmarkCreatedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         bookmarkId: new Id(data.bookmarkId),
         userId: new Id(data.userId),
         postId: new Id(data.postId),
@@ -46,6 +47,7 @@ export class BookmarkEventConverter {
       const data = zBookmarkDeletedEventData.parse(event.data)
       return new BookmarkDeletedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         bookmarkId: new Id(data.bookmarkId),
         userId: new Id(data.userId),
         postId: new Id(data.postId),

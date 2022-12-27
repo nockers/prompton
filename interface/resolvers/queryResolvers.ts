@@ -1,15 +1,20 @@
 import { ApolloServerErrorCode } from "@apollo/server/errors"
+import { AuthorizationError } from "blitz"
 import { GraphQLError } from "graphql"
 import db from "db"
 import type {
+  Query,
   QueryLabelArgs,
   QueryLabelsArgs,
   QueryUserArgs,
   QueryWorkArgs,
   QueryWorksArgs,
 } from "interface/__generated__/node"
+import type { PrismaResolvers } from "interface/resolvers/types/prismaResolvers"
 
-export const QueryResolvers = {
+type Resolvers = PrismaResolvers<Query, {}>
+
+export const QueryResolvers: Resolvers = {
   labels(_: unknown, args: Partial<QueryLabelsArgs>) {
     const take = args.limit || 9 * 4
     const skip = args.offset || 0
@@ -24,7 +29,6 @@ export const QueryResolvers = {
         },
       })
     }
-
     return db.label.findMany({
       orderBy: { posts: { _count: "desc" } },
       take: take,
@@ -112,5 +116,13 @@ export const QueryResolvers = {
   },
   user(_: unknown, args: Partial<QueryUserArgs>) {
     return db.user.findUnique({ where: { id: args.id } })
+  },
+  viewer(_: unknown, __: unknown, context) {
+    if (context.currentUser === null) {
+      throw new GraphQLError(AuthorizationError.name, {
+        extensions: { code: ApolloServerErrorCode.BAD_REQUEST },
+      })
+    }
+    return {}
   },
 }

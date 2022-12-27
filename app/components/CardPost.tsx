@@ -30,7 +30,8 @@ type Props = {
   userAvatarImageURL: string | null
   isLiked: boolean
   isBookmarked: boolean
-  isFollower: boolean
+  isFollowee: boolean
+  isFollowee: boolean
   isEditable: boolean
 }
 
@@ -129,7 +130,7 @@ export const CardPost: FC<Props> = (props) => {
         isOpen={isOpen}
         isLiked={props.isLiked}
         isBookmarked={props.isBookmarked}
-        isFollower={props.isFollower}
+        isFollowee={props.isFollowee}
         isEditable={props.isEditable}
         onClose={onClose}
         onLinkColor={onLinkColor}

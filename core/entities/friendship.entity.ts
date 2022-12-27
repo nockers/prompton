@@ -17,12 +17,12 @@ export class FriendshipEntity {
   readonly id!: Id
 
   /**
-   * フォローされているユーザのID
+   * フォローされたユーザのID
    */
   readonly followeeId!: Id
 
   /**
-   * フォローしているユーザのID
+   * フォローしたユーザのID
    */
   readonly followerId!: Id
 

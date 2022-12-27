@@ -168,7 +168,7 @@ export const UserProfileHeader: FC<Props> = (props) => {
                       opacity={0.8}
                       minW={40}
                     >
-                      {`@${user?.id}`}
+                      {`@${user?.id.slice(0, 8)}`}
                     </Text>
                   </Skeleton>
                   <Skeleton isLoaded={!loading && user !== null}>
@@ -188,7 +188,7 @@ export const UserProfileHeader: FC<Props> = (props) => {
                 rightIcon={<BiEdit />}
                 onClick={onEditProfile}
               >
-                {isEditMode ? "閉じる" : "プロフィール編集"}
+                {isEditMode ? "閉じる" : "編集"}
               </Button>
             </Stack>
           )}

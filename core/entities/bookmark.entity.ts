@@ -3,8 +3,8 @@ import { Id } from "core/valueObjects"
 
 const zProps = z.object({
   id: z.instanceof(Id),
-  postId: z.instanceof(Id),
   userId: z.instanceof(Id),
+  postId: z.instanceof(Id).nullable(),
 })
 
 /**

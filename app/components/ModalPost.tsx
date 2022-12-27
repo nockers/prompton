@@ -56,7 +56,7 @@ type Props = {
   userAvatarImageURL: string | null
   isLiked: boolean
   isBookmarked: boolean
-  isFollower: boolean
+  isFollowee: boolean
   isOpen: boolean
   isEditable: boolean
   onOpenUser(): void
@@ -282,7 +282,7 @@ export const ModalPost: FC<Props> = (props) => {
               {!isSelf && (
                 <ButtonFollow
                   isLoading={isLoadingFriendship}
-                  isActive={props.isFollower}
+                  isActive={props.isFollowee}
                   isDisabled={isSelf || appContext.currentUser === null}
                   onFollow={onFollowUser}
                   onUnfollow={onUnfollowUser}

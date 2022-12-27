@@ -1,9 +1,10 @@
 type Query {
   works(offset: Int, limit: Int, where: WorksWhereInput): [WorkNode!]!
   work(id: ID!): WorkNode
-  user(id: ID!): UserNode
   labels(offset: Int, limit: Int, where: LabelsWhereInput): [LabelNode!]!
   label(id: ID, name: String): LabelNode
+  user(id: ID!): UserNode
+  viewer: Viewer!
 }
 
 input WorksWhereInput {
@@ -21,7 +22,65 @@ input LabelsWhereInput {
 ログインしているユーザ
 """
 type Viewer {
+  user: UserNode!
   works(offset: Int, limit: Int): [WorkNode!]!
+  likedWorks(offset: Int, limit: Int): [WorkNode!]!
+  bookmarkedWorks(offset: Int, limit: Int): [WorkNode!]!
+  followees(offset: Int, limit: Int): [UserNode!]!
+}
+
+"""
+ブックマーク
+"""
+type BookmarkNode implements Node {
+  id: ID!
+  """
+  作成日
+  """
+  createdAt: Int!
+  """
+  作品
+  """
+  work: WorkNode
+  """
+  フォルダ
+  """
+  folder: FolderNode
+}
+
+"""
+フォルダ
+"""
+type FolderNode implements Node {
+  id: ID!
+  """
+  作成日
+  """
+  createdAt: Int!
+  """
+  名前
+  """
+  name: String!
+  """
+  作品
+  """
+  works: [WorkNode!]!
+}
+
+"""
+スキ
+"""
+type LikeNode implements Node {
+  id: ID!
+  createdAt: Int!
+  """
+  作品
+  """
+  work: WorkNode
+  """
+  フォルダ
+  """
+  folder: FolderNode
 }
 
 """

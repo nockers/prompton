@@ -7,6 +7,7 @@ const zProps = z.object({
   friendshipId: z.instanceof(Id),
   userId: z.instanceof(Id),
   followerId: z.instanceof(Id),
+  followeeId: z.instanceof(Id),
 })
 
 type Props = inferEventProps<typeof zProps>
@@ -25,6 +26,8 @@ export class FriendshipDeletedEvent extends PrototypeEvent implements Props {
   readonly userId!: Props["userId"]
 
   readonly followerId!: Props["followerId"]
+
+  readonly followeeId!: Props["followeeId"]
 
   constructor(props: Props) {
     super({ ...props, documentId: props.friendshipId })

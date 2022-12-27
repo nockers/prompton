@@ -1,13 +1,9 @@
 import { gql } from "@apollo/client"
 
 export default gql`
-  query SearchLabels($offset: Int, $limit: Int, $where: LabelsWhereInput) {
-    labels(offset: $offset, limit: $limit, where: $where) {
-      id
-      name
-      nameJA
-      count
-      works {
+  query ViewerBookmarkedWorks($offset: Int, $limit: Int) {
+    viewer {
+      bookmarkedWorks(offset: $offset, limit: $limit) {
         id
         createdAt
         title

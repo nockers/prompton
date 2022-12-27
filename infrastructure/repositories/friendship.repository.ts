@@ -74,16 +74,16 @@ export class FriendshipRepository {
     try {
       await db.$transaction([
         db.user.update({
+          where: { id: friendship.followeeId.value },
           data: {
+            followersCount: { increment: 1 },
             followers: {
               create: {
                 id: friendship.id.value,
                 follower: { connect: { id: friendship.followerId.value } },
               },
             },
-            followersCount: { increment: 1 },
           },
-          where: { id: friendship.followeeId.value },
         }),
         db.user.update({
           data: { followeesCount: { increment: 1 } },
@@ -99,14 +99,11 @@ export class FriendshipRepository {
 
   async unfollow(friendship: FriendshipEntity) {
     try {
-      await db.friendship.delete({
-        where: {
-          id: friendship.id.value,
-        },
-      })
       await db.$transaction([
         db.user.update({
+          where: { id: friendship.followeeId.value },
           data: {
+            followersCount: { decrement: 1 },
             followers: {
               delete: {
                 followerId_followeeId: {
@@ -115,9 +112,7 @@ export class FriendshipRepository {
                 },
               },
             },
-            followersCount: { decrement: 1 },
           },
-          where: { id: friendship.followeeId.value },
         }),
         db.user.update({
           data: { followeesCount: { decrement: 1 } },

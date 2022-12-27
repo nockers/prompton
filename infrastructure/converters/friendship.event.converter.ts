@@ -14,6 +14,7 @@ export class FriendshipEventConverter {
       const data: z.infer<typeof zFriendshipCreatedEventData> = {
         friendshipId: event.friendshipId.value,
         userId: event.userId.value,
+        followeeId: event.followeeId.value,
         followerId: event.followerId.value,
       }
       return zFriendshipCreatedEventData.parse(data)
@@ -23,6 +24,7 @@ export class FriendshipEventConverter {
       const data: z.infer<typeof zFriendshipDeletedEventData> = {
         friendshipId: event.friendshipId.value,
         userId: event.userId.value,
+        followeeId: event.followeeId.value,
         followerId: event.followerId.value,
       }
       return zFriendshipDeletedEventData.parse(data)
@@ -36,8 +38,10 @@ export class FriendshipEventConverter {
       const data = zFriendshipCreatedEventData.parse(event.data)
       return new FriendshipCreatedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         friendshipId: new Id(data.friendshipId),
         userId: new Id(data.userId),
+        followeeId: new Id(data.followeeId),
         followerId: new Id(data.followerId),
       })
     }
@@ -46,8 +50,10 @@ export class FriendshipEventConverter {
       const data = zFriendshipDeletedEventData.parse(event.data)
       return new FriendshipDeletedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         friendshipId: new Id(data.friendshipId),
         userId: new Id(data.userId),
+        followeeId: new Id(data.followeeId),
         followerId: new Id(data.followerId),
       })
     }

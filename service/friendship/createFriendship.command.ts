@@ -4,7 +4,13 @@ import { FriendshipCreatedEvent, Id, IdFactory } from "core"
 import { EventStore } from "infrastructure"
 
 type Props = {
+  /**
+   * フォローされるユーザ
+   */
   followeeId: string
+  /**
+   * フォローするユーザ
+   */
   followerId: string
 }
 
@@ -23,6 +29,7 @@ export class CreateFriendshipCommand {
         friendshipId: IdFactory.create(),
         userId: new Id(props.followeeId),
         followerId: new Id(props.followerId),
+        followeeId: new Id(props.followeeId),
       })
 
       await this.eventStore.commit(event)

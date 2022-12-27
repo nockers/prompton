@@ -23,6 +23,7 @@ export class NotificationEventConverter {
       const data = zNotificationCreatedEventData.parse(event.data)
       return new NotificationCreatedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         notificationId: new Id(data.notificationId),
         userId: new Id(data.userId),
       })

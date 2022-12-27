@@ -36,6 +36,7 @@ export class LikeEventConverter {
       const data = zLikeCreatedEventData.parse(event.data)
       return new LikeCreatedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         likeId: new Id(data.likeId),
         postId: new Id(data.postId),
         userId: new Id(data.userId),
@@ -46,6 +47,7 @@ export class LikeEventConverter {
       const data = zLikeDeletedEventData.parse(event.data)
       return new LikeDeletedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         likeId: new Id(data.likeId),
         postId: new Id(data.postId),
         userId: new Id(data.userId),

@@ -17,7 +17,7 @@ export class LikeRepository {
 
       return new LikeEntity({
         id: new Id(like.id),
-        postId: new Id(like.postId),
+        postId: like.postId !== null ? new Id(like.postId) : null,
         userId: new Id(like.userId),
       })
     } catch (error) {
@@ -42,7 +42,7 @@ export class LikeRepository {
 
       return new LikeEntity({
         id: new Id(like.id),
-        postId: new Id(like.postId),
+        postId: like.postId !== null ? new Id(like.postId) : null,
         userId: new Id(like.userId),
       })
     } catch (error) {

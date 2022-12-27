@@ -99,7 +99,7 @@ const LabelPage: BlitzPage<Props> = () => {
                 userAvatarImageURL={work.user.avatarImageURL}
                 isLiked={work.isLiked}
                 isBookmarked={work.isBookmarked}
-                isFollower={work.user.isFollower}
+                isFollowee={work.user.isFollowee}
                 isEditable={work.user.id === appContext.currentUser?.uid}
               />
             ))}

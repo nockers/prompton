@@ -9,32 +9,38 @@ generator client {
 }
 
 model User {
-  id              String         @id @map("id")
-  createdAt       DateTime       @default(now()) @map("created_at")
-  updatedAt       DateTime       @updatedAt @map("updated_at")
-  index           Int            @unique @default(autoincrement()) @map("index")
-  login           String?        @unique @map("login")
-  name            String         @map("name")
-  description     String         @default("") @map("description")
-  email           String?        @unique @map("email")
-  avatarFileId    String?        @map("avatar_file_id")
-  avatarImageURL  String?        @map("avatar_image_url")
-  role            UserRole       @default(USER) @map("role")
-  isDeleted       Boolean        @default(false) @map("is_deleted")
-  posts           Post[]         @relation("user_posts")
-  tokens          UserToken[]    @relation("user_tokens")
-  sessions        Session[]      @relation("user_sessions")
-  configLanguage  Language       @default(EN) @map("config_language")
-  configColorMode ColorMode      @default(LIGHT) @map("config_color_mode")
-  followees       Friendship[]   @relation("user_followers")
-  followeesCount  Int            @default(0) @map("followees_count")
-  followers       Friendship[]   @relation("user_followees")
-  followersCount  Int            @default(0) @map("followers_count")
-  likes           Like[]         @relation("user_likes")
-  reactions       Reaction[]     @relation("user_reactions")
-  bookmarks       Bookmark[]     @relation("user_bookmarks")
-  comments        Comment[]      @relation("user_comments")
-  notifications   Notification[] @relation("user_notifications")
+  id               String         @id @map("id")
+  createdAt        DateTime       @default(now()) @map("created_at")
+  updatedAt        DateTime       @updatedAt @map("updated_at")
+  index            Int            @unique @default(autoincrement()) @map("index")
+  login            String?        @unique @map("login")
+  name             String         @map("name")
+  description      String         @default("") @map("description")
+  email            String?        @unique @map("email")
+  avatarFileId     String?        @map("avatar_file_id")
+  avatarImageURL   String?        @map("avatar_image_url")
+  role             UserRole       @default(USER) @map("role")
+  isDeleted        Boolean        @default(false) @map("is_deleted")
+  posts            Post[]         @relation("user_posts")
+  tokens           UserToken[]    @relation("user_tokens")
+  sessions         Session[]      @relation("user_sessions")
+  configLanguage   Language       @default(EN) @map("config_language")
+  configColorMode  ColorMode      @default(LIGHT) @map("config_color_mode")
+  followees        Friendship[]   @relation("user_followers")
+  followeesCount   Int            @default(0) @map("followees_count")
+  followers        Friendship[]   @relation("user_followees")
+  followersCount   Int            @default(0) @map("followers_count")
+  likes            Like[]         @relation("user_likes")
+  reactions        Reaction[]     @relation("user_reactions")
+  bookmarks        Bookmark[]     @relation("user_bookmarks")
+  comments         Comment[]      @relation("user_comments")
+  notifications    Notification[] @relation("user_notifications")
+  commissions      Commission[]   @relation("user_commissions")
+  receivedRequests Commission[]   @relation("user_received_commissions")
+  folders          Folder[]       @relation("user_folders")
+  files            File[]         @relation("user_files")
+  isCommissionable Boolean        @default(false) @map("is_commissionable")
+  isPublic         Boolean        @default(true) @map("is_public")
 
   @@map("users")
 }
@@ -92,6 +98,7 @@ model Post {
   dateText           String         @map("date_text")
   tags               Tag[]          @relation("post_tags")
   isDeleted          Boolean        @default(false) @map("is_deleted")
+  isPublic           Boolean        @default(true) @map("is_public")
   user               User           @relation("user_posts", fields: [userId], references: [id])
   userId             String         @map("user_id")
   fileId             String         @map("file_id")
@@ -114,8 +121,49 @@ model Post {
   labels             Label[]        @relation("post_labels")
   webColors          String[]       @map("web_colors")
   notifications      Notification[] @relation("notifications_post")
+  folder             Folder?        @relation("folder_posts", fields: [folderId], references: [id])
+  folderId           String?        @map("folder_id")
+  commission         Commission?    @relation("commission_posts", fields: [commissionId], references: [id])
+  commissionId       String?        @map("commission_id")
 
   @@map("posts")
+}
+
+model Folder {
+  id          String       @id @map("id")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  name        String       @map("name")
+  description String?      @map("description")
+  user        User         @relation("user_folders", fields: [userId], references: [id])
+  userId      String       @map("user_id")
+  posts       Post[]       @relation("folder_posts")
+  likes       Like[]       @relation("folder_likes")
+  bookmarks   Bookmark[]   @relation("folder_bookmarks")
+  commission  Commission[] @relation("folder_commissions")
+  color       String?      @map("color")
+  isPublic    Boolean      @default(true) @map("is_public")
+
+  @@map("folders")
+}
+
+model Commission {
+  id          String   @id @map("id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  user        User     @relation("user_commissions", fields: [userId], references: [id])
+  userId      String   @map("user_id")
+  type        String   @map("type")
+  status      String   @map("status")
+  folder      Folder?  @relation("folder_commissions", fields: [folderId], references: [id])
+  folderId    String?  @map("folder_id")
+  recipient   User     @relation("user_received_commissions", fields: [recipientId], references: [id])
+  recipientId String   @map("recipient_id")
+  posts       Post[]   @relation("commission_posts")
+  file        File[]   @relation("commission_files")
+  note        String?  @map("note")
+
+  @@map("commissions")
 }
 
 model Notification {
@@ -152,13 +200,16 @@ model Label {
 model Like {
   id            String         @id @map("id")
   createdAt     DateTime       @default(now()) @map("created_at")
-  post          Post           @relation("post_likes", fields: [postId], references: [id])
-  postId        String         @map("post_id")
+  post          Post?          @relation("post_likes", fields: [postId], references: [id])
+  postId        String?        @map("post_id")
+  folder        Folder?        @relation("folder_likes", fields: [folderId], references: [id])
+  folderId      String?        @map("folder_id")
   user          User           @relation("user_likes", fields: [userId], references: [id])
   userId        String         @map("user_id")
   notifications Notification[] @relation("notifications_like")
 
   @@unique([userId, postId])
+  @@unique([userId, folderId])
   @@index([userId, createdAt])
   @@map("likes")
 }
@@ -166,12 +217,15 @@ model Like {
 model Bookmark {
   id        String   @id @map("id")
   createdAt DateTime @default(now()) @map("created_at")
-  post      Post     @relation("post_bookmarks", fields: [postId], references: [id])
-  postId    String   @map("post_id")
   user      User     @relation("user_bookmarks", fields: [userId], references: [id])
   userId    String   @map("user_id")
+  post      Post?    @relation("post_bookmarks", fields: [postId], references: [id])
+  postId    String?  @map("post_id")
+  folder    Folder?  @relation("folder_bookmarks", fields: [folderId], references: [id])
+  folderId  String?  @map("folder_id")
 
   @@unique([userId, postId])
+  @@unique([userId, folderId])
   @@index([userId, createdAt])
   @@map("bookmarks")
 }
@@ -230,6 +284,20 @@ model Event {
   @@map("events")
 }
 
+model File {
+  id           String      @id @map("id")
+  createdAt    DateTime    @default(now()) @map("created_at")
+  updatedAt    DateTime    @updatedAt @map("updated_at")
+  name         String      @map("name")
+  type         String      @map("type")
+  user         User?       @relation("user_files", fields: [userId], references: [id])
+  userId       String?     @map("user_id")
+  commission   Commission? @relation("commission_files", fields: [commissionId], references: [id])
+  commissionId String?     @map("commission_id")
+
+  @@map("files")
+}
+
 enum NotificationType {
   FOLLOW
   FRIENDSHIP
@@ -268,4 +336,14 @@ enum Model {
   STABLE_DIFFUSION
   MIDJOURNEY
   DALL_E_2
+}
+
+enum CommissionStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  IN_PROGRESS
+  COMPLETED
+
+  @@map("commission_status")
 }

@@ -59,6 +59,7 @@ export class UserEventConverter {
       const data = zUserCreatedEventData.parse(event.data)
       return new UserCreatedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         userId: new Id(data.userId),
         email: new Email(data.email),
         name: new Name(data.name),
@@ -72,6 +73,7 @@ export class UserEventConverter {
       const data = zUserLoginUpdatedEventData.parse(event.data)
       return new UserLoginUpdatedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         userId: new Id(data.userId),
         login: new Username(data.login),
       })
@@ -81,6 +83,7 @@ export class UserEventConverter {
       const data = zUserProfileUpdatedEventData.parse(event.data)
       return new UserProfileUpdatedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         userId: new Id(data.userId),
         name: new Name(data.name),
         biography: new Biography(data.biography),

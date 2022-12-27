@@ -1,10 +1,13 @@
 import type { BlitzPage } from "@blitzjs/auth"
-import { TabList, Tab, Tabs, Divider } from "@chakra-ui/react"
+import { TabList, Tab, Tabs, Divider, Box } from "@chakra-ui/react"
 import type { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import { useContext, useState } from "react"
 import { UserProfileHeader } from "app/[login]/components/UserProfileHeader"
 import { UserWorks } from "app/[login]/components/UserWorks"
+import { ViewerBookmarkedWorkList } from "app/[login]/components/ViewerBookmarkedWorkList"
+import { ViewerLikedWorkList } from "app/[login]/components/ViewerLikedWorkList"
+import { ViewerWorkList } from "app/[login]/components/ViewerWorkList"
 import UserLayout from "app/[login]/layout"
 import { MainStack } from "app/components/MainStack"
 
@@ -23,7 +26,7 @@ const UserPage: BlitzPage = () => {
 
   const [tabIndex, setTabIndex] = useState(0)
 
-  const isEditable = router.query.login === appContext.currentUser?.uid
+  const isMyPage = router.query.login === appContext.currentUser?.uid
 
   const userId = router.query.login?.toString() ?? null
 
@@ -31,12 +34,23 @@ const UserPage: BlitzPage = () => {
     return null
   }
 
+  if (router.query.login !== appContext.currentUser?.uid) {
+    return (
+      <MainStack title={null} description={null} fileId={null}>
+        <UserProfileHeader userId={userId} />
+        <Divider />
+        <UserWorks userId={userId} isEditable={isMyPage} />
+      </MainStack>
+    )
+  }
+
   return (
     <MainStack title={null} description={null} fileId={null}>
       <UserProfileHeader userId={userId} />
       <Divider />
-      {isEditable && (
+      <Box overflowX={"auto"}>
         <Tabs
+          w={"max-content"}
           variant={"soft-rounded"}
           onChange={(index) => {
             setTabIndex(index)
@@ -46,11 +60,12 @@ const UserPage: BlitzPage = () => {
             <Tab mr={2}>{"作品"}</Tab>
             <Tab mr={2}>{"スキ"}</Tab>
             <Tab mr={2}>{"ブックマーク"}</Tab>
-            <Tab mr={2}>{"フォロー"}</Tab>
           </TabList>
         </Tabs>
-      )}
-      {tabIndex === 0 && <UserWorks userId={userId} isEditable={isEditable} />}
+      </Box>
+      {tabIndex === 0 && <ViewerWorkList />}
+      {tabIndex === 1 && <ViewerLikedWorkList />}
+      {tabIndex === 2 && <ViewerBookmarkedWorkList />}
     </MainStack>
   )
 }

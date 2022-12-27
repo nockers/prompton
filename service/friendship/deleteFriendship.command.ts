@@ -39,6 +39,7 @@ export class DeleteFriendshipCommand {
         id: IdFactory.create(),
         friendshipId: friendship.id,
         userId: friendship.followeeId,
+        followeeId: friendship.followeeId,
         followerId: friendship.followerId,
       })
 

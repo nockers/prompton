@@ -11,9 +11,10 @@ import { unfollowUserResolver } from "interface/resolvers/unfollowUserResolver"
 import { updateUserResolver } from "interface/resolvers/updateUserResolver"
 import { updateWorkResolver } from "interface/resolvers/updateWorkResolver"
 import { UserNodeResolvers } from "interface/resolvers/userNodeResolvers"
+import { ViewerResolvers } from "interface/resolvers/viewerResolvers"
 import { WorkNodeResolvers } from "interface/resolvers/workNodeResolvers"
 
-const Mutation = {
+const MutationResolvers = {
   createUser: createUserResolver,
   createWork: createWorkResolver,
   createWorkLike: createWorkLikeResolver,
@@ -27,9 +28,10 @@ const Mutation = {
 }
 
 export const resolvers = {
-  Mutation,
+  Mutation: MutationResolvers,
   Query: QueryResolvers,
-  WorkNode: WorkNodeResolvers,
   UserNode: UserNodeResolvers,
+  WorkNode: WorkNodeResolvers,
   LabelNode: LabelNodeResolvers,
+  Viewer: ViewerResolvers,
 }

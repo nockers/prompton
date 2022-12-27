@@ -19,7 +19,7 @@ type Props = {
   postWebColors: string[]
   isLiked: boolean
   isBookmarked: boolean
-  isFollower: boolean
+  isFollowee: boolean
 }
 
 export const CardUserWork: FC<Props> = (props) => {
@@ -92,7 +92,7 @@ export const CardUserWork: FC<Props> = (props) => {
         isOpen={isOpen}
         isLiked={props.isLiked}
         isBookmarked={props.isBookmarked}
-        isFollower={props.isFollower}
+        isFollowee={props.isFollowee}
         isEditable={false}
         onClose={onClose}
         onLinkColor={onLinkColor}

@@ -27,7 +27,7 @@ export class FriendshipEventStore {
   async created(event: FriendshipCreatedEvent) {
     const draftFriendship = new FriendshipEntity({
       id: event.friendshipId,
-      followeeId: event.userId,
+      followeeId: event.followeeId,
       followerId: event.followerId,
     })
 

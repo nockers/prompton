@@ -20,7 +20,7 @@ export class BookmarkRepository {
 
       return new BookmarkEntity({
         id: new Id(bookmark.id),
-        postId: new Id(bookmark.postId),
+        postId: bookmark.postId !== null ? new Id(bookmark.postId) : null,
         userId: new Id(bookmark.userId),
       })
     } catch (error) {

@@ -23,8 +23,8 @@ export const unfollowUserResolver = async (
   const command = container.resolve(DeleteFriendshipCommand)
 
   const output = await command.execute({
-    followeeId: ctx.currentUser.uid,
-    followerId: args.input.userId,
+    followeeId: args.input.userId,
+    followerId: ctx.currentUser.uid,
   })
 
   if (output instanceof Error) {

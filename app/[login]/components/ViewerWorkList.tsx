@@ -8,16 +8,11 @@ import { useColumnCount } from "app/hooks/useColumnCount"
 import { useFileUpload } from "app/hooks/useFileUpload"
 import {
   useCreateWorkMutation,
-  useUserWorksQuery,
+  useViewerWorksQuery,
 } from "interface/__generated__/react"
 import { toColumnArray } from "interface/utils/toColumnArray"
 
-type Props = {
-  userId: string
-  isEditable: boolean
-}
-
-export const UserWorks: FC<Props> = (props) => {
+export const ViewerWorkList: FC = () => {
   const [isLoading, setLoading] = useState(false)
 
   const [createWork] = useCreateWorkMutation()
@@ -26,13 +21,7 @@ export const UserWorks: FC<Props> = (props) => {
     data = null,
     loading,
     refetch,
-  } = useUserWorksQuery({
-    variables: {
-      offset: 0,
-      limit: 9 * 6,
-      userId: props.userId,
-    },
-  })
+  } = useViewerWorksQuery({ variables: { offset: 0, limit: 9 * 6 } })
 
   const [uploadFile] = useFileUpload()
 
@@ -79,16 +68,16 @@ export const UserWorks: FC<Props> = (props) => {
     return null
   }
 
+  const columns = toColumnArray(data.viewer.works, columnCount)
+
   return (
     <Stack spacing={4}>
-      {props.isEditable && (
-        <HStack justifyContent={"center"} px={4} w={"100%"}>
-          <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
-        </HStack>
-      )}
+      <HStack justifyContent={"center"} px={4} w={"100%"}>
+        <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
+      </HStack>
       <HStack w={"100%"} justifyContent={"center"}>
         <HStack px={4} alignItems={"flex-start"} spacing={4}>
-          {toColumnArray(data.works, columnCount).map((column, index) => (
+          {columns.map((column, index) => (
             <Stack key={index} spacing={4}>
               {column.map((work) => (
                 <CardUserWork

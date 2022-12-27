@@ -63,7 +63,7 @@ export const UserWorkList: FC<Props> = (props) => {
                 userAvatarImageURL={work.user.avatarImageURL}
                 isLiked={work.isLiked}
                 isBookmarked={work.isBookmarked}
-                isFollower={work.user.isFollower}
+                isFollowee={work.user.isFollowee}
                 isEditable={false}
               />
             ))}

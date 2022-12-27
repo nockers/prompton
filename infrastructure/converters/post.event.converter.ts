@@ -68,6 +68,7 @@ export class PostEventConverter {
       const data = zPostAnnotationsUpdatedEventData.parse(event.data)
       return new PostAnnotationsUpdatedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         postId: new Id(data.postId),
         userId: new Id(data.userId),
         colors: data.colors,
@@ -85,6 +86,7 @@ export class PostEventConverter {
       const data = zPostCreatedEventData.parse(event.data)
       return new PostCreatedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         postId: new Id(data.postId),
         userId: new Id(data.userId),
         fileId: new Id(data.fileId),
@@ -95,6 +97,7 @@ export class PostEventConverter {
       const data = zPostDeletedEventData.parse(event.data)
       return new PostDeletedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         postId: new Id(data.postId),
         userId: new Id(data.userId),
       })
@@ -104,6 +107,7 @@ export class PostEventConverter {
       const data = zPostUpdatedEventData.parse(event.data)
       return new PostUpdatedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         postId: new Id(data.postId),
         userId: new Id(data.userId),
         title: data.title,

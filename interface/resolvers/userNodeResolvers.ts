@@ -44,6 +44,9 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
   followeesCount(parent) {
     return db.friendship.count({ where: { followerId: parent.id } })
   },
+  /**
+   * 自分がフォローされているかどうか
+   */
   async isFollower(parent, _, ctx) {
     if (ctx.currentUser === null) return false
     const friendships = await db.friendship.findUnique({
@@ -56,6 +59,9 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
     })
     return friendships !== null
   },
+  /**
+   * 自分がフォローしているかどうか
+   */
   async isFollowee(parent, _, ctx) {
     if (ctx.currentUser === null) return false
     const friendship = await db.friendship.findUnique({

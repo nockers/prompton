@@ -36,6 +36,7 @@ export class LabelEventConverter {
       const data = zLabelCreatedEventData.parse(event.data)
       return new LabelCreatedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         labelId: new Id(data.labelId),
         name: data.name,
         nameJA: data.nameJA,
@@ -46,6 +47,7 @@ export class LabelEventConverter {
       const data = zLabelNameUpdatedEventData.parse(event.data)
       return new LabelNameUpdatedEvent({
         id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
         labelId: new Id(data.labelId),
         name: data.name,
         nameJA: data.nameJA,
