@@ -31,7 +31,6 @@ type Props = {
   isLiked: boolean
   isBookmarked: boolean
   isFollowee: boolean
-  isFollowee: boolean
   isEditable: boolean
 }
 
