@@ -19,7 +19,6 @@ import { useRouter } from "next/router"
 import type { FC } from "react"
 import { useEffect, useState } from "react"
 import { BiHome } from "react-icons/bi"
-import { HomeHeaderLogin } from "app/components/HomeHeaderLogin"
 import { HomeHeaderUtilities } from "app/components/HomeHeaderUtilities"
 
 export const HomeHeader: FC = () => {
@@ -91,10 +90,7 @@ export const HomeHeader: FC = () => {
             }}
           />
           {searchText.trim() === "" && (
-            <HStack>
-              <HomeHeaderLogin onLogin={onLogin} />
-              <HomeHeaderUtilities />
-            </HStack>
+            <HomeHeaderUtilities onLogin={onLogin} />
           )}
         </HStack>
       </Box>
