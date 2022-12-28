@@ -1,7 +1,7 @@
 import {
+  Avatar,
   Box,
   HStack,
-  Icon,
   IconButton,
   Input,
   useColorModeValue,
@@ -18,7 +18,6 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import type { FC } from "react"
 import { useEffect, useState } from "react"
-import { BiHome } from "react-icons/bi"
 import { HomeHeaderUtilities } from "app/components/HomeHeaderUtilities"
 
 export const HomeHeader: FC = () => {
@@ -76,8 +75,8 @@ export const HomeHeader: FC = () => {
       >
         <HStack spacing={4}>
           <Link href={"/"}>
-            <IconButton aria-label={"Home"}>
-              <Icon as={BiHome} />
+            <IconButton aria-label={"Home"} borderRadius={40}>
+              <Avatar size={"sm"} src={"/favicon.ico"} />
             </IconButton>
           </Link>
           <Input
