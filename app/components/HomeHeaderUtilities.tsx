@@ -57,8 +57,6 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
     )
   }
 
-  const modeText = colorMode === "dark" ? "明るく" : "暗く"
-
   return (
     <HStack>
       {isMobile && (
@@ -139,7 +137,13 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
           </MenuItem>
           <MenuDivider />
           <MenuItem isDisabled>{"使い方"}</MenuItem>
-          <MenuItem isDisabled>{"利用規約"}</MenuItem>
+          <MenuItem isDisabled> {"ガイドライン"}</MenuItem>
+          <Link href={"/terms"}>
+            <MenuItem>{"利用規約"}</MenuItem>
+          </Link>
+          <Link href={"/privacy"}>
+            <MenuItem>{"プライバシーポリシー"}</MenuItem>
+          </Link>
         </MenuList>
       </Menu>
     </HStack>

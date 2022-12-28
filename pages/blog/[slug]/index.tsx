@@ -13,7 +13,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import type { FC } from "react"
 import { BiChevronLeft } from "react-icons/bi"
-import { BoxMarkdown } from "app/components/BoxMarkdown"
+import { MarkdownDocument } from "app/components/BoxMarkdown"
 import { MainFallback } from "app/components/MainFallback"
 import { MainStack } from "app/components/MainStack"
 import { Env } from "infrastructure/env"
@@ -48,7 +48,7 @@ const BlogPostPage: FC<Props> = (props) => {
             <Heading as={"h1"}>{props.title}</Heading>
           </Stack>
           <Stack spacing={4}>
-            <BoxMarkdown>{props.body}</BoxMarkdown>
+            <MarkdownDocument>{props.body}</MarkdownDocument>
           </Stack>
           <Divider />
           <HStack>

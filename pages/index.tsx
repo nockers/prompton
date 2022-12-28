@@ -25,10 +25,6 @@ const RootPage: BlitzPage = () => {
 
   return (
     <MainStack title={null} description={null} fileId={null}>
-      <HStack justifyContent={"flex-start"} w={"100%"} px={4}>
-        <HomeNotification isJA={false} />
-      </HStack>
-      <Divider />
       <Tabs
         index={tabIndex}
         size={"sm"}
@@ -40,11 +36,17 @@ const RootPage: BlitzPage = () => {
           <Tab>{"リクエスト"}</Tab>
           <Tab>{"ユーザ"}</Tab>
         </TabList>
+        <Divider pt={4} />
         <TabPanels>
           <TabPanel px={0}>
-            <Stack spacing={0} w={"100%"}>
-              <HomeLabelList />
-              <HomePostList />
+            <Stack spacing={4}>
+              <HStack justifyContent={"flex-start"} w={"100%"} px={4}>
+                <HomeNotification isJA={false} />
+              </HStack>
+              <Stack spacing={0} w={"100%"}>
+                <HomeLabelList />
+                <HomePostList />
+              </Stack>
             </Stack>
           </TabPanel>
           <TabPanel px={0}>

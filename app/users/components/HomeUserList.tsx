@@ -72,7 +72,7 @@ export const HomeUserList: FC = () => {
   }
 
   return (
-    <Stack w={"100%"} px={4}>
+    <Stack w={"100%"} px={4} spacing={4}>
       {data.users.map((user) => (
         <CardUser
           key={user.id}
