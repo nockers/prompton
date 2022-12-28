@@ -23,6 +23,7 @@ export const QueryResolvers: Resolvers = {
       return db.label.findMany({
         take: 16,
         where: {
+          isDeleted: false,
           OR: [
             { name: { contains: args.where.search } },
             { nameJA: { contains: args.where.search } },

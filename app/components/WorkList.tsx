@@ -37,9 +37,9 @@ export const UserWorkList: FC<Props> = (props) => {
 
   return (
     <Stack>
-      <HStack alignItems={"flex-start"}>
+      <HStack alignItems={"flex-start"} spacing={4}>
         {toColumnArray(works ?? [], columnCount).map((column, index) => (
-          <Stack key={index}>
+          <Stack spacing={4} key={index}>
             {column.map((work) => (
               <CardPost
                 id={work.id}
