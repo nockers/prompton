@@ -211,7 +211,7 @@ export const ModalPost: FC<Props> = (props) => {
             <Text fontSize={"md"}>{props.postId}</Text>
             <Button
               size={"sm"}
-              colorScheme={"pink"}
+              colorScheme={"blue"}
               aria-label={""}
               onClick={props.onLinkWork}
             >

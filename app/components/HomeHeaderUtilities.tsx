@@ -69,9 +69,9 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
         </Link>
       )}
       {!isMobile && (
-        <Button fontSize={14} isDisabled>
-          {"リクエスト"}
-        </Button>
+        <Link href={"/requests"}>
+          <Button fontSize={14}>{"リクエスト"}</Button>
+        </Link>
       )}
       {!isMobile && (
         <Link href={`/${appContext.currentUser.uid}`}>
@@ -98,18 +98,22 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
         />
         <MenuList>
           {isMobile && (
-            <MenuItem
-              icon={<Icon display={"flex"} fontSize={16} as={BiUser} />}
-            >
-              {"マイページ"}
-            </MenuItem>
+            <Link href={`/${appContext.currentUser.uid}`}>
+              <MenuItem
+                icon={<Icon display={"flex"} fontSize={16} as={BiUser} />}
+              >
+                {"マイページ"}
+              </MenuItem>
+            </Link>
           )}
           {isMobile && (
-            <MenuItem
-              icon={<Icon display={"flex"} fontSize={16} as={BiSend} />}
-            >
-              {"リクエスト"}
-            </MenuItem>
+            <Link href={"/requests"}>
+              <MenuItem
+                icon={<Icon display={"flex"} fontSize={16} as={BiSend} />}
+              >
+                {"リクエスト"}
+              </MenuItem>
+            </Link>
           )}
           <MenuItem
             icon={
@@ -129,12 +133,13 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
           >
             {"通知"}
           </MenuItem>
-          <MenuItem
-            isDisabled
-            icon={<Icon display={"flex"} fontSize={16} as={BiWrench} />}
-          >
-            {"設定"}
-          </MenuItem>
+          <Link href={"/settings"}>
+            <MenuItem
+              icon={<Icon display={"flex"} fontSize={16} as={BiWrench} />}
+            >
+              {"設定"}
+            </MenuItem>
+          </Link>
           <MenuDivider />
           <MenuItem isDisabled>{"使い方"}</MenuItem>
           <MenuItem isDisabled> {"ガイドライン"}</MenuItem>

@@ -86,6 +86,10 @@ export class EventStore {
       await this.postEventStore.execute(event)
     }
 
+    if (event instanceof UserCreatedEvent) {
+      await this.userEventStore.execute(event)
+    }
+
     if (
       event instanceof UserCreatedEvent ||
       event instanceof UserLoginUpdatedEvent ||

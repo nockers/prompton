@@ -90,7 +90,7 @@ export const UserProfileHeader: FC<Props> = (props) => {
         <Button
           size={"sm"}
           isLoading={isLoadingFriendship}
-          colorScheme={data?.user?.isFollowee ? "pink" : "gray"}
+          colorScheme={data?.user?.isFollowee ? "blue" : "gray"}
           onClick={data?.user?.isFollowee ? onUnfollowUser : onFollowUser}
         >
           {data?.user?.isFollowee ? "フォロー中" : "フォロー"}

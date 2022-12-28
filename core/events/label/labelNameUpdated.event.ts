@@ -18,7 +18,7 @@ export class LabelNameUpdatedEvent extends PrototypeEvent implements Props {
     return LabelNameUpdatedEvent.type
   }
 
-  readonly collectionId = "LABELS"
+  readonly collectionId = "LABELS" as const
 
   readonly labelId!: Props["labelId"]
 

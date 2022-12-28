@@ -28,7 +28,7 @@ export class PostAnnotationsUpdatedEvent
     return PostAnnotationsUpdatedEvent.type
   }
 
-  readonly collectionId = "POSTS"
+  readonly collectionId = "POSTS" as const
 
   readonly postId!: Props["postId"]
 

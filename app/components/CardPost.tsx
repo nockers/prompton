@@ -75,9 +75,9 @@ export const CardPost: FC<Props> = (props) => {
         h={"auto"}
         p={0}
         onClick={onOpenWork}
-        borderRadius={"lg"}
+        borderRadius={"xl"}
         overflow={"hidden"}
-        boxShadow={"md"}
+        boxShadow={"sm"}
       >
         <Box position={"relative"}>
           <Image

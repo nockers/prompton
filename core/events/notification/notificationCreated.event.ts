@@ -17,7 +17,7 @@ export class NotificationCreatedEvent extends PrototypeEvent implements Props {
     return NotificationCreatedEvent.type
   }
 
-  readonly collectionId = "NOTIFICATIONS"
+  readonly collectionId = "NOTIFICATIONS" as const
 
   readonly notificationId!: Props["notificationId"]
 

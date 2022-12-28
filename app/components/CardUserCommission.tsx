@@ -49,7 +49,7 @@ export const CardUserCommission: FC<Props> = (props) => {
               <Text>{"1320円（税込）"}</Text>
             </Stack>
             <Box>
-              <Button colorScheme={"pink"}>{"依頼する"}</Button>
+              <Button colorScheme={"blue"}>{"依頼する"}</Button>
             </Box>
           </HStack>
         </Stack>

@@ -18,7 +18,7 @@ export class BookmarkCreatedEvent extends PrototypeEvent implements Props {
     return BookmarkCreatedEvent.type
   }
 
-  readonly collectionId = "BOOKMARKS"
+  readonly collectionId = "BOOKMARKS" as const
 
   readonly bookmarkId!: Props["bookmarkId"]
 

@@ -1,15 +1,5 @@
 import type { BlitzPage } from "@blitzjs/auth"
-import {
-  Box,
-  Card,
-  HStack,
-  Stack,
-  Tab,
-  TabList,
-  Tabs,
-  Text,
-} from "@chakra-ui/react"
-import Link from "next/link"
+import { Box, Card, HStack, Stack, Text } from "@chakra-ui/react"
 import { MarkdownDocument } from "app/components/BoxMarkdown"
 import { MainStack } from "app/components/MainStack"
 
@@ -86,27 +76,20 @@ const PrivacyPage: BlitzPage = () => {
 
   return (
     <MainStack title={"プライバシーポリシー"} description={null} fileId={null}>
-      <Tabs index={1} px={4} w={"max-content"} variant={"soft-rounded"}>
-        <TabList>
-          <Link href={"/terms"}>
-            <Tab>{"利用規約"}</Tab>
-          </Link>
-          <Tab>{"プライバシーポリシー"}</Tab>
-          <Tab isDisabled>{"ガイドライン"}</Tab>
-        </TabList>
-      </Tabs>
       <HStack justifyContent={"center"} px={4}>
-        <Card variant={"filled"} p={6} w={"100%"} maxW={"container.md"}>
-          <Stack spacing={4}>
-            <Text fontWeight={"bold"} fontSize={"4xl"}>
-              {"プライバシーポリシー"}
-            </Text>
-            <Text>{introductionText}</Text>
-            <Box pt={4}>
-              <MarkdownDocument>{text}</MarkdownDocument>
-            </Box>
-          </Stack>
-        </Card>
+        <Stack w={"100%"} maxW={"container.md"} spacing={4}>
+          <Text fontWeight={"bold"} fontSize={"2xl"}>
+            {"プライバシーポリシー"}
+          </Text>
+          <Card variant={"filled"} p={6} w={"100%"} maxW={"container.md"}>
+            <Stack spacing={4}>
+              <Text>{introductionText}</Text>
+              <Box pt={4}>
+                <MarkdownDocument>{text}</MarkdownDocument>
+              </Box>
+            </Stack>
+          </Card>
+        </Stack>
       </HStack>
     </MainStack>
   )

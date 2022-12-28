@@ -40,8 +40,10 @@ model User {
   folders          Folder[]       @relation("user_folders")
   plans            Plan[]         @relation("user_plans")
   files            File[]         @relation("user_files")
+  deliverables     Deliverable[]  @relation("user_deliverables")
   isRequestable    Boolean        @default(false) @map("is_requestable")
   isPublic         Boolean        @default(true) @map("is_public")
+  payments         Payment[]      @relation("user_payments")
 
   @@map("users")
 }
@@ -102,7 +104,7 @@ model Post {
   isPublic           Boolean        @default(true) @map("is_public")
   user               User           @relation("user_posts", fields: [userId], references: [id])
   userId             String         @map("user_id")
-  fileId             String         @map("file_id")
+  fileId             String         @unique @map("file_id")
   prompt             String?        @map("prompt")
   model              Model?         @map("model")
   body               String?        @map("body")
@@ -126,6 +128,7 @@ model Post {
   folderId           String?        @map("folder_id")
   request            Request?       @relation("request_posts", fields: [requestId], references: [id])
   requestId          String?        @map("request_id")
+  deliverable        Deliverable?   @relation("deliverable_post")
 
   @@map("posts")
 }
@@ -149,32 +152,81 @@ model Folder {
 }
 
 model Request {
-  id         String   @id @map("id")
-  createdAt  DateTime @default(now()) @map("created_at")
-  updatedAt  DateTime @updatedAt @map("updated_at")
-  user       User     @relation("user_requests", fields: [userId], references: [id])
-  userId     String   @map("user_id")
-  status     String   @map("status")
-  folder     Folder?  @relation("folder_requests", fields: [folderId], references: [id])
-  folderId   String?  @map("folder_id")
-  creator    User     @relation("user_received_requests", fields: [creatorId], references: [id])
-  creatorId  String   @map("creator_id")
-  posts      Post[]   @relation("request_posts")
-  files      File[]   @relation("request_files")
-  note       String?  @map("note")
-  price      Int      @map("price")
-  commission Int      @map("commission")
+  id                  String        @id @map("id")
+  createdAt           DateTime      @default(now()) @map("created_at")
+  updatedAt           DateTime      @updatedAt @map("updated_at")
+  user                User          @relation("user_requests", fields: [userId], references: [id])
+  userId              String        @map("user_id")
+  folder              Folder?       @relation("folder_requests", fields: [folderId], references: [id])
+  folderId            String?       @map("folder_id")
+  creator             User          @relation("user_received_requests", fields: [creatorId], references: [id])
+  creatorId           String        @map("creator_id")
+  title               String?       @map("title")
+  posts               Post[]        @relation("request_posts")
+  files               File[]        @relation("request_files")
+  note                String?       @map("note")
+  price               Int           @map("price")
+  commission          Int           @map("commission")
+  isAccepted          Boolean       @default(false) @map("is_accepted")
+  isRejected          Boolean       @default(false) @map("is_rejected")
+  isCompleted         Boolean       @default(false) @map("is_completed")
+  isCanceled          Boolean       @default(false) @map("is_canceled")
+  isCanceledBySystem  Boolean       @default(false) @map("is_canceled_by_system")
+  isCanceledByCreator Boolean       @default(false) @map("is_canceled_by_creator")
+  isTimeout           Boolean       @default(false) @map("is_timeout")
+  deliverable         Deliverable[] @relation("request_deliverables")
+  payment             Payment?      @relation("request_payment")
+  hasSignature        Boolean       @default(false) @map("has_signature")
+  signature           String?       @map("signature")
 
   @@map("requests")
 }
 
 model Plan {
-  id        String   @id @map("id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  user      User     @relation("user_plans", fields: [userId], references: [id])
-  userId    String   @map("user_id")
-  price     Int      @map("price")
+  id          String   @id @map("id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  name        String   @map("name")
+  description String   @map("description")
+  user        User     @relation("user_plans", fields: [userId], references: [id])
+  userId      String   @map("user_id")
+  price       Int      @map("price")
+
+  @@map("plans")
+}
+
+model Deliverable {
+  id          String   @id @map("id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  name        String   @map("name")
+  description String?  @map("description")
+  user        User     @relation("user_deliverables", fields: [userId], references: [id])
+  userId      String   @map("user_id")
+  request     Request  @relation("request_deliverables", fields: [requestId], references: [id])
+  requestId   String   @map("request_id")
+  post        Post?    @relation("deliverable_post", fields: [postId], references: [id])
+  postId      String?  @unique @map("post_id")
+  file        File     @relation("deliverable_file", fields: [fileId], references: [id])
+  fileId      String   @unique @map("file_id")
+
+  @@map("deliverables")
+}
+
+model Payment {
+  id            String   @id @map("id")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+  user          User     @relation("user_payments", fields: [userId], references: [id])
+  userId        String   @map("user_id")
+  purpose       String   @map("purpose")
+  request       Request? @relation("request_payment", fields: [requestId], references: [id])
+  requestId     String?  @unique @map("request_id")
+  amount        Int      @map("amount")
+  isError       Boolean  @default(false) @map("is_error")
+  transactionId String?  @map("transaction_id")
+
+  @@map("payments")
 }
 
 model Notification {
@@ -297,15 +349,18 @@ model Event {
 }
 
 model File {
-  id        String   @id @map("id")
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  name      String   @map("name")
-  type      String   @map("type")
-  user      User?    @relation("user_files", fields: [userId], references: [id])
-  userId    String?  @map("user_id")
-  request   Request? @relation("request_files", fields: [requestId], references: [id])
-  requestId String?  @map("request_id")
+  id          String       @id @map("id")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  name        String       @map("name")
+  height      Int?         @map("height")
+  width       Int?         @map("width")
+  type        String       @map("type")
+  user        User?        @relation("user_files", fields: [userId], references: [id])
+  userId      String?      @map("user_id")
+  request     Request?     @relation("request_files", fields: [requestId], references: [id])
+  requestId   String?      @map("request_id")
+  deliverable Deliverable? @relation("deliverable_file")
 
   @@map("files")
 }
@@ -348,14 +403,4 @@ enum Model {
   STABLE_DIFFUSION
   MIDJOURNEY
   DALL_E_2
-}
-
-enum RequestStatus {
-  PENDING
-  ACCEPTED
-  REJECTED
-  IN_PROGRESS
-  COMPLETED
-
-  @@map("request_status")
 }

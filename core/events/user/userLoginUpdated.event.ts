@@ -17,7 +17,7 @@ export class UserLoginUpdatedEvent extends PrototypeEvent implements Props {
     return UserLoginUpdatedEvent.type
   }
 
-  readonly collectionId = "USERS"
+  readonly collectionId = "USERS" as const
 
   readonly userId!: Props["userId"]
 

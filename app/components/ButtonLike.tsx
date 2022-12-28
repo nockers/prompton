@@ -19,7 +19,7 @@ export const ButtonLike: FC<Props> = (props) => {
       {...others}
       leftIcon={<Icon as={BiStar} />}
       isLoading={isLoading}
-      colorScheme={isActive ? "pink" : "gray"}
+      colorScheme={isActive ? "blue" : "gray"}
       onClick={isActive ? onDelete : onCreate}
     >
       {0 < count ? `スキ +${count}` : "スキ"}

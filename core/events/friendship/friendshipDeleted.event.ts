@@ -19,7 +19,7 @@ export class FriendshipDeletedEvent extends PrototypeEvent implements Props {
     return FriendshipDeletedEvent.type
   }
 
-  readonly collectionId = "FRIENDSHIPS"
+  readonly collectionId = "FRIENDSHIPS" as const
 
   readonly friendshipId!: Props["friendshipId"]
 

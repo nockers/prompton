@@ -18,7 +18,7 @@ export class LikeCreatedEvent extends PrototypeEvent implements Props {
     return LikeCreatedEvent.type
   }
 
-  readonly collectionId = "LIKES"
+  readonly collectionId = "LIKES" as const
 
   readonly likeId!: Props["likeId"]
 

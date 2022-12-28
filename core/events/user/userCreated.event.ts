@@ -19,7 +19,7 @@ export class UserCreatedEvent extends PrototypeEvent implements Props {
     return UserCreatedEvent.type
   }
 
-  readonly collectionId = "USERS"
+  readonly collectionId = "USERS" as const
 
   readonly userId!: Props["userId"]
 

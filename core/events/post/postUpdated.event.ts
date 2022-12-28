@@ -19,7 +19,7 @@ export class PostUpdatedEvent extends PrototypeEvent implements Props {
     return PostUpdatedEvent.type
   }
 
-  readonly collectionId = "POSTS"
+  readonly collectionId = "POSTS" as const
 
   readonly postId!: Props["postId"]
 
