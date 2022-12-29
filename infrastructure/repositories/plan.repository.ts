@@ -12,14 +12,14 @@ export class PlanRepository {
         update: {
           name: entity.name,
           description: entity.description,
-          price: entity.price,
+          fee: entity.fee,
         },
         create: {
           id: entity.id.value,
           userId: entity.userId.value,
           name: entity.name,
           description: entity.description,
-          price: entity.price,
+          fee: entity.fee,
         },
       })
 

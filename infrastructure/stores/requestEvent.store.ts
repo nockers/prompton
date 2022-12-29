@@ -34,7 +34,7 @@ export class RequestEventStore {
       commission: event.commission,
       planId: event.planId,
       postIds: [],
-      price: event.price,
+      fee: event.fee,
       title: event.title,
       userId: event.userId,
     })

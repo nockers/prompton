@@ -14,11 +14,11 @@ const zProps = z.object({
   isCanceledByCreator: z.boolean(),
   isTimeout: z.boolean(),
   commission: z.number(),
-  price: z.number(),
+  fee: z.number(),
   note: z.string().nullable(),
   fileIds: z.array(z.instanceof(Id)),
   deliverableIds: z.array(z.instanceof(Id)),
-  planId: z.instanceof(Id).nullable(),
+  planId: z.instanceof(Id),
   folderId: z.instanceof(Id).nullable(),
   postIds: z.array(z.instanceof(Id)),
   paymentId: z.instanceof(Id).nullable(),
@@ -81,7 +81,7 @@ export class RequestEntity implements Props {
   /**
    * 値段
    */
-  readonly price!: Props["price"]
+  readonly fee!: Props["fee"]
 
   /**
    * 手数料

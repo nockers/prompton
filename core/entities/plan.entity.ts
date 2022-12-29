@@ -6,7 +6,7 @@ const zProps = z.object({
   userId: z.instanceof(Id),
   name: z.string(),
   description: z.string(),
-  price: z.number(),
+  fee: z.number(),
 })
 
 type Props = z.infer<typeof zProps>
@@ -38,7 +38,7 @@ export class PlanEntity implements Props {
   /**
    * 価格
    */
-  readonly price!: Props["price"]
+  readonly fee!: Props["fee"]
 
   constructor(public props: z.infer<typeof zProps>) {
     zProps.parse(props)

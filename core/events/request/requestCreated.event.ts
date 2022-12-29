@@ -12,8 +12,8 @@ const zProps = z.object({
   fileIs: z.array(z.instanceof(Id)),
   title: z.string().nullable(),
   note: z.string().nullable(),
-  price: z.number(),
-  planId: z.instanceof(Id).nullable(),
+  fee: z.number(),
+  planId: z.instanceof(Id),
   commission: z.number(),
 })
 
@@ -44,7 +44,7 @@ export class RequestCreatedEvent extends PrototypeEvent implements Props {
 
   readonly note!: Props["note"]
 
-  readonly price!: Props["price"]
+  readonly fee!: Props["fee"]
 
   readonly commission!: Props["commission"]
 

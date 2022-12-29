@@ -10,7 +10,6 @@ export class RequestRepository {
           id: entity.id.value,
         },
         update: {
-          title: entity.title,
           note: entity.note,
           isAccepted: entity.isAccepted,
           isCompleted: entity.isCompleted,
@@ -24,14 +23,14 @@ export class RequestRepository {
           id: entity.id.value,
           userId: entity.userId.value,
           creatorId: entity.creatorId.value,
-          title: entity.title,
           note: entity.note,
           commission: entity.commission,
-          price: entity.price,
+          fee: entity.fee,
           folderId: entity.folderId?.value ?? undefined,
           isAccepted: false,
           isCompleted: false,
           isRejected: false,
+          planId: entity.planId.value,
         },
       })
 

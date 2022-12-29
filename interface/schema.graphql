@@ -80,13 +80,13 @@ type Request implements Node {
   """
   user: UserNode!
   """
-  製作者
+  制作者
   """
   creator: UserNode!
   """
   値段
   """
-  price: Int!
+  fee: Int!
   """
   手数料
   """
