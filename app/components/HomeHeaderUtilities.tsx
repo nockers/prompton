@@ -69,7 +69,7 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
         </Link>
       )}
       {!isMobile && (
-        <Link href={"/requests"}>
+        <Link href={"/viewer/requests"}>
           <Button fontSize={14}>{"リクエスト"}</Button>
         </Link>
       )}
@@ -107,7 +107,7 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
             </Link>
           )}
           {isMobile && (
-            <Link href={"/requests"}>
+            <Link href={"/viewer/requests"}>
               <MenuItem
                 icon={<Icon display={"flex"} fontSize={16} as={BiSend} />}
               >
@@ -115,6 +115,13 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
               </MenuItem>
             </Link>
           )}
+          <Link href={"/viewer/plans"}>
+            <MenuItem
+              icon={<Icon display={"flex"} fontSize={16} as={BiSend} />}
+            >
+              {"プラン"}
+            </MenuItem>
+          </Link>
           <MenuItem
             icon={
               <Icon
@@ -148,6 +155,9 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
           </Link>
           <Link href={"/privacy"}>
             <MenuItem>{"プライバシーポリシー"}</MenuItem>
+          </Link>
+          <Link href={"/specified-commercial-transaction-act"}>
+            <MenuItem>{"特定商取引法に基づく表記"}</MenuItem>
           </Link>
         </MenuList>
       </Menu>

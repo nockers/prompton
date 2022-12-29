@@ -132,7 +132,13 @@ const TermsPage: BlitzPage = () => {
           <Text fontWeight={"bold"} fontSize={"2xl"}>
             {"利用規約"}
           </Text>
-          <Card variant={"filled"} p={6}>
+          <Card
+            variant={"filled"}
+            p={6}
+            w={"100%"}
+            maxW={"container.md"}
+            borderRadius={"xl"}
+          >
             <Stack spacing={4}>
               <Text>{introductionText}</Text>
               <Box pt={4}>

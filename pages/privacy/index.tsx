@@ -81,7 +81,13 @@ const PrivacyPage: BlitzPage = () => {
           <Text fontWeight={"bold"} fontSize={"2xl"}>
             {"プライバシーポリシー"}
           </Text>
-          <Card variant={"filled"} p={6} w={"100%"} maxW={"container.md"}>
+          <Card
+            variant={"filled"}
+            p={6}
+            w={"100%"}
+            maxW={"container.md"}
+            borderRadius={"xl"}
+          >
             <Stack spacing={4}>
               <Text>{introductionText}</Text>
               <Box pt={4}>
