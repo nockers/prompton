@@ -48,6 +48,9 @@ model User {
   isBeta           Boolean        @default(false) @map("is_beta")
   isPremium        Boolean        @default(false) @map("is_premium")
   isAdmin          Boolean        @default(false) @map("is_admin")
+  minimumFee       Int            @default(1000) @map("minimum_fee")
+  maximumFee       Int            @default(8000) @map("maximum_fee")
+  isVerified       Boolean        @default(false) @map("is_verified")
 
   @@map("users")
 }
@@ -181,8 +184,8 @@ model Request {
   payment             Payment?      @relation("request_payment")
   hasSignature        Boolean       @default(false) @map("has_signature")
   signature           String?       @map("signature")
-  plan                Plan          @relation("plan_requests", fields: [planId], references: [id])
-  planId              String        @map("plan_id")
+  plan                Plan?         @relation("plan_requests", fields: [planId], references: [id])
+  planId              String?       @map("plan_id")
 
   @@map("requests")
 }
@@ -363,7 +366,7 @@ model File {
   id          String       @id @map("id")
   createdAt   DateTime     @default(now()) @map("created_at")
   updatedAt   DateTime     @updatedAt @map("updated_at")
-  name        String       @map("name")
+  path        String       @map("path")
   height      Int?         @map("height")
   width       Int?         @map("width")
   type        String       @map("type")
