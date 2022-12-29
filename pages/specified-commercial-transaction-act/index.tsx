@@ -85,7 +85,7 @@ const SpecifiedCommercialTransactionActPage: BlitzPage = () => {
                 <Text fontWeight={"bold"} minW={"max-content"}>
                   {"営業時間"}
                 </Text>
-                <Text>{"土曜日（12時から17時）（祝日は休み）"}</Text>
+                <Text>{"土日（10時から17時）（祝日は休み）"}</Text>
               </HStack>
               <Divider />
               <HStack spacing={4}>

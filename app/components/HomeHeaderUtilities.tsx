@@ -46,14 +46,52 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
 
   if (appContext.currentUser === null) {
     return (
-      <Button
-        leftIcon={<Icon as={FcGoogle} />}
-        fontSize={14}
-        onClick={props.onLogin}
-        minW={28}
-      >
-        {"ログイン"}
-      </Button>
+      <HStack>
+        <Button
+          leftIcon={<Icon as={FcGoogle} />}
+          fontSize={14}
+          onClick={props.onLogin}
+          minW={28}
+        >
+          {"ログイン"}
+        </Button>
+        {!isMobile && (
+          <ButtonDarkMode colorMode={colorMode} onClick={toggleColorMode} />
+        )}
+        <Menu>
+          <MenuButton
+            as={IconButton}
+            aria-label={"その他"}
+            icon={<Icon as={BiDotsHorizontalRounded} />}
+          />
+          <MenuList>
+            <MenuItem
+              icon={
+                <Icon
+                  display={"flex"}
+                  fontSize={16}
+                  as={colorMode === "light" ? BiMoon : BiSun}
+                />
+              }
+              onClick={toggleColorMode}
+            >
+              {colorMode === "light" ? "ダークモード" : "ライトモード"}
+            </MenuItem>
+            <MenuDivider />
+            <MenuItem isDisabled>{"使い方"}</MenuItem>
+            <MenuItem isDisabled> {"ガイドライン"}</MenuItem>
+            <Link href={"/terms"}>
+              <MenuItem>{"利用規約"}</MenuItem>
+            </Link>
+            <Link href={"/privacy"}>
+              <MenuItem>{"プライバシーポリシー"}</MenuItem>
+            </Link>
+            <Link href={"/specified-commercial-transaction-act"}>
+              <MenuItem>{"特定商取引法に基づく表記"}</MenuItem>
+            </Link>
+          </MenuList>
+        </Menu>
+      </HStack>
     )
   }
 
