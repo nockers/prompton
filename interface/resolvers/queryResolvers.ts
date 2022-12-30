@@ -151,6 +151,18 @@ export const QueryResolvers: Resolvers = {
       },
     })
   },
+  plan() {
+    return null
+  },
+  plans() {
+    return []
+  },
+  request() {
+    return null
+  },
+  requests() {
+    return []
+  },
   viewer(_: unknown, __: unknown, context) {
     if (context.currentUser === null) {
       throw new GraphQLError(AuthorizationError.name, {

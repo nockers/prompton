@@ -1,11 +1,13 @@
 type Query {
-  works(offset: Int, limit: Int, where: WorksWhereInput): [WorkNode!]!
   work(id: ID!): WorkNode
-  labels(offset: Int, limit: Int, where: LabelsWhereInput): [LabelNode!]!
+  works(offset: Int, limit: Int, where: WorksWhereInput): [WorkNode!]!
   label(id: ID, name: String): LabelNode
+  labels(offset: Int, limit: Int, where: LabelsWhereInput): [LabelNode!]!
   user(id: ID!): UserNode
   users(offset: Int, limit: Int, where: UsersWhereInput): [UserNode!]!
+  request(id: ID!): RequestNode
   requests(offset: Int, limit: Int, where: RequestsWhereInput): [RequestNode!]!
+  plan(id: ID!): PlanNode
   plans(offset: Int, limit: Int): [PlanNode!]!
   viewer: Viewer!
 }
