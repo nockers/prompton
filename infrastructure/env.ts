@@ -73,4 +73,16 @@ export class Env {
   static get imageUrl() {
     return process.env.NEXT_PUBLIC_IMAGE_URL!
   }
+
+  static get sentryDSN() {
+    return process.env.NEXT_PUBLIC_SENTRY_DSN!
+  }
+
+  static get sentryEnvironment() {
+    return process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT!
+  }
+
+  static get sentryRelease() {
+    return process.env.NEXT_PUBLIC_SENTRY_RELEASE!
+  }
 }

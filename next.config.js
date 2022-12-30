@@ -1,5 +1,6 @@
-// @ts-check
+/* eslint-disable @typescript-eslint/no-var-requires */
 const bundleAnalyzer = require("@next/bundle-analyzer")
+const packageJSON = require("./package.json")
 
 // https://www.npmjs.com/package/@next/bundle-analyzer
 const withBundleAnalyzer = bundleAnalyzer({
@@ -16,6 +17,9 @@ const nextConfig = {
   experimental: {
     appDir: false,
     scrollRestoration: true,
+  },
+  env: {
+    NEXT_PUBLIC_SENTRY_RELEASE: packageJSON.version,
   },
 }
 

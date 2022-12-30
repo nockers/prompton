@@ -47,6 +47,14 @@ export class Config {
     return process.env.NEXT_PUBLIC_SENTRY_DSN!
   }
 
+  static get sentryEnvironment() {
+    return process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT!
+  }
+
+  static get sentryRelease() {
+    return process.env.NEXT_PUBLIC_SENTRY_RELEASE!
+  }
+
   static get firebaseOptions() {
     return {
       apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,

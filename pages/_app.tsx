@@ -75,7 +75,14 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
  * Sentry
  */
 if (Config.isClient && Config.isProduction) {
-  init({ dsn: Config.sentryDSN, tracesSampleRate: 1.0 })
+  init({
+    dsn: Config.sentryDSN,
+    environment: Config.sentryEnvironment,
+    tracesSampleRate: 1.0,
+    attachStacktrace: true,
+    normalizeDepth: 5,
+    release: Config.sentryRelease,
+  })
 }
 
 /**
