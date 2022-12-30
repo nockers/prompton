@@ -10,7 +10,7 @@ import {
 
 export class LikeEventConverter {
   static toData(event: LikeEvent): LikeEventData {
-    if (event.type === LikeCreatedEvent.type) {
+    if (event instanceof LikeCreatedEvent) {
       const data: z.infer<typeof zLikeCreatedEventData> = {
         likeId: event.likeId.value,
         userId: event.userId.value,
@@ -19,7 +19,7 @@ export class LikeEventConverter {
       return zLikeCreatedEventData.parse(data)
     }
 
-    if (event.type === LikeDeletedEvent.type) {
+    if (event instanceof LikeDeletedEvent) {
       const data: z.infer<typeof zLikeDeletedEventData> = {
         likeId: event.likeId.value,
         userId: event.userId.value,

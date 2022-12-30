@@ -10,6 +10,9 @@ const zProps = z.object({
   headerImageId: z.instanceof(Id).nullable(),
   avatarImageURL: z.instanceof(Url).nullable(),
   avatarImageId: z.instanceof(Id).nullable(),
+  isRequestable: z.boolean(),
+  maximumFee: z.number(),
+  minimumFee: z.number(),
 })
 
 type Props = z.infer<typeof zProps>
@@ -58,6 +61,21 @@ export class UserEntity {
    */
   readonly avatarImageId!: Props["avatarImageId"]
 
+  /**
+   * リクエスト可能かどうか
+   */
+  readonly isRequestable!: Props["isRequestable"]
+
+  /**
+   * 報酬の最大額
+   */
+  readonly maximumFee!: Props["maximumFee"]
+
+  /**
+   * 報酬の最低額
+   */
+  readonly minimumFee!: Props["minimumFee"]
+
   constructor(public props: Props) {
     zProps.parse(props)
     Object.assign(this, props)
@@ -84,6 +102,19 @@ export class UserEntity {
       name: input.name ?? this.name,
       headerImageId: input.headerImageId ?? this.headerImageId,
       avatarImageId: input.avatarImageId ?? this.avatarImageId,
+    })
+  }
+
+  updateRequestSettings(input: {
+    isRequestable: boolean
+    maximumFee: number
+    minimumFee: number
+  }) {
+    return new UserEntity({
+      ...this.props,
+      isRequestable: input.isRequestable,
+      maximumFee: input.maximumFee,
+      minimumFee: input.minimumFee,
     })
   }
 }

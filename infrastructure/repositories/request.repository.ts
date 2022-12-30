@@ -26,11 +26,11 @@ export class RequestRepository {
           note: entity.note,
           commission: entity.commission,
           fee: entity.fee,
-          folderId: entity.folderId?.value ?? undefined,
+          folderId: entity.folderId?.value,
           isAccepted: false,
           isCompleted: false,
           isRejected: false,
-          planId: entity.planId.value,
+          planId: entity.planId?.value,
         },
       })
 

@@ -186,6 +186,10 @@ model Request {
   signature           String?       @map("signature")
   plan                Plan?         @relation("plan_requests", fields: [planId], references: [id])
   planId              String?       @map("plan_id")
+  isDeleted           Boolean       @default(false) @map("is_deleted")
+  isPublic            Boolean       @default(true) @map("is_public")
+  isAnonymous         Boolean       @default(false) @map("is_anonymous")
+  message             String?       @map("message")
 
   @@map("requests")
 }

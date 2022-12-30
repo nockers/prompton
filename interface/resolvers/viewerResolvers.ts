@@ -63,4 +63,21 @@ export const ViewerResolvers: Resolvers = {
       },
     })
   },
+  plans() {
+    return []
+  },
+  sentRequests(_, __, context) {
+    return db.request.findMany({
+      where: {
+        userId: context.currentUser!.uid!,
+      },
+    })
+  },
+  receivedRequests(_, __, context) {
+    return db.request.findMany({
+      where: {
+        creatorId: context.currentUser!.uid!,
+      },
+    })
+  },
 }

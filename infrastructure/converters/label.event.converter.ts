@@ -10,7 +10,7 @@ import {
 
 export class LabelEventConverter {
   static toData(event: LabelEvent): LabelEventData {
-    if (event.type === LabelCreatedEvent.type) {
+    if (event instanceof LabelCreatedEvent) {
       const data: z.infer<typeof zLabelCreatedEventData> = {
         labelId: event.labelId.value,
         name: event.name,
@@ -19,7 +19,7 @@ export class LabelEventConverter {
       return zLabelCreatedEventData.parse(data)
     }
 
-    if (event.type === LabelNameUpdatedEvent.type) {
+    if (event instanceof LabelNameUpdatedEvent) {
       const data: z.infer<typeof zLabelNameUpdatedEventData> = {
         labelId: event.labelId.value,
         name: event.name,

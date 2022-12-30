@@ -1,22 +1,5 @@
 import type { Event } from "@prisma/client"
-import {
-  BookmarkCreatedEvent,
-  PostCreatedEvent,
-  PostDeletedEvent,
-  FriendshipCreatedEvent,
-  FriendshipDeletedEvent,
-  LabelCreatedEvent,
-  LabelNameUpdatedEvent,
-  LikeCreatedEvent,
-  LikeDeletedEvent,
-  NotificationCreatedEvent,
-  PostAnnotationsUpdatedEvent,
-  PostUpdatedEvent,
-  BookmarkDeletedEvent,
-  UserCreatedEvent,
-  UserLoginUpdatedEvent,
-  UserProfileUpdatedEvent,
-} from "core"
+
 import type { DomainEvent } from "core/events/domainEvent"
 import { BookmarkEventConverter } from "infrastructure/converters/bookmark.event.converter"
 import { FriendshipEventConverter } from "infrastructure/converters/friendship.event.converter"
@@ -29,52 +12,31 @@ import type { EventData } from "infrastructure/validations"
 
 export class EventConverter {
   static toData(event: DomainEvent): EventData {
-    if (
-      event.type === BookmarkCreatedEvent.type ||
-      event.type === BookmarkDeletedEvent.type
-    ) {
+    if (event.collectionId === "BOOKMARKS") {
       return BookmarkEventConverter.toData(event)
     }
 
-    if (
-      event.type === FriendshipCreatedEvent.type ||
-      event.type === FriendshipDeletedEvent.type
-    ) {
+    if (event.collectionId === "FRIENDSHIPS") {
       return FriendshipEventConverter.toData(event)
     }
 
-    if (
-      event.type === LabelCreatedEvent.type ||
-      event.type === LabelNameUpdatedEvent.type
-    ) {
+    if (event.collectionId === "LABELS") {
       return LabelEventConverter.toData(event)
     }
 
-    if (
-      event.type === LikeCreatedEvent.type ||
-      event.type === LikeDeletedEvent.type
-    ) {
+    if (event.collectionId === "LIKES") {
       return LikeEventConverter.toData(event)
     }
 
-    if (event.type === NotificationCreatedEvent.type) {
+    if (event.collectionId === "NOTIFICATIONS") {
       return NotificationEventConverter.toData(event)
     }
 
-    if (
-      event.type === PostAnnotationsUpdatedEvent.type ||
-      event.type === PostCreatedEvent.type ||
-      event.type === PostDeletedEvent.type ||
-      event.type === PostUpdatedEvent.type
-    ) {
+    if (event.collectionId === "POSTS") {
       return PostEventConverter.toData(event)
     }
 
-    if (
-      event.type === UserCreatedEvent.type ||
-      event.type === UserLoginUpdatedEvent.type ||
-      event.type === UserProfileUpdatedEvent.type
-    ) {
+    if (event.collectionId === "USERS") {
       return UserEventConverter.toData(event)
     }
 
@@ -82,52 +44,31 @@ export class EventConverter {
   }
 
   static toEntity(event: Event): DomainEvent {
-    if (
-      event.type === BookmarkCreatedEvent.type ||
-      event.type === BookmarkDeletedEvent.type
-    ) {
+    if (event.collectionId === "BOOKMARKS") {
       return BookmarkEventConverter.toEntity(event)
     }
 
-    if (
-      event.type === FriendshipCreatedEvent.type ||
-      event.type === FriendshipDeletedEvent.type
-    ) {
+    if (event.collectionId === "FRIENDSHIPS") {
       return FriendshipEventConverter.toEntity(event)
     }
 
-    if (
-      event.type === LabelCreatedEvent.type ||
-      event.type === LabelNameUpdatedEvent.type
-    ) {
+    if (event.collectionId === "LABELS") {
       return LabelEventConverter.toEntity(event)
     }
 
-    if (
-      event.type === LikeCreatedEvent.type ||
-      event.type === LikeDeletedEvent.type
-    ) {
+    if (event.collectionId === "LIKES") {
       return LikeEventConverter.toEntity(event)
     }
 
-    if (event.type === NotificationCreatedEvent.type) {
+    if (event.collectionId === "NOTIFICATIONS") {
       return NotificationEventConverter.toEntity(event)
     }
 
-    if (
-      event.type === PostAnnotationsUpdatedEvent.type ||
-      event.type === PostCreatedEvent.type ||
-      event.type === PostDeletedEvent.type ||
-      event.type === PostUpdatedEvent.type
-    ) {
+    if (event.collectionId === "POSTS") {
       return PostEventConverter.toEntity(event)
     }
 
-    if (
-      event.type === UserCreatedEvent.type ||
-      event.type === UserLoginUpdatedEvent.type ||
-      event.type === UserProfileUpdatedEvent.type
-    ) {
+    if (event.collectionId === "USERS") {
       return UserEventConverter.toEntity(event)
     }
 

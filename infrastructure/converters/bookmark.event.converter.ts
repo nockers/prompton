@@ -10,7 +10,7 @@ import {
 
 export class BookmarkEventConverter {
   static toData(event: BookmarkEvent): BookmarkEventData {
-    if (event.type === BookmarkCreatedEvent.type) {
+    if (event instanceof BookmarkCreatedEvent) {
       const data: z.infer<typeof zBookmarkCreatedEventData> = {
         bookmarkId: event.bookmarkId.value,
         userId: event.userId.value,
@@ -19,7 +19,7 @@ export class BookmarkEventConverter {
       return zBookmarkCreatedEventData.parse(data)
     }
 
-    if (event.type === BookmarkDeletedEvent.type) {
+    if (event instanceof BookmarkDeletedEvent) {
       const data: z.infer<typeof zBookmarkDeletedEventData> = {
         bookmarkId: event.bookmarkId.value,
         userId: event.userId.value,

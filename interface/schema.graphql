@@ -5,6 +5,8 @@ type Query {
   label(id: ID, name: String): LabelNode
   user(id: ID!): UserNode
   users(offset: Int, limit: Int, where: UsersWhereInput): [UserNode!]!
+  requests(offset: Int, limit: Int, where: RequestsWhereInput): [RequestNode!]!
+  plans(offset: Int, limit: Int): [PlanNode!]!
   viewer: Viewer!
 }
 
@@ -23,6 +25,10 @@ input UsersWhereInput {
   search: String
 }
 
+input RequestsWhereInput {
+  status: String
+}
+
 """
 ログインしているユーザ
 """
@@ -32,6 +38,9 @@ type Viewer {
   likedWorks(offset: Int, limit: Int): [WorkNode!]!
   bookmarkedWorks(offset: Int, limit: Int): [WorkNode!]!
   followees(offset: Int, limit: Int): [UserNode!]!
+  sentRequests(offset: Int, limit: Int): [RequestNode!]!
+  receivedRequests(offset: Int, limit: Int): [RequestNode!]!
+  plans(offset: Int, limit: Int): [PlanNode!]!
 }
 
 """
@@ -113,6 +122,32 @@ type FolderNode implements Node {
 }
 
 """
+納品物
+"""
+type DeliverableNode implements Node {
+  id: ID!
+  createdAt: Int!
+  name: String!
+  description: String
+  user: UserNode!
+  request: RequestNode!
+  work: WorkNode
+  file: FileNode!
+}
+
+"""
+ファイル
+"""
+type FileNode implements Node {
+  id: ID!
+  createdAt: Int!
+  path: String!
+  height: Int
+  weight: Int
+  type: String!
+}
+
+"""
 スキ
 """
 type LikeNode implements Node {
@@ -126,6 +161,64 @@ type LikeNode implements Node {
   フォルダ
   """
   folder: FolderNode
+}
+
+"""
+決済
+"""
+type PaymentNode implements Node {
+  id: ID!
+  createdAt: Int!
+  user: UserNode!
+  purpose: String!
+  request: RequestNode
+  amount: Int!
+  isError: Boolean!
+  transactionId: String
+}
+
+"""
+プラン
+"""
+type PlanNode implements Node {
+  id: ID!
+  createdAt: Int!
+  name: String!
+  fee: Int!
+  category: String!
+  sort: Int!
+  user: UserNode!
+  requests: [RequestNode!]!
+  isDeleted: Boolean!
+  isPublic: Boolean!
+  isActive: Boolean!
+}
+
+"""
+リクエスト
+"""
+type RequestNode implements Node {
+  id: ID!
+  createdAt: Int!
+  user: UserNode!
+  folderId: FolderNode!
+  creator: UserNode!
+  works: [WorkNode!]!
+  files: [FileNode!]!
+  note: String!
+  fee: Int!
+  isPending: Boolean!
+  isAccepted: Boolean!
+  isRejected: Boolean!
+  isCompleted: Boolean!
+  isCanceled: Boolean!
+  isCanceledBySystem: Boolean!
+  isCanceledByCreator: Boolean!
+  isTimeout: Boolean!
+  payment: PaymentNode
+  hasSignature: Boolean!
+  signature: String
+  plan: PlanNode!
 }
 
 """
@@ -278,6 +371,14 @@ type UserNode implements Node {
   制作依頼を受け付けているかどうか
   """
   isRequestable: Boolean!
+  """
+  リクエストの最低報酬
+  """
+  minimumFee: Int!
+  """
+  リクエストの最大報酬
+  """
+  maximumFee: Int!
 }
 
 """
@@ -326,11 +427,19 @@ type Mutation {
   """
   ユーザを更新する
   """
-  updateUser(input: UpdateUserInput!): Boolean
+  updateUserProfile(input: UpdateUserProfileInput!): UserNode
+  """
+  ユーザの設定を更新する
+  """
+  updateUserRequestSettings(input: UpdateUserRequestSettingsInput!): UserNode
   """
   作品を作成する
   """
   createWork(input: CreateWorkInput!): WorkNode!
+  """
+  作品を削除する
+  """
+  deleteWork(input: DeleteWorkInput!): Boolean
   """
   作品を更新する
   """
@@ -359,10 +468,58 @@ type Mutation {
   ユーザのフォローは解除する
   """
   unfollowUser(input: UnfollowUserInput!): UserNode
+  """
+  プランを作成する
+  """
+  createPlan(input: CreatePlanInput!): PlanNode!
+  """
+  プランを更新する
+  """
+  updatePlan(input: DeletePlanInput!): PlanNode!
+  """
+  プランを順序を上げる
+  """
+  updatePlanSort(input: updatePlanSortInput!): PlanNode!
+  """
+  プランを削除する
+  """
+  deletePlan(input: DeletePlanInput!): Boolean
+  """
+  リクエストを作成する
+  """
+  createRequest(input: CreateRequestInput!): RequestNode!
+  """
+  リクエストを受諾する
+  """
+  markRequestAsAccepted(input: MarkRequestAsAcceptedInput!): RequestNode!
+  """
+  リクエストを拒否する
+  """
+  markRequestAsRejected(input: MarkRequestAsRejected!): RequestNode!
+  """
+  リクエストを完了とする
+  """
+  markRequestAsDone(input: MarkRequestAsRejected!): RequestNode!
+  """
+  納品物を作成する
+  """
+  createDeliverable(input: CreateDeliverableInput!): DeliverableNode!
+  """
+  納品物を削除する
+  """
+  updateDeliverable(input: UpdateDeliverableInput!): DeliverableNode!
+  """
+  納品物を削除する
+  """
+  deleteDeliverable(input: DeleteDeliverableInput!): Boolean
 }
 
 input CreateWorkInput {
   fileId: String!
+}
+
+input DeleteWorkInput {
+  workId: String!
 }
 
 input UpdateWorkInput {
@@ -408,15 +565,80 @@ input CreateUserInput {
   name: String!
 }
 
-input UpdateUserInput {
+input UpdateUserProfileInput {
   name: String!
   avatarFileId: String
   headerImageId: String
   biography: String!
 }
 
+input UpdateUserRequestSettingsInput {
+  isRequestable: Boolean!
+  minimumFee: Int!
+  maximumFee: Int!
+}
+
 input LoginInput {
   token: String!
+}
+
+input CreatePlanInput {
+  category: String!
+  name: String!
+  description: String!
+  fee: Int!
+}
+
+input UpdatePlanInput {
+  planId: String!
+  name: String!
+  description: String!
+  fee: Int!
+}
+
+input updatePlanSortInput {
+  planId: String!
+}
+
+input DecrementPlanSort {
+  planId: String!
+}
+
+input DeletePlanInput {
+  planId: String!
+}
+
+input CreateRequestInput {
+  planId: String!
+}
+
+input MarkRequestAsAcceptedInput {
+  requestId: String!
+}
+
+input MarkRequestAsRejected {
+  requestId: String!
+}
+
+input MarkRequestAsRejected {
+  requestId: String!
+}
+
+input CreateDeliverableInput {
+  requestId: String!
+  fileId: String!
+  name: String!
+  description: String
+}
+
+input UpdateDeliverableInput {
+  deliverableId: String!
+  name: String!
+  description: String
+}
+
+input DeleteDeliverableInput {
+  deliverableId: String!
 }
 
 interface Node {

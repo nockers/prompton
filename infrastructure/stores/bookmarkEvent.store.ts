@@ -12,11 +12,11 @@ export class BookmarkEventStore {
   constructor(private repository: BookmarkRepository) {}
 
   execute(event: BookmarkEvent) {
-    if (event.type === BookmarkCreatedEvent.type) {
+    if (event instanceof BookmarkCreatedEvent) {
       return this.created(event)
     }
 
-    if (event.type === BookmarkDeletedEvent.type) {
+    if (event instanceof BookmarkDeletedEvent) {
       return this.deleted(event)
     }
 

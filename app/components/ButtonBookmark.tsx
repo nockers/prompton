@@ -18,7 +18,7 @@ export const ButtonBookmark: FC<Props> = (props) => {
       {...others}
       leftIcon={<Icon as={BiBookmark} />}
       isLoading={isLoading}
-      colorScheme={isActive ? "blue" : "gray"}
+      colorScheme={isActive ? "primary" : "gray"}
       onClick={isActive ? onDelete : onCreate}
     >
       {"ブックマーク"}

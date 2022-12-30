@@ -17,7 +17,7 @@ import {
 
 export class PostEventConverter {
   static toData(event: PostEvent) {
-    if (event.type === PostAnnotationsUpdatedEvent.type) {
+    if (event instanceof PostAnnotationsUpdatedEvent) {
       const data: z.infer<typeof zPostAnnotationsUpdatedEventData> = {
         postId: event.postId.value,
         userId: event.userId.value,
@@ -33,7 +33,7 @@ export class PostEventConverter {
       return zPostAnnotationsUpdatedEventData.parse(data)
     }
 
-    if (event.type === PostCreatedEvent.type) {
+    if (event instanceof PostCreatedEvent) {
       const data: z.infer<typeof zPostCreatedEventData> = {
         postId: event.postId.value,
         userId: event.userId.value,
@@ -42,7 +42,7 @@ export class PostEventConverter {
       return zPostCreatedEventData.parse(data)
     }
 
-    if (event.type === PostDeletedEvent.type) {
+    if (event instanceof PostDeletedEvent) {
       const data: z.infer<typeof zPostDeletedEventData> = {
         postId: event.postId.value,
         userId: event.userId.value,
@@ -50,7 +50,7 @@ export class PostEventConverter {
       return zPostDeletedEventData.parse(data)
     }
 
-    if (event.type === PostUpdatedEvent.type) {
+    if (event instanceof PostUpdatedEvent) {
       const data: z.infer<typeof zPostUpdatedEventData> = {
         postId: event.postId.value,
         userId: event.userId.value,

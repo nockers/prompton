@@ -1,3 +1,4 @@
 export * from "./createUser.command"
-export * from "./updateUser.command"
+export * from "./updateUserProfile.command"
+export * from "./updateUserRequestSettings.command"
 export * from "./userCreatedEvent.handler"

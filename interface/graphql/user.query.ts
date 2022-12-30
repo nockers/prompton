@@ -9,6 +9,8 @@ export default gql`
       avatarImageId
       headerImageId
       biography
+      minimumFee
+      maximumFee
       createdAt
       isFollowee
       isRequestable

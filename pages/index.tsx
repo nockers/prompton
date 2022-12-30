@@ -12,7 +12,7 @@ import {
 import { useState } from "react"
 import { HomeLabelList } from "app/components/HomeLabelList"
 import { HomeNotification } from "app/components/HomeNotification"
-import { HomePostList } from "app/components/HomePostList"
+import { HomeWorkList } from "app/components/HomeWorkList"
 import { MainStack } from "app/components/MainStack"
 import { HomeUserList } from "app/users/components/HomeUserList"
 
@@ -45,7 +45,7 @@ const RootPage: BlitzPage = () => {
               </HStack>
               <Stack spacing={0} w={"100%"}>
                 <HomeLabelList />
-                <HomePostList />
+                <HomeWorkList />
               </Stack>
             </Stack>
           </TabPanel>

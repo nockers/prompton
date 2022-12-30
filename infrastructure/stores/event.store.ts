@@ -1,23 +1,5 @@
 import axios from "axios"
 import { injectable } from "tsyringe"
-import {
-  BookmarkCreatedEvent,
-  BookmarkDeletedEvent,
-  FriendshipCreatedEvent,
-  FriendshipDeletedEvent,
-  LabelCreatedEvent,
-  LabelNameUpdatedEvent,
-  LikeCreatedEvent,
-  LikeDeletedEvent,
-  NotificationCreatedEvent,
-  PostAnnotationsUpdatedEvent,
-  PostCreatedEvent,
-  PostDeletedEvent,
-  PostUpdatedEvent,
-  UserCreatedEvent,
-  UserLoginUpdatedEvent,
-  UserProfileUpdatedEvent,
-} from "core"
 import type { DomainEvent } from "core/events/domainEvent"
 import { Env } from "infrastructure/env"
 import { EventRepository } from "infrastructure/repositories"
@@ -45,56 +27,31 @@ export class EventStore {
   async commit(event: DomainEvent) {
     await this.eventRepository.persist(event)
 
-    if (
-      event instanceof BookmarkCreatedEvent ||
-      event instanceof BookmarkDeletedEvent
-    ) {
+    if (event.collectionId === "BOOKMARKS") {
       await this.bookmarkEventStore.execute(event)
     }
 
-    if (
-      event instanceof FriendshipCreatedEvent ||
-      event instanceof FriendshipDeletedEvent
-    ) {
+    if (event.collectionId === "FRIENDSHIPS") {
       await this.friendshipEventStore.execute(event)
     }
 
-    if (
-      event instanceof LabelCreatedEvent ||
-      event instanceof LabelNameUpdatedEvent
-    ) {
+    if (event.collectionId === "LABELS") {
       await this.labelEventStore.execute(event)
     }
 
-    if (
-      event instanceof LikeCreatedEvent ||
-      event instanceof LikeDeletedEvent
-    ) {
+    if (event.collectionId === "LIKES") {
       await this.likeEventStore.execute(event)
     }
 
-    if (event instanceof NotificationCreatedEvent) {
+    if (event.collectionId === "NOTIFICATIONS") {
       await this.notificationEventStore.execute(event)
     }
 
-    if (
-      event instanceof PostAnnotationsUpdatedEvent ||
-      event instanceof PostCreatedEvent ||
-      event instanceof PostDeletedEvent ||
-      event instanceof PostUpdatedEvent
-    ) {
+    if (event.collectionId === "POSTS") {
       await this.postEventStore.execute(event)
     }
 
-    if (event instanceof UserCreatedEvent) {
-      await this.userEventStore.execute(event)
-    }
-
-    if (
-      event instanceof UserCreatedEvent ||
-      event instanceof UserLoginUpdatedEvent ||
-      event instanceof UserProfileUpdatedEvent
-    ) {
+    if (event.collectionId === "USERS") {
       await this.userEventStore.execute(event)
     }
 

@@ -7,7 +7,7 @@ import { useWorksQuery } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
 import { toColumnArray } from "interface/utils/toColumnArray"
 
-export const HomePostList: FC = () => {
+export const HomeWorkList: FC = () => {
   const appContext = useContext(AppContext)
 
   const {

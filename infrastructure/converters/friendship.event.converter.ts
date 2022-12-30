@@ -10,7 +10,7 @@ import {
 
 export class FriendshipEventConverter {
   static toData(event: FriendshipEvent): FriendshipEventData {
-    if (event.type === FriendshipCreatedEvent.type) {
+    if (event instanceof FriendshipCreatedEvent) {
       const data: z.infer<typeof zFriendshipCreatedEventData> = {
         friendshipId: event.friendshipId.value,
         userId: event.userId.value,
@@ -20,7 +20,7 @@ export class FriendshipEventConverter {
       return zFriendshipCreatedEventData.parse(data)
     }
 
-    if (event.type === FriendshipDeletedEvent.type) {
+    if (event instanceof FriendshipDeletedEvent) {
       const data: z.infer<typeof zFriendshipDeletedEventData> = {
         friendshipId: event.friendshipId.value,
         userId: event.userId.value,

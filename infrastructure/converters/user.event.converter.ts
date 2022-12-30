@@ -2,6 +2,7 @@ import type { Event } from "@prisma/client"
 import type { z } from "zod"
 import type { UserEvent } from "core"
 import {
+  UserRequestSettingsUpdatedEvent,
   Biography,
   Name,
   UserProfileUpdatedEvent,
@@ -17,11 +18,12 @@ import {
   zUserLoginUpdatedEventData,
   zUserProfileUpdatedEventData,
   zUserCreatedEventData,
+  zUserRequestSettingsUpdatedEventData,
 } from "infrastructure/validations"
 
 export class UserEventConverter {
   static toData(event: UserEvent): UserEventData {
-    if (event.type === UserCreatedEvent.type) {
+    if (event instanceof UserCreatedEvent) {
       const data: z.infer<typeof zUserCreatedEventData> = {
         userId: event.userId.value,
         email: event.email.value,
@@ -31,7 +33,7 @@ export class UserEventConverter {
       return zUserCreatedEventData.parse(data)
     }
 
-    if (event.type === UserLoginUpdatedEvent.type) {
+    if (event instanceof UserLoginUpdatedEvent) {
       const data: z.infer<typeof zUserLoginUpdatedEventData> = {
         userId: event.userId.value,
         login: event.login.value,
@@ -39,7 +41,7 @@ export class UserEventConverter {
       return zUserLoginUpdatedEventData.parse(data)
     }
 
-    if (event.type === UserProfileUpdatedEvent.type) {
+    if (event instanceof UserProfileUpdatedEvent) {
       const data: z.infer<typeof zUserProfileUpdatedEventData> = {
         userId: event.userId.value,
         name: event.name.value,
@@ -49,6 +51,16 @@ export class UserEventConverter {
         avatarImageId: event.avatarImageId?.value ?? null,
       }
       return zUserProfileUpdatedEventData.parse(data)
+    }
+
+    if (event instanceof UserRequestSettingsUpdatedEvent) {
+      const data: z.infer<typeof zUserRequestSettingsUpdatedEventData> = {
+        userId: event.userId.value,
+        isRequestable: event.isRequestable,
+        maximumFee: event.maximumFee,
+        minimumFee: event.minimumFee,
+      }
+      return zUserRequestSettingsUpdatedEventData.parse(data)
     }
 
     return event
@@ -93,6 +105,18 @@ export class UserEventConverter {
           data.avatarImageURL !== null ? new Url(data.avatarImageURL) : null,
         avatarImageId:
           data.avatarImageId !== null ? new Id(data.avatarImageId) : null,
+      })
+    }
+
+    if (event.type === UserRequestSettingsUpdatedEvent.type) {
+      const data = zUserRequestSettingsUpdatedEventData.parse(event.data)
+      return new UserRequestSettingsUpdatedEvent({
+        id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
+        userId: new Id(data.userId),
+        isRequestable: data.isRequestable,
+        maximumFee: data.maximumFee,
+        minimumFee: data.minimumFee,
       })
     }
 

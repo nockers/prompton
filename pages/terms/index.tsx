@@ -127,11 +127,13 @@ const TermsPage: BlitzPage = () => {
 
   return (
     <MainStack title={"利用規約"} description={null} fileId={null}>
-      <HStack justifyContent={"center"} px={4}>
+      <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
         <Stack w={"100%"} maxW={"container.md"} spacing={4}>
-          <Text fontWeight={"bold"} fontSize={"2xl"}>
-            {"利用規約"}
-          </Text>
+          <Box py={{ base: 2, md: 4 }}>
+            <Text fontWeight={"bold"} fontSize={"2xl"}>
+              {"利用規約"}
+            </Text>
+          </Box>
           <Card
             variant={"filled"}
             p={6}

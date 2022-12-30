@@ -14,19 +14,19 @@ export class PostEventStore {
   constructor(private repository: PostRepository) {}
 
   execute(event: PostEvent) {
-    if (event.type === PostAnnotationsUpdatedEvent.type) {
+    if (event instanceof PostAnnotationsUpdatedEvent) {
       return this.annotationsUpdated(event)
     }
 
-    if (event.type === PostCreatedEvent.type) {
+    if (event instanceof PostCreatedEvent) {
       return this.created(event)
     }
 
-    if (event.type === PostDeletedEvent.type) {
+    if (event instanceof PostDeletedEvent) {
       return this.deleted(event)
     }
 
-    if (event.type === PostUpdatedEvent.type) {
+    if (event instanceof PostUpdatedEvent) {
       return this.updated(event)
     }
 

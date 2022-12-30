@@ -1,17 +1,17 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
-import { Biography, Id, IdFactory, Name, UserProfileUpdatedEvent } from "core"
+import { Id, IdFactory, UserRequestSettingsUpdatedEvent } from "core"
 import { EventStore, UserRepository } from "infrastructure"
 
 type Props = {
   userId: string
-  userName: string
-  userAvatarFileId: string | null
-  userBiography: string
+  userIsRequestable: boolean
+  userMaximumFee: number
+  userMinimumFee: number
 }
 
 @injectable()
-export class UpdateUserCommand {
+export class UpdateUserRequestSettingsCommand {
   constructor(
     private eventStore: EventStore,
     private userRepository: UserRepository,
@@ -29,16 +29,12 @@ export class UpdateUserCommand {
         return new Error()
       }
 
-      const event = new UserProfileUpdatedEvent({
+      const event = new UserRequestSettingsUpdatedEvent({
         id: IdFactory.create(),
         userId: user.id,
-        name: new Name(props.userName),
-        biography: new Biography(props.userBiography),
-        headerImageId: null,
-        avatarImageURL: null,
-        avatarImageId: props.userAvatarFileId
-          ? new Id(props.userAvatarFileId)
-          : null,
+        isRequestable: props.userIsRequestable,
+        maximumFee: props.userMaximumFee,
+        minimumFee: props.userMinimumFee,
       })
 
       await this.eventStore.commit(event)

@@ -1,22 +1,30 @@
 import { ApolloServerErrorCode } from "@apollo/server/errors"
-import { getAuth } from "firebase-admin/auth"
 import { GraphQLError } from "graphql"
 import { container } from "tsyringe"
-import type { MutationResolvers } from "interface/__generated__/node"
-import { UpdateUserCommand } from "service"
+import db from "db"
+import type {
+  MutationUpdateUserProfileArgs,
+  RequireFields,
+  Resolver,
+} from "interface/__generated__/node"
+import { UpdateUserProfileCommand } from "service"
+import type { ApolloContext } from "types"
 
-export const updateUserResolver: MutationResolvers["updateUser"] = async (
-  _,
-  args,
-  ctx,
-) => {
+type Resolvers = Resolver<
+  unknown,
+  unknown,
+  ApolloContext,
+  RequireFields<MutationUpdateUserProfileArgs, "input">
+>
+
+export const updateUserProfileResolver: Resolvers = async (_, args, ctx) => {
   if (ctx.currentUser === null) {
     throw new GraphQLError("ERROR", {
       extensions: { code: ApolloServerErrorCode.INTERNAL_SERVER_ERROR },
     })
   }
 
-  const command = container.resolve(UpdateUserCommand)
+  const command = container.resolve(UpdateUserProfileCommand)
 
   const output = await command.execute({
     userId: ctx.currentUser.uid,
@@ -31,9 +39,5 @@ export const updateUserResolver: MutationResolvers["updateUser"] = async (
     })
   }
 
-  await getAuth().updateUser(ctx.currentUser.uid, {
-    displayName: args.input.name,
-  })
-
-  return true
+  return db.user.findUnique({ where: { id: ctx.currentUser.uid } })
 }

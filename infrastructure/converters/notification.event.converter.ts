@@ -7,7 +7,7 @@ import { zNotificationCreatedEventData } from "infrastructure/validations"
 
 export class NotificationEventConverter {
   static toData(event: NotificationEvent): NotificationEventData {
-    if (event.type === NotificationCreatedEvent.type) {
+    if (event instanceof NotificationCreatedEvent) {
       const data: z.infer<typeof zNotificationCreatedEventData> = {
         notificationId: event.notificationId.value,
         userId: event.userId.value,

@@ -19,6 +19,9 @@ export class UserRepository {
         login: user.login !== null ? new Username(user.login) : null,
         name: new Name(user.name),
         biography: new Biography(""),
+        isRequestable: user.isRequestable,
+        minimumFee: user.minimumFee,
+        maximumFee: user.maximumFee,
         headerImageId: null,
         avatarImageId: null,
         avatarImageURL:
@@ -46,6 +49,9 @@ export class UserRepository {
         login: user.login !== null ? new Username(user.login) : null,
         name: new Name(user.name),
         biography: new Biography(""),
+        isRequestable: user.isRequestable,
+        minimumFee: user.minimumFee,
+        maximumFee: user.maximumFee,
         headerImageId: null,
         avatarImageId: null,
         avatarImageURL:
@@ -76,6 +82,9 @@ export class UserRepository {
           avatarImageURL: entity.avatarImageURL?.value,
           avatarFileId: entity.avatarImageId?.value,
           description: entity.biography.value,
+          isRequestable: entity.isRequestable,
+          minimumFee: entity.minimumFee,
+          maximumFee: entity.maximumFee,
         },
         where: { email: entity.email?.value },
       })

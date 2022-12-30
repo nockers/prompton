@@ -1,29 +1,56 @@
+import { createDeliverableResolver } from "interface/resolvers/createDeliverableResolver"
+import { createPlanResolver } from "interface/resolvers/createPlanResolver"
+import { createRequestResolver } from "interface/resolvers/createRequestResolver"
 import { createUserResolver } from "interface/resolvers/createUserResolver"
 import { createWorkBookmarkResolver } from "interface/resolvers/createWorkBookmarkResolver"
 import { createWorkLikeResolver } from "interface/resolvers/createWorkLikeResolver"
 import { createWorkResolver } from "interface/resolvers/createWorkResolver"
+import { deleteDeliverableResolver } from "interface/resolvers/deleteDeliverableResolver"
+import { deletePlanResolver } from "interface/resolvers/deletePlanSortResolver"
 import { deleteWorkBookmarkResolver } from "interface/resolvers/deleteWorkBookmarkResolver"
 import { deleteWorkLikeResolver } from "interface/resolvers/deleteWorkLikeResolver"
+import { deleteWorkResolver } from "interface/resolvers/deleteWorkResolver"
 import { followUserResolver } from "interface/resolvers/followUserResolver"
 import { LabelNodeResolvers } from "interface/resolvers/labelNodeResolvers"
+import { markRequestAsAcceptedResolver } from "interface/resolvers/markRequestAsAcceptedResolver"
+import { markRequestAsDoneResolver } from "interface/resolvers/markRequestAsDoneResolver"
+import { markRequestAsRejectedResolver } from "interface/resolvers/markRequestAsRejectedResolver"
 import { QueryResolvers } from "interface/resolvers/queryResolvers"
+import { RequestNodeResolvers } from "interface/resolvers/requestNodeResolvers"
 import { unfollowUserResolver } from "interface/resolvers/unfollowUserResolver"
-import { updateUserResolver } from "interface/resolvers/updateUserResolver"
+import { updateDeliverableResolver } from "interface/resolvers/updateDeliverableResolver"
+import { updatePlanResolver } from "interface/resolvers/updatePlanResolver"
+import { updatePlanSortResolver } from "interface/resolvers/updatePlanSortResolver"
+import { updateUserProfileResolver } from "interface/resolvers/updateUserProfileResolver"
+import { updateUserRequestSettingsResolver } from "interface/resolvers/updateUserRequestSettingsResolver"
 import { updateWorkResolver } from "interface/resolvers/updateWorkResolver"
 import { UserNodeResolvers } from "interface/resolvers/userNodeResolvers"
 import { ViewerResolvers } from "interface/resolvers/viewerResolvers"
 import { WorkNodeResolvers } from "interface/resolvers/workNodeResolvers"
 
 const MutationResolvers = {
+  createDeliverable: createDeliverableResolver,
+  createPlan: createPlanResolver,
+  createRequest: createRequestResolver,
   createUser: createUserResolver,
   createWork: createWorkResolver,
-  createWorkLike: createWorkLikeResolver,
-  deleteWorkLike: deleteWorkLikeResolver,
   createWorkBookmark: createWorkBookmarkResolver,
+  createWorkLike: createWorkLikeResolver,
+  deleteDeliverable: deleteDeliverableResolver,
+  deletePlan: deletePlanResolver,
+  deleteWork: deleteWorkResolver,
   deleteWorkBookmark: deleteWorkBookmarkResolver,
+  deleteWorkLike: deleteWorkLikeResolver,
   followUser: followUserResolver,
+  markRequestAsAccepted: markRequestAsAcceptedResolver,
+  markRequestAsDone: markRequestAsDoneResolver,
+  markRequestAsRejected: markRequestAsRejectedResolver,
   unfollowUser: unfollowUserResolver,
-  updateUser: updateUserResolver,
+  updateDeliverable: updateDeliverableResolver,
+  updatePlan: updatePlanResolver,
+  updatePlanSort: updatePlanSortResolver,
+  updateUserProfile: updateUserProfileResolver,
+  updateUserRequestSettings: updateUserRequestSettingsResolver,
   updateWork: updateWorkResolver,
 }
 
@@ -33,5 +60,6 @@ export const resolvers = {
   UserNode: UserNodeResolvers,
   WorkNode: WorkNodeResolvers,
   LabelNode: LabelNodeResolvers,
+  RequestNode: RequestNodeResolvers,
   Viewer: ViewerResolvers,
 }

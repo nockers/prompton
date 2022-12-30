@@ -11,14 +11,17 @@ import {
   Tooltip,
   useBreakpointValue,
   useColorMode,
+  useToast,
 } from "@chakra-ui/react"
+import { getAuth, signOut } from "firebase/auth"
 import Link from "next/link"
+import { useRouter } from "next/router"
 import type { FC } from "react"
 import { useContext } from "react"
 import {
   BiBell,
-  BiCog,
   BiDotsHorizontalRounded,
+  BiExit,
   BiMoon,
   BiSend,
   BiSun,
@@ -36,9 +39,29 @@ type Props = {
 export const HomeHeaderUtilities: FC<Props> = (props) => {
   const appContext = useContext(AppContext)
 
+  const router = useRouter()
+
   const { colorMode, toggleColorMode } = useColorMode()
 
   const isMobile = useBreakpointValue({ base: true, md: false })
+
+  const toast = useToast()
+
+  const onLogout = async () => {
+    try {
+      await signOut(getAuth())
+      router.push("/")
+      toast({ title: "ログアウトしました" })
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          title: "ERROR",
+          description: error.message,
+          status: "error",
+        })
+      }
+    }
+  }
 
   if (appContext.isLoading) {
     return <Button isLoading={true} fontSize={14} />
@@ -119,21 +142,14 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
       {!isMobile && (
         <ButtonDarkMode colorMode={colorMode} onClick={toggleColorMode} />
       )}
-      {!isMobile && (
-        <Link href={"/settings"}>
-          <Tooltip label={"設定"}>
-            <IconButton aria-label={""}>
-              <Icon as={BiCog} />
-            </IconButton>
-          </Tooltip>
-        </Link>
-      )}
       <Menu>
-        <MenuButton
-          as={IconButton}
-          aria-label={"その他"}
-          icon={<Icon as={BiDotsHorizontalRounded} />}
-        />
+        <Tooltip label={"設定など"}>
+          <MenuButton
+            as={IconButton}
+            aria-label={"その他"}
+            icon={<Icon as={BiDotsHorizontalRounded} />}
+          />
+        </Tooltip>
         <MenuList>
           {isMobile && (
             <Link href={`/${appContext.currentUser.uid}`}>
@@ -153,11 +169,17 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
               </MenuItem>
             </Link>
           )}
-          <Link href={"/viewer/plans"}>
+          <MenuItem
+            isDisabled
+            icon={<Icon display={"flex"} fontSize={16} as={BiBell} />}
+          >
+            {"通知"}
+          </MenuItem>
+          <Link href={"/settings"}>
             <MenuItem
-              icon={<Icon display={"flex"} fontSize={16} as={BiSend} />}
+              icon={<Icon display={"flex"} fontSize={16} as={BiWrench} />}
             >
-              {"プラン"}
+              {"設定"}
             </MenuItem>
           </Link>
           <MenuItem
@@ -173,18 +195,11 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
             {colorMode === "light" ? "ダークモード" : "ライトモード"}
           </MenuItem>
           <MenuItem
-            isDisabled
-            icon={<Icon display={"flex"} fontSize={16} as={BiBell} />}
+            icon={<Icon display={"flex"} fontSize={16} as={BiExit} />}
+            onClick={onLogout}
           >
-            {"通知"}
+            {"ログアウト"}
           </MenuItem>
-          <Link href={"/settings"}>
-            <MenuItem
-              icon={<Icon display={"flex"} fontSize={16} as={BiWrench} />}
-            >
-              {"設定"}
-            </MenuItem>
-          </Link>
           <MenuDivider />
           <MenuItem isDisabled>{"使い方"}</MenuItem>
           <MenuItem isDisabled> {"ガイドライン"}</MenuItem>

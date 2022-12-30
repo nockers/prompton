@@ -211,7 +211,7 @@ export const ModalPost: FC<Props> = (props) => {
             <Text fontSize={"md"}>{props.postId}</Text>
             <Button
               size={"sm"}
-              colorScheme={"blue"}
+              colorScheme={"primary"}
               aria-label={""}
               onClick={props.onLinkWork}
             >
@@ -281,6 +281,7 @@ export const ModalPost: FC<Props> = (props) => {
               />
               {!isSelf && (
                 <ButtonFollow
+                  size={"sm"}
                   isLoading={isLoadingFriendship}
                   isActive={props.isFollowee}
                   isDisabled={isSelf || appContext.currentUser === null}

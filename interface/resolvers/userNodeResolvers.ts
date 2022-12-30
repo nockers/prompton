@@ -53,6 +53,12 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
   worksCount(parent) {
     return db.post.count({ where: { userId: parent.id, isDeleted: false } })
   },
+  minimumFee(parent) {
+    return parent.minimumFee
+  },
+  maximumFee(parent) {
+    return parent.maximumFee
+  },
   isRequestable(parent) {
     return parent.isRequestable
   },

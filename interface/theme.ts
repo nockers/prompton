@@ -1,12 +1,29 @@
-import { extendTheme, theme as defaultTheme } from "@chakra-ui/react"
+import {
+  extendTheme,
+  theme as defaultTheme,
+  withDefaultColorScheme,
+} from "@chakra-ui/react"
 
-export const theme = extendTheme({
+const primary = {
+  50: "#eef2ff",
+  100: "#e0e7ff",
+  200: "#c7d2fe",
+  300: "#a5b4fc",
+  400: "#818cf8",
+  500: "#6366f1",
+  600: "#4f46e5",
+  700: "#4338ca",
+  800: "#3730a3",
+  900: "#312e81",
+}
+
+const baseTheme = extendTheme({
   config: {
     initialColorMode: "dark",
     useSystemColorMode: false,
   },
   colors: {
-    primary: defaultTheme.colors.blue,
+    primary: primary,
     secondary: defaultTheme.colors.cyan,
     background: {
       light: defaultTheme.colors.white,
@@ -30,3 +47,11 @@ export const theme = extendTheme({
     },
   },
 })
+
+export const theme = extendTheme(
+  baseTheme,
+  withDefaultColorScheme({
+    colorScheme: "primary",
+    components: ["Tabs", "Switch"],
+  }),
+)

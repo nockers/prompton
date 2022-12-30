@@ -13,11 +13,11 @@ export class FriendshipEventStore {
   constructor(private repository: FriendshipRepository) {}
 
   execute(event: FriendshipEvent) {
-    if (event.type === FriendshipCreatedEvent.type) {
+    if (event instanceof FriendshipCreatedEvent) {
       return this.created(event)
     }
 
-    if (event.type === FriendshipDeletedEvent.type) {
+    if (event instanceof FriendshipDeletedEvent) {
       return this.deleted(event)
     }
 

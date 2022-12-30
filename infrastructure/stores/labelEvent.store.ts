@@ -9,11 +9,11 @@ export class LabelEventStore {
   constructor(private repository: LabelRepository) {}
 
   execute(event: LabelEvent) {
-    if (event.type === LabelCreatedEvent.type) {
+    if (event instanceof LabelCreatedEvent) {
       return this.created(event)
     }
 
-    if (event.type === LabelNameUpdatedEvent.type) {
+    if (event instanceof LabelNameUpdatedEvent) {
       return this.labelNameUpdated(event)
     }
 

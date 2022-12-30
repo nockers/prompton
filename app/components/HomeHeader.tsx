@@ -79,18 +79,20 @@ export const HomeHeader: FC = () => {
               <Avatar size={"sm"} src={"/favicon.ico"} />
             </IconButton>
           </Link>
-          <Input
-            variant={"filled"}
-            placeholder={"検索"}
-            value={searchText}
-            onChange={(event) => {
-              setSearchText(event.target.value)
-              setSearch(event.target.value)
-            }}
-          />
-          {searchText.trim() === "" && (
-            <HomeHeaderUtilities onLogin={onLogin} />
-          )}
+          <HStack spacing={2} flex={1}>
+            <Input
+              variant={"filled"}
+              placeholder={"検索"}
+              value={searchText}
+              onChange={(event) => {
+                setSearchText(event.target.value)
+                setSearch(event.target.value)
+              }}
+            />
+            {searchText.trim() === "" && (
+              <HomeHeaderUtilities onLogin={onLogin} />
+            )}
+          </HStack>
         </HStack>
       </Box>
       <Box h={"4.5rem"} />

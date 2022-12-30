@@ -2,7 +2,7 @@ import type { BlitzPage } from "@blitzjs/auth"
 import { HStack, Stack } from "@chakra-ui/react"
 import { HomeLabelList } from "app/components/HomeLabelList"
 import { HomeNotification } from "app/components/HomeNotification"
-import { HomePostList } from "app/components/HomePostList"
+import { HomeWorkList } from "app/components/HomeWorkList"
 import { MainStackJa } from "app/components/MainStackJa"
 
 const RootPage: BlitzPage = () => {
@@ -13,7 +13,7 @@ const RootPage: BlitzPage = () => {
       </HStack>
       <Stack spacing={0} w={"100%"} alignItems={"center"}>
         <HomeLabelList />
-        <HomePostList />
+        <HomeWorkList />
       </Stack>
     </MainStackJa>
   )

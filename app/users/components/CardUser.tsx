@@ -45,7 +45,7 @@ export const CardUser: FC<Props> = (props) => {
             </Box>
           </Stack>
           <Button
-            colorScheme={props.isFollowee ? "pink" : "blue"}
+            colorScheme={props.isFollowee ? "pink" : "primary"}
             size={"sm"}
             borderRadius={40}
             onClick={props.isFollowee ? props.onUnfollow : props.onFollow}

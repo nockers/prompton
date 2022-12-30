@@ -10,39 +10,29 @@ import {
   Avatar,
   Skeleton,
   SkeletonCircle,
-  useColorModeValue,
   Textarea,
 } from "@chakra-ui/react"
-import { useRouter } from "next/router"
 import type { FC } from "react"
-import { useContext } from "react"
 import { BiCheck, BiPaint } from "react-icons/bi"
 import { UserAvatarDropzone } from "app/[login]/components/UserAvatarDropzone"
 import { useFileUpload } from "app/hooks/useFileUpload"
 import {
-  useUpdateUserMutation,
+  useUpdateUserProfileMutation,
   useUserQuery,
 } from "interface/__generated__/react"
-import { AppContext } from "interface/contexts/appContext"
 
 type Props = {
   userId: string
 }
 
 export const ViewerUserProfileHeader: FC<Props> = (props) => {
-  const appContext = useContext(AppContext)
-
-  const backgroundColor = useColorModeValue("gray.50", "gray.700")
-
-  const router = useRouter()
-
   const {
     isOpen: isEditMode,
     onOpen: onOpenEditor,
     onClose: onCloseEditor,
   } = useDisclosure()
 
-  const [updateUser] = useUpdateUserMutation()
+  const [updateUserProfile] = useUpdateUserProfileMutation()
 
   const {
     data = null,
@@ -57,7 +47,7 @@ export const ViewerUserProfileHeader: FC<Props> = (props) => {
   const onChangeAvatarFileId = async (file: File) => {
     try {
       const fileId = await uploadFile(file)
-      await updateUser({
+      await updateUserProfile({
         variables: {
           input: {
             avatarFileId: fileId,
@@ -90,7 +80,7 @@ export const ViewerUserProfileHeader: FC<Props> = (props) => {
 
   const onChangeName = async (name: string) => {
     try {
-      await updateUser({
+      await updateUserProfile({
         variables: {
           input: {
             avatarFileId: data?.user?.avatarImageId ?? null,
@@ -115,7 +105,7 @@ export const ViewerUserProfileHeader: FC<Props> = (props) => {
 
   const onChangeBiography = async (biography: string) => {
     try {
-      await updateUser({
+      await updateUserProfile({
         variables: {
           input: {
             avatarFileId: data?.user?.avatarImageId ?? null,

@@ -9,11 +9,11 @@ export class LikeEventStore {
   constructor(private repository: LikeRepository) {}
 
   execute(event: LikeEvent) {
-    if (event.type === LikeCreatedEvent.type) {
+    if (event instanceof LikeCreatedEvent) {
       return this.created(event)
     }
 
-    if (event.type === LikeDeletedEvent.type) {
+    if (event instanceof LikeDeletedEvent) {
       return this.deleted(event)
     }
 

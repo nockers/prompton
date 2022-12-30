@@ -28,7 +28,7 @@ export const CardFollowee: FC<Props> = (props) => {
             </Text>
           </Stack>
           <Button
-            colorScheme={"blue"}
+            colorScheme={"primary"}
             size={"sm"}
             borderRadius={40}
             onClick={props.onUnfollow}

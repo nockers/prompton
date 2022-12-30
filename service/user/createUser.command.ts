@@ -20,6 +20,9 @@ export class CreateUserCommand {
         id: new Id(props.userId),
         email: props.userEmail ? new Email(props.userEmail) : null,
         biography: new Biography(""),
+        isRequestable: false,
+        minimumFee: 1000,
+        maximumFee: 8000,
         headerImageId: null,
         avatarImageId: null,
         avatarImageURL:
