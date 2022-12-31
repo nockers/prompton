@@ -52,9 +52,9 @@ export const SearchPostList: FC<Props> = (props) => {
       <Box w={"100%"}>
         <Divider />
       </Box>
-      <HStack alignItems={"flex-start"} spacing={4}>
+      <HStack alignItems={"flex-start"} spacing={4} w={"100%"}>
         {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
-          <Stack key={index} spacing={4}>
+          <Stack key={index} spacing={4} flex={1}>
             {column.map((work) => (
               <CardPost
                 id={work.id}

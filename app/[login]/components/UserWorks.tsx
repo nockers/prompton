@@ -82,40 +82,38 @@ export const UserWorks: FC<Props> = (props) => {
   return (
     <Stack spacing={4}>
       {props.isEditable && (
-        <HStack justifyContent={"center"} px={4} w={"100%"}>
+        <HStack px={4}>
           <UploadDropzone isLoading={isLoading} onChange={onUploadFiles} />
         </HStack>
       )}
-      <HStack w={"100%"} justifyContent={"center"}>
-        <HStack px={4} alignItems={"flex-start"} spacing={4}>
-          {toColumnArray(data.works, columnCount).map((column, index) => (
-            <Stack key={index} spacing={4}>
-              {column.map((work) => (
-                <CardUserWork
-                  id={work.id}
-                  key={work.id}
-                  postFileId={work.fileId}
-                  postPrompt={work.prompt}
-                  postLikeCount={work.likesCount}
-                  postAnnotationAdult={work.annotationAdult}
-                  postAnnotationMedical={work.annotationMedical}
-                  postAnnotationRacy={work.annotationRacy}
-                  postAnnotationSpoof={work.annotationSpoof}
-                  postAnnotationViolence={work.annotationViolence}
-                  postLabels={work.labels.map((label) => [
-                    label.nameJA || label.name,
-                    label.count,
-                  ])}
-                  postColors={work.colors}
-                  postWebColors={work.webColors}
-                  isLiked={false}
-                  isBookmarked={false}
-                  isFollowee={false}
-                />
-              ))}
-            </Stack>
-          ))}
-        </HStack>
+      <HStack px={4} alignItems={"flex-start"} spacing={4} w={"100%"}>
+        {toColumnArray(data.works, columnCount).map((column, index) => (
+          <Stack key={index} spacing={4} flex={1}>
+            {column.map((work) => (
+              <CardUserWork
+                id={work.id}
+                key={work.id}
+                postFileId={work.fileId}
+                postPrompt={work.prompt}
+                postLikeCount={work.likesCount}
+                postAnnotationAdult={work.annotationAdult}
+                postAnnotationMedical={work.annotationMedical}
+                postAnnotationRacy={work.annotationRacy}
+                postAnnotationSpoof={work.annotationSpoof}
+                postAnnotationViolence={work.annotationViolence}
+                postLabels={work.labels.map((label) => [
+                  label.nameJA || label.name,
+                  label.count,
+                ])}
+                postColors={work.colors}
+                postWebColors={work.webColors}
+                isLiked={false}
+                isBookmarked={false}
+                isFollowee={false}
+              />
+            ))}
+          </Stack>
+        ))}
       </HStack>
     </Stack>
   )
