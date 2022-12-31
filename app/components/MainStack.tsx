@@ -49,7 +49,12 @@ export const MainStack: FC<Props> = (props) => {
         <meta name={"twitter:description"} content={ogDescription} />
         <meta name={"twitter:image"} content={twitterImageURL} />
       </Head>
-      <Stack as={"main"} spacing={4} pb={8} pt={4} overflowX={"hidden"}>
+      <Stack
+        as={"main"}
+        spacing={{ base: 4, md: 8 }}
+        pb={8}
+        overflowX={"hidden"}
+      >
         {props.children}
       </Stack>
     </>

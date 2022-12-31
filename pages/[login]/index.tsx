@@ -1,5 +1,5 @@
 import type { BlitzPage } from "@blitzjs/auth"
-import { TabList, Tab, Tabs, Divider, Box } from "@chakra-ui/react"
+import { TabList, Tab, Tabs, Divider, Box, Stack } from "@chakra-ui/react"
 import type { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import { useContext, useState } from "react"
@@ -37,35 +37,47 @@ const UserPage: BlitzPage = () => {
   if (router.query.login !== appContext.currentUser?.uid) {
     return (
       <MainStack title={null} description={null} fileId={null}>
-        <UserProfileHeader userId={userId} />
-        <Divider />
-        <UserWorks userId={userId} isEditable={isMyPage} />
+        <Stack
+          spacing={{ base: 4, md: 8 }}
+          px={{ base: 4, md: 8 }}
+          pt={{ base: 4, md: 8 }}
+        >
+          <UserProfileHeader userId={userId} />
+          <Divider />
+          <UserWorks userId={userId} isEditable={isMyPage} />
+        </Stack>
       </MainStack>
     )
   }
 
   return (
     <MainStack title={null} description={null} fileId={null}>
-      <ViewerUserProfileHeader userId={userId} />
-      <Divider />
-      <Box overflowX={"auto"}>
-        <Tabs
-          w={"max-content"}
-          variant={"soft-rounded"}
-          onChange={(index) => {
-            setTabIndex(index)
-          }}
-        >
-          <TabList px={4}>
-            <Tab mr={2}>{"作品"}</Tab>
-            <Tab mr={2}>{"スキ"}</Tab>
-            <Tab mr={2}>{"ブックマーク"}</Tab>
-          </TabList>
-        </Tabs>
-      </Box>
-      {tabIndex === 0 && <ViewerWorkList />}
-      {tabIndex === 1 && <ViewerLikedWorkList />}
-      {tabIndex === 2 && <ViewerBookmarkedWorkList />}
+      <Stack pt={{ base: 4, md: 8 }} spacing={{ base: 4, md: 8 }}>
+        <Box px={{ base: 4, md: 8 }}>
+          <ViewerUserProfileHeader userId={userId} />
+        </Box>
+        <Divider />
+        <Box overflowX={"auto"}>
+          <Tabs
+            w={"max-content"}
+            variant={"soft-rounded"}
+            onChange={(index) => {
+              setTabIndex(index)
+            }}
+          >
+            <TabList px={{ base: 4, md: 8 }}>
+              <Tab mr={2}>{"作品"}</Tab>
+              <Tab mr={2}>{"スキ"}</Tab>
+              <Tab mr={2}>{"ブックマーク"}</Tab>
+            </TabList>
+          </Tabs>
+        </Box>
+        <Box px={{ base: 4, md: 8 }}>
+          {tabIndex === 0 && <ViewerWorkList />}
+          {tabIndex === 1 && <ViewerLikedWorkList />}
+          {tabIndex === 2 && <ViewerBookmarkedWorkList />}
+        </Box>
+      </Stack>
     </MainStack>
   )
 }

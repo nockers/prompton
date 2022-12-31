@@ -66,7 +66,8 @@ export const HomeHeader: FC = () => {
   return (
     <>
       <Box
-        p={4}
+        py={4}
+        px={{ base: 4, md: 8 }}
         position={"fixed"}
         w={"100%"}
         top={0}

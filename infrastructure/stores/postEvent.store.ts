@@ -51,6 +51,7 @@ export class PostEventStore {
       .updateAnnotationSpoof(event.annotationSpoof)
       .updateAnnotationMedical(event.annotationMedical)
       .updateAnnotationViolence(event.annotationViolence)
+      .updateAnnotationRacy(event.annotationRacy)
       .updateLabelIds(event.labelIds)
 
     return this.repository.persist(draftPost)

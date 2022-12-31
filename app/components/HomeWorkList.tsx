@@ -55,7 +55,7 @@ export const HomeWorkList: FC = () => {
   }
 
   return (
-    <Stack px={4} spacing={4}>
+    <Stack spacing={4}>
       <HStack alignItems={"flex-start"} spacing={4} w={"100%"}>
         {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
           <Stack key={index} spacing={4} flex={1}>

@@ -1,3 +1,4 @@
+import Stripe from "stripe"
 import type { User } from "db"
 import db from "db"
 import { Env } from "infrastructure/env"
@@ -61,6 +62,22 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
   },
   isRequestable(parent) {
     return parent.isRequestable
+  },
+  async paymentMethod(parent, _, ctx) {
+    if (ctx.currentUser === null) return null
+    const stripe = new Stripe(Env.stripeSecretKey, {
+      apiVersion: "2022-11-15",
+    })
+    const resp = await stripe.customers.search({
+      query: `metadata['userId']:'${ctx.currentUser.uid}'`,
+      expand: ["data.default_source"],
+    })
+    const [customer = null] = resp.data
+    const paymentMethods = await stripe.paymentMethods.list({
+      customer: customer?.id,
+    })
+    const [paymentMethod = null] = paymentMethods.data
+    return paymentMethod
   },
   /**
    * 自分がフォローされているかどうか

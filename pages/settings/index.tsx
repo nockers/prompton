@@ -1,19 +1,33 @@
-import { Box, Stack, Text } from "@chakra-ui/react"
+import { Button, Divider, HStack, Stack, Text } from "@chakra-ui/react"
 import type { FC } from "react"
 import { MainStack } from "app/components/MainStack"
 
 const SettingsPage: FC = () => {
   return (
     <MainStack title={"設定"} description={null} fileId={null}>
-      <Stack spacing={8} px={{ base: 4, md: 8 }}>
-        <Stack spacing={4}>
-          <Box pt={4}>
+      <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
+        <Stack w={"100%"} maxW={"container.md"} spacing={{ base: 4, md: 8 }}>
+          <Stack pt={{ base: 4, md: 8 }}>
             <Text fontWeight={"bold"} fontSize={"xl"}>
               {"設定"}
             </Text>
-          </Box>
+          </Stack>
+          <Divider />
+          <Stack spacing={4}>
+            <Text fontWeight={"bold"}>{"言語について"}</Text>
+            <HStack>
+              <Button isDisabled>{"表示言語を変更する"}</Button>
+            </HStack>
+          </Stack>
+          <Divider />
+          <Stack spacing={4}>
+            <Text fontWeight={"bold"}>{"危険な操作"}</Text>
+            <HStack>
+              <Button isDisabled>{"アカウントを削除する"}</Button>
+            </HStack>
+          </Stack>
         </Stack>
-      </Stack>
+      </HStack>
     </MainStack>
   )
 }

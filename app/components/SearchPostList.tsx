@@ -48,7 +48,7 @@ export const SearchPostList: FC<Props> = (props) => {
   }
 
   return (
-    <Stack px={4} spacing={4}>
+    <Stack spacing={4}>
       <Box w={"100%"}>
         <Divider />
       </Box>

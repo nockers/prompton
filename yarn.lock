@@ -5107,6 +5107,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stripe/stripe-js@npm:^1.46.0":
+  version: 1.46.0
+  resolution: "@stripe/stripe-js@npm:1.46.0"
+  checksum: e9f1a6c1abc1e9eb5cfe7d604066230078958d3ada61089912829b57d090e768d6310149f054c8da0a8c49d7a313c44418705f91174909c2d2313c9ded781be1
+  languageName: node
+  linkType: hard
+
 "@swc/helpers@npm:0.4.14":
   version: 0.4.14
   resolution: "@swc/helpers@npm:0.4.14"
@@ -5469,6 +5476,13 @@ __metadata:
   version: 18.11.17
   resolution: "@types/node@npm:18.11.17"
   checksum: 1933afd068d5c75c068c6c4df6d10edb3b0b2bb6503d544e2f0496ac007c90596e6a5e284a8ef032451bc16f871b7e46719d7d2bea60e9b25d13a77d52161cac
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:>=8.1.0":
+  version: 18.11.18
+  resolution: "@types/node@npm:18.11.18"
+  checksum: 03f17f9480f8d775c8a72da5ea7e9383db5f6d85aa5fefde90dd953a1449bd5e4ffde376f139da4f3744b4c83942166d2a7603969a6f8ea826edfb16e6e3b49d
   languageName: node
   linkType: hard
 
@@ -13349,6 +13363,7 @@ __metadata:
     "@sentry/browser": ^7.28.1
     "@sentry/node": ^7.28.1
     "@sentry/react": ^7.28.1
+    "@stripe/stripe-js": ^1.46.0
     "@types/color": ^3.0.3
     "@types/node": 18.11.17
     "@types/react": 18.0.26
@@ -13378,6 +13393,7 @@ __metadata:
     react-markdown: ^8.0.4
     reflect-metadata: ^0.1.13
     sharp: ^0.31.3
+    stripe: ^11.5.0
     tsyringe: ^4.7.0
     typescript: ^4.9.4
     zod: ^3.20.2
@@ -13552,7 +13568,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:6.11.0":
+"qs@npm:6.11.0, qs@npm:^6.11.0":
   version: 6.11.0
   resolution: "qs@npm:6.11.0"
   dependencies:
@@ -14991,6 +15007,16 @@ __metadata:
   version: 2.0.1
   resolution: "strip-json-comments@npm:2.0.1"
   checksum: 1074ccb63270d32ca28edfb0a281c96b94dc679077828135141f27d52a5a398ef5e78bcf22809d23cadc2b81dfbe345eb5fd8699b385c8b1128907dec4a7d1e1
+  languageName: node
+  linkType: hard
+
+"stripe@npm:^11.5.0":
+  version: 11.5.0
+  resolution: "stripe@npm:11.5.0"
+  dependencies:
+    "@types/node": ">=8.1.0"
+    qs: ^6.11.0
+  checksum: 22df037eeadc0ef999b9d2c08d8e97766f2df567c0d43ea4495563486ef38752c3d7a40ee2b0f334c462e9b0df94a34502c850f060d1c43cbee897c3ac5aa925
   languageName: node
   linkType: hard
 

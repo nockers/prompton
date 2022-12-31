@@ -26,17 +26,17 @@ export const SearchLabelList: FC<Props> = (props) => {
   })
 
   return (
-    <Stack spacing={4} w={"100%"}>
+    <Stack spacing={{ base: 4, md: 8 }} w={"100%"}>
       {data?.labels.map((label) => (
-        <Stack key={label.id}>
-          <Box px={4}>
+        <Stack key={label.id} spacing={{ base: 2, md: 4 }}>
+          <Box px={{ base: 4, md: 8 }}>
             <Link href={`/labels/${label.name}`}>
               <Button size={"md"} rightIcon={<Icon as={BiRightArrowAlt} />}>
                 {`#${label.nameJA || label.name}`}
               </Button>
             </Link>
           </Box>
-          <HStack overflow={"auto"} pl={4}>
+          <HStack overflow={"auto"} pl={{ base: 4, md: 8 }}>
             {label.works.map((work) => (
               <Box key={work.id} minW={40}>
                 <CardLabelPost

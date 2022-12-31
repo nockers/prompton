@@ -1,5 +1,6 @@
 import type { BlitzPage } from "@blitzjs/auth"
 import {
+  Divider,
   HStack,
   Stack,
   Tab,
@@ -27,7 +28,7 @@ import { AppContext } from "interface/contexts/appContext"
 const ViewerRequestsPage: BlitzPage = () => {
   const appContext = useContext(AppContext)
 
-  const { data = null } = useViewerUserQuery({
+  const { data = null, refetch } = useViewerUserQuery({
     skip: appContext.currentUser === null,
   })
 
@@ -61,6 +62,7 @@ const ViewerRequestsPage: BlitzPage = () => {
       if (!isRequestable) {
         toast({ status: "success", description: "リクエストを無効にしました" })
       }
+      await refetch()
     } catch (error) {
       if (error instanceof Error) {
         toast({ status: "error", description: error.message })
@@ -96,14 +98,9 @@ const ViewerRequestsPage: BlitzPage = () => {
 
   return (
     <MainStack title={"リクエスト"} description={null} fileId={null}>
-      <HStack justifyContent={"center"}>
-        <Stack
-          w={"100%"}
-          maxW={"container.sm"}
-          spacing={{ base: 4, md: 8 }}
-          px={{ base: 4, md: 8 }}
-        >
-          <Stack spacing={2} pt={{ base: 0, md: 4 }}>
+      <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
+        <Stack w={"100%"} maxW={"container.md"} spacing={{ base: 4, md: 8 }}>
+          <Stack pt={{ base: 4, md: 8 }}>
             <Text fontWeight={"bold"} fontSize={"xl"}>
               {"リクエスト"}
             </Text>
@@ -113,6 +110,7 @@ const ViewerRequestsPage: BlitzPage = () => {
               }
             </Text>
           </Stack>
+          <Divider />
           <CardViewerRequestSettings
             isRequestable={data.viewer.user.isRequestable}
             minimumFee={data.viewer.user.minimumFee}

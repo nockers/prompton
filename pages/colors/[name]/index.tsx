@@ -73,12 +73,12 @@ const ColorPage: BlitzPage<Props> = () => {
       description={`カラーコード「#${label}」に関連する作品があります。`}
       fileId={null}
     >
-      <HStack px={4} py={4}>
+      <Stack pt={{ base: 4, md: 8 }} px={{ base: 4, md: 8 }}>
         <Text lineHeight={1} fontSize={"4xl"} fontWeight={"bold"}>
           {`#${label}`}
         </Text>
-      </HStack>
-      <HStack px={4} alignItems={"flex-start"} spacing={4}>
+      </Stack>
+      <HStack px={{ base: 4, md: 8 }} alignItems={"flex-start"} spacing={4}>
         {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
           <Stack key={index} spacing={4}>
             {column.map((work) => (

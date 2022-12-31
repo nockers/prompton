@@ -1,5 +1,5 @@
 import type { BlitzPage } from "@blitzjs/auth"
-import { Box, Card, Divider, HStack, Stack, Text } from "@chakra-ui/react"
+import { Card, Divider, HStack, Stack, Text } from "@chakra-ui/react"
 import { MainStack } from "app/components/MainStack"
 
 const SpecifiedCommercialTransactionActPage: BlitzPage = () => {
@@ -10,12 +10,13 @@ const SpecifiedCommercialTransactionActPage: BlitzPage = () => {
       fileId={null}
     >
       <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
-        <Stack w={"100%"} maxW={"container.md"} spacing={4}>
-          <Box py={{ base: 2, md: 4 }}>
-            <Text fontWeight={"bold"} fontSize={"2xl"}>
+        <Stack w={"100%"} maxW={"container.md"} spacing={{ base: 4, md: 8 }}>
+          <Stack pt={{ base: 4, md: 8 }}>
+            <Text fontWeight={"bold"} fontSize={"xl"}>
               {"特定商取引法に基づく表記"}
             </Text>
-          </Box>
+          </Stack>
+          <Divider />
           <Card
             variant={"filled"}
             p={6}

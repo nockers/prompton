@@ -62,39 +62,35 @@ export const UserRequestHeader: FC<Props> = (props) => {
   const isLoadingFriendship = isCreatingFriendship || isDeletingFriendship
 
   return (
-    <Stack px={4}>
-      <HStack
-        spacing={4}
-        py={4}
-        px={0}
-        borderRadius={"lg"}
-        justifyContent={"space-between"}
-        alignItems={"center"}
+    <HStack
+      spacing={4}
+      borderRadius={"lg"}
+      justifyContent={"space-between"}
+      alignItems={"center"}
+    >
+      <SkeletonCircle size={"16"} isLoaded={!loading && user !== null}>
+        <Avatar size={"lg"} src={user?.avatarImageURL || ""} />
+      </SkeletonCircle>
+      <Stack flex={1} spacing={1}>
+        <Skeleton isLoaded={!loading && user !== null}>
+          <Text fontSize={"xs"} fontWeight={"bold"} opacity={0.8} minW={40}>
+            {`@${user?.id.slice(0, 8)}`}
+          </Text>
+        </Skeleton>
+        <Skeleton isLoaded={!loading && user !== null}>
+          <Text fontSize={"2xl"} lineHeight={1} fontWeight={"bold"}>
+            {user?.name ?? "-"}
+          </Text>
+        </Skeleton>
+      </Stack>
+      <Button
+        size={"sm"}
+        isLoading={isLoadingFriendship}
+        colorScheme={data?.user?.isFollowee ? "primary" : "gray"}
+        onClick={data?.user?.isFollowee ? onUnfollowUser : onFollowUser}
       >
-        <SkeletonCircle size={"16"} isLoaded={!loading && user !== null}>
-          <Avatar size={"lg"} src={user?.avatarImageURL || ""} />
-        </SkeletonCircle>
-        <Stack flex={1} spacing={1}>
-          <Skeleton isLoaded={!loading && user !== null}>
-            <Text fontSize={"xs"} fontWeight={"bold"} opacity={0.8} minW={40}>
-              {`@${user?.id.slice(0, 8)}`}
-            </Text>
-          </Skeleton>
-          <Skeleton isLoaded={!loading && user !== null}>
-            <Text fontSize={"2xl"} lineHeight={1} fontWeight={"bold"}>
-              {user?.name ?? "-"}
-            </Text>
-          </Skeleton>
-        </Stack>
-        <Button
-          size={"sm"}
-          isLoading={isLoadingFriendship}
-          colorScheme={data?.user?.isFollowee ? "primary" : "gray"}
-          onClick={data?.user?.isFollowee ? onUnfollowUser : onFollowUser}
-        >
-          {data?.user?.isFollowee ? "フォロー中" : "フォロー"}
-        </Button>
-      </HStack>
-    </Stack>
+        {data?.user?.isFollowee ? "フォロー中" : "フォロー"}
+      </Button>
+    </HStack>
   )
 }

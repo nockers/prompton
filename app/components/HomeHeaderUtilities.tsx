@@ -20,6 +20,7 @@ import type { FC } from "react"
 import { useContext } from "react"
 import {
   BiBell,
+  BiCreditCard,
   BiDotsHorizontalRounded,
   BiExit,
   BiMoon,
@@ -175,6 +176,13 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
           >
             {"通知"}
           </MenuItem>
+          <Link href={"/viewer/payments"}>
+            <MenuItem
+              icon={<Icon display={"flex"} fontSize={16} as={BiCreditCard} />}
+            >
+              {"お支払い"}
+            </MenuItem>
+          </Link>
           <Link href={"/settings"}>
             <MenuItem
               icon={<Icon display={"flex"} fontSize={16} as={BiWrench} />}

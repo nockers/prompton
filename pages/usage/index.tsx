@@ -1,17 +1,20 @@
 import type { BlitzPage } from "@blitzjs/auth"
-import { Stack, Text } from "@chakra-ui/react"
-import { MarkdownDocument } from "app/components/BoxMarkdown"
+import { Divider, HStack, Stack, Text } from "@chakra-ui/react"
 import { MainStack } from "app/components/MainStack"
 
 const UsagePage: BlitzPage = () => {
-  const text = ``
-
   return (
-    <MainStack title={"使い方"} description={null} fileId={null}>
-      <Text>{"使い方"}</Text>
-      <Stack spacing={4}>
-        <MarkdownDocument>{text}</MarkdownDocument>
-      </Stack>
+    <MainStack title={"ガイドライン"} description={null} fileId={null}>
+      <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
+        <Stack w={"100%"} maxW={"container.md"} spacing={{ base: 4, md: 8 }}>
+          <Stack pt={{ base: 4, md: 8 }}>
+            <Text fontWeight={"bold"} fontSize={"xl"}>
+              {"ガイドライン"}
+            </Text>
+          </Stack>
+          <Divider />
+        </Stack>
+      </HStack>
     </MainStack>
   )
 }

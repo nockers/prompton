@@ -221,14 +221,13 @@ const WorkPage: BlitzPage<Props> = (props) => {
       description={data.work.prompt || `${data.work.id}`}
       fileId={data.work.fileId}
     >
-      {appContext.isLoading ? "foo" : "bar"}
-      <HStack justifyContent={"center"} w={"100%"}>
+      <HStack justifyContent={"center"} w={"100%"} pt={{ base: 4, md: 8 }}>
         <Stack
-          px={4}
+          px={{ base: 4, md: 8 }}
           maxW={"container.xl"}
           direction={{ base: "column", lg: "row" }}
           w={"100%"}
-          spacing={4}
+          spacing={{ base: 4, md: 8 }}
         >
           <Box flex={1} w={"100%"}>
             <Image
@@ -240,48 +239,50 @@ const WorkPage: BlitzPage<Props> = (props) => {
             />
           </Box>
           <Stack w={{ base: "100%", lg: "xs" }} spacing={4}>
-            <HStack spacing={4}>
-              <Avatar
-                size={"md"}
-                src={data.work.user.avatarImageURL ?? ""}
-                cursor={"pointer"}
-                onClick={onOpenUser}
-              />
-              <Box flex={1}>
-                <Box onClick={onOpenUser} cursor={"pointer"}>
-                  <Text fontWeight={"bold"}>{data.work.user.name}</Text>
-                </Box>
-              </Box>
-              {!isSelf && (
-                <ButtonFollow
-                  size={"sm"}
-                  isLoading={isLoadingFriendship}
-                  isActive={data.work.user.isFollowee}
-                  isDisabled={appContext.currentUser === null}
-                  onFollow={onFollowUser}
-                  onUnfollow={onUnfollowUser}
+            <Stack spacing={4}>
+              <HStack spacing={4}>
+                <Avatar
+                  size={"md"}
+                  src={data.work.user.avatarImageURL ?? ""}
+                  cursor={"pointer"}
+                  onClick={onOpenUser}
                 />
-              )}
-            </HStack>
-            <HStack spacing={4}>
-              <ButtonBookmark
-                flex={1}
-                isLoading={isLoadingBookmark}
-                isActive={data.work.isBookmarked}
-                isDisabled={appContext.currentUser === null}
-                onCreate={onCreateBookmark}
-                onDelete={onDeleteBookmark}
-              />
-              <ButtonLike
-                flex={1}
-                count={data.work.likesCount}
-                isLoading={isLoadingLike}
-                isActive={data.work.isLiked}
-                isDisabled={isSelf || appContext.currentUser === null}
-                onCreate={onCreateLike}
-                onDelete={onDeleteLike}
-              />
-            </HStack>
+                <Box flex={1}>
+                  <Box onClick={onOpenUser} cursor={"pointer"}>
+                    <Text fontWeight={"bold"}>{data.work.user.name}</Text>
+                  </Box>
+                </Box>
+                {!isSelf && (
+                  <ButtonFollow
+                    size={"sm"}
+                    isLoading={isLoadingFriendship}
+                    isActive={data.work.user.isFollowee}
+                    isDisabled={appContext.currentUser === null}
+                    onFollow={onFollowUser}
+                    onUnfollow={onUnfollowUser}
+                  />
+                )}
+              </HStack>
+              <HStack spacing={4}>
+                <ButtonBookmark
+                  flex={1}
+                  isLoading={isLoadingBookmark}
+                  isActive={data.work.isBookmarked}
+                  isDisabled={appContext.currentUser === null}
+                  onCreate={onCreateBookmark}
+                  onDelete={onDeleteBookmark}
+                />
+                <ButtonLike
+                  flex={1}
+                  count={data.work.likesCount}
+                  isLoading={isLoadingLike}
+                  isActive={data.work.isLiked}
+                  isDisabled={isSelf || appContext.currentUser === null}
+                  onCreate={onCreateLike}
+                  onDelete={onDeleteLike}
+                />
+              </HStack>
+            </Stack>
             <Box bg={"blackAlpha.400"} p={4} rounded={"lg"}>
               <Text>{data.work.prompt ?? "No prompt"}</Text>
             </Box>
@@ -316,7 +317,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
           </Stack>
         </Stack>
       </HStack>
-      <Box px={4} maxW={"container.xl"}>
+      <Box px={{ base: 4, md: 8 }}>
         <UserWorkList
           excludedWorkId={data.work.id}
           userId={data.work.user.id}

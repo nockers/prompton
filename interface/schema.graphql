@@ -381,6 +381,21 @@ type UserNode implements Node {
   リクエストの最大報酬
   """
   maximumFee: Int!
+  """
+  Stripeの決済方法
+  """
+  paymentMethod: PaymentMethodNode
+}
+
+type PaymentMethodNode implements Node {
+  id: ID!
+  type: String!
+  cardBrand: String!
+  cardLast4: String!
+  cardExpMonth: String!
+  cardExpYear: String!
+  cardFunding: String!
+  isLiveMode: Boolean!
 }
 
 """
@@ -514,6 +529,16 @@ type Mutation {
   納品物を削除する
   """
   deleteDeliverable(input: DeleteDeliverableInput!): Boolean
+  """
+  決済方法を登録する
+  """
+  createPaymentMethod(
+    input: CreatePaymentMethodInput!
+  ): CreatePaymentMethodResult
+  """
+  決済方法を削除する
+  """
+  deletePaymentMethod: Boolean
 }
 
 input CreateWorkInput {
@@ -622,10 +647,6 @@ input MarkRequestAsRejected {
   requestId: String!
 }
 
-input MarkRequestAsRejected {
-  requestId: String!
-}
-
 input CreateDeliverableInput {
   requestId: String!
   fileId: String!
@@ -641,6 +662,14 @@ input UpdateDeliverableInput {
 
 input DeleteDeliverableInput {
   deliverableId: String!
+}
+
+input CreatePaymentMethodInput {
+  requestUserId: String
+}
+
+type CreatePaymentMethodResult {
+  checkoutURL: String!
 }
 
 interface Node {

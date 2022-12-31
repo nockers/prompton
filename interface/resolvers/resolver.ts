@@ -1,4 +1,5 @@
 import { createDeliverableResolver } from "interface/resolvers/createDeliverableResolver"
+import { createPaymentMethodResolver } from "interface/resolvers/createPaymentMethodResolver"
 import { createPlanResolver } from "interface/resolvers/createPlanResolver"
 import { createRequestResolver } from "interface/resolvers/createRequestResolver"
 import { createUserResolver } from "interface/resolvers/createUserResolver"
@@ -6,6 +7,7 @@ import { createWorkBookmarkResolver } from "interface/resolvers/createWorkBookma
 import { createWorkLikeResolver } from "interface/resolvers/createWorkLikeResolver"
 import { createWorkResolver } from "interface/resolvers/createWorkResolver"
 import { deleteDeliverableResolver } from "interface/resolvers/deleteDeliverableResolver"
+import { deletePaymentMethodResolver } from "interface/resolvers/deletePaymentMethodResolver"
 import { deletePlanResolver } from "interface/resolvers/deletePlanSortResolver"
 import { deleteWorkBookmarkResolver } from "interface/resolvers/deleteWorkBookmarkResolver"
 import { deleteWorkLikeResolver } from "interface/resolvers/deleteWorkLikeResolver"
@@ -15,6 +17,7 @@ import { LabelNodeResolvers } from "interface/resolvers/labelNodeResolvers"
 import { markRequestAsAcceptedResolver } from "interface/resolvers/markRequestAsAcceptedResolver"
 import { markRequestAsDoneResolver } from "interface/resolvers/markRequestAsDoneResolver"
 import { markRequestAsRejectedResolver } from "interface/resolvers/markRequestAsRejectedResolver"
+import { PaymentMethodNodeResolvers } from "interface/resolvers/paymentMethodNodeResolvers"
 import { QueryResolvers } from "interface/resolvers/queryResolvers"
 import { RequestNodeResolvers } from "interface/resolvers/requestNodeResolvers"
 import { unfollowUserResolver } from "interface/resolvers/unfollowUserResolver"
@@ -52,6 +55,8 @@ const MutationResolvers = {
   updateUserProfile: updateUserProfileResolver,
   updateUserRequestSettings: updateUserRequestSettingsResolver,
   updateWork: updateWorkResolver,
+  createPaymentMethod: createPaymentMethodResolver,
+  deletePaymentMethod: deletePaymentMethodResolver,
 }
 
 export const resolvers = {
@@ -61,5 +66,6 @@ export const resolvers = {
   WorkNode: WorkNodeResolvers,
   LabelNode: LabelNodeResolvers,
   RequestNode: RequestNodeResolvers,
+  PaymentMethodNode: PaymentMethodNodeResolvers,
   Viewer: ViewerResolvers,
 }

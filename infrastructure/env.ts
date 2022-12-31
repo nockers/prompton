@@ -85,4 +85,8 @@ export class Env {
   static get sentryRelease() {
     return process.env.NEXT_PUBLIC_SENTRY_RELEASE!
   }
+
+  static get stripeSecretKey() {
+    return process.env.STRIPE_SECRET_KEY!
+  }
 }

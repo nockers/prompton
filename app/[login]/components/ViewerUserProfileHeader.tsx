@@ -131,7 +131,7 @@ export const ViewerUserProfileHeader: FC<Props> = (props) => {
   const user = data?.user ?? null
 
   return (
-    <Stack px={4} w={"100%"} spacing={4}>
+    <Stack w={"100%"} spacing={4}>
       <HStack>
         <Button
           aria-label={""}

@@ -25,16 +25,12 @@ export const ViewerLikedWorkList: FC = () => {
   const columns = toColumnArray(data.viewer.likedWorks, columnCount)
 
   if (data.viewer.likedWorks.length === 0) {
-    return (
-      <HStack px={4}>
-        <AlertIntroductionLike />
-      </HStack>
-    )
+    return <AlertIntroductionLike />
   }
 
   return (
     <HStack w={"100%"} justifyContent={"center"}>
-      <HStack px={4} alignItems={"flex-start"} spacing={4}>
+      <HStack alignItems={"flex-start"} spacing={4}>
         {columns.map((column, index) => (
           <Stack key={index} spacing={4}>
             {column.map((work) => (

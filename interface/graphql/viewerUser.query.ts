@@ -15,6 +15,16 @@ export default gql`
         createdAt
         isFollowee
         isRequestable
+        paymentMethod {
+          id
+          type
+          cardBrand
+          cardLast4
+          cardExpMonth
+          cardExpYear
+          cardFunding
+          isLiveMode
+        }
       }
     }
   }

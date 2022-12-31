@@ -14,7 +14,7 @@ export const HomeLabelList: FC = () => {
 
   return (
     <Box overflow={"hidden"} w={"100%"}>
-      <Box overflowX={"auto"} pb={4} px={4}>
+      <Box overflowX={"auto"} pb={4} px={{ base: 4, md: 8 }}>
         <HStack>
           {data?.labels.map((label) => (
             <Link key={label.id} href={`/labels/${label.name}`}>

@@ -25,16 +25,12 @@ export const ViewerBookmarkedWorkList: FC = () => {
   const columns = toColumnArray(data.viewer.bookmarkedWorks, columnCount)
 
   if (data.viewer.bookmarkedWorks.length === 0) {
-    return (
-      <HStack px={4}>
-        <AlertIntroductionBookmark />
-      </HStack>
-    )
+    return <AlertIntroductionBookmark />
   }
 
   return (
     <HStack w={"100%"} justifyContent={"center"}>
-      <HStack px={4} alignItems={"flex-start"} spacing={4}>
+      <HStack alignItems={"flex-start"} spacing={4}>
         {columns.map((column, index) => (
           <Stack key={index} spacing={4}>
             {column.map((work) => (

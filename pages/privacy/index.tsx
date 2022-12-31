@@ -1,5 +1,5 @@
 import type { BlitzPage } from "@blitzjs/auth"
-import { Box, Card, HStack, Stack, Text } from "@chakra-ui/react"
+import { Box, Card, Divider, HStack, Stack, Text } from "@chakra-ui/react"
 import { MarkdownDocument } from "app/components/BoxMarkdown"
 import { MainStack } from "app/components/MainStack"
 
@@ -77,12 +77,13 @@ const PrivacyPage: BlitzPage = () => {
   return (
     <MainStack title={"プライバシーポリシー"} description={null} fileId={null}>
       <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
-        <Stack w={"100%"} maxW={"container.md"} spacing={4}>
-          <Box py={{ base: 2, md: 4 }}>
-            <Text fontWeight={"bold"} fontSize={"2xl"}>
+        <Stack w={"100%"} maxW={"container.md"} spacing={{ base: 4, md: 8 }}>
+          <Stack pt={{ base: 4, md: 8 }}>
+            <Text fontWeight={"bold"} fontSize={"xl"}>
               {"プライバシーポリシー"}
             </Text>
-          </Box>
+          </Stack>
+          <Divider />
           <Card
             variant={"filled"}
             p={6}

@@ -7,6 +7,7 @@ import {
   SkeletonCircle,
   useToast,
   Button,
+  Box,
 } from "@chakra-ui/react"
 import type { FC } from "react"
 import { CardUserCommission } from "app/components/CardUserCommission"
@@ -63,11 +64,9 @@ export const UserProfileHeader: FC<Props> = (props) => {
   const isLoadingFriendship = isCreatingFriendship || isDeletingFriendship
 
   return (
-    <Stack px={4}>
+    <Stack spacing={{ base: 4, md: 8 }}>
       <HStack
         spacing={4}
-        py={4}
-        px={0}
         borderRadius={"lg"}
         justifyContent={"space-between"}
         alignItems={"center"}
@@ -96,10 +95,12 @@ export const UserProfileHeader: FC<Props> = (props) => {
           {data?.user?.isFollowee ? "フォロー中" : "フォロー"}
         </Button>
       </HStack>
-      <CardUserCommission
-        userId={props.userId}
-        isRequestable={data?.user?.isRequestable ?? false}
-      />
+      <Box maxW={"lg"}>
+        <CardUserCommission
+          userId={props.userId}
+          isRequestable={data?.user?.isRequestable ?? false}
+        />
+      </Box>
     </Stack>
   )
 }

@@ -36,7 +36,7 @@ export const UserWorkList: FC<Props> = (props) => {
   })
 
   return (
-    <Stack>
+    <Stack spacing={8}>
       <HStack alignItems={"flex-start"} spacing={4}>
         {toColumnArray(works ?? [], columnCount).map((column, index) => (
           <Stack spacing={4} key={index}>
@@ -70,9 +70,16 @@ export const UserWorkList: FC<Props> = (props) => {
           </Stack>
         ))}
       </HStack>
-      <Button isLoading={loading} onClick={onFetchMore}>
-        {"MORE"}
-      </Button>
+      <HStack justifyContent={"center"} px={4} w={"100%"}>
+        <Button
+          w={"100%"}
+          maxW={"xs"}
+          isLoading={loading}
+          onClick={onFetchMore}
+        >
+          {"MORE"}
+        </Button>
+      </HStack>
     </Stack>
   )
 }

@@ -1,7 +1,7 @@
 import type { BlitzPage } from "@blitzjs/auth"
 import {
+  Box,
   Divider,
-  HStack,
   Stack,
   Tab,
   TabList,
@@ -11,7 +11,6 @@ import {
 } from "@chakra-ui/react"
 import { useState } from "react"
 import { HomeLabelList } from "app/components/HomeLabelList"
-import { HomeNotification } from "app/components/HomeNotification"
 import { HomeWorkList } from "app/components/HomeWorkList"
 import { MainStack } from "app/components/MainStack"
 import { HomeUserList } from "app/users/components/HomeUserList"
@@ -31,29 +30,36 @@ const RootPage: BlitzPage = () => {
         variant={"soft-rounded"}
         onChange={onChange}
       >
-        <TabList px={4}>
+        <TabList px={{ base: 4, md: 8 }} pt={{ base: 4, md: 8 }}>
           <Tab>{"投稿"}</Tab>
           <Tab>{"リクエスト"}</Tab>
           <Tab>{"ユーザ"}</Tab>
         </TabList>
-        <Divider pt={4} />
+        <Divider pt={{ base: 4, md: 8 }} />
         <TabPanels>
-          <TabPanel px={0}>
-            <Stack spacing={4}>
-              <HStack justifyContent={"flex-start"} w={"100%"} px={4}>
-                <HomeNotification isJA={false} />
-              </HStack>
-              <Stack spacing={0} w={"100%"}>
-                <HomeLabelList />
+          <TabPanel p={0}>
+            <Stack spacing={{ base: 0, lg: 4 }} pt={{ base: 4, md: 8 }}>
+              <HomeLabelList />
+              <Box px={{ base: 4, md: 8 }}>
                 <HomeWorkList />
-              </Stack>
+              </Box>
             </Stack>
           </TabPanel>
-          <TabPanel px={0}>
-            <Stack spacing={0} w={"100%"}></Stack>
+          <TabPanel p={0}>
+            <Stack
+              spacing={0}
+              w={"100%"}
+              px={{ base: 4, md: 8 }}
+              pt={{ base: 4, md: 8 }}
+            ></Stack>
           </TabPanel>
-          <TabPanel px={0}>
-            <Stack spacing={0} w={"100%"}>
+          <TabPanel p={0}>
+            <Stack
+              spacing={0}
+              w={"100%"}
+              px={{ base: 4, md: 8 }}
+              pt={{ base: 4, md: 8 }}
+            >
               <HomeUserList />
             </Stack>
           </TabPanel>

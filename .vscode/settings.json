@@ -33,8 +33,10 @@
     "codegen",
     "followee",
     "followees",
+    "livemode",
     "prompton",
     "Requestable",
+    "sharewindow",
     "strapi",
     "tsyringe",
     "unfollow"
