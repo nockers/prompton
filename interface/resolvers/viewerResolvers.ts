@@ -22,7 +22,10 @@ export const ViewerResolvers: Resolvers = {
       orderBy: { createdAt: "desc" },
       take: take,
       skip: skip,
-      where: { userId: context.currentUser!.uid! },
+      where: {
+        isDeleted: false,
+        userId: context.currentUser!.uid!,
+      },
     })
   },
   likedWorks(_, args: Partial<ViewerLikedWorksArgs>, context) {
@@ -33,6 +36,7 @@ export const ViewerResolvers: Resolvers = {
       take: take,
       skip: skip,
       where: {
+        isDeleted: false,
         likes: { some: { userId: context.currentUser!.uid! } },
       },
     })
@@ -45,6 +49,7 @@ export const ViewerResolvers: Resolvers = {
       take: take,
       skip: skip,
       where: {
+        isDeleted: false,
         bookmarks: { some: { userId: context.currentUser!.uid! } },
       },
     })
