@@ -5,7 +5,7 @@ export default gql`
     viewer {
       receivedRequests {
         id
-        user {
+        sender {
           id
           name
           avatarImageURL
@@ -18,8 +18,8 @@ export default gql`
         isRejected
         isCompleted
         isCanceled
-        isCanceledBySystem
-        isCanceledByCreator
+        isCanceledBySender
+        isCanceledByRecipient
         isTimeout
       }
     }

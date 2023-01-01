@@ -3,7 +3,67 @@ import { Stripe } from "stripe"
 import type { Email, Id } from "core"
 import { Env } from "infrastructure/env"
 
-export class StripeAdapter {
+export class PaymentAdapter {
+  async createCharge(userId: Id, amount: number) {
+    try {
+      const stripe = new Stripe(Env.stripeSecretKey, {
+        apiVersion: "2022-11-15",
+      })
+
+      const resp = await stripe.customers.search({
+        query: `metadata['userId']:'${userId.value}'`,
+      })
+
+      const [customer = null] = resp.data
+
+      if (customer === null) {
+        return new Error()
+      }
+
+      const intent = await stripe.paymentIntents.create({
+        amount: amount,
+        currency: "jpy",
+        capture_method: "manual",
+        customer: customer.id,
+      })
+
+      return intent
+    } catch (error) {
+      captureException(error)
+      return new Error()
+    }
+  }
+
+  async captureCharge(transactionId: string) {
+    try {
+      const stripe = new Stripe(Env.stripeSecretKey, {
+        apiVersion: "2022-11-15",
+      })
+
+      const intent = await stripe.paymentIntents.capture(transactionId)
+
+      return intent
+    } catch (error) {
+      captureException(error)
+      return new Error()
+    }
+  }
+
+  async cancelCharge(transactionId: string) {
+    try {
+      const stripe = new Stripe(Env.stripeSecretKey, {
+        apiVersion: "2022-11-15",
+      })
+
+      const intent = await stripe.paymentIntents.cancel(transactionId)
+
+      return intent
+    } catch (error) {
+      captureException(error)
+      return new Error()
+    }
+  }
+
   async findCustomer(userId: Id) {
     try {
       const stripe = new Stripe(Env.stripeSecretKey, {

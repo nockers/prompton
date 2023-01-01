@@ -1,3 +1,6 @@
+import { acceptRequestResolver } from "interface/resolvers/acceptRequestResolver"
+import { cancelRequestResolver } from "interface/resolvers/cancelRequestResolver"
+import { closeRequestResolver } from "interface/resolvers/closeRequestResolver"
 import { createDeliverableResolver } from "interface/resolvers/createDeliverableResolver"
 import { createPaymentMethodResolver } from "interface/resolvers/createPaymentMethodResolver"
 import { createPlanResolver } from "interface/resolvers/createPlanResolver"
@@ -14,11 +17,9 @@ import { deleteWorkLikeResolver } from "interface/resolvers/deleteWorkLikeResolv
 import { deleteWorkResolver } from "interface/resolvers/deleteWorkResolver"
 import { followUserResolver } from "interface/resolvers/followUserResolver"
 import { LabelNodeResolvers } from "interface/resolvers/labelNodeResolvers"
-import { markRequestAsAcceptedResolver } from "interface/resolvers/markRequestAsAcceptedResolver"
-import { markRequestAsDoneResolver } from "interface/resolvers/markRequestAsDoneResolver"
-import { markRequestAsRejectedResolver } from "interface/resolvers/markRequestAsRejectedResolver"
 import { PaymentMethodNodeResolvers } from "interface/resolvers/paymentMethodNodeResolvers"
 import { QueryResolvers } from "interface/resolvers/queryResolvers"
+import { rejectRequestResolver } from "interface/resolvers/rejectRequestResolver"
 import { RequestNodeResolvers } from "interface/resolvers/requestNodeResolvers"
 import { unfollowUserResolver } from "interface/resolvers/unfollowUserResolver"
 import { updateDeliverableResolver } from "interface/resolvers/updateDeliverableResolver"
@@ -45,9 +46,10 @@ const MutationResolvers = {
   deleteWorkBookmark: deleteWorkBookmarkResolver,
   deleteWorkLike: deleteWorkLikeResolver,
   followUser: followUserResolver,
-  markRequestAsAccepted: markRequestAsAcceptedResolver,
-  markRequestAsDone: markRequestAsDoneResolver,
-  markRequestAsRejected: markRequestAsRejectedResolver,
+  acceptRequest: acceptRequestResolver,
+  rejectRequest: rejectRequestResolver,
+  closeRequest: closeRequestResolver,
+  cancelRequest: cancelRequestResolver,
   unfollowUser: unfollowUserResolver,
   updateDeliverable: updateDeliverableResolver,
   updatePlan: updatePlanResolver,

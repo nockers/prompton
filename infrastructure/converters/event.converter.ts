@@ -6,7 +6,9 @@ import { FriendshipEventConverter } from "infrastructure/converters/friendship.e
 import { LabelEventConverter } from "infrastructure/converters/label.event.converter"
 import { LikeEventConverter } from "infrastructure/converters/like.event.converter"
 import { NotificationEventConverter } from "infrastructure/converters/notification.event.converter"
+import { PaymentEventConverter } from "infrastructure/converters/payment.event.converter"
 import { PostEventConverter } from "infrastructure/converters/post.event.converter"
+import { RequestEventConverter } from "infrastructure/converters/request.event.converter"
 import { UserEventConverter } from "infrastructure/converters/user.event.converter"
 import type { EventData } from "infrastructure/validations"
 
@@ -32,8 +34,16 @@ export class EventConverter {
       return NotificationEventConverter.toData(event)
     }
 
+    if (event.collectionId === "PAYMENTS") {
+      return PaymentEventConverter.toData(event)
+    }
+
     if (event.collectionId === "POSTS") {
       return PostEventConverter.toData(event)
+    }
+
+    if (event.collectionId === "REQUESTS") {
+      return RequestEventConverter.toData(event)
     }
 
     if (event.collectionId === "USERS") {
@@ -64,8 +74,16 @@ export class EventConverter {
       return NotificationEventConverter.toEntity(event)
     }
 
+    if (event.collectionId === "PAYMENTS") {
+      return PaymentEventConverter.toEntity(event)
+    }
+
     if (event.collectionId === "POSTS") {
       return PostEventConverter.toEntity(event)
+    }
+
+    if (event.collectionId === "REQUESTS") {
+      return RequestEventConverter.toEntity(event)
     }
 
     if (event.collectionId === "USERS") {

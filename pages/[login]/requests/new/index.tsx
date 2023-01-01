@@ -11,11 +11,16 @@ import {
   Text,
   Textarea,
   UnorderedList,
+  useToast,
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import { UserRequestHeader } from "app/[login]/requests/components/UserRequestHeader"
 import { MainStack } from "app/components/MainStack"
+import {
+  useCreateRequestMutation,
+  useUserQuery,
+} from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
 
 const UserRequestsNewPage: BlitzPage = () => {
@@ -23,15 +28,52 @@ const UserRequestsNewPage: BlitzPage = () => {
 
   const router = useRouter()
 
-  const isMyPage = router.query.login === appContext.currentUser?.uid
+  const [createRequest, { loading }] = useCreateRequestMutation()
 
   const userId = router.query.login?.toString() ?? null
+
+  const { data } = useUserQuery({
+    skip: userId === null,
+    variables: { id: userId! },
+  })
+
+  const isMyPage = router.query.login === appContext.currentUser?.uid
+
+  const toast = useToast()
+
+  const onCreateRequest = async () => {
+    if (userId === null) return
+    try {
+      const { data = null } = await createRequest({
+        variables: {
+          input: {
+            planId: null,
+            fee: 500,
+            note: "test",
+            recipientId: userId,
+          },
+        },
+      })
+      const requestId = data?.createRequest.id ?? null
+      if (requestId === null) return
+      router.replace(`/viewer/requests/${requestId}`)
+      toast({ description: "リクエストを送信しました", status: "success" })
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({ description: error.message, status: "error" })
+      }
+    }
+  }
 
   if (userId === null) {
     return null
   }
 
   if (isMyPage === null) {
+    return null
+  }
+
+  if (data === null || data?.user === null) {
     return null
   }
 
@@ -57,13 +99,13 @@ const UserRequestsNewPage: BlitzPage = () => {
               <Stack p={6}>
                 <Stack>
                   <HStack justifyContent={"space-between"}>
-                    <Text fontWeight={"bold"} fontSize={"xl"}>
-                      {"おまかせプラン"}
+                    <Text fontWeight={"bold"} fontSize={"lg"}>
+                      {"おまかせリクエストで支援"}
                     </Text>
                     <Tag colorScheme={"primary"}>{"イラスト"}</Tag>
                   </HStack>
                   <Text fontWeight={"bold"} fontSize={"2xl"}>
-                    {"報酬 1000円（税込）"}
+                    {`${data?.user.minimumFee}〜${data?.user.maximumFee}円（税込）`}
                   </Text>
                   <Text>
                     {
@@ -138,7 +180,11 @@ const UserRequestsNewPage: BlitzPage = () => {
                     {"決済方法の登録が完了するとリクエストが送信されます。"}
                   </Text>
                   <HStack>
-                    <Button colorScheme={"primary"}>
+                    <Button
+                      isLoading={loading}
+                      colorScheme={"primary"}
+                      onClick={onCreateRequest}
+                    >
                       {"決済方法を登録する"}
                     </Button>
                   </HStack>

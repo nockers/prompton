@@ -1,6 +1,7 @@
 import { Card, HStack, Stack, Text } from "@chakra-ui/react"
 import type { FC } from "react"
 import { TagRequestStatus } from "app/requests/components/TagRequestStatus"
+import { toDateText } from "interface/utils/toDateText"
 
 type Props = {
   fee: number
@@ -10,8 +11,8 @@ type Props = {
   isRejected: boolean
   isCompleted: boolean
   isCanceled: boolean
-  isCanceledBySystem: boolean
-  isCanceledByCreator: boolean
+  isCanceledBySender: boolean
+  isCanceledByRecipient: boolean
   isTimeout: boolean
 }
 
@@ -26,7 +27,7 @@ export const CardViewerRequest: FC<Props> = (props) => {
       <Stack p={{ base: 4, md: 4 }} spacing={0}>
         <HStack justifyContent={"space-between"}>
           <Text opacity={0.8} fontSize={"sm"}>
-            {"2020年1月1日"}
+            {toDateText(props.createdAt)}
           </Text>
           <TagRequestStatus
             isPending={props.isPending}
@@ -34,8 +35,8 @@ export const CardViewerRequest: FC<Props> = (props) => {
             isRejected={props.isRejected}
             isCompleted={props.isCompleted}
             isCanceled={props.isCanceled}
-            isCanceledBySystem={props.isCanceledBySystem}
-            isCanceledByCreator={props.isCanceledByCreator}
+            isCanceledBySender={props.isCanceledBySender}
+            isCanceledByRecipient={props.isCanceledByRecipient}
             isTimeout={props.isTimeout}
           />
         </HStack>

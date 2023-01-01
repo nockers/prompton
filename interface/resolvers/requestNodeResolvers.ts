@@ -10,18 +10,20 @@ export const RequestNodeResolvers: PrismaResolvers<RequestNode, Request> = {
   createdAt(parent) {
     return Math.floor(parent.createdAt.getTime() / 1000)
   },
-  creator(parent) {
-    return db.user.findUnique({ where: { id: parent.creatorId } })
+  recipient(parent) {
+    return db.request.findUnique({ where: { id: parent.id } }).recipient()
+  },
+  sender(parent) {
+    return db.request.findUnique({ where: { id: parent.id } }).sender()
+  },
+  commission(parent) {
+    return parent.commission
   },
   fee(parent) {
     return parent.fee
   },
   files(parent) {
-    return db.file.findMany({ where: { requestId: parent.id } })
-  },
-
-  user(parent) {
-    return db.user.findUnique({ where: { id: parent.userId } })
+    return db.request.findUnique({ where: { id: parent.id } }).files()
   },
   isPending(parent) {
     return (
@@ -29,8 +31,8 @@ export const RequestNodeResolvers: PrismaResolvers<RequestNode, Request> = {
       !parent.isRejected &&
       !parent.isCompleted &&
       !parent.isCanceled &&
-      !parent.isCanceledBySystem &&
-      !parent.isCanceledByCreator &&
+      !parent.isCanceledBySender &&
+      !parent.isCanceledByRecipient &&
       !parent.isTimeout
     )
   },
@@ -46,11 +48,11 @@ export const RequestNodeResolvers: PrismaResolvers<RequestNode, Request> = {
   isCanceled(parent) {
     return parent.isCanceled
   },
-  isCanceledBySystem(parent) {
-    return parent.isCanceledBySystem
+  isCanceledBySender(parent) {
+    return parent.isCanceledBySender
   },
-  isCanceledByCreator(parent) {
-    return parent.isCanceledByCreator
+  isCanceledByRecipient(parent) {
+    return parent.isCanceledByRecipient
   },
   isTimeout(parent) {
     return parent.isTimeout
@@ -58,15 +60,15 @@ export const RequestNodeResolvers: PrismaResolvers<RequestNode, Request> = {
   note(parent) {
     return parent.note
   },
-  payment(parent) {
-    return db.payment.findUnique({ where: { requestId: parent.id } })
+  payments(parent) {
+    return db.request.findUnique({ where: { id: parent.id } }).payments()
   },
   plan(parent) {
     if (parent.planId === null) return null
-    return db.plan.findUnique({ where: { id: parent.planId } })
+    return db.request.findUnique({ where: { id: parent.id } }).plan()
   },
-  folderId() {
-    return null
+  folder(parent) {
+    return db.request.findUnique({ where: { id: parent.id } }).folder()
   },
   hasSignature(parent) {
     return parent.hasSignature

@@ -38,7 +38,9 @@ export const ViewerUserProfileHeader: FC<Props> = (props) => {
     data = null,
     loading,
     refetch,
-  } = useUserQuery({ variables: { id: props.userId } })
+  } = useUserQuery({
+    variables: { id: props.userId },
+  })
 
   const [uploadFile] = useFileUpload()
 

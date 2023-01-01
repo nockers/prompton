@@ -97,7 +97,7 @@ export class UpdatePostAnnotationsCommand {
 
       await this.eventStore.commit(event)
 
-      return null
+      return event
     } catch (error) {
       captureException(error)
       return new Error()

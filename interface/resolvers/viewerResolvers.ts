@@ -74,14 +74,14 @@ export const ViewerResolvers: Resolvers = {
   sentRequests(_, __, context) {
     return db.request.findMany({
       where: {
-        userId: context.currentUser!.uid!,
+        senderId: context.currentUser!.uid!,
       },
     })
   },
   receivedRequests(_, __, context) {
     return db.request.findMany({
       where: {
-        creatorId: context.currentUser!.uid!,
+        recipientId: context.currentUser!.uid!,
       },
     })
   },

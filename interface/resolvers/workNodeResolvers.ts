@@ -54,32 +54,28 @@ export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
     return db.post.findUnique({ where: { id: parent.id } }).user()
   },
   labels(parent) {
-    return db.post
-      .findUnique({ where: { id: parent.id } })
-      .labels({ where: { isDeleted: false } })
+    return db.post.findUnique({ where: { id: parent.id } }).labels({
+      where: { isDeleted: false },
+    })
   },
   async isLiked(parent, _, ctx) {
     if (ctx.currentUser === null) return false
-    const like = await db.like.findUnique({
-      where: {
-        userId_postId: {
-          userId: ctx.currentUser!.uid,
-          postId: parent.id,
-        },
-      },
+    const likes = await db.post.findUnique({ where: { id: parent.id } }).likes({
+      take: 1,
+      where: { userId: ctx.currentUser!.uid },
     })
+    const [like = null] = likes ?? []
     return like !== null
   },
   async isBookmarked(parent, _, ctx) {
     if (ctx.currentUser === null) return false
-    const like = await db.bookmark.findUnique({
-      where: {
-        userId_postId: {
-          userId: ctx.currentUser!.uid,
-          postId: parent.id,
-        },
-      },
-    })
-    return like !== null
+    const bookmarks = await db.post
+      .findUnique({ where: { id: parent.id } })
+      .bookmarks({
+        take: 1,
+        where: { userId: ctx.currentUser!.uid },
+      })
+    const [bookmark = null] = bookmarks ?? []
+    return bookmark !== null
   },
 }

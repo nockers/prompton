@@ -22,18 +22,18 @@ export const createWorkResolver = async (
 
   const command = container.resolve(CreatePostCommand)
 
-  const output = await command.execute({
+  const event = await command.execute({
     userId: ctx.currentUser.uid,
     postFileId: args.input.fileId,
   })
 
-  if (output instanceof Error) {
+  if (event instanceof Error) {
     throw new GraphQLError("ERROR", {
       extensions: { code: ApolloServerErrorCode.INTERNAL_SERVER_ERROR },
     })
   }
 
   return db.post.findUnique({
-    where: { id: output.postId.value },
+    where: { id: event.postId.value },
   })
 }

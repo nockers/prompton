@@ -46,10 +46,10 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
     return db.friendship.count({ where: { followerId: parent.id } })
   },
   requestsCount(parent) {
-    return db.request.count({ where: { userId: parent.id } })
+    return db.request.count({ where: { senderId: parent.id } })
   },
   receivedRequestsCount(parent) {
-    return db.request.count({ where: { creatorId: parent.id } })
+    return db.request.count({ where: { recipientId: parent.id } })
   },
   worksCount(parent) {
     return db.post.count({ where: { userId: parent.id, isDeleted: false } })

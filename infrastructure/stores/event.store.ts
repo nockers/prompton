@@ -8,19 +8,23 @@ import { FriendshipEventStore } from "infrastructure/stores/friendshipEvent.stor
 import { LabelEventStore } from "infrastructure/stores/labelEvent.store"
 import { LikeEventStore } from "infrastructure/stores/likeEvent.store"
 import { NotificationEventStore } from "infrastructure/stores/notificationEvent.store"
+import { PaymentEventStore } from "infrastructure/stores/paymentEvent.store"
 import { PostEventStore } from "infrastructure/stores/postEvent.store"
+import { RequestEventStore } from "infrastructure/stores/requestEvent.store"
 import { UserEventStore } from "infrastructure/stores/userEvent.store"
 
 @injectable()
 export class EventStore {
   constructor(
-    private eventRepository: EventRepository,
     private bookmarkEventStore: BookmarkEventStore,
+    private eventRepository: EventRepository,
     private friendshipEventStore: FriendshipEventStore,
     private labelEventStore: LabelEventStore,
     private likeEventStore: LikeEventStore,
     private notificationEventStore: NotificationEventStore,
+    private paymentEventStore: PaymentEventStore,
     private postEventStore: PostEventStore,
+    private requestEventStore: RequestEventStore,
     private userEventStore: UserEventStore,
   ) {}
 
@@ -47,8 +51,16 @@ export class EventStore {
       await this.notificationEventStore.execute(event)
     }
 
+    if (event.collectionId === "PAYMENTS") {
+      await this.paymentEventStore.execute(event)
+    }
+
     if (event.collectionId === "POSTS") {
       await this.postEventStore.execute(event)
+    }
+
+    if (event.collectionId === "REQUESTS") {
+      await this.requestEventStore.execute(event)
     }
 
     if (event.collectionId === "USERS") {

@@ -14,13 +14,11 @@ import {
 import { useContext } from "react"
 import { MainStack } from "app/components/MainStack"
 import ViewerLayout from "app/viewer/layout"
-import { CardViewerReceivedRequest } from "app/viewer/requests/components/CardViewerReceivedRequest"
-import { CardViewerRequest } from "app/viewer/requests/components/CardViewerRequest"
 import { CardViewerRequestSettings } from "app/viewer/requests/components/CardViewerRequestSettings"
+import { ViewerReceivedRequestList } from "app/viewer/requests/components/ViewerReceivedRequestList"
+import { ViewerSentRequestList } from "app/viewer/requests/components/ViewerSentRequestList"
 import {
   useUpdateUserRequestSettingsMutation,
-  useViewerReceivedRequestsQuery,
-  useViewerSentRequestsQuery,
   useViewerUserQuery,
 } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
@@ -29,14 +27,6 @@ const ViewerRequestsPage: BlitzPage = () => {
   const appContext = useContext(AppContext)
 
   const { data = null, refetch } = useViewerUserQuery({
-    skip: appContext.currentUser === null,
-  })
-
-  const { data: sentRequests = null } = useViewerSentRequestsQuery({
-    skip: appContext.currentUser === null,
-  })
-
-  const { data: receivedRequests = null } = useViewerReceivedRequestsQuery({
     skip: appContext.currentUser === null,
   })
 
@@ -85,11 +75,16 @@ const ViewerRequestsPage: BlitzPage = () => {
           },
         },
       })
+      await refetch()
     } catch (error) {
       if (error instanceof Error) {
         toast({ status: "error", description: error.message })
       }
     }
+  }
+
+  if (appContext.currentUser === null) {
+    return null
   }
 
   if (data === null) {
@@ -129,42 +124,10 @@ const ViewerRequestsPage: BlitzPage = () => {
             </TabList>
             <TabPanels>
               <TabPanel px={0}>
-                <Stack spacing={4}>
-                  {receivedRequests?.viewer?.receivedRequests.map((request) => (
-                    <CardViewerReceivedRequest
-                      key={request.id}
-                      fee={2000}
-                      createdAt={0}
-                      isPending={true}
-                      isAccepted={false}
-                      isRejected={false}
-                      isCompleted={false}
-                      isCanceled={false}
-                      isCanceledBySystem={false}
-                      isCanceledByCreator={false}
-                      isTimeout={false}
-                    />
-                  ))}
-                </Stack>
+                <ViewerReceivedRequestList />
               </TabPanel>
               <TabPanel px={0}>
-                <Stack spacing={4}>
-                  {sentRequests?.viewer?.sentRequests.map((request) => (
-                    <CardViewerRequest
-                      key={request.id}
-                      fee={2000}
-                      createdAt={0}
-                      isPending={true}
-                      isAccepted={false}
-                      isRejected={false}
-                      isCompleted={false}
-                      isCanceled={false}
-                      isCanceledBySystem={false}
-                      isCanceledByCreator={false}
-                      isTimeout={false}
-                    />
-                  ))}
-                </Stack>
+                <ViewerSentRequestList />
               </TabPanel>
             </TabPanels>
           </Tabs>

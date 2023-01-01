@@ -15,12 +15,11 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react"
-import { useRouter } from "next/router"
 import { useMemo, useState } from "react"
 import { MainStack } from "app/components/MainStack"
 
 const ViewerPlanNewPage: BlitzPage = () => {
-  const router = useRouter()
+  // const router = useRouter()
 
   const [category, setCategory] = useState("ILLUSTRATION_FREEDOM")
 
@@ -59,9 +58,9 @@ const ViewerPlanNewPage: BlitzPage = () => {
     }
   }
 
-  const onCreate = async () => {
-    router.replace("/viewer/plans")
-  }
+  // const onCreate = async () => {
+  //   router.replace("/viewer/plans")
+  // }
 
   return (
     <MainStack title={null} description={null} fileId={null}>

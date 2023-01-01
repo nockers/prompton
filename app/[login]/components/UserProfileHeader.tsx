@@ -98,6 +98,8 @@ export const UserProfileHeader: FC<Props> = (props) => {
       <Box maxW={"lg"}>
         <CardUserCommission
           userId={props.userId}
+          minimumFee={data?.user?.minimumFee ?? 0}
+          maximumFee={data?.user?.maximumFee ?? 0}
           isRequestable={data?.user?.isRequestable ?? false}
         />
       </Box>

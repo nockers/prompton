@@ -10,9 +10,11 @@ type Props = {
   isRejected: boolean
   isCompleted: boolean
   isCanceled: boolean
-  isCanceledBySystem: boolean
-  isCanceledByCreator: boolean
+  isCanceledBySender: boolean
+  isCanceledByRecipient: boolean
   isTimeout: boolean
+  onAccept(): void
+  onReject(): void
 }
 
 export const CardViewerReceivedRequest: FC<Props> = (props) => {
@@ -35,8 +37,8 @@ export const CardViewerReceivedRequest: FC<Props> = (props) => {
               isRejected={props.isRejected}
               isCompleted={props.isCompleted}
               isCanceled={props.isCanceled}
-              isCanceledBySystem={props.isCanceledBySystem}
-              isCanceledByCreator={props.isCanceledByCreator}
+              isCanceledBySender={props.isCanceledBySender}
+              isCanceledByRecipient={props.isCanceledByRecipient}
               isTimeout={props.isTimeout}
             />
           </HStack>
@@ -49,17 +51,16 @@ export const CardViewerReceivedRequest: FC<Props> = (props) => {
         </Stack>
         <HStack spacing={2} justifyContent={"flex-end"}>
           {props.isPending && (
-            <Button size={"sm"} colorScheme={"gray"}>
+            <Button size={"sm"} colorScheme={"gray"} onClick={props.onReject}>
               {"見送る"}
             </Button>
           )}
           {props.isPending && (
-            <Button size={"sm"} colorScheme={"primary"}>
-              {"この依頼を受ける"}
-            </Button>
-          )}
-          {props.isRejected && (
-            <Button size={"sm"} colorScheme={"primary"}>
+            <Button
+              size={"sm"}
+              colorScheme={"primary"}
+              onClick={props.onAccept}
+            >
               {"この依頼を受ける"}
             </Button>
           )}

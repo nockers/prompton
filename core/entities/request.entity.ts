@@ -3,15 +3,15 @@ import { Id } from "core/valueObjects"
 
 const zProps = z.object({
   id: z.instanceof(Id),
-  userId: z.instanceof(Id),
-  creatorId: z.instanceof(Id),
+  recipientId: z.instanceof(Id),
+  senderId: z.instanceof(Id),
   title: z.string().nullable(),
   isAccepted: z.boolean(),
   isRejected: z.boolean(),
   isCompleted: z.boolean(),
   isCanceled: z.boolean(),
-  isCanceledBySystem: z.boolean(),
-  isCanceledByCreator: z.boolean(),
+  isCanceledBySender: z.boolean(),
+  isCanceledByRecipient: z.boolean(),
   isTimeout: z.boolean(),
   commission: z.number(),
   fee: z.number(),
@@ -21,7 +21,7 @@ const zProps = z.object({
   planId: z.instanceof(Id).nullable(),
   folderId: z.instanceof(Id).nullable(),
   postIds: z.array(z.instanceof(Id)),
-  paymentId: z.instanceof(Id).nullable(),
+  paymentIds: z.array(z.instanceof(Id)),
 })
 
 type Props = z.infer<typeof zProps>
@@ -36,11 +36,6 @@ export class RequestEntity implements Props {
   readonly id!: Props["id"]
 
   /**
-   * ユーザのID
-   */
-  readonly userId!: Props["userId"]
-
-  /**
    * タイトル
    */
   readonly title!: Props["title"]
@@ -48,7 +43,12 @@ export class RequestEntity implements Props {
   /**
    * 依頼先のユーザのID
    */
-  readonly creatorId!: Props["creatorId"]
+  readonly recipientId!: Props["recipientId"]
+
+  /**
+   * 依頼先のユーザのID
+   */
+  readonly senderId!: Props["senderId"]
 
   /**
    * 依頼が受け入れられたかどうか
@@ -67,10 +67,19 @@ export class RequestEntity implements Props {
 
   readonly isCanceled!: Props["isCanceled"]
 
-  readonly isCanceledBySystem!: Props["isCanceledBySystem"]
+  /**
+   * 送り側によるキャンセルが発生したかどうか
+   */
+  readonly isCanceledBySender!: Props["isCanceledBySender"]
 
-  readonly isCanceledByCreator!: Props["isCanceledByCreator"]
+  /**
+   * 受け取り側によるキャンセルが発生したかどうか
+   */
+  readonly isCanceledByRecipient!: Props["isCanceledByRecipient"]
 
+  /**
+   * 時間切れかどうか
+   */
   readonly isTimeout!: Props["isTimeout"]
 
   /**
@@ -110,11 +119,53 @@ export class RequestEntity implements Props {
 
   readonly postIds!: Props["postIds"]
 
-  readonly paymentId!: Props["paymentId"]
+  readonly paymentIds!: Props["paymentIds"]
 
   constructor(public props: z.infer<typeof zProps>) {
     zProps.parse(props)
     Object.assign(this, props)
     Object.freeze(this)
+  }
+
+  markAsAccepted() {
+    return new RequestEntity({
+      ...this.props,
+      isAccepted: true,
+    })
+  }
+
+  markAsCanceled() {
+    return new RequestEntity({
+      ...this.props,
+      isCanceled: true,
+    })
+  }
+
+  markAsCanceledByRecipient() {
+    return new RequestEntity({
+      ...this.props,
+      isCanceledByRecipient: true,
+    })
+  }
+
+  markAsCanceledBySender() {
+    return new RequestEntity({
+      ...this.props,
+      isCanceledBySender: true,
+    })
+  }
+
+  markAsCompleted() {
+    return new RequestEntity({
+      ...this.props,
+      isCompleted: true,
+    })
+  }
+
+  markAsRejected() {
+    return new RequestEntity({
+      ...this.props,
+      isRejected: true,
+    })
   }
 }

@@ -7,15 +7,15 @@ type Props = {
   isRejected: boolean
   isCompleted: boolean
   isCanceled: boolean
-  isCanceledBySystem: boolean
-  isCanceledByCreator: boolean
+  isCanceledBySender: boolean
+  isCanceledByRecipient: boolean
   isTimeout: boolean
 }
 
 export const TagRequestStatus: FC<Props> = (props) => {
   if (props.isAccepted) {
     return (
-      <Tag variant={"subtle"} colorScheme={"gray"}>
+      <Tag variant={"subtle"} colorScheme={"primary"}>
         {"取り組み中"}
       </Tag>
     )
@@ -23,7 +23,7 @@ export const TagRequestStatus: FC<Props> = (props) => {
 
   if (props.isRejected) {
     return (
-      <Tag variant={"subtle"} colorScheme={"purple"}>
+      <Tag variant={"subtle"} colorScheme={"primary"}>
         {"見送り"}
       </Tag>
     )
@@ -45,7 +45,7 @@ export const TagRequestStatus: FC<Props> = (props) => {
     )
   }
 
-  if (props.isCanceledBySystem) {
+  if (props.isCanceledBySender) {
     return (
       <Tag variant={"subtle"} colorScheme={"red"}>
         {"キャンセル"}
@@ -53,7 +53,7 @@ export const TagRequestStatus: FC<Props> = (props) => {
     )
   }
 
-  if (props.isCanceledByCreator) {
+  if (props.isCanceledByRecipient) {
     return (
       <Tag variant={"subtle"} colorScheme={"red"}>
         {"キャンセル"}
@@ -70,8 +70,8 @@ export const TagRequestStatus: FC<Props> = (props) => {
   }
 
   return (
-    <Tag variant={"subtle"} colorScheme={"red"}>
-      {"確認待ち"}
+    <Tag variant={"subtle"} colorScheme={"primary"}>
+      {"送信済み"}
     </Tag>
   )
 }

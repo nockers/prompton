@@ -1,7 +1,7 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
 import { Id } from "core"
-import { StripeAdapter, UserRepository } from "infrastructure"
+import { PaymentAdapter, UserRepository } from "infrastructure"
 
 type Props = {
   userId: string
@@ -11,7 +11,7 @@ type Props = {
 export class CreatePaymentMethodCommand {
   constructor(
     private userRepository: UserRepository,
-    private stripeAdapter: StripeAdapter,
+    private stripeAdapter: PaymentAdapter,
   ) {}
 
   async execute(props: Props) {

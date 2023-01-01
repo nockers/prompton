@@ -7,7 +7,7 @@ import { NotificationRepository } from "infrastructure/repositories"
 export class NotificationEventStore {
   constructor(private repository: NotificationRepository) {}
 
-  execute(event: NotificationEvent) {
+  async execute(event: NotificationEvent) {
     this.repository
     event
     return null

@@ -44,7 +44,7 @@ export class LabelCreatedEventHandler {
 
       await this.eventStore.commit(nextEvent)
 
-      return null
+      return nextEvent
     } catch (error) {
       captureException(error)
       return new Error()

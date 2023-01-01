@@ -64,46 +64,6 @@ type BookmarkNode implements Node {
   folder: FolderNode
 }
 
-type Request implements Node {
-  id: ID!
-  """
-  作成日
-  """
-  createdAt: Int!
-  """
-  状態
-  """
-  status: String!
-  """
-  作品
-  """
-  works: [WorkNode!]!
-  """
-  フォルダ
-  """
-  folders: [FolderNode!]!
-  """
-  ノート
-  """
-  note: String
-  """
-  依頼者
-  """
-  user: UserNode!
-  """
-  制作者
-  """
-  creator: UserNode!
-  """
-  値段
-  """
-  fee: Int!
-  """
-  手数料
-  """
-  commission: Int!
-}
-
 """
 フォルダ
 """
@@ -202,9 +162,15 @@ type PlanNode implements Node {
 type RequestNode implements Node {
   id: ID!
   createdAt: Int!
-  user: UserNode!
-  folderId: FolderNode!
-  creator: UserNode!
+  folder: FolderNode
+  """
+  送ったユーザ
+  """
+  sender: UserNode!
+  """
+  受け取ったユーザ
+  """
+  recipient: UserNode!
   works: [WorkNode!]!
   files: [FileNode!]!
   note: String!
@@ -214,13 +180,20 @@ type RequestNode implements Node {
   isRejected: Boolean!
   isCompleted: Boolean!
   isCanceled: Boolean!
-  isCanceledBySystem: Boolean!
-  isCanceledByCreator: Boolean!
+  isCanceledBySender: Boolean!
+  isCanceledByRecipient: Boolean!
   isTimeout: Boolean!
-  payment: PaymentNode
+  """
+  関連する決済
+  """
+  payments: [PaymentNode!]!
   hasSignature: Boolean!
   signature: String
-  plan: PlanNode!
+  plan: PlanNode
+  """
+  手数料
+  """
+  commission: Int!
 }
 
 """
@@ -508,15 +481,19 @@ type Mutation {
   """
   リクエストを受諾する
   """
-  markRequestAsAccepted(input: MarkRequestAsAcceptedInput!): RequestNode!
+  acceptRequest(input: AcceptRequestInput!): RequestNode!
   """
   リクエストを拒否する
   """
-  markRequestAsRejected(input: MarkRequestAsRejected!): RequestNode!
+  rejectRequest(input: RejectRequestInput!): RequestNode!
+  """
+  リクエストをキャンセルする
+  """
+  cancelRequest(input: CancelRequestInput!): RequestNode!
   """
   リクエストを完了とする
   """
-  markRequestAsDone(input: MarkRequestAsRejected!): RequestNode!
+  closeRequest(input: CloseRequestInput!): RequestNode!
   """
   納品物を作成する
   """
@@ -636,14 +613,25 @@ input DeletePlanInput {
 }
 
 input CreateRequestInput {
-  planId: String!
+  planId: String
+  fee: Int!
+  note: String!
+  recipientId: String!
 }
 
-input MarkRequestAsAcceptedInput {
+input AcceptRequestInput {
   requestId: String!
 }
 
-input MarkRequestAsRejected {
+input RejectRequestInput {
+  requestId: String!
+}
+
+input CloseRequestInput {
+  requestId: String!
+}
+
+input CancelRequestInput {
   requestId: String!
 }
 

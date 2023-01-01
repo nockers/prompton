@@ -25,7 +25,7 @@ export class CreatePostCommand {
 
       await this.eventStore.commit(event)
 
-      return { postId }
+      return event
     } catch (error) {
       captureException(error)
       return new Error()

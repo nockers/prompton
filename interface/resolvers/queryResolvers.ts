@@ -6,6 +6,7 @@ import type {
   Query,
   QueryLabelArgs,
   QueryLabelsArgs,
+  QueryRequestArgs,
   QueryUserArgs,
   QueryUsersArgs,
   QueryWorkArgs,
@@ -113,13 +114,13 @@ export const QueryResolvers: Resolvers = {
       where: { isDeleted: false },
     })
   },
-  work(_: unknown, args: Partial<QueryWorkArgs>) {
+  work(_: unknown, args: QueryWorkArgs) {
     return db.post.findUnique({ where: { id: args.id } })
   },
-  user(_: unknown, args: Partial<QueryUserArgs>) {
+  user(_: unknown, args: QueryUserArgs) {
     return db.user.findUnique({ where: { id: args.id } })
   },
-  async users(_: unknown, args: Partial<QueryUsersArgs>, context) {
+  async users(_: unknown, args: QueryUsersArgs, context) {
     const take = args.limit || 9 * 4
     const skip = args.offset || 0
     if (typeof args.where?.search === "string") {
@@ -157,8 +158,16 @@ export const QueryResolvers: Resolvers = {
   plans() {
     return []
   },
-  request() {
-    return null
+  async request(_: unknown, args: QueryRequestArgs, context) {
+    return db.request.findFirst({
+      where: {
+        OR: [
+          { id: args.id, isPublic: true },
+          { id: args.id, senderId: context.currentUser?.uid },
+          { id: args.id, recipientId: context.currentUser?.uid },
+        ],
+      },
+    })
   },
   requests() {
     return []
