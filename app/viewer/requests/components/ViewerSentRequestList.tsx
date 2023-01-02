@@ -1,12 +1,19 @@
 import { Stack, Text } from "@chakra-ui/react"
+import { useRouter } from "next/router"
 import type { FC } from "react"
-import { CardViewerRequest } from "app/viewer/requests/components/CardViewerRequest"
+import { CardViewerSentRequest } from "app/viewer/requests/components/CardViewerSentRequest"
 import { useViewerSentRequestsQuery } from "interface/__generated__/react"
 
 type Props = {}
 
 export const ViewerSentRequestList: FC<Props> = () => {
+  const router = useRouter()
+
   const { data = null } = useViewerSentRequestsQuery()
+
+  const onOpen = async (requestId: string) => {
+    router.push(`/viewer/requests/${requestId}`)
+  }
 
   if (data === null) {
     return null
@@ -25,7 +32,7 @@ export const ViewerSentRequestList: FC<Props> = () => {
   return (
     <Stack spacing={4}>
       {data.viewer?.sentRequests.map((request) => (
-        <CardViewerRequest
+        <CardViewerSentRequest
           key={request.id}
           fee={request.fee}
           createdAt={request.createdAt}
@@ -37,6 +44,9 @@ export const ViewerSentRequestList: FC<Props> = () => {
           isCanceledBySender={request.isCanceledBySender}
           isCanceledByRecipient={request.isCanceledByRecipient}
           isTimeout={request.isTimeout}
+          onOpen={() => {
+            onOpen(request.id)
+          }}
         />
       ))}
     </Stack>

@@ -1,5 +1,6 @@
 import { ApolloServerErrorCode } from "@apollo/server/errors"
 import { GraphQLError } from "graphql"
+import db from "db"
 import type {
   MutationCancelRequestArgs,
   RequireFields,
@@ -21,5 +22,5 @@ export const cancelRequestResolver: Resolvers = async (_, args, ctx) => {
     })
   }
 
-  return null
+  return await db.request.findUnique({ where: { id: args.input.requestId } })
 }

@@ -4,6 +4,7 @@ import { Id, IdFactory, RequestMarkedAsRejectedEvent } from "core"
 import { EventStore, RequestRepository } from "infrastructure"
 
 type Props = {
+  userId: string
   requestId: string
 }
 
@@ -23,6 +24,10 @@ export class markRequestAsRejectedCommand {
       }
 
       if (request === null) {
+        return new Error()
+      }
+
+      if (request.recipientId.value !== props.userId) {
         return new Error()
       }
 

@@ -40,6 +40,7 @@ type Viewer {
   likedWorks(offset: Int, limit: Int): [WorkNode!]!
   bookmarkedWorks(offset: Int, limit: Int): [WorkNode!]!
   followees(offset: Int, limit: Int): [UserNode!]!
+  requests(offset: Int, limit: Int): [RequestNode!]!
   sentRequests(offset: Int, limit: Int): [RequestNode!]!
   receivedRequests(offset: Int, limit: Int): [RequestNode!]!
   plans(offset: Int, limit: Int): [PlanNode!]!
@@ -653,7 +654,7 @@ input DeleteDeliverableInput {
 }
 
 input CreatePaymentMethodInput {
-  requestUserId: String
+  requestRecipientId: String
 }
 
 type CreatePaymentMethodResult {
@@ -673,4 +674,14 @@ interface Connection {
   totalCount: Int
   pageInfo: PageInfo!
   edges: [Edge!]!
+}
+
+directive @cacheControl(
+  maxAge: Int
+  scope: CacheControlScope
+) on OBJECT | FIELD_DEFINITION
+
+enum CacheControlScope {
+  PUBLIC
+  PRIVATE
 }

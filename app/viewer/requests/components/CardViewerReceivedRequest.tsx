@@ -1,6 +1,8 @@
-import { Button, Card, HStack, Stack, Text } from "@chakra-ui/react"
+import { Button, Card, HStack, Icon, Stack, Tag, Text } from "@chakra-ui/react"
 import type { FC } from "react"
+import { BiRightArrowAlt } from "react-icons/bi"
 import { TagRequestStatus } from "app/requests/components/TagRequestStatus"
+import { toDateText } from "interface/utils/toDateText"
 
 type Props = {
   fee: number
@@ -15,6 +17,7 @@ type Props = {
   isTimeout: boolean
   onAccept(): void
   onReject(): void
+  onOpen(): void
 }
 
 export const CardViewerReceivedRequest: FC<Props> = (props) => {
@@ -22,49 +25,64 @@ export const CardViewerReceivedRequest: FC<Props> = (props) => {
     <Card
       variant={"filled"}
       borderRadius={"xl"}
-      borderColor={"primary.100"}
+      borderColor={"primary.200"}
       borderWidth={4}
     >
       <Stack p={{ base: 4, md: 4 }} spacing={2}>
-        <Stack spacing={0}>
+        <Stack spacing={2}>
           <HStack justifyContent={"space-between"}>
+            <HStack>
+              <Tag variant={"subtle"} colorScheme={"primary"}>
+                {"受け取ったリクエスト"}
+              </Tag>
+              <TagRequestStatus
+                isPending={props.isPending}
+                isAccepted={props.isAccepted}
+                isRejected={props.isRejected}
+                isCompleted={props.isCompleted}
+                isCanceled={props.isCanceled}
+                isCanceledBySender={props.isCanceledBySender}
+                isCanceledByRecipient={props.isCanceledByRecipient}
+                isTimeout={props.isTimeout}
+              />
+            </HStack>
             <Text opacity={0.8} fontSize={"sm"}>
-              {"2020年1月1日"}
+              {toDateText(props.createdAt)}
             </Text>
-            <TagRequestStatus
-              isPending={props.isPending}
-              isAccepted={props.isAccepted}
-              isRejected={props.isRejected}
-              isCompleted={props.isCompleted}
-              isCanceled={props.isCanceled}
-              isCanceledBySender={props.isCanceledBySender}
-              isCanceledByRecipient={props.isCanceledByRecipient}
-              isTimeout={props.isTimeout}
-            />
           </HStack>
           <Stack spacing={0}>
-            <Text fontSize={"2xl"} fontWeight={"bold"} color={"primary.500"}>
-              {`${props.fee}円`}
-            </Text>
-            <Text>{"Twitterのアイコンを作成してください！"}</Text>
+            <Stack spacing={0}>
+              <Text fontSize={"2xl"} fontWeight={"bold"} color={"primary.500"}>
+                {`${props.fee}円`}
+              </Text>
+              <Text>{"Twitterのアイコンを作成してください！"}</Text>
+            </Stack>
           </Stack>
-        </Stack>
-        <HStack spacing={2} justifyContent={"flex-end"}>
-          {props.isPending && (
-            <Button size={"sm"} colorScheme={"gray"} onClick={props.onReject}>
-              {"見送る"}
-            </Button>
-          )}
-          {props.isPending && (
+          <HStack spacing={2} justifyContent={"flex-end"}>
+            {props.isPending && (
+              <Button size={"sm"} onClick={props.onReject}>
+                {"見送る"}
+              </Button>
+            )}
+            {props.isPending && (
+              <Button
+                size={"sm"}
+                colorScheme={"primary"}
+                onClick={props.onAccept}
+              >
+                {"この依頼を受ける"}
+              </Button>
+            )}
             <Button
+              rightIcon={<Icon as={BiRightArrowAlt} />}
               size={"sm"}
               colorScheme={"primary"}
-              onClick={props.onAccept}
+              onClick={props.onOpen}
             >
-              {"この依頼を受ける"}
+              {"確認する"}
             </Button>
-          )}
-        </HStack>
+          </HStack>
+        </Stack>
       </Stack>
     </Card>
   )

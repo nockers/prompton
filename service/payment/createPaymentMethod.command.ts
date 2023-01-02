@@ -1,10 +1,11 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
 import { Id } from "core"
-import { PaymentAdapter, UserRepository } from "infrastructure"
+import { Env, PaymentAdapter, UserRepository } from "infrastructure"
 
 type Props = {
   userId: string
+  requestRecipientId: string | null
 }
 
 @injectable()
@@ -35,7 +36,15 @@ export class CreatePaymentMethodCommand {
         return new Error()
       }
 
-      const session = await this.stripeAdapter.createPaymentMethod(user.id)
+      const pageURL =
+        props.requestRecipientId !== null
+          ? `${Env.appURL}/${props.requestRecipientId}/requests/new`
+          : `${Env.appURL}/viewer/payments`
+
+      const session = await this.stripeAdapter.createPaymentMethod({
+        userId: user.id,
+        pageURL: pageURL,
+      })
 
       if (session instanceof Error) {
         return new Error()

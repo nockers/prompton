@@ -9,6 +9,7 @@ import {
 import { EventStore, RequestRepository, PaymentAdapter } from "infrastructure"
 
 type Props = {
+  userId: string
   requestId: string
 }
 
@@ -29,6 +30,10 @@ export class markRequestAsAcceptedCommand {
       }
 
       if (request === null) {
+        return new Error()
+      }
+
+      if (request.recipientId.value !== props.userId) {
         return new Error()
       }
 

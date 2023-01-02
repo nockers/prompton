@@ -1,20 +1,11 @@
 import type { BlitzPage } from "@blitzjs/auth"
-import {
-  Box,
-  Button,
-  Card,
-  Divider,
-  HStack,
-  Icon,
-  Stack,
-  Tag,
-  Text,
-} from "@chakra-ui/react"
+import { Button, Divider, HStack, Icon, Stack, Text } from "@chakra-ui/react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import { BiArrowBack } from "react-icons/bi"
 import { MainStack } from "app/components/MainStack"
+import { TagRequestStatus } from "app/requests/components/TagRequestStatus"
 import ViewerLayout from "app/viewer/layout"
 
 import { useRequestQuery } from "interface/__generated__/react"
@@ -58,22 +49,24 @@ const ViewerRequestPage: BlitzPage = () => {
               <Text fontWeight={"bold"} fontSize={"xl"}>
                 {"リクエスト"}
               </Text>
-              <Tag variant={"subtle"} colorScheme={"primary"}>
-                {data.request.id}
-              </Tag>
+
+              <TagRequestStatus
+                isPending={data.request.isPending}
+                isAccepted={data.request.isAccepted}
+                isRejected={data.request.isRejected}
+                isCompleted={data.request.isCompleted}
+                isCanceled={data.request.isCanceled}
+                isCanceledBySender={data.request.isCanceledBySender}
+                isCanceledByRecipient={data.request.isCanceledByRecipient}
+                isTimeout={data.request.isTimeout}
+              />
             </HStack>
-            <Text>{toDateText(data.request.createdAt)}</Text>
+            <Text>{`${toDateText(data.request.createdAt)} 作成`}</Text>
+            <Text fontSize={"sm"}>{`ID: ${data.request.id}`}</Text>
           </Stack>
           <Divider />
           <Stack spacing={4}>
-            <Card variant={"filled"}>
-              <Stack p={4}>
-                <Box>
-                  <Tag colorScheme={"primary"}>{"要望"}</Tag>
-                </Box>
-                <Text>{data?.request.note}</Text>
-              </Stack>
-            </Card>
+            <Text>{data?.request.note}</Text>
           </Stack>
         </Stack>
       </HStack>

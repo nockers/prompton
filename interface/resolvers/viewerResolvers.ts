@@ -71,8 +71,20 @@ export const ViewerResolvers: Resolvers = {
   plans() {
     return []
   },
+  requests(_, __, context) {
+    return db.request.findMany({
+      orderBy: { createdAt: "desc" },
+      where: {
+        OR: [
+          { senderId: context.currentUser!.uid! },
+          { recipientId: context.currentUser!.uid! },
+        ],
+      },
+    })
+  },
   sentRequests(_, __, context) {
     return db.request.findMany({
+      orderBy: { createdAt: "desc" },
       where: {
         senderId: context.currentUser!.uid!,
       },
@@ -80,6 +92,7 @@ export const ViewerResolvers: Resolvers = {
   },
   receivedRequests(_, __, context) {
     return db.request.findMany({
+      orderBy: { createdAt: "desc" },
       where: {
         recipientId: context.currentUser!.uid!,
       },

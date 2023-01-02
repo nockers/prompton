@@ -1,4 +1,5 @@
 import { Stack, Text, useToast } from "@chakra-ui/react"
+import { useRouter } from "next/router"
 import type { FC } from "react"
 import { CardViewerReceivedRequest } from "app/viewer/requests/components/CardViewerReceivedRequest"
 import {
@@ -10,6 +11,8 @@ import {
 type Props = {}
 
 export const ViewerReceivedRequestList: FC<Props> = () => {
+  const router = useRouter()
+
   const { data = null, refetch } = useViewerReceivedRequestsQuery()
 
   const [acceptRequest] = useAcceptRequestMutation()
@@ -46,6 +49,10 @@ export const ViewerReceivedRequestList: FC<Props> = () => {
     }
   }
 
+  const onOpen = async (requestId: string) => {
+    router.push(`/viewer/requests/${requestId}`)
+  }
+
   if (data === null) {
     return null
   }
@@ -80,6 +87,9 @@ export const ViewerReceivedRequestList: FC<Props> = () => {
           }}
           onReject={() => {
             onReject(request.id)
+          }}
+          onOpen={() => {
+            onOpen(request.id)
           }}
         />
       ))}

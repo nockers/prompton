@@ -22,6 +22,7 @@ export const QueryResolvers: Resolvers = {
     const skip = args.offset || 0
     if (typeof args.where?.search === "string") {
       return db.label.findMany({
+        orderBy: { posts: { _count: "desc" } },
         take: 16,
         where: {
           isDeleted: false,
@@ -170,7 +171,9 @@ export const QueryResolvers: Resolvers = {
     })
   },
   requests() {
-    return []
+    return db.request.findFirst({
+      orderBy: { createdAt: "desc" },
+    })
   },
   viewer(_: unknown, __: unknown, context) {
     if (context.currentUser === null) {

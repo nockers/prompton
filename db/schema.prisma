@@ -140,6 +140,18 @@ model Post {
   @@map("posts")
 }
 
+model Page {
+  id          String   @id @map("id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  title       String   @map("title")
+  description String?  @map("description")
+  slug        String   @unique @map("slug")
+  isPublic    Boolean  @default(true) @map("is_public")
+
+  @@map("pages")
+}
+
 model Folder {
   id          String     @id @map("id")
   createdAt   DateTime   @default(now()) @map("created_at")

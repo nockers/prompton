@@ -8,8 +8,9 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react"
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { MainStack } from "app/components/MainStack"
+import { useRedirectResult } from "app/hooks/useRedirectResult"
 import {
   useCreatePaymentMethodMutation,
   useDeletePaymentMethodMutation,
@@ -32,22 +33,17 @@ const UserPaymentsPage: BlitzPage = () => {
 
   const toast = useToast()
 
-  useEffect(() => {
-    if (typeof window === "undefined") return
-    if (location.search.includes("success")) {
-      toast({ status: "success", description: "決済方法を登録しました。" })
-    }
-    if (location.search.includes("cancel")) {
+  useRedirectResult({
+    onSuccess() {
+      toast({ status: "success", description: "お支払い方法を登録しました。" })
+    },
+    onCancel() {
       toast({
         status: "error",
-        description: "決済方法の登録がキャンセルされました。",
+        description: "お支払い方法の登録がキャンセルされました。",
       })
-    }
-    setTimeout(() => {
-      history.replaceState({}, document.title, "/viewer/payments")
-    }, 0)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    },
+  })
 
   const onDeletePaymentMethod = async () => {
     try {
@@ -66,7 +62,7 @@ const UserPaymentsPage: BlitzPage = () => {
       const result = await createPaymentMethod({
         variables: {
           input: {
-            requestUserId: null,
+            requestRecipientId: null,
           },
         },
       })
@@ -89,7 +85,7 @@ const UserPaymentsPage: BlitzPage = () => {
   const paymentMethod = data.viewer.user.paymentMethod
 
   return (
-    <MainStack title={"決済"} description={null} fileId={null}>
+    <MainStack title={"お支払い"} description={null} fileId={null}>
       <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
         <Stack w={"100%"} maxW={"container.md"} spacing={{ base: 4, md: 8 }}>
           <Stack pt={{ base: 4, md: 8 }}>
@@ -101,7 +97,7 @@ const UserPaymentsPage: BlitzPage = () => {
           {paymentMethod !== null && (
             <Stack spacing={4}>
               <HStack>
-                <Text>{"決済方法が登録されています。"}</Text>
+                <Text>{"お支払い方法が登録されています。"}</Text>
                 <Button
                   isLoading={isDeleting}
                   size={"sm"}
@@ -151,7 +147,7 @@ const UserPaymentsPage: BlitzPage = () => {
               borderRadius={"xl"}
             >
               <Stack spacing={4}>
-                <Text>{"決済方法が登録されていません。"}</Text>
+                <Text>{"お支払い方法が登録されていません。"}</Text>
                 <HStack justifyContent={"flex-end"}>
                   <Button
                     isLoading={isCreating}

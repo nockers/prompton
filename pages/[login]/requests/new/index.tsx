@@ -14,12 +14,15 @@ import {
   useToast,
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { UserRequestHeader } from "app/[login]/requests/components/UserRequestHeader"
 import { MainStack } from "app/components/MainStack"
+import { useRedirectResult } from "app/hooks/useRedirectResult"
 import {
+  useCreatePaymentMethodMutation,
   useCreateRequestMutation,
   useUserQuery,
+  useViewerUserQuery,
 } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
 
@@ -30,16 +33,51 @@ const UserRequestsNewPage: BlitzPage = () => {
 
   const [createRequest, { loading }] = useCreateRequestMutation()
 
+  const { data: sender = null } = useViewerUserQuery({
+    skip: appContext.currentUser === null,
+  })
+
+  const [createPaymentMethod] = useCreatePaymentMethodMutation()
+
   const userId = router.query.login?.toString() ?? null
 
-  const { data } = useUserQuery({
+  const { data = null } = useUserQuery({
     skip: userId === null,
     variables: { id: userId! },
   })
 
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    if (location.search.includes("success")) {
+      toast({ status: "success", description: "お支払い方法を登録しました。" })
+    }
+    if (location.search.includes("cancel")) {
+      toast({
+        status: "error",
+        description: "お支払い方法の登録がキャンセルされました。",
+      })
+    }
+    setTimeout(() => {
+      history.replaceState({}, document.title, location.pathname)
+    }, 0)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const isMyPage = router.query.login === appContext.currentUser?.uid
 
   const toast = useToast()
+
+  useRedirectResult({
+    onSuccess() {
+      toast({ status: "success", description: "お支払い方法を登録しました。" })
+    },
+    onCancel() {
+      toast({
+        status: "error",
+        description: "お支払い方法の登録がキャンセルされました。",
+      })
+    },
+  })
 
   const onCreateRequest = async () => {
     if (userId === null) return
@@ -65,6 +103,25 @@ const UserRequestsNewPage: BlitzPage = () => {
     }
   }
 
+  const onCreatePaymentMethod = async () => {
+    try {
+      const result = await createPaymentMethod({
+        variables: {
+          input: { requestRecipientId: userId! },
+        },
+      })
+      const pageURL = result.data?.createPaymentMethod?.checkoutURL ?? null
+      if (pageURL === null) {
+        return null
+      }
+      location.replace(pageURL)
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
+    }
+  }
+
   if (userId === null) {
     return null
   }
@@ -73,7 +130,12 @@ const UserRequestsNewPage: BlitzPage = () => {
     return null
   }
 
-  if (data === null || data?.user === null) {
+  if (
+    data === null ||
+    data.user === null ||
+    sender === null ||
+    sender.viewer === null
+  ) {
     return null
   }
 
@@ -95,6 +157,25 @@ const UserRequestsNewPage: BlitzPage = () => {
           alignItems={{ base: "center", lg: "flex-start" }}
         >
           <Stack maxW={"container.md"} w={"100%"} spacing={4}>
+            {sender.viewer.user.paymentMethod === null && (
+              <Card
+                variant={"filled"}
+                borderColor={"red.200"}
+                borderWidth={4}
+                borderRadius={"xl"}
+              >
+                <Stack p={6} spacing={4}>
+                  <Text fontWeight={"bold"}>
+                    {"リクエストを送るにはお支払い方法の登録が必要です。"}
+                  </Text>
+                  <HStack justifyContent={"flex-end"}>
+                    <Button colorScheme={"red"} onClick={onCreatePaymentMethod}>
+                      {"お支払い方法を登録する"}
+                    </Button>
+                  </HStack>
+                </Stack>
+              </Card>
+            )}
             <Card variant={"filled"} borderRadius={"xl"}>
               <Stack p={6}>
                 <Stack>
@@ -176,16 +257,14 @@ const UserRequestsNewPage: BlitzPage = () => {
                 </Stack>
                 <Divider />
                 <Stack>
-                  <Text fontSize={"sm"}>
-                    {"決済方法の登録が完了するとリクエストが送信されます。"}
-                  </Text>
                   <HStack>
                     <Button
+                      isDisabled={sender.viewer.user.paymentMethod === null}
                       isLoading={loading}
                       colorScheme={"primary"}
                       onClick={onCreateRequest}
                     >
-                      {"決済方法を登録する"}
+                      {"リクエストする"}
                     </Button>
                   </HStack>
                 </Stack>

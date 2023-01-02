@@ -2,7 +2,7 @@ import { ApolloServerErrorCode } from "@apollo/server/errors"
 import { GraphQLError } from "graphql"
 import { container } from "tsyringe"
 import type {
-  MutationUpdateWorkArgs,
+  MutationCreatePaymentMethodArgs,
   RequireFields,
 } from "interface/__generated__/node"
 import { CreatePaymentMethodCommand } from "service"
@@ -10,7 +10,7 @@ import type { ApolloContext } from "types"
 
 export const createPaymentMethodResolver = async (
   _: unknown,
-  args: RequireFields<MutationUpdateWorkArgs, "input">,
+  args: RequireFields<MutationCreatePaymentMethodArgs, "input">,
   ctx: ApolloContext,
 ) => {
   if (ctx.currentUser === null) {
@@ -23,6 +23,7 @@ export const createPaymentMethodResolver = async (
 
   const output = await command.execute({
     userId: ctx.currentUser.uid,
+    requestRecipientId: args.input.requestRecipientId,
   })
 
   if (output instanceof Error) {

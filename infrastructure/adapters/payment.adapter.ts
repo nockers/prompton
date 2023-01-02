@@ -114,14 +114,14 @@ export class PaymentAdapter {
     }
   }
 
-  async createPaymentMethod(userId: Id) {
+  async createPaymentMethod(props: { userId: Id; pageURL: string }) {
     try {
       const stripe = new Stripe(Env.stripeSecretKey, {
         apiVersion: "2022-11-15",
       })
 
       const resp = await stripe.customers.search({
-        query: `metadata['userId']:'${userId.value}'`,
+        query: `metadata['userId']:'${props.userId.value}'`,
         expand: ["data.default_source"],
       })
 
@@ -141,12 +141,14 @@ export class PaymentAdapter {
         return new Error()
       }
 
+      const pageURL = props.pageURL ?? `${Env.appURL}/viewer/payments`
+
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         mode: "setup",
         customer: customer.id,
-        success_url: `${Env.appURL}/viewer/payments?status=success`,
-        cancel_url: `${Env.appURL}/viewer/payments?status=cancel`,
+        success_url: `${pageURL}?status=success`,
+        cancel_url: `${pageURL}?status=cancel`,
       })
 
       return session
