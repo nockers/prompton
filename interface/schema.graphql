@@ -268,6 +268,10 @@ type WorkNode implements Node {
   ログインしているユーザが作品に対してブックマーク済みかどうか
   """
   isBookmarked: Boolean!
+  """
+  削除されているかどうか
+  """
+  isDeleted: Boolean!
 }
 
 type WorkEdge implements Edge {
@@ -430,7 +434,7 @@ type Mutation {
   """
   作品を削除する
   """
-  deleteWork(input: DeleteWorkInput!): Boolean
+  deleteWork(input: DeleteWorkInput!): WorkNode!
   """
   作品を更新する
   """

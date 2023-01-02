@@ -58,6 +58,9 @@ export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
       where: { isDeleted: false },
     })
   },
+  isDeleted(parent) {
+    return parent.isDeleted
+  },
   async isLiked(parent, _, ctx) {
     if (ctx.currentUser === null) return false
     const likes = await db.post.findUnique({ where: { id: parent.id } }).likes({

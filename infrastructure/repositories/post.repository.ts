@@ -83,4 +83,16 @@ export class PostRepository {
       return new Error()
     }
   }
+
+  async delete(postId: Id) {
+    try {
+      return db.post.update({
+        data: { isDeleted: true },
+        where: { id: postId.value },
+      })
+    } catch (error) {
+      captureException(error)
+      return new Error()
+    }
+  }
 }

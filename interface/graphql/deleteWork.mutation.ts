@@ -2,6 +2,9 @@ import { gql } from "@apollo/client"
 
 export default gql`
   mutation DeleteWork($input: DeleteWorkInput!) {
-    deleteWork(input: $input)
+    deleteWork(input: $input) {
+      id
+      isDeleted
+    }
   }
 `

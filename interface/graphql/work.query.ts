@@ -19,6 +19,7 @@ export default gql`
       webColors
       isLiked
       isBookmarked
+      isDeleted
       labels {
         id
         name

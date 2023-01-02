@@ -116,7 +116,12 @@ export const QueryResolvers: Resolvers = {
     })
   },
   work(_: unknown, args: QueryWorkArgs) {
-    return db.post.findUnique({ where: { id: args.id } })
+    return db.post.findFirst({
+      where: {
+        id: args.id,
+        isDeleted: false,
+      },
+    })
   },
   user(_: unknown, args: QueryUserArgs) {
     return db.user.findUnique({ where: { id: args.id } })

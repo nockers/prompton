@@ -78,8 +78,17 @@ export class PostEventStore {
   }
 
   async deleted(event: PostDeletedEvent) {
-    event
-    return null
+    const post = await this.repository.find(event.postId)
+
+    if (post instanceof Error) {
+      return new Error()
+    }
+
+    if (post === null) {
+      return new Error()
+    }
+
+    return this.repository.delete(event.postId)
   }
 
   async updated(event: PostUpdatedEvent) {

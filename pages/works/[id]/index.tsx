@@ -16,6 +16,7 @@ import { useRouter } from "next/router"
 import { useContext, useEffect } from "react"
 import UserLayout from "app/[login]/layout"
 import { ButtonBookmark } from "app/components/ButtonBookmark"
+import { ButtonDelete } from "app/components/ButtonDelete"
 import { ButtonFollow } from "app/components/ButtonFollow"
 import { ButtonLike } from "app/components/ButtonLike"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
@@ -29,6 +30,7 @@ import type {
   WorkQueryVariables,
 } from "interface/__generated__/react"
 import {
+  useDeleteWorkMutation,
   useFollowUserMutation,
   useUnfollowUserMutation,
   useCreateWorkBookmarkMutation,
@@ -85,6 +87,8 @@ const WorkPage: BlitzPage<Props> = (props) => {
   const [deleteWorkBookmark, { loading: isDeletingBookmark }] =
     useDeleteWorkBookmarkMutation()
 
+  const [deleteWork, { loading: isDeleting }] = useDeleteWorkMutation()
+
   const toast = useToast()
 
   // ログイン情報が取得できたら再度データを取得する
@@ -107,7 +111,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
   }
 
   const onShareWithTwitter = async () => {
-    const text = `${data?.work?.user.name}さんの作品`
+    const text = `${data?.work?.user.name}さんの作品 #AIイラスト #nijijourney #midjourney #AIart`
     if (window.navigator.share) {
       await window.navigator.share({
         title: text,
@@ -168,6 +172,8 @@ const WorkPage: BlitzPage<Props> = (props) => {
       await deleteWorkLike({
         variables: { input: { workId: data!.work!.id } },
       })
+      // await refetchWork()
+      toast({ status: "success", description: "削除しました。" })
     } catch (error) {
       if (error instanceof Error) {
         toast({ status: "error", description: error.message })
@@ -199,6 +205,18 @@ const WorkPage: BlitzPage<Props> = (props) => {
     }
   }
 
+  const onDeleteWork = async () => {
+    try {
+      await deleteWork({
+        variables: { input: { workId: data!.work!.id } },
+      })
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
+    }
+  }
+
   const isLoadingFriendship = isCreatingFriendship || isDeletingFriendship
 
   const isLoadingLike = isCreatingLike || isDeletingLike
@@ -211,6 +229,10 @@ const WorkPage: BlitzPage<Props> = (props) => {
 
   if (data === null || data.work === null) {
     return null
+  }
+
+  if (data.work.isDeleted) {
+    return <Text>{"削除済み"}</Text>
   }
 
   const isSelf = data.work.user.id === appContext.currentUser?.uid
@@ -263,25 +285,35 @@ const WorkPage: BlitzPage<Props> = (props) => {
                   />
                 )}
               </HStack>
-              <HStack spacing={4}>
-                <ButtonBookmark
-                  flex={1}
-                  isLoading={isLoadingBookmark}
-                  isActive={data.work.isBookmarked}
-                  isDisabled={appContext.currentUser === null}
-                  onCreate={onCreateBookmark}
-                  onDelete={onDeleteBookmark}
-                />
-                <ButtonLike
-                  flex={1}
-                  count={data.work.likesCount}
-                  isLoading={isLoadingLike}
-                  isActive={data.work.isLiked}
-                  isDisabled={isSelf || appContext.currentUser === null}
-                  onCreate={onCreateLike}
-                  onDelete={onDeleteLike}
-                />
-              </HStack>
+              <Stack>
+                <HStack spacing={2}>
+                  <ButtonBookmark
+                    flex={1}
+                    isLoading={isLoadingBookmark}
+                    isActive={data.work.isBookmarked}
+                    isDisabled={appContext.currentUser === null}
+                    onCreate={onCreateBookmark}
+                    onDelete={onDeleteBookmark}
+                  />
+                  <ButtonLike
+                    flex={1}
+                    count={data.work.likesCount}
+                    isLoading={isLoadingLike}
+                    isActive={data.work.isLiked}
+                    isDisabled={isSelf || appContext.currentUser === null}
+                    onCreate={onCreateLike}
+                    onDelete={onDeleteLike}
+                  />
+                </HStack>
+                <ShareButtonTwitter w={"100%"} onClick={onShareWithTwitter} />
+                {isSelf && (
+                  <ButtonDelete
+                    w={"100%"}
+                    isLoading={isDeleting}
+                    onClick={onDeleteWork}
+                  />
+                )}
+              </Stack>
             </Stack>
             <Box bg={"blackAlpha.400"} p={4} rounded={"lg"}>
               <Text>{data.work.prompt ?? "No prompt"}</Text>
@@ -311,9 +343,6 @@ const WorkPage: BlitzPage<Props> = (props) => {
                 ))}
               </Wrap>
             </Stack>
-            <Box>
-              <ShareButtonTwitter onClick={onShareWithTwitter} />
-            </Box>
           </Stack>
         </Stack>
       </HStack>
