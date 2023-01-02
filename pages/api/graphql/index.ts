@@ -9,7 +9,7 @@ import { getApps, initializeApp } from "firebase-admin/app"
 import { getAuth } from "firebase-admin/auth"
 import { Env } from "infrastructure/env"
 import { sentryPlugin } from "interface/plugins/sentryPlugin"
-import { resolvers } from "interface/resolvers/resolver"
+import { resolvers } from "interface/resolvers/resolvers"
 
 init({
   dsn: Env.sentryDSN,
