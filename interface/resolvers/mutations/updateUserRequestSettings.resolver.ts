@@ -33,6 +33,7 @@ export const updateUserRequestSettingsResolver: Resolvers = async (
   const output = await command.execute({
     userId: ctx.currentUser.uid,
     userIsRequestable: args.input.isRequestable,
+    userIsRequestableForFree: args.input.isRequestableForFree,
     userMaximumFee: args.input.maximumFee,
     userMinimumFee: args.input.minimumFee,
   })

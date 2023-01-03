@@ -5,7 +5,7 @@ import { Email, Id, Name, Url } from "core/valueObjects"
 
 const zProps = z.object({
   userId: z.instanceof(Id),
-  email: z.instanceof(Email),
+  email: z.instanceof(Email).nullable(),
   name: z.instanceof(Name),
   avatarImageURL: z.instanceof(Url).nullable(),
 })

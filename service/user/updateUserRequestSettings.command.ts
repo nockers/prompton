@@ -6,6 +6,7 @@ import { EventStore, UserRepository } from "infrastructure"
 type Props = {
   userId: string
   userIsRequestable: boolean
+  userIsRequestableForFree: boolean
   userMaximumFee: number
   userMinimumFee: number
 }
@@ -33,6 +34,7 @@ export class UpdateUserRequestSettingsCommand {
         id: IdFactory.create(),
         userId: user.id,
         isRequestable: props.userIsRequestable,
+        isRequestableForFree: props.userIsRequestableForFree,
         maximumFee: props.userMaximumFee,
         minimumFee: props.userMinimumFee,
       })

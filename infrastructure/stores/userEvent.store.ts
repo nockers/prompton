@@ -46,8 +46,9 @@ export class UserEventStore {
       name: event.name,
       login: null,
       isRequestable: false,
+      isRequestableForFree: false,
       minimumFee: 1000,
-      maximumFee: 8000,
+      maximumFee: 4000,
     })
 
     return this.repository.persist(draftUser)
@@ -95,6 +96,7 @@ export class UserEventStore {
 
     const draftUser = user.updateRequestSettings({
       isRequestable: event.isRequestable,
+      isRequestableForFree: event.isRequestableForFree,
       minimumFee: event.minimumFee,
       maximumFee: event.maximumFee,
     })

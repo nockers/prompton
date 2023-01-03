@@ -64,6 +64,9 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
   isRequestable(parent) {
     return parent.isRequestable
   },
+  isRequestableForFree(parent) {
+    return parent.isRequestableForFree
+  },
   async paymentMethod(_, __, ctx) {
     if (ctx.currentUser === null) return null
     const stripe = new Stripe(Env.stripeSecretKey, {

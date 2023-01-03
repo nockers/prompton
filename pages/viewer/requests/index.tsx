@@ -44,6 +44,7 @@ const ViewerRequestsPage: BlitzPage = () => {
             minimumFee: data.viewer.user.minimumFee,
             maximumFee: data.viewer.user.maximumFee,
             isRequestable,
+            isRequestableForFree: false,
           },
         },
       })
@@ -73,6 +74,7 @@ const ViewerRequestsPage: BlitzPage = () => {
             minimumFee,
             maximumFee,
             isRequestable: data.viewer.user.isRequestable,
+            isRequestableForFree: false,
           },
         },
       })

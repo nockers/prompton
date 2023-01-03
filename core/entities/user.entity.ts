@@ -11,6 +11,7 @@ const zProps = z.object({
   avatarImageURL: z.instanceof(Url).nullable(),
   avatarImageId: z.instanceof(Id).nullable(),
   isRequestable: z.boolean(),
+  isRequestableForFree: z.boolean(),
   maximumFee: z.number(),
   minimumFee: z.number(),
 })
@@ -67,6 +68,11 @@ export class UserEntity {
   readonly isRequestable!: Props["isRequestable"]
 
   /**
+   * 無償でリクエスト可能かどうか
+   */
+  readonly isRequestableForFree!: Props["isRequestableForFree"]
+
+  /**
    * 報酬の最大額
    */
   readonly maximumFee!: Props["maximumFee"]
@@ -107,12 +113,14 @@ export class UserEntity {
 
   updateRequestSettings(input: {
     isRequestable: boolean
+    isRequestableForFree: boolean
     maximumFee: number
     minimumFee: number
   }) {
     return new UserEntity({
       ...this.props,
       isRequestable: input.isRequestable,
+      isRequestableForFree: input.isRequestableForFree,
       maximumFee: input.maximumFee,
       minimumFee: input.minimumFee,
     })

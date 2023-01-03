@@ -6,6 +6,7 @@ import { Id } from "core/valueObjects"
 const zProps = z.object({
   userId: z.instanceof(Id),
   isRequestable: z.boolean(),
+  isRequestableForFree: z.boolean(),
   maximumFee: z.number(),
   minimumFee: z.number(),
 })
@@ -27,6 +28,8 @@ export class UserRequestSettingsUpdatedEvent
   readonly userId!: Props["userId"]
 
   readonly isRequestable!: Props["isRequestable"]
+
+  readonly isRequestableForFree!: Props["isRequestableForFree"]
 
   readonly maximumFee!: Props["maximumFee"]
 

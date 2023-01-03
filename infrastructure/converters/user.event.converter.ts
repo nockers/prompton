@@ -26,7 +26,7 @@ export class UserEventConverter {
     if (event instanceof UserCreatedEvent) {
       const data: z.infer<typeof zUserCreatedEventData> = {
         userId: event.userId.value,
-        email: event.email.value,
+        email: event.email?.value ?? null,
         name: event.name.value,
         avatarImageURL: event.avatarImageURL?.value ?? null,
       }
@@ -57,6 +57,7 @@ export class UserEventConverter {
       const data: z.infer<typeof zUserRequestSettingsUpdatedEventData> = {
         userId: event.userId.value,
         isRequestable: event.isRequestable,
+        isRequestableForFree: event.isRequestableForFree,
         maximumFee: event.maximumFee,
         minimumFee: event.minimumFee,
       }
@@ -73,7 +74,7 @@ export class UserEventConverter {
         id: new Id(event.id),
         timestamp: Math.floor(event.timestamp.getTime() / 1000),
         userId: new Id(data.userId),
-        email: new Email(data.email),
+        email: data.email !== null ? new Email(data.email) : null,
         name: new Name(data.name),
         avatarImageURL: data.avatarImageURL
           ? new Url(data.avatarImageURL)
@@ -115,6 +116,7 @@ export class UserEventConverter {
         timestamp: Math.floor(event.timestamp.getTime() / 1000),
         userId: new Id(data.userId),
         isRequestable: data.isRequestable,
+        isRequestableForFree: data.isRequestableForFree ?? false,
         maximumFee: data.maximumFee,
         minimumFee: data.minimumFee,
       })

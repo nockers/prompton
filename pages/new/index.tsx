@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Card,
   HStack,
   Input,
   Link,
@@ -45,8 +46,14 @@ const LoginPage: FC = () => {
   return (
     <MainStack title={"アカウント作成"} description={null} fileId={null}>
       <HStack px={4} pt={16} justifyContent={"center"}>
-        <Box maxW={"sm"} bg={"gray.700"} rounded={"md"} w={"100%"} p={4}>
-          <Stack gap={2}>
+        <Card
+          variant={"outline"}
+          borderWidth={4}
+          maxW={"sm"}
+          rounded={"md"}
+          w={"100%"}
+        >
+          <Stack gap={2} p={4}>
             <Text fontSize={20} fontWeight={"bold"}>
               {"アカウント作成"}
             </Text>
@@ -78,7 +85,7 @@ const LoginPage: FC = () => {
               {"利用開始"}
             </Button>
           </Stack>
-        </Box>
+        </Card>
       </HStack>
     </MainStack>
   )

@@ -364,6 +364,10 @@ type UserNode implements Node {
   """
   isRequestable: Boolean!
   """
+  無償で制作依頼を受け付けているかどうか
+  """
+  isRequestableForFree: Boolean!
+  """
   リクエストの最低報酬
   """
   minimumFee: Int!
@@ -595,6 +599,7 @@ input UpdateUserProfileInput {
 
 input UpdateUserRequestSettingsInput {
   isRequestable: Boolean!
+  isRequestableForFree: Boolean!
   minimumFee: Int!
   maximumFee: Int!
 }
