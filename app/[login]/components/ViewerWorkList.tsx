@@ -1,6 +1,6 @@
 import { HStack, Stack, useToast } from "@chakra-ui/react"
 import type { FC } from "react"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { UploadDropzone } from "app/[login]/components/UploadDropzone"
 import UserLoading from "app/[login]/loading"
 import { CardUserWork } from "app/components/CardUserWork"
@@ -10,9 +10,12 @@ import {
   useCreateWorkMutation,
   useViewerWorksQuery,
 } from "interface/__generated__/react"
+import { AppContext } from "interface/contexts/appContext"
 import { toColumnArray } from "interface/utils/toColumnArray"
 
 export const ViewerWorkList: FC = () => {
+  const appContext = useContext(AppContext)
+
   const [isLoading, setLoading] = useState(false)
 
   const [createWork] = useCreateWorkMutation()
@@ -97,6 +100,7 @@ export const ViewerWorkList: FC = () => {
                 postColors={work.colors}
                 postWebColors={work.webColors}
                 postThumbnailURL={work.thumbnailURL}
+                isEditable={work.user.id === appContext.currentUser?.uid}
                 isLiked={false}
                 isBookmarked={false}
                 isFollowee={false}

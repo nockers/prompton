@@ -77,6 +77,10 @@ export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
       where: { isDeleted: false },
     })
   },
+  isMine(parent, _, ctx) {
+    if (ctx.currentUser === null) return false
+    return parent.userId === ctx.currentUser!.uid
+  },
   isDeleted(parent) {
     return parent.isDeleted
   },

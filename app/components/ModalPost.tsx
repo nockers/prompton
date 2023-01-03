@@ -18,7 +18,7 @@ import {
   useToast,
 } from "@chakra-ui/react"
 import type { FC } from "react"
-import { useContext, useState } from "react"
+import { useState } from "react"
 import { ButtonFollow } from "app/components/ButtonFollow"
 import { ButtonLike } from "app/components/ButtonLike"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
@@ -35,7 +35,6 @@ import {
   useUpdateWorkMutation,
   useWorkQuery,
 } from "interface/__generated__/react"
-import { AppContext } from "interface/contexts/appContext"
 
 type Props = {
   postId: string
@@ -67,8 +66,6 @@ type Props = {
 }
 
 export const ModalPost: FC<Props> = (props) => {
-  const appContext = useContext(AppContext)
-
   /**
    * データを更新する
    */
@@ -196,8 +193,6 @@ export const ModalPost: FC<Props> = (props) => {
 
   const isLoadingBookmark = isCreatingBookmark || isDeletingBookmark
 
-  const isSelf = props.userId === appContext.currentUser?.uid
-
   return (
     <Modal
       isOpen={props.isOpen}
@@ -270,50 +265,48 @@ export const ModalPost: FC<Props> = (props) => {
             </Stack>
           </Stack>
         </ModalBody>
-        <ModalFooter px={4}>
-          <HStack justifyContent={"space-between"} w={"100%"}>
-            <HStack spacing={4}>
-              <UserProfile
-                userId={props.userId}
-                userAvatarImageURL={props.userAvatarImageURL}
-                userName={props.userName}
-                onOpenUser={props.onOpenUser}
-              />
-              {!isSelf && (
+        {props.isEditable && <ModalFooter py={2} />}
+        {!props.isEditable && (
+          <ModalFooter px={4}>
+            <HStack justifyContent={"space-between"} w={"100%"}>
+              <HStack spacing={4}>
+                <UserProfile
+                  userId={props.userId}
+                  userAvatarImageURL={props.userAvatarImageURL}
+                  userName={props.userName}
+                  onOpenUser={props.onOpenUser}
+                />
                 <ButtonFollow
                   size={"sm"}
                   isLoading={isLoadingFriendship}
                   isActive={props.isFollowee}
-                  isDisabled={isSelf || appContext.currentUser === null}
                   onFollow={onFollowUser}
                   onUnfollow={onUnfollowUser}
                 />
-              )}
-            </HStack>
-            <HStack>
-              <IconButtonBookmark
-                aria-label={"Bookmark"}
-                size={"sm"}
-                isLoading={isLoadingBookmark}
-                isDisabled={appContext.currentUser === null}
-                isActive={props.isBookmarked}
-                onCreate={onCreateBookmark}
-                onDelete={onDeleteBookmark}
-              />
-              {!props.isEditable && (
-                <ButtonLike
+              </HStack>
+              <HStack>
+                <IconButtonBookmark
+                  aria-label={"Bookmark"}
                   size={"sm"}
-                  count={props.postLikeCount}
-                  isLoading={isLoadingLike}
-                  isActive={props.isLiked}
-                  isDisabled={isSelf || appContext.currentUser === null}
-                  onCreate={onCreateLike}
-                  onDelete={onDeleteLike}
+                  isLoading={isLoadingBookmark}
+                  isActive={props.isBookmarked}
+                  onCreate={onCreateBookmark}
+                  onDelete={onDeleteBookmark}
                 />
-              )}
+                {!props.isEditable && (
+                  <ButtonLike
+                    size={"sm"}
+                    count={props.postLikeCount}
+                    isLoading={isLoadingLike}
+                    isActive={props.isLiked}
+                    onCreate={onCreateLike}
+                    onDelete={onDeleteLike}
+                  />
+                )}
+              </HStack>
             </HStack>
-          </HStack>
-        </ModalFooter>
+          </ModalFooter>
+        )}
       </ModalContent>
     </Modal>
   )

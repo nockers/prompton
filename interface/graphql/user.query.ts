@@ -14,6 +14,7 @@ export default gql`
       createdAt
       isFollowee
       isRequestable
+      isRequestableForFree
       minimumFee
       maximumFee
     }

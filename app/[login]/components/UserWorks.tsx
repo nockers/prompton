@@ -1,6 +1,6 @@
 import { HStack, Stack, useToast } from "@chakra-ui/react"
 import type { FC } from "react"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { UploadDropzone } from "app/[login]/components/UploadDropzone"
 import UserLoading from "app/[login]/loading"
 import { CardUserWork } from "app/components/CardUserWork"
@@ -10,6 +10,7 @@ import {
   useCreateWorkMutation,
   useUserWorksQuery,
 } from "interface/__generated__/react"
+import { AppContext } from "interface/contexts/appContext"
 import { toColumnArray } from "interface/utils/toColumnArray"
 
 type Props = {
@@ -18,6 +19,8 @@ type Props = {
 }
 
 export const UserWorks: FC<Props> = (props) => {
+  const appContext = useContext(AppContext)
+
   const [isLoading, setLoading] = useState(false)
 
   const [createWork] = useCreateWorkMutation()
@@ -108,6 +111,7 @@ export const UserWorks: FC<Props> = (props) => {
                 postColors={work.colors}
                 postWebColors={work.webColors}
                 postThumbnailURL={work.thumbnailURL}
+                isEditable={props.userId === appContext.currentUser?.uid}
                 isLiked={false}
                 isBookmarked={false}
                 isFollowee={false}

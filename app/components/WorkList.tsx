@@ -1,8 +1,10 @@
 import { Button, HStack, Stack } from "@chakra-ui/react"
 import type { FC } from "react"
+import { useContext } from "react"
 import { CardPost } from "app/components/CardPost"
 import { useColumnCount } from "app/hooks/useColumnCount"
 import { useWorksQuery } from "interface/__generated__/react"
+import { AppContext } from "interface/contexts/appContext"
 import { toColumnArray } from "interface/utils/toColumnArray"
 
 type Props = {
@@ -11,6 +13,8 @@ type Props = {
 }
 
 export const UserWorkList: FC<Props> = (props) => {
+  const appContext = useContext(AppContext)
+
   const { data, fetchMore, loading } = useWorksQuery({
     fetchPolicy: "cache-and-network",
     notifyOnNetworkStatusChange: true,
@@ -65,7 +69,7 @@ export const UserWorkList: FC<Props> = (props) => {
                 isLiked={work.isLiked}
                 isBookmarked={work.isBookmarked}
                 isFollowee={work.user.isFollowee}
-                isEditable={false}
+                isEditable={work.user.id === appContext.currentUser?.uid}
               />
             ))}
           </Stack>

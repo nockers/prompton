@@ -15,6 +15,7 @@ export default gql`
         createdAt
         isFollowee
         isRequestable
+        isRequestableForFree
         paymentMethod {
           id
           type

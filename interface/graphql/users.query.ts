@@ -12,6 +12,7 @@ export default gql`
       createdAt
       isFollowee
       isRequestable
+      isRequestableForFree
       works {
         id
         createdAt

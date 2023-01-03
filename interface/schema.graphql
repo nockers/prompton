@@ -284,6 +284,10 @@ type WorkNode implements Node {
   削除されているかどうか
   """
   isDeleted: Boolean!
+  """
+  自分の作品かどうか
+  """
+  isMine: Boolean!
 }
 
 type WorkEdge implements Edge {
