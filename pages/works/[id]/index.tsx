@@ -110,7 +110,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
   }
 
   const onShareWithTwitter = async () => {
-    const text = `${data?.work?.user.name}さんの作品 #AIイラスト #nijijourney #midjourney #AIart`
+    const text = `${data?.work?.user.name}さんの作品 #AIイラスト #nijijourney #midjourney #AIart #prompton`
     if (window.navigator.share) {
       await window.navigator.share({
         title: text,

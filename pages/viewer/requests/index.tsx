@@ -44,7 +44,7 @@ const ViewerRequestsPage: BlitzPage = () => {
             minimumFee: data.viewer.user.minimumFee,
             maximumFee: data.viewer.user.maximumFee,
             isRequestable,
-            isRequestableForFree: false,
+            isRequestableForFree: data.viewer.user.isRequestableForFree,
           },
         },
       })
@@ -53,6 +53,39 @@ const ViewerRequestsPage: BlitzPage = () => {
       }
       if (!isRequestable) {
         toast({ status: "success", description: "リクエストを無効にしました" })
+      }
+      await refetch()
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
+    }
+  }
+
+  const onMarkAsRequestableForFree = async (isRequestable: boolean) => {
+    if (data === null) return
+    try {
+      await updateUserSettings({
+        variables: {
+          input: {
+            minimumFee: data.viewer.user.minimumFee,
+            maximumFee: data.viewer.user.maximumFee,
+            isRequestable: data.viewer.user.isRequestable,
+            isRequestableForFree: isRequestable,
+          },
+        },
+      })
+      if (isRequestable) {
+        toast({
+          status: "success",
+          description: "無償リクエストを有効にしました",
+        })
+      }
+      if (!isRequestable) {
+        toast({
+          status: "success",
+          description: "無償リクエストを無効にしました",
+        })
       }
       await refetch()
     } catch (error) {
@@ -86,6 +119,46 @@ const ViewerRequestsPage: BlitzPage = () => {
     }
   }
 
+  const onShareRequestLink = async () => {
+    const text = `AIイラストのリクエストを受け付けています！ #AIイラスト #prompton`
+    if (window.navigator.share) {
+      await window.navigator.share({
+        title: text,
+        url: location.href,
+      })
+      return
+    }
+    const search = new URLSearchParams([
+      ["text", text],
+      ["url", location.href],
+    ])
+    window.open(
+      "http://twitter.com/share?" + search.toString(),
+      "sharewindow",
+      "width=550, height=450, personalbar=0, toolbar=0, scrollbars=1, resizable=!",
+    )
+  }
+
+  const onShareFreeRequestLink = async () => {
+    const text = `無料でAIイラストのリクエストできます！ #AIイラスト #prompton`
+    if (window.navigator.share) {
+      await window.navigator.share({
+        title: text,
+        url: location.href,
+      })
+      return
+    }
+    const search = new URLSearchParams([
+      ["text", text],
+      ["url", location.href],
+    ])
+    window.open(
+      "http://twitter.com/share?" + search.toString(),
+      "sharewindow",
+      "width=550, height=450, personalbar=0, toolbar=0, scrollbars=1, resizable=!",
+    )
+  }
+
   if (appContext.currentUser === null) {
     return null
   }
@@ -110,7 +183,9 @@ const ViewerRequestsPage: BlitzPage = () => {
           </Stack>
           <Divider />
           <CardViewerRequestSettings
+            userId={data.viewer.user.id}
             isRequestable={data.viewer.user.isRequestable}
+            isRequestableForFree={data.viewer.user.isRequestableForFree}
             minimumFee={data.viewer.user.minimumFee}
             maximumFee={data.viewer.user.maximumFee}
             onChangeFeeRange={(minimumFee, maximumFee) => {
@@ -119,6 +194,11 @@ const ViewerRequestsPage: BlitzPage = () => {
             onMarkAsRequestable={(isRequestable) => {
               onMarkAsRequestable(isRequestable)
             }}
+            onMarkAsRequestableForFree={(isRequestable) => {
+              onMarkAsRequestableForFree(isRequestable)
+            }}
+            onShareRequestLink={onShareRequestLink}
+            onShareFreeRequestLink={onShareFreeRequestLink}
           />
           <Tabs variant={"soft-rounded"}>
             <TabList>

@@ -35,6 +35,10 @@ export class Config {
     return "Prompton（プロンプトン）はAI作品を楽しむ人々のコミュニティサイトです。AI作品を投稿したり依頼を受け付けることができます。"
   }
 
+  static get appURL() {
+    return process.env.NEXT_PUBLIC_APP_URL!
+  }
+
   static get imageUrl() {
     return process.env.NEXT_PUBLIC_IMAGE_URL!
   }
