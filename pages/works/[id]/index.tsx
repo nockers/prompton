@@ -40,7 +40,6 @@ import {
   useDeleteWorkLikeMutation,
   useWorkQuery,
 } from "interface/__generated__/react"
-import { Config } from "interface/config"
 import { AppContext } from "interface/contexts/appContext"
 import { client } from "interface/utils/client"
 
@@ -255,8 +254,8 @@ const WorkPage: BlitzPage<Props> = (props) => {
             <Image
               w={"100%"}
               alt={""}
-              src={`${Config.imageUrl}/${data.work.fileId}?w=1024`}
-              fallbackSrc={`${Config.imageUrl}/${data.work.fileId}?w=512`}
+              src={data.work.imageURL}
+              fallbackSrc={data.work.thumbnailURL}
               borderRadius={4}
             />
           </Box>

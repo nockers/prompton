@@ -3,6 +3,7 @@ import { injectable } from "tsyringe"
 import { Id, IdFactory, LabelEntity, PostAnnotationsUpdatedEvent } from "core"
 import {
   EventStore,
+  ImageAdapter,
   LabelRepository,
   PostRepository,
   VisionAdapter,
@@ -20,6 +21,7 @@ export class UpdatePostAnnotationsCommand {
     private labelRepository: LabelRepository,
     private visionAdapter: VisionAdapter,
     private postRepository: PostRepository,
+    private imageAdapter: ImageAdapter,
   ) {}
 
   async execute(props: Props) {
@@ -79,6 +81,8 @@ export class UpdatePostAnnotationsCommand {
         return new Error()
       }
 
+      const resizableImageURL = await this.imageAdapter.createURL(post.fileId)
+
       const event = new PostAnnotationsUpdatedEvent({
         id: IdFactory.create(),
         postId: post.id,
@@ -90,6 +94,7 @@ export class UpdatePostAnnotationsCommand {
         annotationRacy: annotation.racy,
         annotationSpoof: annotation.spoof,
         annotationViolence: annotation.violence,
+        resizableImageURL: resizableImageURL,
         labelIds: labels.map((label) => {
           return label.id
         }),

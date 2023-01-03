@@ -212,6 +212,18 @@ type WorkNode implements Node {
   """
   fileId: String!
   """
+  画像のURL
+  """
+  imageURL: String!
+  """
+  サムネイル画像のURL
+  """
+  thumbnailURL: String!
+  """
+  正方形のサムネイル画像のURL
+  """
+  squareThumbnailURL: String!
+  """
   プロンプト
   """
   prompt: String

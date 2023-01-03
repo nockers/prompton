@@ -8,6 +8,9 @@ export default gql`
         createdAt
         title
         fileId
+        imageURL
+        thumbnailURL
+        squareThumbnailURL
         likesCount
         prompt
         model

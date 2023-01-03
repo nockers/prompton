@@ -107,6 +107,7 @@ export const UserWorks: FC<Props> = (props) => {
                 ])}
                 postColors={work.colors}
                 postWebColors={work.webColors}
+                postThumbnailURL={work.thumbnailURL}
                 isLiked={false}
                 isBookmarked={false}
                 isFollowee={false}

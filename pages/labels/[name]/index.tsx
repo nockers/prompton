@@ -95,6 +95,7 @@ const LabelPage: BlitzPage<Props> = () => {
                 ])}
                 postColors={work.colors}
                 postWebColors={work.webColors}
+                postThumbnailURL={work.thumbnailURL}
                 userId={work.user.id}
                 userName={work.user.name}
                 userAvatarImageURL={work.user.avatarImageURL}

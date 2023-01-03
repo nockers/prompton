@@ -35,7 +35,6 @@ import {
   useUpdateWorkMutation,
   useWorkQuery,
 } from "interface/__generated__/react"
-import { Config } from "interface/config"
 import { AppContext } from "interface/contexts/appContext"
 
 type Props = {
@@ -51,6 +50,7 @@ type Props = {
   postLabels: [string, number][]
   postColors: string[]
   postWebColors: string[]
+  postThumbnailURL: string
   userId: string
   userName: string
   userAvatarImageURL: string | null
@@ -223,7 +223,7 @@ export const ModalPost: FC<Props> = (props) => {
           <Stack direction={{ base: "column", lg: "row" }} spacing={4}>
             <Image
               alt={""}
-              src={`${Config.imageUrl}/${props.postFileId}?w=512`}
+              src={props.postThumbnailURL}
               borderRadius={8}
               w={"100%"}
             />

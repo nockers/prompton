@@ -116,6 +116,7 @@ model Post {
   model              Model?         @map("model")
   body               String?        @map("body")
   title              String?        @map("title")
+  resizableImageURL  String?        @map("resizable_image_url")
   viewsCount         Int            @default(0) @map("views_count")
   likesCount         Int            @default(0) @map("likes_count")
   likes              Like[]         @relation("post_likes")

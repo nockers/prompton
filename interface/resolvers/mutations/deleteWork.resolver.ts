@@ -36,9 +36,5 @@ export const deleteWorkResolver: Resolvers = async (_, args, ctx) => {
     })
   }
 
-  const a = await db.post.findUnique({ where: { id: args.input.workId } })
-
-  console.log(a)
-
-  return a
+  return db.post.findUnique({ where: { id: args.input.workId } })
 }

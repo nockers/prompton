@@ -2,6 +2,7 @@ import type { Event } from "@prisma/client"
 import type { z } from "zod"
 import type { PostEvent } from "core"
 import {
+  Url,
   PostAnnotationsUpdatedEvent,
   PostCreatedEvent,
   PostDeletedEvent,
@@ -29,6 +30,7 @@ export class PostEventConverter {
         annotationSpoof: event.annotationSpoof,
         annotationViolence: event.annotationViolence,
         labelIds: event.labelIds.map((id) => id.value),
+        resizableImageURL: event.resizableImageURL?.value ?? null,
       }
       return zPostAnnotationsUpdatedEventData.parse(data)
     }
@@ -79,6 +81,9 @@ export class PostEventConverter {
         annotationSpoof: data.annotationSpoof,
         annotationViolence: data.annotationViolence,
         labelIds: data.labelIds.map((id) => new Id(id)),
+        resizableImageURL: data.resizableImageURL
+          ? new Url(data.resizableImageURL)
+          : null,
       })
     }
 

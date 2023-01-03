@@ -1,7 +1,7 @@
 import { z } from "zod"
 import { PrototypeEvent } from "core/events/prototype.event"
 import type { inferEventProps } from "core/types"
-import { Id } from "core/valueObjects"
+import { Id, Url } from "core/valueObjects"
 
 const zProps = z.object({
   postId: z.instanceof(Id),
@@ -13,6 +13,7 @@ const zProps = z.object({
   annotationRacy: z.string().nullable(),
   annotationSpoof: z.string().nullable(),
   annotationViolence: z.string().nullable(),
+  resizableImageURL: z.instanceof(Url).nullable(),
   labelIds: z.array(z.instanceof(Id)),
 })
 
@@ -49,6 +50,8 @@ export class PostAnnotationsUpdatedEvent
   readonly annotationViolence!: Props["annotationViolence"]
 
   readonly labelIds!: Props["labelIds"]
+
+  readonly resizableImageURL!: Props["resizableImageURL"]
 
   constructor(props: Props) {
     super({ ...props, documentId: props.postId })

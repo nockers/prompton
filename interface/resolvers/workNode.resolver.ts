@@ -1,5 +1,6 @@
 import type { Post } from "@prisma/client"
 import db from "db"
+import { Env } from "infrastructure"
 import type { WorkNode } from "interface/__generated__/node"
 import type { PrismaResolvers } from "interface/resolvers/types/prismaResolvers"
 
@@ -15,6 +16,24 @@ export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
   },
   fileId(parent) {
     return parent.fileId
+  },
+  imageURL(parent) {
+    if (parent.resizableImageURL !== null) {
+      return `${parent.resizableImageURL}=s1024`
+    }
+    return `${Env.imageUrl}/${parent.fileId}?w=1024&h=1024`
+  },
+  thumbnailURL(parent) {
+    if (parent.resizableImageURL !== null) {
+      return `${parent.resizableImageURL}=s512`
+    }
+    return `${Env.imageUrl}/${parent.fileId}?w=512&h=512`
+  },
+  squareThumbnailURL(parent) {
+    if (parent.resizableImageURL !== null) {
+      return `${parent.resizableImageURL}=s256-c`
+    }
+    return `${Env.imageUrl}/${parent.fileId}?w=256&h=256`
   },
   prompt(parent) {
     return parent.prompt

@@ -55,6 +55,7 @@ export const SearchLabelList: FC<Props> = (props) => {
                   ])}
                   postColors={work.colors}
                   postWebColors={work.webColors}
+                  postSquareThumbnailURL={work.squareThumbnailURL}
                   userId={work.user.id}
                   userName={work.user.name}
                   userAvatarImageURL={work.user.avatarImageURL}

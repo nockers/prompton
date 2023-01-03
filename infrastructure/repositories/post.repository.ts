@@ -1,5 +1,5 @@
 import { captureException } from "@sentry/node"
-import { Id, PostEntity } from "core"
+import { Id, PostEntity, Url } from "core"
 import db from "db"
 
 export class PostRepository {
@@ -27,6 +27,10 @@ export class PostRepository {
         annotationRacy: post.annotationRacy,
         annotationSpoof: post.annotationSpoof,
         annotationViolence: post.annotationViolence,
+        resizableImageURL:
+          post.resizableImageURL !== null
+            ? new Url(post.resizableImageURL)
+            : null,
         labelIds: post.labels.map((label) => {
           return new Id(label.id)
         }),
@@ -70,6 +74,7 @@ export class PostRepository {
           annotationRacy: entity.annotationRacy,
           annotationSpoof: entity.annotationSpoof,
           annotationViolence: entity.annotationViolence,
+          resizableImageURL: entity.resizableImageURL?.value,
           labels: {
             connect: entity.labelIds.map((labelId) => {
               return { id: labelId.value }

@@ -1,5 +1,5 @@
 import { z } from "zod"
-import { Id } from "core/valueObjects"
+import { Id, Url } from "core/valueObjects"
 
 const zProps = z.object({
   id: z.instanceof(Id),
@@ -15,6 +15,7 @@ const zProps = z.object({
   annotationSpoof: z.string().nullable(),
   annotationViolence: z.string().nullable(),
   labelIds: z.array(z.instanceof(Id)),
+  resizableImageURL: z.instanceof(Url).nullable(),
 })
 
 type Props = z.infer<typeof zProps>
@@ -60,6 +61,8 @@ export class PostEntity {
   readonly annotationViolence!: Props["annotationViolence"]
 
   readonly labelIds!: Props["labelIds"]
+
+  readonly resizableImageURL!: Props["resizableImageURL"]
 
   constructor(public props: Props) {
     zProps.parse(props)
@@ -127,6 +130,13 @@ export class PostEntity {
     return new PostEntity({
       ...this.props,
       labelIds,
+    })
+  }
+
+  updateResizableImageURL(resizableImageURL: Url | null) {
+    return new PostEntity({
+      ...this.props,
+      resizableImageURL,
     })
   }
 }

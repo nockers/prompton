@@ -89,4 +89,12 @@ export class Env {
   static get stripeSecretKey() {
     return process.env.STRIPE_SECRET_KEY!
   }
+
+  static get appEngineURL() {
+    return process.env.APP_ENGINE_URL!
+  }
+
+  static get storageBucker() {
+    return process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET!
+  }
 }

@@ -53,6 +53,7 @@ export class PostEventStore {
       .updateAnnotationViolence(event.annotationViolence)
       .updateAnnotationRacy(event.annotationRacy)
       .updateLabelIds(event.labelIds)
+      .updateResizableImageURL(event.resizableImageURL)
 
     return this.repository.persist(draftPost)
   }
@@ -71,6 +72,7 @@ export class PostEventStore {
       annotationRacy: null,
       annotationSpoof: null,
       annotationViolence: null,
+      resizableImageURL: null,
       labelIds: [],
     })
 

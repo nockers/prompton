@@ -1,4 +1,4 @@
-export * from "./payment.adapter"
+export * from "./image.adapter"
 export * from "./payment.adapter"
 export * from "./storage.adapter"
 export * from "./translation.adapter"

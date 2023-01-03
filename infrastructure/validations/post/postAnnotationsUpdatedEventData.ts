@@ -11,4 +11,5 @@ export const zPostAnnotationsUpdatedEventData = z.object({
   annotationSpoof: z.string().nullable(),
   annotationViolence: z.string().nullable(),
   labelIds: z.array(z.string()),
+  resizableImageURL: z.string().nullable(),
 })

@@ -4,6 +4,7 @@ import type { PostCreatedEvent } from "core"
 import { LabelCreatedEvent, IdFactory, PostAnnotationsUpdatedEvent } from "core"
 import {
   EventStore,
+  ImageAdapter,
   LabelRepository,
   PostRepository,
   VisionAdapter,
@@ -17,6 +18,7 @@ export class PostCreatedEventHandler {
     private labelRepository: LabelRepository,
     private visionAdapter: VisionAdapter,
     private postRepository: PostRepository,
+    private imageAdapter: ImageAdapter,
   ) {}
 
   async execute(event: PostCreatedEvent) {
@@ -74,6 +76,8 @@ export class PostCreatedEventHandler {
         return new Error()
       }
 
+      const resizableImageURL = await this.imageAdapter.createURL(post.fileId)
+
       const nextEvent = new PostAnnotationsUpdatedEvent({
         id: IdFactory.create(),
         postId: post.id,
@@ -85,6 +89,7 @@ export class PostCreatedEventHandler {
         annotationRacy: annotation.racy,
         annotationSpoof: annotation.spoof,
         annotationViolence: annotation.violence,
+        resizableImageURL: resizableImageURL,
         labelIds: labels.map((label) => {
           return label.id
         }),

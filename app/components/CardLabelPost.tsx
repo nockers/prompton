@@ -2,7 +2,6 @@ import { Image, useDisclosure, Button, Box } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import type { FC } from "react"
 import { ModalPost } from "app/components/ModalPost"
-import { Config } from "interface/config"
 
 type Props = {
   id: string
@@ -17,6 +16,7 @@ type Props = {
   postLabels: [string, number][]
   postColors: string[]
   postWebColors: string[]
+  postSquareThumbnailURL: string
   userId: string
   userName: string
   userAvatarImageURL: string | null
@@ -71,11 +71,7 @@ export const CardLabelPost: FC<Props> = (props) => {
         overflow={"hidden"}
       >
         <Box position={"relative"}>
-          <Image
-            w={"100%"}
-            alt={""}
-            src={`${Config.imageUrl}/${props.postFileId}?w=256&h=245`}
-          />
+          <Image w={"100%"} alt={""} src={props.postSquareThumbnailURL} />
         </Box>
       </Button>
       <ModalPost
@@ -91,6 +87,7 @@ export const CardLabelPost: FC<Props> = (props) => {
         postLabels={props.postLabels}
         postColors={props.postColors}
         postWebColors={props.postWebColors}
+        postThumbnailURL={props.postSquareThumbnailURL}
         userId={props.userId}
         userName={props.userName}
         userAvatarImageURL={props.userAvatarImageURL}

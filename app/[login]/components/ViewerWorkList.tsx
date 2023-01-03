@@ -96,6 +96,7 @@ export const ViewerWorkList: FC = () => {
                 ])}
                 postColors={work.colors}
                 postWebColors={work.webColors}
+                postThumbnailURL={work.thumbnailURL}
                 isLiked={false}
                 isBookmarked={false}
                 isFollowee={false}

@@ -9,7 +9,6 @@ export const useRedirectResult = (props: Props) => {
   useEffect(() => {
     if (typeof window === "undefined") return
     if (location.search === "") return
-    console.log("call")
     if (location.search.includes("success")) {
       props.onSuccess()
     }
