@@ -37,6 +37,7 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
     return db.user.findUnique({ where: { id: parent.id } }).posts({
       orderBy: { createdAt: "desc" },
       where: { isDeleted: false },
+      take: 4,
     })
   },
   followersCount(parent) {
@@ -63,7 +64,7 @@ export const UserNodeResolvers: PrismaResolvers<UserNode, User> = {
   isRequestable(parent) {
     return parent.isRequestable
   },
-  async paymentMethod(parent, _, ctx) {
+  async paymentMethod(_, __, ctx) {
     if (ctx.currentUser === null) return null
     const stripe = new Stripe(Env.stripeSecretKey, {
       apiVersion: "2022-11-15",

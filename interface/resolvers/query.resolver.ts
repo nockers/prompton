@@ -149,7 +149,9 @@ export const QueryResolvers: Resolvers = {
       })
     }
     return db.user.findMany({
-      orderBy: { createdAt: "desc" },
+      orderBy: {
+        posts: { _count: "desc" },
+      },
       take: take,
       skip: skip,
       where: {
