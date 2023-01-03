@@ -21,7 +21,7 @@ export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
     if (parent.resizableImageURL !== null) {
       return `${parent.resizableImageURL}=s1024`
     }
-    return `${Env.imageUrl}/${parent.fileId}?w=1024&h=1024`
+    return `${Env.imageUrl}/${parent.fileId}?w=1024`
   },
   thumbnailURL(parent) {
     if (parent.resizableImageURL !== null) {
