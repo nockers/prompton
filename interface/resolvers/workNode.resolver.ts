@@ -36,10 +36,22 @@ export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
     return `${Env.imageUrl}/${parent.fileId}?w=256&h=256`
   },
   prompt(parent) {
-    return parent.prompt
+    return parent.prompt || parent.detectedPrompt
   },
-  model(parent) {
-    return parent.model
+  detectedPrompt(parent) {
+    return parent.detectedPrompt
+  },
+  software(parent) {
+    return parent.software || parent.detectedSoftware
+  },
+  detectedSoftware(parent) {
+    return parent.detectedSoftware
+  },
+  seed(parent) {
+    return parent.seed || parent.detectedSeed
+  },
+  detectedSeed(parent) {
+    return parent.detectedSeed
   },
   async likesCount(parent) {
     const post = await db.post.findUnique({

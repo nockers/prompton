@@ -1,5 +1,5 @@
 import { captureException } from "@sentry/node"
-import { Id, PostEntity, Url } from "core"
+import { Id, PostEntity, SoftwareFactory, Url } from "core"
 import db from "db"
 
 export class PostRepository {
@@ -20,6 +20,17 @@ export class PostRepository {
         fileId: new Id(post.fileId),
         userId: new Id(post.userId),
         prompt: post.prompt,
+        detectedPrompt: post.detectedPrompt,
+        software:
+          post.software !== null
+            ? SoftwareFactory.fromText(post.software)
+            : null,
+        detectedSoftware:
+          post.detectedSoftware !== null
+            ? SoftwareFactory.fromText(post.detectedSoftware)
+            : null,
+        seed: post.seed,
+        detectedSeed: post.detectedSeed,
         colors: post.colors,
         webColors: post.webColors,
         annotationAdult: post.annotationAdult,
@@ -51,6 +62,11 @@ export class PostRepository {
           fileId: entity.fileId.value,
           userId: entity.userId.value,
           prompt: entity.prompt,
+          detectedPrompt: entity.detectedPrompt,
+          software: entity.software?.value ?? null,
+          detectedSoftware: entity.detectedSoftware?.value ?? null,
+          seed: entity.seed,
+          detectedSeed: entity.detectedSeed,
           colors: entity.colors,
           webColors: entity.webColors,
           annotationAdult: entity.annotationAdult,
@@ -67,6 +83,11 @@ export class PostRepository {
         update: {
           title: entity.title,
           prompt: entity.prompt,
+          detectedPrompt: entity.detectedPrompt,
+          software: entity.software?.value ?? null,
+          detectedSoftware: entity.detectedSoftware?.value ?? null,
+          seed: entity.seed,
+          detectedSeed: entity.detectedSeed,
           colors: entity.colors,
           webColors: entity.webColors,
           annotationAdult: entity.annotationAdult,

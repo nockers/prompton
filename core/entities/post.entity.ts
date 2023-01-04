@@ -1,11 +1,16 @@
 import { z } from "zod"
-import { Id, Url } from "core/valueObjects"
+import { Id, Software, Url } from "core/valueObjects"
 
 const zProps = z.object({
   id: z.instanceof(Id),
   title: z.string().nullable(),
   fileId: z.instanceof(Id),
   prompt: z.string().nullable(),
+  detectedPrompt: z.string().nullable(),
+  seed: z.string().nullable(),
+  detectedSeed: z.string().nullable(),
+  software: z.instanceof(Software).nullable(),
+  detectedSoftware: z.instanceof(Software).nullable(),
   userId: z.instanceof(Id),
   colors: z.array(z.string()),
   webColors: z.array(z.string()),
@@ -23,7 +28,7 @@ type Props = z.infer<typeof zProps>
 /**
  * 投稿
  */
-export class PostEntity {
+export class PostEntity implements Props {
   /**
    * ID
    */
@@ -45,6 +50,16 @@ export class PostEntity {
   readonly userId!: Props["userId"]
 
   readonly prompt!: Props["prompt"]
+
+  readonly detectedPrompt!: Props["detectedPrompt"]
+
+  readonly seed!: Props["seed"]
+
+  readonly detectedSeed!: Props["detectedSeed"]
+
+  readonly software!: Props["software"]
+
+  readonly detectedSoftware!: Props["detectedSoftware"]
 
   readonly colors!: Props["colors"]
 

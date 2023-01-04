@@ -1,7 +1,7 @@
 import { Button, HStack, Spinner, Stack } from "@chakra-ui/react"
 import type { FC } from "react"
 import { useContext } from "react"
-import { CardPost } from "app/components/CardPost"
+import { CardWork } from "app/components/CardWork"
 import { useHomeColumnCount } from "app/hooks/useHomeColumnCount"
 import { useWorksQuery } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
@@ -60,7 +60,7 @@ export const HomeWorkList: FC = () => {
         {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
           <Stack key={index} spacing={4} flex={1}>
             {column.map((work) => (
-              <CardPost
+              <CardWork
                 id={work.id}
                 key={work.id}
                 postFileId={work.fileId}

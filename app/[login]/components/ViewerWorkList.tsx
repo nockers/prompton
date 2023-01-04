@@ -41,7 +41,14 @@ export const ViewerWorkList: FC = () => {
       })
       for (const file of Array.from(files)) {
         const fileId = await uploadFile(file)
-        await createWork({ variables: { input: { fileId: fileId } } })
+        await createWork({
+          variables: {
+            input: {
+              fileId: fileId,
+              fileName: file.name,
+            },
+          },
+        })
       }
       toast.close(id)
       toast({

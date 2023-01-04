@@ -2,6 +2,7 @@ import type { Event } from "@prisma/client"
 import type { z } from "zod"
 import type { PostEvent } from "core"
 import {
+  SoftwareFactory,
   Url,
   PostAnnotationsUpdatedEvent,
   PostCreatedEvent,
@@ -40,6 +41,12 @@ export class PostEventConverter {
         postId: event.postId.value,
         userId: event.userId.value,
         fileId: event.fileId.value,
+        detectedSeed: event.detectedSeed ?? null,
+        detectedSoftware: event.detectedSoftware?.value ?? null,
+        detectedPrompt: event.detectedPrompt ?? null,
+        prompt: event.prompt ?? null,
+        software: event.software?.value ?? null,
+        seed: event.seed ?? null,
       }
       return zPostCreatedEventData.parse(data)
     }
@@ -95,6 +102,20 @@ export class PostEventConverter {
         postId: new Id(data.postId),
         userId: new Id(data.userId),
         fileId: new Id(data.fileId),
+        detectedSoftware:
+          typeof data.detectedSoftware === "string"
+            ? SoftwareFactory.fromFileName(data.detectedSoftware)
+            : null,
+        detectedPrompt:
+          typeof data.detectedPrompt === "string" ? data.detectedPrompt : null,
+        detectedSeed:
+          typeof data.detectedSeed === "string" ? data.detectedSeed : null,
+        software:
+          typeof data.software === "string"
+            ? SoftwareFactory.fromFileName(data.software)
+            : null,
+        prompt: typeof data.prompt === "string" ? data.prompt : null,
+        seed: typeof data.seed === "string" ? data.seed : null,
       })
     }
 

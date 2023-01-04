@@ -25,6 +25,7 @@ export const createWorkResolver = async (
   const event = await command.execute({
     userId: ctx.currentUser.uid,
     postFileId: args.input.fileId,
+    postFileName: args.input.fileName,
   })
 
   if (event instanceof Error) {

@@ -26,7 +26,7 @@ type Props = {
   isEditable: boolean
 }
 
-export const CardPost: FC<Props> = (props) => {
+export const CardWork: FC<Props> = (props) => {
   const router = useRouter()
 
   const { isOpen, onOpen, onClose } = useDisclosure()

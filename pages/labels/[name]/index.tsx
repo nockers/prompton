@@ -4,7 +4,7 @@ import type { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import UserLayout from "app/[login]/layout"
-import { CardPost } from "app/components/CardPost"
+import { CardWork } from "app/components/CardWork"
 import { MainFallback } from "app/components/MainFallback"
 import { MainStack } from "app/components/MainStack"
 import { useColumnCount } from "app/hooks/useColumnCount"
@@ -78,7 +78,7 @@ const LabelPage: BlitzPage<Props> = () => {
         {toColumnArray(data?.works ?? [], columnCount).map((column, index) => (
           <Stack key={index} spacing={4}>
             {column.map((work) => (
-              <CardPost
+              <CardWork
                 id={work.id}
                 key={work.id}
                 postFileId={work.fileId}

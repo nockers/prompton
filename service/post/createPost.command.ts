@@ -1,11 +1,12 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
-import { Id, IdFactory, PostCreatedEvent } from "core"
+import { Id, IdFactory, PostCreatedEvent, SoftwareFactory } from "core"
 import { EventStore } from "infrastructure"
 
 type Props = {
   userId: string
   postFileId: string
+  postFileName: string
 }
 
 @injectable()
@@ -16,11 +17,23 @@ export class CreatePostCommand {
     try {
       const postId = IdFactory.create()
 
+      const detectedSoftware = SoftwareFactory.fromFileName(props.postFileName)
+
+      const detectedPrompt = this.parsePrompt(props.postFileName)
+
+      const detectedSeed = this.parseSeed(props.postFileName)
+
       const event = new PostCreatedEvent({
         id: IdFactory.create(),
         postId: postId,
         fileId: new Id(props.postFileId),
         userId: new Id(props.userId),
+        detectedSoftware: detectedSoftware,
+        detectedPrompt: detectedPrompt,
+        detectedSeed: detectedSeed,
+        software: null,
+        prompt: null,
+        seed: null,
       })
 
       await this.eventStore.commit(event)
@@ -30,5 +43,45 @@ export class CreatePostCommand {
       captureException(error)
       return new Error()
     }
+  }
+
+  parsePrompt(fileName: string) {
+    const software = SoftwareFactory.fromFileName(fileName)
+
+    if (software === null) {
+      return null
+    }
+
+    if (software.isHolara) {
+      const text = fileName
+        .replace("_0.png", "")
+        .replace("_1.png", "")
+        .replace("_2.png", "")
+        .replace("_3.png", "")
+      const [, ...prompts] = text.split("_")
+      return prompts.join("_")
+    }
+
+    return null
+  }
+
+  parseSeed(fileName: string) {
+    const software = SoftwareFactory.fromFileName(fileName)
+
+    if (software === null) {
+      return null
+    }
+
+    if (software.isHolara) {
+      const text = fileName
+        .replace("_0.png", "")
+        .replace("_1.png", "")
+        .replace("_2.png", "")
+        .replace("_3.png", "")
+      const [seed] = text.split("_")
+      return seed
+    }
+
+    return null
   }
 }

@@ -13,7 +13,11 @@ export default gql`
         squareThumbnailURL
         likesCount
         prompt
-        model
+        detectedPrompt
+        software
+        detectedSoftware
+        seed
+        detectedSeed
         annotationAdult
         annotationMedical
         annotationViolence

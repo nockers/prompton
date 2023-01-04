@@ -114,7 +114,9 @@ model Post {
   userId             String         @map("user_id")
   fileId             String         @unique @map("file_id")
   prompt             String?        @map("prompt")
-  model              Model?         @map("model")
+  detectedPrompt     String?        @map("deleted_prompt")
+  software           Software?      @map("software")
+  detectedSoftware   Software?      @map("detected_software")
   body               String?        @map("body")
   title              String?        @map("title")
   resizableImageURL  String?        @map("resizable_image_url")
@@ -138,6 +140,8 @@ model Post {
   request            Request?       @relation("request_posts", fields: [requestId], references: [id])
   requestId          String?        @map("request_id")
   deliverable        Deliverable?   @relation("deliverable_post")
+  seed               String?        @map("seed")
+  detectedSeed       String?        @map("detected_seed")
 
   @@map("posts")
 }
@@ -430,11 +434,15 @@ enum Language {
   @@map("language")
 }
 
-enum Model {
+enum Software {
   NOVEL_AI
   STABLE_DIFFUSION
   MIDJOURNEY
+  NIJIJOURNEY
   DALL_E_2
+  HOLARA
+
+  @@map("software")
 }
 
 enum PlanCategory {
@@ -442,4 +450,6 @@ enum PlanCategory {
   ILLUSTRATION_FREEDOM
   ILLUSTRATION_MODIFICATION
   ILLUSTRATION_IMAGE_TO_IMAGE
+
+  @@map("plan_category")
 }

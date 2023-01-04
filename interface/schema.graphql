@@ -228,9 +228,25 @@ type WorkNode implements Node {
   """
   prompt: String
   """
-  学習モデル
+  検出されたプロンプト
   """
-  model: String
+  detectedPrompt: String
+  """
+  ソフトウェア
+  """
+  software: String
+  """
+  検出されたソフトウェア
+  """
+  detectedSoftware: String
+  """
+  シード値
+  """
+  seed: String
+  """
+  検出されたシード値
+  """
+  detectedSeed: String
   """
   いいね数
   """
@@ -545,6 +561,7 @@ type Mutation {
 
 input CreateWorkInput {
   fileId: String!
+  fileName: String!
 }
 
 input DeleteWorkInput {

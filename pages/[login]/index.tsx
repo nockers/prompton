@@ -44,7 +44,7 @@ const UserPage: BlitzPage = () => {
         >
           <UserProfileHeader userId={userId} />
           <Divider />
-          <UserWorks userId={userId} isEditable={isMyPage} />
+          <UserWorks userId={userId} />
         </Stack>
       </MainStack>
     )
