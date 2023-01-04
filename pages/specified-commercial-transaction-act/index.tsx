@@ -15,6 +15,9 @@ const SpecifiedCommercialTransactionActPage: BlitzPage = () => {
             <Text fontWeight={"bold"} fontSize={"xl"}>
               {"特定商取引法に基づく表記"}
             </Text>
+            <Text fontSize={"sm"}>
+              {"本サービスは取引仲介システムを通して販売機会の提供を行います。"}
+            </Text>
           </Stack>
           <Divider />
           <Card
@@ -25,29 +28,37 @@ const SpecifiedCommercialTransactionActPage: BlitzPage = () => {
             borderRadius={"xl"}
           >
             <Stack spacing={4}>
-              <HStack spacing={2}>
+              <Stack spacing={1}>
                 <Text fontWeight={"bold"} minW={"max-content"}>
-                  {"商品"}
+                  {"提供するもの"}
                 </Text>
-                <Text>{"イラストを依頼する為の依頼チケット"}</Text>
-              </HStack>
+                <Text>
+                  {
+                    "イラストなどの制作物を有償で指定するリクエストの権利の販売機会。"
+                  }
+                </Text>
+              </Stack>
+              <Divider />
+              <Stack spacing={1}>
+                <Text fontWeight={"bold"} minW={"max-content"}>
+                  {"役務の対価"}
+                </Text>
+                <Text>{"購入者が指定した購入額に対する最大10%の手数料。"}</Text>
+              </Stack>
               <Divider />
               <Stack spacing={1}>
                 <Text fontWeight={"bold"} minW={"max-content"}>
                   {"商品の提供時期"}
                 </Text>
-                <Text>{"決済が完了してから即時反映されます。"}</Text>
+                <Text>{"購入者との取引の成立した際。"}</Text>
               </Stack>
               <Divider />
               <Stack spacing={1}>
                 <Text fontWeight={"bold"} minW={"max-content"}>
                   {"販売価格"}
                 </Text>
-                <Text>
-                  {"価格は商品によって異なり、価格は各ページに記載があります。"}
-                </Text>
+                <Text>{"購入者が最大8000円までの購入額を設定します。"}</Text>
               </Stack>
-
               <Divider />
               <Stack spacing={1}>
                 <Text fontWeight={"bold"} minW={"max-content"}>
@@ -55,7 +66,7 @@ const SpecifiedCommercialTransactionActPage: BlitzPage = () => {
                 </Text>
                 <Text>
                   {
-                    "チケットを購入後、依頼が承諾されるまでの間は返金が可能です。"
+                    "取引成立後から10日間が経過しても制作物が納品されなかった場合のみ自動返金されます。"
                   }
                 </Text>
               </Stack>
@@ -83,13 +94,6 @@ const SpecifiedCommercialTransactionActPage: BlitzPage = () => {
                   }
                 </Text>
               </Stack>
-              <Divider />
-              <HStack spacing={4} alignItems={"flex-start"}>
-                <Text fontWeight={"bold"} minW={"max-content"}>
-                  {"営業時間"}
-                </Text>
-                <Text>{"土日（10時から17時）（祝日は休み）"}</Text>
-              </HStack>
               <Divider />
               <HStack spacing={4}>
                 <Text fontWeight={"bold"} minW={"max-content"}>
