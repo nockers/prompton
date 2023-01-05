@@ -57,12 +57,14 @@ const SpecifiedCommercialTransactionActPage: BlitzPage = () => {
                 <Text fontWeight={"bold"} minW={"max-content"}>
                   {"販売価格"}
                 </Text>
-                <Text>{"購入者が最大8000円までの購入額を設定します。"}</Text>
+                <Text>
+                  {"各商品ページに最大8000円までの金額が記載されます。"}
+                </Text>
               </Stack>
               <Divider />
               <Stack spacing={1}>
                 <Text fontWeight={"bold"} minW={"max-content"}>
-                  {"返品について"}
+                  {"返金について"}
                 </Text>
                 <Text>
                   {
@@ -75,11 +77,7 @@ const SpecifiedCommercialTransactionActPage: BlitzPage = () => {
                 <Text fontWeight={"bold"} minW={"max-content"}>
                   {"支払い方法について"}
                 </Text>
-                <Text>
-                  {
-                    "クレジットカードまたはデビットカード、プリペイドカードでのオンラインカード決済"
-                  }
-                </Text>
+                <Text>{"クレジットカードまたはデビットカード"}</Text>
               </Stack>
               <Divider />
               <Stack spacing={1}>
@@ -95,18 +93,25 @@ const SpecifiedCommercialTransactionActPage: BlitzPage = () => {
                 </Text>
               </Stack>
               <Divider />
-              <HStack spacing={4}>
-                <Text fontWeight={"bold"} minW={"max-content"}>
-                  {"責任者"}
-                </Text>
-                <Text>{"代表取締役 高田亜門"}</Text>
-              </HStack>
-              <Divider />
-              <HStack spacing={4}>
+              <Stack spacing={1}>
                 <Text fontWeight={"bold"} minW={"max-content"}>
                   {"連絡先"}
                 </Text>
-                <Text>{"hello@nocker.io"}</Text>
+                <HStack>
+                  <Text>{"メールアドレス"}</Text>
+                  <Text>{"hello@nocker.io"}</Text>
+                </HStack>
+                <HStack>
+                  <Text>{"電話番号"}</Text>
+                  <Text>{"07089973096"}</Text>
+                </HStack>
+              </Stack>
+              <Divider />
+              <HStack spacing={4}>
+                <Text fontWeight={"bold"} minW={"max-content"}>
+                  {"運営統括責任者"}
+                </Text>
+                <Text>{"代表 高田亜門"}</Text>
               </HStack>
             </Stack>
           </Card>

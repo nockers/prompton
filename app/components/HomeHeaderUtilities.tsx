@@ -103,7 +103,7 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
             </MenuItem>
             <MenuDivider />
             <Link href={"/about"}>
-              <MenuItem>{"サイトについて"}</MenuItem>
+              <MenuItem>{"サービスについて"}</MenuItem>
             </Link>
             <MenuItem isDisabled>{"使い方"}</MenuItem>
             <Link href={"/guide"}>
@@ -215,7 +215,7 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
           </MenuItem>
           <MenuDivider />
           <Link href={"/about"}>
-            <MenuItem>{"サイトについて"}</MenuItem>
+            <MenuItem>{"サービスについて"}</MenuItem>
           </Link>
           <MenuItem isDisabled>{"使い方"}</MenuItem>
           <Link href={"/guide"}>
