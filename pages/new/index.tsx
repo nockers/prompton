@@ -14,7 +14,7 @@ import {
 import { useRouter } from "next/router"
 import type { FC } from "react"
 import { useState } from "react"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 import { useCreateUserMutation } from "interface/__generated__/react"
 
 const LoginPage: FC = () => {
@@ -44,7 +44,7 @@ const LoginPage: FC = () => {
   }
 
   return (
-    <MainStack title={"アカウント作成"} description={null} fileId={null}>
+    <MainStackJA title={"アカウント作成"} description={null} fileId={null}>
       <HStack px={4} pt={16} justifyContent={"center"}>
         <Card
           variant={"outline"}
@@ -87,7 +87,7 @@ const LoginPage: FC = () => {
           </Stack>
         </Card>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

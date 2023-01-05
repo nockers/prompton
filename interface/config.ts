@@ -24,7 +24,7 @@ export class Config {
   }
 
   static get siteCatchphraseJA() {
-    return "AI作品の依頼サイト"
+    return "AI創作を気軽にリクエスト"
   }
 
   static get siteDescriptionEN() {
@@ -32,7 +32,7 @@ export class Config {
   }
 
   static get siteDescriptionJA() {
-    return "Prompton（プロンプトン）はAI作品を楽しむ人々のコミュニティサイトです。AI作品を投稿したり依頼を受け付けることができます。"
+    return "Prompton（プロンプトン）ではAI作品を投稿したり有償でリクエストすることができます。"
   }
 
   static get appURL() {

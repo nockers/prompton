@@ -1,10 +1,10 @@
 import type { BlitzPage } from "@blitzjs/auth"
 import { Card, Divider, HStack, Stack, Text } from "@chakra-ui/react"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 
 const SpecifiedCommercialTransactionActPage: BlitzPage = () => {
   return (
-    <MainStack
+    <MainStackJA
       title={"特定商取引法に基づく表記"}
       description={null}
       fileId={null}
@@ -112,7 +112,7 @@ const SpecifiedCommercialTransactionActPage: BlitzPage = () => {
           </Card>
         </Stack>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

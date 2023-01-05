@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import { BiArrowBack } from "react-icons/bi"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 import { TagRequestStatus } from "app/requests/components/TagRequestStatus"
 import ViewerLayout from "app/viewer/layout"
 
@@ -29,7 +29,7 @@ const ViewerRequestPage: BlitzPage = () => {
   }
 
   return (
-    <MainStack title={"リクエスト"} description={null} fileId={null}>
+    <MainStackJA title={"リクエスト"} description={null} fileId={null}>
       <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
         <Stack
           pt={{ base: 4, md: 8 }}
@@ -70,7 +70,7 @@ const ViewerRequestPage: BlitzPage = () => {
           </Stack>
         </Stack>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

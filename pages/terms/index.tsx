@@ -3,7 +3,7 @@ import type { BlitzPage } from "@blitzjs/auth"
 import { Card, Divider, HStack, Stack, Text } from "@chakra-ui/react"
 import type { GetStaticProps } from "next"
 import { MarkdownDocument } from "app/components/BoxMarkdown"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 
 type Props = {
   text: string
@@ -13,7 +13,7 @@ const TermsPage: BlitzPage<Props> = (props) => {
   const introductionText = `この利用規約（以下、「本規約」といいます。）は、Nocker株式会社（以下、「当社」といいます。）がこのウェブサイト上で提供するサービス（以下、「本サービス」といいます。）の利用条件を定めるものです。登録ユーザーの皆さま（以下、「ユーザー」といいます。）には、本規約に従って、本サービスをご利用いただきます。`
 
   return (
-    <MainStack title={"利用規約"} description={null} fileId={null}>
+    <MainStackJA title={"利用規約"} description={null} fileId={null}>
       <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
         <Stack w={"100%"} maxW={"container.md"} spacing={{ base: 4, md: 8 }}>
           <Stack pt={{ base: 4, md: 8 }}>
@@ -34,7 +34,7 @@ const TermsPage: BlitzPage<Props> = (props) => {
           </Card>
         </Stack>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

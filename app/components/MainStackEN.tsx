@@ -11,7 +11,7 @@ type Props = {
   children: ReactNode
 }
 
-export const MainStack: FC<Props> = (props) => {
+export const MainStackEN: FC<Props> = (props) => {
   const appName = Config.siteName
 
   const defaultTitle = `${appName} - ${Config.siteCatchphraseEN}`

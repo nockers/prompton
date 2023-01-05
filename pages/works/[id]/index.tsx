@@ -22,7 +22,7 @@ import { ButtonLike } from "app/components/ButtonLike"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
 import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"
 import { MainFallback } from "app/components/MainFallback"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 import { ShareButtonTwitter } from "app/components/ShareButtonTwitter"
 import { UserWorkList } from "app/components/WorkList"
 import type {
@@ -237,7 +237,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
   const isSelf = data.work.user.id === appContext.currentUser?.uid
 
   return (
-    <MainStack
+    <MainStackJA
       title={`${data.work.user.name}さんの作品`}
       description={data.work.prompt || `${data.work.id}`}
       fileId={data.work.fileId}
@@ -351,7 +351,7 @@ const WorkPage: BlitzPage<Props> = (props) => {
           userId={data.work.user.id}
         />
       </Box>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

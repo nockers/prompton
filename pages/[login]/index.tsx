@@ -10,7 +10,7 @@ import { ViewerLikedWorkList } from "app/[login]/components/ViewerLikedWorkList"
 import { ViewerUserProfileHeader } from "app/[login]/components/ViewerUserProfileHeader"
 import { ViewerWorkList } from "app/[login]/components/ViewerWorkList"
 import UserLayout from "app/[login]/layout"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 import { AppContext } from "interface/contexts/appContext"
 
 type Props = {}
@@ -36,7 +36,7 @@ const UserPage: BlitzPage = () => {
 
   if (router.query.login !== appContext.currentUser?.uid) {
     return (
-      <MainStack title={null} description={null} fileId={null}>
+      <MainStackJA title={null} description={null} fileId={null}>
         <Stack
           spacing={{ base: 4, md: 8 }}
           px={{ base: 4, md: 8 }}
@@ -46,12 +46,12 @@ const UserPage: BlitzPage = () => {
           <Divider />
           <UserWorks userId={userId} />
         </Stack>
-      </MainStack>
+      </MainStackJA>
     )
   }
 
   return (
-    <MainStack title={null} description={null} fileId={null}>
+    <MainStackJA title={null} description={null} fileId={null}>
       <Stack pt={{ base: 4, md: 8 }} spacing={{ base: 4, md: 8 }}>
         <Box px={{ base: 4, md: 8 }}>
           <ViewerUserProfileHeader userId={userId} />
@@ -78,7 +78,7 @@ const UserPage: BlitzPage = () => {
           {tabIndex === 2 && <ViewerBookmarkedWorkList />}
         </Box>
       </Stack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

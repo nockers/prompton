@@ -15,7 +15,7 @@ import type { FC } from "react"
 import { BiChevronLeft } from "react-icons/bi"
 import { MarkdownDocument } from "app/components/BoxMarkdown"
 import { MainFallback } from "app/components/MainFallback"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 import { Env } from "infrastructure/env"
 import type { StrapiPosts } from "interface/types/strapiPosts"
 
@@ -38,7 +38,7 @@ const BlogPostPage: FC<Props> = (props) => {
   }
 
   return (
-    <MainStack title={props.title} description={props.body} fileId={null}>
+    <MainStackJA title={props.title} description={props.body} fileId={null}>
       <HStack justifyContent={"center"}>
         <Stack maxW={"xl"} w={"100%"} spacing={8} py={4}>
           <Stack spacing={1}>
@@ -60,7 +60,7 @@ const BlogPostPage: FC<Props> = (props) => {
           </HStack>
         </Stack>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

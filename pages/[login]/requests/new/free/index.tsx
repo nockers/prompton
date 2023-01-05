@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useContext, useEffect } from "react"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 import { useRedirectResult } from "app/hooks/useRedirectResult"
 import {
   useCreatePaymentMethodMutation,
@@ -117,7 +117,7 @@ const UserRequestsNewFreePage: BlitzPage = () => {
   }
 
   return (
-    <MainStack title={"リクエスト"} description={null} fileId={null}>
+    <MainStackJA title={"リクエスト"} description={null} fileId={null}>
       <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
         <Stack w={"100%"} maxW={"container.md"} spacing={{ base: 4, md: 8 }}>
           <Stack pt={{ base: 4, md: 8 }}>
@@ -163,7 +163,7 @@ const UserRequestsNewFreePage: BlitzPage = () => {
           </Stack>
         </Stack>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

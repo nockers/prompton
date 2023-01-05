@@ -2,11 +2,11 @@ import type { BlitzPage } from "@blitzjs/auth"
 import { Button, Card, HStack, Icon, Stack, Tag, Text } from "@chakra-ui/react"
 import Link from "next/link"
 import { BiPlus } from "react-icons/bi"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 
 const ViewerPlansPage: BlitzPage = () => {
   return (
-    <MainStack title={null} description={null} fileId={null}>
+    <MainStackJA title={null} description={null} fileId={null}>
       <Stack p={{ base: 4, sm: 8 }}>
         <Text fontWeight={"bold"} fontSize={"2xl"}>
           {"あなたのプラン"}
@@ -38,7 +38,7 @@ const ViewerPlansPage: BlitzPage = () => {
           </Button>
         </Link>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

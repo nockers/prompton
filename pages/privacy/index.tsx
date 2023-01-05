@@ -3,7 +3,7 @@ import type { BlitzPage } from "@blitzjs/auth"
 import { Card, Divider, HStack, Stack, Text } from "@chakra-ui/react"
 import type { GetStaticProps } from "next"
 import { MarkdownDocument } from "app/components/BoxMarkdown"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 
 type Props = {
   text: string
@@ -13,7 +13,11 @@ const PrivacyPage: BlitzPage<Props> = (props) => {
   const introductionText = `Nocker株式会社（以下，「当社」といいます。）は，本ウェブサイト上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。`
 
   return (
-    <MainStack title={"プライバシーポリシー"} description={null} fileId={null}>
+    <MainStackJA
+      title={"プライバシーポリシー"}
+      description={null}
+      fileId={null}
+    >
       <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
         <Stack w={"100%"} maxW={"container.md"} spacing={{ base: 4, md: 8 }}>
           <Stack pt={{ base: 4, md: 8 }}>
@@ -34,7 +38,7 @@ const PrivacyPage: BlitzPage<Props> = (props) => {
           </Card>
         </Stack>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

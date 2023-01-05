@@ -16,7 +16,7 @@ import {
 import { useRouter } from "next/router"
 import { useContext, useEffect } from "react"
 import { UserRequestHeader } from "app/[login]/requests/components/UserRequestHeader"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 import { useRedirectResult } from "app/hooks/useRedirectResult"
 import {
   useCreatePaymentMethodMutation,
@@ -140,7 +140,7 @@ const UserRequestsNewPage: BlitzPage = () => {
   }
 
   return (
-    <MainStack title={null} description={null} fileId={null}>
+    <MainStackJA title={null} description={null} fileId={null}>
       <Stack px={{ base: 4, md: 8 }} pt={{ base: 4, md: 8 }}>
         <UserRequestHeader userId={userId} />
       </Stack>
@@ -273,7 +273,7 @@ const UserRequestsNewPage: BlitzPage = () => {
           </Stack>
         </Stack>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

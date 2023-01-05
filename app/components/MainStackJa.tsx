@@ -11,7 +11,7 @@ type Props = {
   children: ReactNode
 }
 
-export const MainStackJa: FC<Props> = (props) => {
+export const MainStackJA: FC<Props> = (props) => {
   const appName = Config.siteName
 
   const defaultTitle = `${appName} - ${Config.siteCatchphraseJA}`
@@ -49,7 +49,12 @@ export const MainStackJa: FC<Props> = (props) => {
         <meta name={"twitter:description"} content={ogDescription} />
         <meta name={"twitter:image"} content={twitterImageURL} />
       </Head>
-      <Stack as={"main"} spacing={4} alignItems={"center"} pb={8}>
+      <Stack
+        as={"main"}
+        spacing={{ base: 4, md: 8 }}
+        pb={8}
+        overflowX={"hidden"}
+      >
         {props.children}
       </Stack>
     </>

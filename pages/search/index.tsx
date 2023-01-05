@@ -1,7 +1,7 @@
 import type { BlitzPage } from "@blitzjs/auth"
 import { Box } from "@chakra-ui/react"
 import { useRouter } from "next/router"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 import { SearchLabelList } from "app/components/SearchLabelList"
 import { SearchPostList } from "app/components/SearchPostList"
 
@@ -15,12 +15,12 @@ const SearchPage: BlitzPage = () => {
   }
 
   return (
-    <MainStack title={null} description={null} fileId={null}>
+    <MainStackJA title={null} description={null} fileId={null}>
       <Box pt={{ base: 4, md: 8 }}>
         <SearchLabelList searchText={searchText} />
       </Box>
       <SearchPostList searchText={searchText} />
-    </MainStack>
+    </MainStackJA>
   )
 }
 

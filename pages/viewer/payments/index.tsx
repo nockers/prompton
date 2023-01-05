@@ -9,7 +9,7 @@ import {
   useToast,
 } from "@chakra-ui/react"
 import { useContext } from "react"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 import { useRedirectResult } from "app/hooks/useRedirectResult"
 import {
   useCreatePaymentMethodMutation,
@@ -85,7 +85,7 @@ const UserPaymentsPage: BlitzPage = () => {
   const paymentMethod = data.viewer.user.paymentMethod
 
   return (
-    <MainStack title={"お支払い"} description={null} fileId={null}>
+    <MainStackJA title={"お支払い"} description={null} fileId={null}>
       <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
         <Stack w={"100%"} maxW={"container.md"} spacing={{ base: 4, md: 8 }}>
           <Stack pt={{ base: 4, md: 8 }}>
@@ -164,7 +164,7 @@ const UserPaymentsPage: BlitzPage = () => {
           <Text>{"まだ決済履歴はありません。"}</Text>
         </Stack>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

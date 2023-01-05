@@ -3,9 +3,9 @@ import { Box, Divider, Stack, Tab, TabList, Tabs } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { HomeLabelList } from "app/components/HomeLabelList"
 import { HomeWorkList } from "app/components/HomeWorkList"
-import { MainStackJA } from "app/components/MainStackJA"
+import { MainStackEN } from "app/components/MainStackEN"
 
-const RootPage: BlitzPage = () => {
+const RootEnPage: BlitzPage = () => {
   const router = useRouter()
 
   const onChange = (index: number) => {
@@ -18,7 +18,7 @@ const RootPage: BlitzPage = () => {
   }
 
   return (
-    <MainStackJA title={null} description={null} fileId={null}>
+    <MainStackEN title={null} description={null} fileId={null}>
       <Tabs
         index={0}
         pt={{ base: 4, md: 8 }}
@@ -39,12 +39,12 @@ const RootPage: BlitzPage = () => {
           <HomeWorkList />
         </Box>
       </Stack>
-    </MainStackJA>
+    </MainStackEN>
   )
 }
 
-RootPage.getLayout = (page) => {
+RootEnPage.getLayout = (page) => {
   return <>{page}</>
 }
 
-export default RootPage
+export default RootEnPage

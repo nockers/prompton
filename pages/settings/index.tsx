@@ -1,10 +1,10 @@
 import { Button, Divider, HStack, Stack, Text } from "@chakra-ui/react"
 import type { FC } from "react"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 
 const SettingsPage: FC = () => {
   return (
-    <MainStack title={"設定"} description={null} fileId={null}>
+    <MainStackJA title={"設定"} description={null} fileId={null}>
       <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
         <Stack w={"100%"} maxW={"container.md"} spacing={{ base: 4, md: 8 }}>
           <Stack pt={{ base: 4, md: 8 }}>
@@ -28,7 +28,7 @@ const SettingsPage: FC = () => {
           </Stack>
         </Stack>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

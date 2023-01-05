@@ -15,7 +15,7 @@ import {
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import { UserRequestHeader } from "app/[login]/requests/components/UserRequestHeader"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 import { AppContext } from "interface/contexts/appContext"
 
 const UserPlanXxxPage: BlitzPage = () => {
@@ -36,7 +36,7 @@ const UserPlanXxxPage: BlitzPage = () => {
   }
 
   return (
-    <MainStack title={null} description={null} fileId={null}>
+    <MainStackJA title={null} description={null} fileId={null}>
       <UserRequestHeader userId={userId} />
       <Divider />
       <HStack px={4} justifyContent={"center"}>
@@ -140,7 +140,7 @@ const UserPlanXxxPage: BlitzPage = () => {
           </Stack>
         </Stack>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

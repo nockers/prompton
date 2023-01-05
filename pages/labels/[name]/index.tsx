@@ -6,7 +6,7 @@ import { useContext } from "react"
 import UserLayout from "app/[login]/layout"
 import { CardWork } from "app/components/CardWork"
 import { MainFallback } from "app/components/MainFallback"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 import { useColumnCount } from "app/hooks/useColumnCount"
 import { useWorksQuery } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
@@ -63,7 +63,7 @@ const LabelPage: BlitzPage<Props> = () => {
   }
 
   return (
-    <MainStack
+    <MainStackJA
       title={`#${label}`}
       description={`ラベル「#${label}」に関連する作品があります。`}
       fileId={null}
@@ -118,7 +118,7 @@ const LabelPage: BlitzPage<Props> = () => {
           {"MORE"}
         </Button>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

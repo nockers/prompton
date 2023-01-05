@@ -12,7 +12,7 @@ import {
   useToast,
 } from "@chakra-ui/react"
 import { useContext } from "react"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 import ViewerLayout from "app/viewer/layout"
 import { CardViewerRequestSettings } from "app/viewer/requests/components/CardViewerRequestSettings"
 import { ViewerReceivedRequestList } from "app/viewer/requests/components/ViewerReceivedRequestList"
@@ -168,7 +168,7 @@ const ViewerRequestsPage: BlitzPage = () => {
   }
 
   return (
-    <MainStack title={"リクエスト"} description={null} fileId={null}>
+    <MainStackJA title={"リクエスト"} description={null} fileId={null}>
       <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
         <Stack w={"100%"} maxW={"container.md"} spacing={{ base: 4, md: 8 }}>
           <Stack pt={{ base: 4, md: 8 }}>
@@ -220,7 +220,7 @@ const ViewerRequestsPage: BlitzPage = () => {
           </Tabs>
         </Stack>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

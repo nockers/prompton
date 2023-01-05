@@ -1,12 +1,12 @@
 import type { BlitzPage } from "@blitzjs/auth"
 import { Text } from "@chakra-ui/react"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 
 const RulesPage: BlitzPage = () => {
   return (
-    <MainStack title={"ガイドライン"} description={null} fileId={null}>
+    <MainStackJA title={"ガイドライン"} description={null} fileId={null}>
       <Text>{"ガイドライン"}</Text>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

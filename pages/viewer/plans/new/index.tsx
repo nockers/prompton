@@ -16,7 +16,7 @@ import {
   Textarea,
 } from "@chakra-ui/react"
 import { useMemo, useState } from "react"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 
 const ViewerPlanNewPage: BlitzPage = () => {
   // const router = useRouter()
@@ -63,7 +63,7 @@ const ViewerPlanNewPage: BlitzPage = () => {
   // }
 
   return (
-    <MainStack title={null} description={null} fileId={null}>
+    <MainStackJA title={null} description={null} fileId={null}>
       <HStack justifyContent={"center"} px={4} pt={4} pb={8}>
         <Stack w={"100%"} maxW={"xl"} spacing={8}>
           <Text fontWeight={"bold"} fontSize={"xl"}>
@@ -155,7 +155,7 @@ const ViewerPlanNewPage: BlitzPage = () => {
           </Card>
         </Stack>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

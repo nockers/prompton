@@ -1,7 +1,7 @@
 import type { BlitzPage } from "@blitzjs/auth"
 import { Divider, Stack, Tab, TabList, Tabs } from "@chakra-ui/react"
 import { useRouter } from "next/router"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 import { HomeUserList } from "app/users/components/HomeUserList"
 
 const UsersPage: BlitzPage = () => {
@@ -17,7 +17,7 @@ const UsersPage: BlitzPage = () => {
   }
 
   return (
-    <MainStack title={null} description={null} fileId={null}>
+    <MainStackJA title={null} description={null} fileId={null}>
       <Tabs
         index={2}
         pt={{ base: 4, md: 8 }}
@@ -35,7 +35,7 @@ const UsersPage: BlitzPage = () => {
       <Stack spacing={0} w={"100%"} px={{ base: 4, md: 8 }}>
         <HomeUserList />
       </Stack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 

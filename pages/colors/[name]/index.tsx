@@ -6,7 +6,7 @@ import { useContext } from "react"
 import UserLayout from "app/[login]/layout"
 import { CardWork } from "app/components/CardWork"
 import { MainFallback } from "app/components/MainFallback"
-import { MainStack } from "app/components/MainStack"
+import { MainStackJA } from "app/components/MainStackJA"
 import { useColumnCount } from "app/hooks/useColumnCount"
 import type {
   WorksQuery,
@@ -68,7 +68,7 @@ const ColorPage: BlitzPage<Props> = () => {
   }
 
   return (
-    <MainStack
+    <MainStackJA
       title={`#${label}`}
       description={`カラーコード「#${label}」に関連する作品があります。`}
       fileId={null}
@@ -122,7 +122,7 @@ const ColorPage: BlitzPage<Props> = () => {
           {"MORE"}
         </Button>
       </HStack>
-    </MainStack>
+    </MainStackJA>
   )
 }
 
