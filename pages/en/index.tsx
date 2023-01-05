@@ -3,7 +3,7 @@ import { Box, Divider, Stack, Tab, TabList, Tabs } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { HomeLabelList } from "app/components/HomeLabelList"
 import { HomeWorkList } from "app/components/HomeWorkList"
-import { MainStackEN } from "app/components/MainStackEn"
+import { MainStackEN } from "app/components/MainStackEn_"
 
 const RootEnPage: BlitzPage = () => {
   const router = useRouter()
