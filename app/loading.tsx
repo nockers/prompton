@@ -3,7 +3,7 @@ import type { FC } from "react"
 
 const RootLoading: FC = () => {
   return (
-    <HStack pt={40} justifyContent={"center"}>
+    <HStack py={40} justifyContent={"center"}>
       <Spinner size={"xl"} />
     </HStack>
   )

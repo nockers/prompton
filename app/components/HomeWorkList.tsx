@@ -44,7 +44,7 @@ export const HomeWorkList: FC = () => {
 
   if (loading && data === null) {
     return (
-      <HStack pt={40} justifyContent={"center"}>
+      <HStack py={40} justifyContent={"center"}>
         <Spinner size={"xl"} />
       </HStack>
     )

@@ -4,7 +4,7 @@ import type { FC } from "react"
 
 const UserLoading: FC = () => {
   return (
-    <HStack pt={40} justifyContent={"center"}>
+    <HStack py={40} justifyContent={"center"}>
       <Spinner size={"xl"} />
     </HStack>
   )
