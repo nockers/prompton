@@ -14,6 +14,7 @@ import { Router } from "next/router"
 import type { FC } from "react"
 import { Suspense, useEffect } from "react"
 import { AppContextProvider } from "app/components/AuthContextProvider"
+import { HomeFooter } from "app/components/HomeFooter"
 import { HomeHeader } from "app/components/HomeHeader"
 import RootError from "app/error"
 import RootLoading from "app/loading"
@@ -63,6 +64,7 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
             <AppContextProvider>
               <HomeHeader />
               {getLayout(<Component {...pageProps} />)}
+              <HomeFooter />
             </AppContextProvider>
           </ErrorBoundary>
         </Suspense>

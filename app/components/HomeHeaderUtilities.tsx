@@ -209,7 +209,7 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
             {"ログアウト"}
           </MenuItem>
           <MenuDivider />
-          <Link href={"/hello"}>
+          <Link href={"/about"}>
             <MenuItem>{"サイトについて"}</MenuItem>
           </Link>
           <MenuItem isDisabled>{"使い方"}</MenuItem>
