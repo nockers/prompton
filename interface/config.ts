@@ -24,7 +24,7 @@ export class Config {
   }
 
   static get siteCatchphraseJA() {
-    return "AI創作を気軽にリクエスト"
+    return "AI創作コミッションサービス"
   }
 
   static get siteDescriptionEN() {

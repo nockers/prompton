@@ -121,6 +121,9 @@ export const MarkdownDocument: FC<Props> = (props) => {
             />
           )
         },
+        strong(props) {
+          return <Box as={"strong"} color={"pink.500"} {...props} />
+        },
         blockquote(props) {
           return (
             <Box as={"blockquote"} mt={4}>

@@ -50,6 +50,7 @@
     "react-dropzone": "^14.2.3",
     "react-icons": "^4.7.1",
     "react-markdown": "^8.0.4",
+    "reactflow": "^11.4.0",
     "reflect-metadata": "^0.1.13",
     "sharp": "^0.31.3",
     "stripe": "^11.5.0",

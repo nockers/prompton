@@ -10,7 +10,7 @@ type Props = {
 }
 
 const PrivacyPage: BlitzPage<Props> = (props) => {
-  const introductionText = `Nocker株式会社（以下，「当社」といいます。）は，本ウェブサイト上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。`
+  const description = `Nocker株式会社（以下，「当社」といいます。）は，本ウェブサイト上で提供するサービス（以下,「本サービス」といいます。）における，ユーザーの個人情報の取扱いについて，以下のとおりプライバシーポリシー（以下，「本ポリシー」といいます。）を定めます。`
 
   return (
     <MainStackJA
@@ -24,7 +24,7 @@ const PrivacyPage: BlitzPage<Props> = (props) => {
             <Text fontWeight={"bold"} fontSize={"xl"}>
               {"プライバシーポリシー"}
             </Text>
-            <Text fontSize={"sm"}>{introductionText}</Text>
+            <Text fontSize={"sm"}>{description}</Text>
           </Stack>
           <Divider />
           <Card
