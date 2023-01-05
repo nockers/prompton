@@ -16,7 +16,7 @@ import {
   Textarea,
 } from "@chakra-ui/react"
 import { useMemo, useState } from "react"
-import { MainStackJA } from "app/components/MainStackJA"
+import { MainStackJA } from "app/components/MainStackJA_"
 
 const ViewerPlanNewPage: BlitzPage = () => {
   // const router = useRouter()

@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import { BiArrowBack } from "react-icons/bi"
-import { MainStackJA } from "app/components/MainStackJA"
+import { MainStackJA } from "app/components/MainStackJA_"
 import { TagRequestStatus } from "app/requests/components/TagRequestStatus"
 import ViewerLayout from "app/viewer/layout"
 

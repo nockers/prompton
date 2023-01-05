@@ -1,7 +1,7 @@
 import type { BlitzPage } from "@blitzjs/auth"
 import { Box } from "@chakra-ui/react"
 import { useRouter } from "next/router"
-import { MainStackJA } from "app/components/MainStackJA"
+import { MainStackJA } from "app/components/MainStackJA_"
 import { SearchLabelList } from "app/components/SearchLabelList"
 import { SearchPostList } from "app/components/SearchPostList"
 

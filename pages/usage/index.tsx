@@ -1,6 +1,6 @@
 import type { BlitzPage } from "@blitzjs/auth"
 import { Divider, HStack, Stack, Text } from "@chakra-ui/react"
-import { MainStackJA } from "app/components/MainStackJA"
+import { MainStackJA } from "app/components/MainStackJA_"
 
 const UsagePage: BlitzPage = () => {
   return (

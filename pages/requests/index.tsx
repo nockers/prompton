@@ -1,7 +1,7 @@
 import type { BlitzPage } from "@blitzjs/auth"
 import { Divider, Stack, Tab, TabList, Tabs } from "@chakra-ui/react"
 import { useRouter } from "next/router"
-import { MainStackJA } from "app/components/MainStackJA"
+import { MainStackJA } from "app/components/MainStackJA_"
 
 const RequestsPage: BlitzPage = () => {
   const router = useRouter()

@@ -22,7 +22,7 @@ import { ButtonLike } from "app/components/ButtonLike"
 import { ButtonLinkColor } from "app/components/ButtonLinkColor"
 import { ButtonLinkLabel } from "app/components/ButtonLinkLabel"
 import { MainFallback } from "app/components/MainFallback"
-import { MainStackJA } from "app/components/MainStackJA"
+import { MainStackJA } from "app/components/MainStackJA_"
 import { ShareButtonTwitter } from "app/components/ShareButtonTwitter"
 import { UserWorkList } from "app/components/WorkList"
 import type {

@@ -12,7 +12,7 @@ import {
   useToast,
 } from "@chakra-ui/react"
 import { useContext } from "react"
-import { MainStackJA } from "app/components/MainStackJA"
+import { MainStackJA } from "app/components/MainStackJA_"
 import ViewerLayout from "app/viewer/layout"
 import { CardViewerRequestSettings } from "app/viewer/requests/components/CardViewerRequestSettings"
 import { ViewerReceivedRequestList } from "app/viewer/requests/components/ViewerReceivedRequestList"

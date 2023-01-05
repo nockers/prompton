@@ -3,7 +3,7 @@ import axios from "axios"
 import type { GetStaticProps } from "next"
 import Link from "next/link"
 import type { FC } from "react"
-import { MainStackJA } from "app/components/MainStackJA"
+import { MainStackJA } from "app/components/MainStackJA_"
 import { Env } from "infrastructure/env"
 import type { StrapiPosts } from "interface/types/strapiPosts"
 
