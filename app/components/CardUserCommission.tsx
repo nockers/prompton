@@ -20,7 +20,7 @@ type Props = {
 export const CardUserCommission: FC<Props> = (props) => {
   if (!props.isRequestable) {
     return (
-      <Card variant={"filled"}>
+      <Card variant={"filled"} borderWidth={4} borderRadius={"lg"}>
         <CardBody>
           <Stack spacing={4}>
             <Text fontWeight={"bold"}>{"リクエスト"}</Text>
@@ -35,23 +35,33 @@ export const CardUserCommission: FC<Props> = (props) => {
   }
 
   return (
-    <Card variant={"filled"}>
+    <Card
+      variant={"filled"}
+      borderWidth={4}
+      borderColor={"primary.200"}
+      borderRadius={"lg"}
+    >
       <CardBody>
-        <Stack>
-          <Text fontWeight={"bold"}>{"リクエストして支援"}</Text>
+        <Stack spacing={4}>
+          <Text fontWeight={"bold"} color={"primary.500"}>
+            {"リクエスト受付中"}
+          </Text>
           <Stack
             spacing={4}
             direction={{ base: "column", sm: "row" }}
             alignItems={{ base: "flex-start", sm: "center" }}
           >
             <Stack flex={1}>
-              <Text fontWeight={"bold"}>
-                {`1回 ${props.minimumFee}〜${props.maximumFee}円（税込）`}
+              <Text fontWeight={"bold"} fontSize={"lg"}>
+                {`料金 ${props.minimumFee}円（税込）`}
+              </Text>
+              <Text fontSize={"xs"} opacity={"sm"}>
+                {`※最大 ${props.maximumFee}円（税込）まで変更できます。`}
               </Text>
             </Stack>
             <Link href={`/${props.userId}/requests/new`}>
               <Button w={{ base: "100%", sm: "auto" }} colorScheme={"primary"}>
-                {"リクエスト"}
+                {"リクエストする"}
               </Button>
             </Link>
           </Stack>

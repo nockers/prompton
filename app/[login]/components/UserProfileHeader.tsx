@@ -95,14 +95,19 @@ export const UserProfileHeader: FC<Props> = (props) => {
           {data?.user?.isFollowee ? "フォロー中" : "フォロー"}
         </Button>
       </HStack>
-      <Box maxW={"lg"}>
-        <CardUserCommission
-          userId={props.userId}
-          minimumFee={data?.user?.minimumFee ?? 0}
-          maximumFee={data?.user?.maximumFee ?? 0}
-          isRequestable={data?.user?.isRequestable ?? false}
-        />
+      <Box>
+        <Text>{data?.user?.biography}</Text>
       </Box>
+      {typeof data?.user !== "undefined" && (
+        <Box maxW={"lg"}>
+          <CardUserCommission
+            userId={props.userId}
+            minimumFee={data?.user?.minimumFee ?? 0}
+            maximumFee={data?.user?.maximumFee ?? 0}
+            isRequestable={data?.user?.isRequestable ?? false}
+          />
+        </Box>
+      )}
     </Stack>
   )
 }

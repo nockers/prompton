@@ -102,8 +102,13 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
               {colorMode === "light" ? "ダークモード" : "ライトモード"}
             </MenuItem>
             <MenuDivider />
+            <Link href={"/about"}>
+              <MenuItem>{"サイトについて"}</MenuItem>
+            </Link>
             <MenuItem isDisabled>{"使い方"}</MenuItem>
-            <MenuItem isDisabled> {"ガイドライン"}</MenuItem>
+            <Link href={"/guide"}>
+              <MenuItem>{"ガイドライン"}</MenuItem>
+            </Link>
             <Link href={"/terms"}>
               <MenuItem>{"利用規約"}</MenuItem>
             </Link>

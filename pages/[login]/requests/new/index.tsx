@@ -5,7 +5,14 @@ import {
   Checkbox,
   Divider,
   HStack,
+  Icon,
+  Link as ChakraLink,
   ListItem,
+  RangeSlider,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  RangeSliderTrack,
+  Spinner,
   Stack,
   Tag,
   Text,
@@ -13,8 +20,16 @@ import {
   UnorderedList,
   useToast,
 } from "@chakra-ui/react"
+import {
+  getAuth,
+  getIdTokenResult,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth"
+import Link from "next/link"
 import { useRouter } from "next/router"
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
+import { FcGoogle } from "react-icons/fc"
 import { UserRequestHeader } from "app/[login]/requests/components/UserRequestHeader"
 import { MainStackJA } from "app/components/MainStackJa"
 import { useRedirectResult } from "app/hooks/useRedirectResult"
@@ -38,6 +53,10 @@ const UserRequestsNewPage: BlitzPage = () => {
   })
 
   const [createPaymentMethod] = useCreatePaymentMethodMutation()
+
+  const [additionalFee, setAdditionalFee] = useState(() => {
+    return 0
+  })
 
   const userId = router.query.login?.toString() ?? null
 
@@ -122,6 +141,26 @@ const UserRequestsNewPage: BlitzPage = () => {
     }
   }
 
+  const onLogout = async () => {
+    try {
+      const provider = new GoogleAuthProvider()
+      const result = await signInWithPopup(getAuth(), provider)
+      const idTokenResult = await getIdTokenResult(result.user)
+      if (!idTokenResult.claims.isInitialized) {
+        router.push("/new")
+      }
+      toast({ title: "アカウントを確認できました" })
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({
+          title: "ERROR",
+          description: error.message,
+          status: "error",
+        })
+      }
+    }
+  }
+
   if (userId === null) {
     return null
   }
@@ -130,14 +169,27 @@ const UserRequestsNewPage: BlitzPage = () => {
     return null
   }
 
-  if (
-    data === null ||
-    data.user === null ||
-    sender === null ||
-    sender.viewer === null
-  ) {
-    return null
+  if (data === null || data.user === null) {
+    return (
+      <HStack py={40} justifyContent={"center"}>
+        <Spinner size={"xl"} />
+      </HStack>
+    )
   }
+
+  const hasSender = sender !== null && sender.viewer.user !== null
+
+  const isActive = sender !== null && sender.viewer.user.paymentMethod === null
+
+  const isDisabled =
+    typeof appContext.currentUser?.uid !== "string" || hasSender || !isActive
+
+  const hasPaymentMethod =
+    sender !== null &&
+    sender.viewer.user !== null &&
+    sender.viewer.user.paymentMethod === null
+
+  const fee = data.user.minimumFee + additionalFee
 
   return (
     <MainStackJA title={null} description={null} fileId={null}>
@@ -157,7 +209,36 @@ const UserRequestsNewPage: BlitzPage = () => {
           alignItems={{ base: "center", lg: "flex-start" }}
         >
           <Stack maxW={"container.md"} w={"100%"} spacing={4}>
-            {sender.viewer.user.paymentMethod === null && (
+            {!hasSender && (
+              <Card
+                variant={"filled"}
+                borderColor={"red.200"}
+                borderWidth={4}
+                borderRadius={"xl"}
+              >
+                <Stack
+                  justifyContent={"space-between"}
+                  direction={{ base: "column", md: "row" }}
+                  alignItems={{ base: "", md: "center" }}
+                  p={6}
+                  spacing={4}
+                >
+                  <Text fontWeight={"bold"}>
+                    {"リクエストを送るにはログインが必要です。"}
+                  </Text>
+                  <Button
+                    leftIcon={<Icon as={FcGoogle} />}
+                    fontSize={14}
+                    onClick={onLogout}
+                    minW={28}
+                    colorScheme={"primary"}
+                  >
+                    {"ログイン"}
+                  </Button>
+                </Stack>
+              </Card>
+            )}
+            {hasSender && !hasPaymentMethod && (
               <Card
                 variant={"filled"}
                 borderColor={"red.200"}
@@ -176,27 +257,42 @@ const UserRequestsNewPage: BlitzPage = () => {
                 </Stack>
               </Card>
             )}
-            <Card variant={"filled"} borderRadius={"xl"}>
+            <Card variant={"filled"} borderRadius={"xl"} borderWidth={4}>
               <Stack p={6}>
                 <Stack>
                   <HStack justifyContent={"space-between"}>
                     <Text fontWeight={"bold"} fontSize={"lg"}>
-                      {"おまかせリクエストで支援"}
+                      {"新しいリクエスト"}
                     </Text>
                     <Tag colorScheme={"primary"}>{"イラスト"}</Tag>
                   </HStack>
-                  <Text fontWeight={"bold"} fontSize={"2xl"}>
-                    {`${data?.user.minimumFee}〜${data?.user.maximumFee}円（税込）`}
-                  </Text>
                   <Text>
-                    {
-                      "この依頼では制作者がおまかせで作品を制作します。制作物の内容について要望を提示できますが、反映されるかどうかは制作者の判断に委ねられます。"
-                    }
+                    {`次の金額で「${data.user.name}」さんにイラストの制作をリクエストします。`}
                   </Text>
+                  <Text fontWeight={"bold"} fontSize={"2xl"}>
+                    {`料金 ${fee}円（税込）`}
+                  </Text>
+                  <RangeSlider
+                    step={500}
+                    min={0}
+                    max={data.user.maximumFee - data.user.minimumFee}
+                    value={[additionalFee]}
+                    onChange={([value]) => {
+                      setAdditionalFee(value)
+                    }}
+                  >
+                    <RangeSliderTrack>
+                      <RangeSliderFilledTrack />
+                    </RangeSliderTrack>
+                    <RangeSliderThumb index={0} />
+                  </RangeSlider>
+                  <Text
+                    fontSize={"sm"}
+                  >{`※最大${data.user.maximumFee}円まで増額できます。`}</Text>
                 </Stack>
               </Stack>
             </Card>
-            <Card variant={"filled"} borderRadius={"xl"}>
+            <Card variant={"filled"} borderRadius={"xl"} borderWidth={4}>
               <Stack p={6}>
                 <Text fontWeight={"bold"} fontSize={"xl"}>
                   {"注意事項"}
@@ -227,18 +323,19 @@ const UserRequestsNewPage: BlitzPage = () => {
             </Card>
           </Stack>
           <Stack maxW={"container.md"} w={"100%"} spacing={4}>
-            <Card variant={"filled"} borderRadius={"xl"}>
+            <Card variant={"filled"} borderRadius={"xl"} borderWidth={4}>
               <Stack p={6} spacing={4}>
                 <Text fontWeight={"bold"} fontSize={"xl"}>
-                  {"新しいリクエスト"}
+                  {"リクエストの内容"}
                 </Text>
                 <Stack>
                   <Text>{"作品の内容についての要望を書いてください。"}</Text>
                   <Textarea
+                    isDisabled={isDisabled}
                     placeholder={"例：白い背景でお願いします。（最大200文字）"}
                     rows={4}
                   />
-                  <Text fontSize={"sm"}>
+                  <Text fontSize={"sm"} opacity={0.8}>
                     {"※全ての要望が作品に反映されるとは限りません。"}
                   </Text>
                 </Stack>
@@ -246,7 +343,11 @@ const UserRequestsNewPage: BlitzPage = () => {
                 <Stack>
                   <Text>{"以下のことを確認してください。"}</Text>
                   <Checkbox defaultChecked>
-                    {"本サイトの利用規約に同意する。"}
+                    <Text as={"span"}>{"本サイトの"}</Text>
+                    <ChakraLink as={Link} href={"/terms"} color={"blue.500"}>
+                      {"利用規約"}
+                    </ChakraLink>
+                    <Text as={"span"}>{"に同意する。"}</Text>
                   </Checkbox>
                   <Checkbox defaultChecked>
                     {"制作物の全ての権利は制作者にあることに同意する。"}
@@ -257,16 +358,21 @@ const UserRequestsNewPage: BlitzPage = () => {
                 </Stack>
                 <Divider />
                 <Stack>
-                  <HStack>
-                    <Button
-                      isDisabled={sender.viewer.user.paymentMethod === null}
-                      isLoading={loading}
-                      colorScheme={"primary"}
-                      onClick={onCreateRequest}
-                    >
-                      {"リクエストする"}
-                    </Button>
-                  </HStack>
+                  <Text
+                    fontSize={"sm"}
+                    fontWeight={"bold"}
+                    color={"primary.500"}
+                  >
+                    {`クリックすると${fee}円（税込）が決済されます。`}
+                  </Text>
+                  <Button
+                    isDisabled={isDisabled}
+                    isLoading={loading}
+                    colorScheme={"primary"}
+                    onClick={onCreateRequest}
+                  >
+                    {"決済する"}
+                  </Button>
                 </Stack>
               </Stack>
             </Card>
