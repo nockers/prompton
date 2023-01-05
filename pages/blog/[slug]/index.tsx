@@ -15,7 +15,7 @@ import type { FC } from "react"
 import { BiChevronLeft } from "react-icons/bi"
 import { MarkdownDocument } from "app/components/BoxMarkdown"
 import { MainFallback } from "app/components/MainFallback"
-import { MainStackJA } from "app/components/MainStackJA_"
+import { MainStackJA } from "app/components/MainStackJa"
 import { Env } from "infrastructure/env"
 import type { StrapiPosts } from "interface/types/strapiPosts"
 

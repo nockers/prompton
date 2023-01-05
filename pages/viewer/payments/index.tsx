@@ -9,7 +9,7 @@ import {
   useToast,
 } from "@chakra-ui/react"
 import { useContext } from "react"
-import { MainStackJA } from "app/components/MainStackJA_"
+import { MainStackJA } from "app/components/MainStackJa"
 import { useRedirectResult } from "app/hooks/useRedirectResult"
 import {
   useCreatePaymentMethodMutation,

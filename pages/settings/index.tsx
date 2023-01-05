@@ -1,6 +1,6 @@
 import { Button, Divider, HStack, Stack, Text } from "@chakra-ui/react"
 import type { FC } from "react"
-import { MainStackJA } from "app/components/MainStackJA_"
+import { MainStackJA } from "app/components/MainStackJa"
 
 const SettingsPage: FC = () => {
   return (

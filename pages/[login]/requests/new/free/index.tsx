@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react"
 import { useRouter } from "next/router"
 import { useContext, useEffect } from "react"
-import { MainStackJA } from "app/components/MainStackJA_"
+import { MainStackJA } from "app/components/MainStackJa"
 import { useRedirectResult } from "app/hooks/useRedirectResult"
 import {
   useCreatePaymentMethodMutation,

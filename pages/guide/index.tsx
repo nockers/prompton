@@ -3,7 +3,7 @@ import type { BlitzPage } from "@blitzjs/auth"
 import { Card, Divider, HStack, Stack, Text } from "@chakra-ui/react"
 import type { GetStaticProps } from "next"
 import { MarkdownDocument } from "app/components/BoxMarkdown"
-import { MainStackJA } from "app/components/MainStackJA_"
+import { MainStackJA } from "app/components/MainStackJa"
 
 type Props = {
   text: string

@@ -15,7 +15,7 @@ import {
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import { UserRequestHeader } from "app/[login]/requests/components/UserRequestHeader"
-import { MainStackJA } from "app/components/MainStackJA_"
+import { MainStackJA } from "app/components/MainStackJa"
 import { AppContext } from "interface/contexts/appContext"
 
 const UserPlanXxxPage: BlitzPage = () => {

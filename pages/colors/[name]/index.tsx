@@ -6,7 +6,7 @@ import { useContext } from "react"
 import UserLayout from "app/[login]/layout"
 import { CardWork } from "app/components/CardWork"
 import { MainFallback } from "app/components/MainFallback"
-import { MainStackJA } from "app/components/MainStackJA_"
+import { MainStackJA } from "app/components/MainStackJa"
 import { useColumnCount } from "app/hooks/useColumnCount"
 import type {
   WorksQuery,

@@ -2,7 +2,7 @@ import type { BlitzPage } from "@blitzjs/auth"
 import { Button, Card, HStack, Icon, Stack, Tag, Text } from "@chakra-ui/react"
 import Link from "next/link"
 import { BiPlus } from "react-icons/bi"
-import { MainStackJA } from "app/components/MainStackJA_"
+import { MainStackJA } from "app/components/MainStackJa"
 
 const ViewerPlansPage: BlitzPage = () => {
   return (

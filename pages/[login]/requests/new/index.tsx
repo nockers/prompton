@@ -16,7 +16,7 @@ import {
 import { useRouter } from "next/router"
 import { useContext, useEffect } from "react"
 import { UserRequestHeader } from "app/[login]/requests/components/UserRequestHeader"
-import { MainStackJA } from "app/components/MainStackJA_"
+import { MainStackJA } from "app/components/MainStackJa"
 import { useRedirectResult } from "app/hooks/useRedirectResult"
 import {
   useCreatePaymentMethodMutation,

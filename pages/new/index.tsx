@@ -14,7 +14,7 @@ import {
 import { useRouter } from "next/router"
 import type { FC } from "react"
 import { useState } from "react"
-import { MainStackJA } from "app/components/MainStackJA_"
+import { MainStackJA } from "app/components/MainStackJa"
 import { useCreateUserMutation } from "interface/__generated__/react"
 
 const LoginPage: FC = () => {
