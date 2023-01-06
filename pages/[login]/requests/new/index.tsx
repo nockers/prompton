@@ -192,7 +192,7 @@ const UserRequestsNewPage: BlitzPage = () => {
   const fee = data.user.minimumFee + additionalFee
 
   return (
-    <MainStackJA title={null} description={null} fileId={null}>
+    <MainStackJA pageTitle={null} pageDescription={null} fileId={null}>
       <Stack px={{ base: 4, md: 8 }} pt={{ base: 4, md: 8 }}>
         <UserRequestHeader userId={userId} />
       </Stack>

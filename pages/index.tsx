@@ -18,7 +18,7 @@ const RootPage: BlitzPage = () => {
   }
 
   return (
-    <MainStackJA title={null} description={null} fileId={null}>
+    <MainStackJA pageTitle={null} pageDescription={null} fileId={null}>
       <Tabs
         index={0}
         pt={{ base: 4, md: 8 }}

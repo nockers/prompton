@@ -4,7 +4,7 @@ import { MainStackJA } from "app/components/MainStackJa"
 
 const AboutPage: BlitzPage = () => {
   return (
-    <MainStackJA title={null} description={null} fileId={null}>
+    <MainStackJA pageTitle={null} pageDescription={null} fileId={null}>
       <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>
         <Stack w={"100%"} maxW={"container.md"} spacing={{ base: 4, md: 8 }}>
           <Stack pt={{ base: 4, md: 8 }}>

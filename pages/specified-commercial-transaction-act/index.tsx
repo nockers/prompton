@@ -5,8 +5,8 @@ import { MainStackJA } from "app/components/MainStackJa"
 const SpecifiedCommercialTransactionActPage: BlitzPage = () => {
   return (
     <MainStackJA
-      title={"特定商取引法に基づく表記"}
-      description={null}
+      pageTitle={"特定商取引法に基づく表記"}
+      pageDescription={null}
       fileId={null}
     >
       <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>

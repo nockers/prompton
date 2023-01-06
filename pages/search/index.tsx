@@ -15,7 +15,7 @@ const SearchPage: BlitzPage = () => {
   }
 
   return (
-    <MainStackJA title={null} description={null} fileId={null}>
+    <MainStackJA pageTitle={null} pageDescription={null} fileId={null}>
       <Box pt={{ base: 4, md: 8 }}>
         <SearchLabelList searchText={searchText} />
       </Box>

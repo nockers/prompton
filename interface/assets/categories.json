@@ -1,0 +1,74 @@
+[
+  {
+    "value": "CHARACTER",
+    "name": "キャラクター"
+  },
+  {
+    "value": "POSE",
+    "name": "ポーズ"
+  },
+  {
+    "value": "ANGLE",
+    "name": "アングル"
+  },
+  {
+    "value": "BACKGROUND",
+    "name": "背景"
+  },
+  {
+    "value": "CLOTHES",
+    "name": "服装"
+  },
+  {
+    "value": "HAIR_STYLE",
+    "name": "髪型"
+  },
+  {
+    "value": "HAIR_COLOR",
+    "name": "髪色"
+  },
+  {
+    "value": "EYE_COLOR",
+    "name": "目の色"
+  },
+  {
+    "value": "EAR_STYLE",
+    "name": "耳の種類"
+  },
+  {
+    "value": "MOUTH",
+    "name": "口"
+  },
+  {
+    "value": "FIGURE",
+    "name": "体型"
+  },
+  {
+    "value": "CHEST",
+    "name": "胸部"
+  },
+  {
+    "value": "ARM",
+    "name": "腕"
+  },
+  {
+    "value": "HAND",
+    "name": "手"
+  },
+  {
+    "value": "WAIST",
+    "name": "腰"
+  },
+  {
+    "value": "FOOT",
+    "name": "足"
+  },
+  {
+    "value": "SKIN",
+    "name": "肌"
+  },
+  {
+    "value": "BODY_PAINT",
+    "name": "ボディペイント"
+  }
+]

@@ -14,8 +14,8 @@ const PrivacyPage: BlitzPage<Props> = (props) => {
 
   return (
     <MainStackJA
-      title={"プライバシーポリシー"}
-      description={null}
+      pageTitle={"プライバシーポリシー"}
+      pageDescription={null}
       fileId={null}
     >
       <HStack justifyContent={"center"} px={{ base: 4, md: 8 }}>

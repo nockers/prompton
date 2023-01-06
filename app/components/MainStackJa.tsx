@@ -1,46 +1,53 @@
+import type { StackProps } from "@chakra-ui/react"
 import { Stack } from "@chakra-ui/react"
 import Head from "next/head"
 import type { FC, ReactNode } from "react"
 import { Config } from "interface/config"
 
-type Props = {
-  title: string | null
-  description: string | null
+type Props = StackProps & {
+  pageTitle: string | null
+  pageDescription: string | null
   fileId: string | null
-  spacing?: number
   children: ReactNode
 }
 
 export const MainStackJA: FC<Props> = (props) => {
-  const appName = Config.siteName
+  const {
+    pageTitle: title,
+    pageDescription: description,
+    fileId,
+    children,
+    ...stackProps
+  } = props
 
-  const defaultTitle = `${appName} - ${Config.siteCatchphraseJA}`
+  const siteName = Config.siteName
 
-  const title =
-    props.title !== null ? `${props.title} - ${appName}` : defaultTitle
+  const defaultTitle = `${siteName} - ${Config.siteCatchphraseJA}`
 
-  const ogTitle = props.title !== null ? props.title : defaultTitle
+  const pageTitle = title !== null ? `${title} - ${siteName}` : defaultTitle
+
+  const ogTitle = title !== null ? title : defaultTitle
 
   const defaultOgImageURL = `${Config.imageUrl}/facebook.png`
 
   const ogImageURL =
-    props.fileId !== null
-      ? `${Config.imageUrl}/${props.fileId}?w=1024&h=630`
+    fileId !== null
+      ? `${Config.imageUrl}/${fileId}?w=1024&h=630`
       : defaultOgImageURL
 
   const twitterImageURL =
-    props.fileId !== null
-      ? `${Config.imageUrl}/${props.fileId}?w=300&h=157`
+    fileId !== null
+      ? `${Config.imageUrl}/${fileId}?w=300&h=157`
       : defaultOgImageURL
 
   const defaultDescription = Config.siteDescriptionJA
 
-  const ogDescription = props.description || defaultDescription
+  const ogDescription = description || defaultDescription
 
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>{pageTitle}</title>
         <meta name={"description"} content={ogDescription} />
         <meta property={"og:title"} content={ogTitle} />
         <meta property={"og:description"} content={ogDescription} />
@@ -54,8 +61,9 @@ export const MainStackJA: FC<Props> = (props) => {
         spacing={{ base: 4, md: 8 }}
         pb={8}
         overflowX={"hidden"}
+        {...stackProps}
       >
-        {props.children}
+        {children}
       </Stack>
     </>
   )

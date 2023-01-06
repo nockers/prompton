@@ -6,7 +6,7 @@ import { MainStackJA } from "app/components/MainStackJa"
 
 const ViewerPlansPage: BlitzPage = () => {
   return (
-    <MainStackJA title={null} description={null} fileId={null}>
+    <MainStackJA pageTitle={null} pageDescription={null} fileId={null}>
       <Stack p={{ base: 4, sm: 8 }}>
         <Text fontWeight={"bold"} fontSize={"2xl"}>
           {"あなたのプラン"}

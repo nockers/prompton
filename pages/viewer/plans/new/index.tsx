@@ -63,7 +63,7 @@ const ViewerPlanNewPage: BlitzPage = () => {
   // }
 
   return (
-    <MainStackJA title={null} description={null} fileId={null}>
+    <MainStackJA pageTitle={null} pageDescription={null} fileId={null}>
       <HStack justifyContent={"center"} px={4} pt={4} pb={8}>
         <Stack w={"100%"} maxW={"xl"} spacing={8}>
           <Text fontWeight={"bold"} fontSize={"xl"}>

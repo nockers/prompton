@@ -36,7 +36,7 @@ const UserPlanXxxPage: BlitzPage = () => {
   }
 
   return (
-    <MainStackJA title={null} description={null} fileId={null}>
+    <MainStackJA pageTitle={null} pageDescription={null} fileId={null}>
       <UserRequestHeader userId={userId} />
       <Divider />
       <HStack px={4} justifyContent={"center"}>

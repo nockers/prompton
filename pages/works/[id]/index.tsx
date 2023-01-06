@@ -238,8 +238,8 @@ const WorkPage: BlitzPage<Props> = (props) => {
 
   return (
     <MainStackJA
-      title={`${data.work.user.name}さんの作品`}
-      description={data.work.prompt || `${data.work.id}`}
+      pageTitle={`${data.work.user.name}さんの作品`}
+      pageDescription={data.work.prompt || `${data.work.id}`}
       fileId={data.work.fileId}
     >
       <HStack justifyContent={"center"} w={"100%"} pt={{ base: 4, md: 8 }}>

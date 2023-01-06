@@ -64,8 +64,8 @@ const LabelPage: BlitzPage<Props> = () => {
 
   return (
     <MainStackJA
-      title={`#${label}`}
-      description={`ラベル「#${label}」に関連する作品があります。`}
+      pageTitle={`#${label}`}
+      pageDescription={`ラベル「#${label}」に関連する作品があります。`}
       fileId={null}
     >
       <Stack pt={{ base: 4, md: 8 }} px={{ base: 4, md: 8 }}>

@@ -36,7 +36,7 @@ const UserPage: BlitzPage = () => {
 
   if (router.query.login !== appContext.currentUser?.uid) {
     return (
-      <MainStackJA title={null} description={null} fileId={null}>
+      <MainStackJA pageTitle={null} pageDescription={null} fileId={null}>
         <Stack
           spacing={{ base: 4, md: 8 }}
           px={{ base: 4, md: 8 }}
@@ -51,7 +51,7 @@ const UserPage: BlitzPage = () => {
   }
 
   return (
-    <MainStackJA title={null} description={null} fileId={null}>
+    <MainStackJA pageTitle={null} pageDescription={null} fileId={null}>
       <Stack pt={{ base: 4, md: 8 }} spacing={{ base: 4, md: 8 }}>
         <Box px={{ base: 4, md: 8 }}>
           <ViewerUserProfileHeader userId={userId} />

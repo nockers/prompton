@@ -1,0 +1,722 @@
+[
+  {
+    "category": "CHARACTER",
+    "name": "",
+    "texts": ["1girl", "solo"]
+  },
+  {
+    "category": "CHARACTER",
+    "name": "",
+    "texts": ["1body", "solo"]
+  },
+  {
+    "category": "CHARACTER",
+    "name": "",
+    "texts": ["2girls"]
+  },
+  {
+    "category": "CHARACTER",
+    "name": "",
+    "texts": ["3girls"]
+  },
+  {
+    "category": "CHARACTER",
+    "name": "",
+    "texts": ["1other", "solo"]
+  },
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["walking"]
+  },
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["stretching"]
+  },
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["dancing"]
+  },
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["paw pose"]
+  },
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["jumping"]
+  },
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["squatting"]
+  },
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["all fours"]
+  },
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["crossed legs"]
+  },
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["running"]
+  },
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["fighting stance"]
+  },
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["arm support"]
+  },
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["head rest"]
+  },
+
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["crossed arms"]
+  },
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["leg up"]
+  },
+  {
+    "category": "POSE",
+    "name": "",
+    "texts": ["claw pose"]
+  },
+  {
+    "category": "ANGLE",
+    "name": "",
+    "texts": ["from above"]
+  },
+  {
+    "category": "ANGLE",
+    "name": "",
+    "texts": ["from below"]
+  },
+  {
+    "category": "ANGLE",
+    "name": "",
+    "texts": ["from behind"]
+  },
+  {
+    "category": "ANGLE",
+    "name": "",
+    "texts": ["from side"]
+  },
+  {
+    "category": "ANGLE",
+    "name": "",
+    "texts": ["dutch angle"]
+  },
+
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["nature"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["forest"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["beach"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["sauna"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["starry sky"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["cityscape"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["outdoors"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["indoors"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["onsen"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["space"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["alley"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["shopping"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["cherry blossoms"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["field"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["park"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["mountain"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["garden"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["simple background"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["snowing"]
+  },
+
+  {
+    "category": "EXPRESSION",
+    "name": "",
+    "texts": ["smile"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["smug"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["one eye closed"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["angry"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["closed eyes"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["blush", "embarrassed"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["evil smile"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["furrowed brow"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["tongue out"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["happy"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["nervous"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["pout"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["scared"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["surprised"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": [":d"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": [":3"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": [":p"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": [":o"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": [":<"]
+  },
+  {
+    "category": "BACKGROUND",
+    "name": "",
+    "texts": ["grin"]
+  },
+
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["hoodie"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["sweater"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["school uniform"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["armor"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["military uniform"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["kimono"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["skirt"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["maid dress"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["crop top"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["t-shirt", "casual"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["coat"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["jacket"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["tank top"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["sash"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["halterneck"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["apron"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["cape"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["kigurumi", "onesie"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["overalls"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["pajamas"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["sailor"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["suit"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["leotard"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["swimsuit"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["robe"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["jeans"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["shorts"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["thighhighs"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["pantyhose"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["shoes"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["boots"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["high heels"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["sandals"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["slippers"]
+  },
+  {
+    "category": "CLOTHES",
+    "name": "",
+    "texts": ["loafers"]
+  },
+
+  {
+    "category": "HAIR_COLOR",
+    "name": "",
+    "texts": ["aqua hair"]
+  },
+  {
+    "category": "HAIR_COLOR",
+    "name": "",
+    "texts": ["black hair"]
+  },
+  {
+    "category": "HAIR_COLOR",
+    "name": "",
+    "texts": ["blonde hair"]
+  },
+  {
+    "category": "HAIR_COLOR",
+    "name": "",
+    "texts": ["blue hair"]
+  },
+  {
+    "category": "HAIR_COLOR",
+    "name": "",
+    "texts": ["brown hair"]
+  },
+  {
+    "category": "HAIR_COLOR",
+    "name": "",
+    "texts": ["green hair"]
+  },
+  {
+    "category": "HAIR_COLOR",
+    "name": "",
+    "texts": ["grey hair"]
+  },
+  {
+    "category": "HAIR_COLOR",
+    "name": "",
+    "texts": ["orange hair"]
+  },
+  {
+    "category": "HAIR_COLOR",
+    "name": "",
+    "texts": ["pink hair"]
+  },
+  {
+    "category": "HAIR_COLOR",
+    "name": "",
+    "texts": ["purple hair"]
+  },
+  {
+    "category": "HAIR_COLOR",
+    "name": "",
+    "texts": ["red hair"]
+  },
+  {
+    "category": "HAIR_COLOR",
+    "name": "",
+    "texts": ["white hair"]
+  },
+  {
+    "category": "HAIR_STYLE",
+    "name": "",
+    "texts": ["long hair"]
+  },
+  {
+    "category": "HAIR_STYLE",
+    "name": "",
+    "texts": ["short hair"]
+  },
+  {
+    "category": "HAIR_STYLE",
+    "name": "",
+    "texts": ["very long hair"]
+  },
+  {
+    "category": "HAIR_STYLE",
+    "name": "",
+    "texts": ["braid"]
+  },
+  {
+    "category": "HAIR_STYLE",
+    "name": "",
+    "texts": ["hair bow"]
+  },
+  {
+    "category": "HAIR_STYLE",
+    "name": "",
+    "texts": ["twintails"]
+  },
+  {
+    "category": "HAIR_STYLE",
+    "name": "",
+    "texts": ["ponytail"]
+  },
+  {
+    "category": "HAIR_STYLE",
+    "name": "",
+    "texts": ["ahoge"]
+  },
+  {
+    "category": "HAIR_STYLE",
+    "name": "",
+    "texts": ["drill hair"]
+  },
+  {
+    "category": "HAIR_STYLE",
+    "name": "",
+    "texts": ["spiked hair"]
+  },
+  {
+    "category": "HAIR_STYLE",
+    "name": "",
+    "texts": ["curly hair"]
+  },
+  {
+    "category": "EAR_STYLE",
+    "name": "",
+    "texts": ["cat ears"]
+  },
+  {
+    "category": "EAR_STYLE",
+    "name": "",
+    "texts": ["dog ears"]
+  },
+  {
+    "category": "EAR_STYLE",
+    "name": "",
+    "texts": ["fox ears"]
+  },
+  {
+    "category": "EAR_STYLE",
+    "name": "",
+    "texts": ["rabbit ears"]
+  },
+  {
+    "category": "EAR_STYLE",
+    "name": "",
+    "texts": ["pointy ears"]
+  },
+  {
+    "category": "EAR_STYLE",
+    "name": "",
+    "texts": ["wolf ears"]
+  },
+  {
+    "category": "EYE_COLOR",
+    "name": "",
+    "texts": ["aqua eyes"]
+  },
+  {
+    "category": "EYE_COLOR",
+    "name": "",
+    "texts": ["black eyes"]
+  },
+  {
+    "category": "EYE_COLOR",
+    "name": "",
+    "texts": ["blue eyes"]
+  },
+  {
+    "category": "EYE_COLOR",
+    "name": "",
+    "texts": ["brown eyes"]
+  },
+  {
+    "category": "EYE_COLOR",
+    "name": "",
+    "texts": ["green eyes"]
+  },
+  {
+    "category": "EYE_COLOR",
+    "name": "",
+    "texts": ["grey eyes"]
+  },
+  {
+    "category": "EYE_COLOR",
+    "name": "",
+    "texts": ["orange eyes"]
+  },
+  {
+    "category": "EYE_COLOR",
+    "name": "",
+    "texts": ["purple eyes"]
+  },
+  {
+    "category": "EYE_COLOR",
+    "name": "",
+    "texts": ["pink eyes"]
+  },
+  {
+    "category": "EYE_COLOR",
+    "name": "",
+    "texts": ["red eyes"]
+  },
+  {
+    "category": "EYE_COLOR",
+    "name": "",
+    "texts": ["yellow eyes"]
+  },
+  {
+    "category": "EYE_COLOR",
+    "name": "",
+    "texts": ["amber eyes"]
+  },
+  {
+    "category": "ACCESSORY",
+    "name": "",
+    "texts": ["earrings"]
+  },
+  {
+    "category": "ACCESSORY",
+    "name": "",
+    "texts": ["glasses"]
+  },
+  {
+    "category": "ACCESSORY",
+    "name": "",
+    "texts": ["hair ornament"]
+  }
+]

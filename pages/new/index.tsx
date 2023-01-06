@@ -44,7 +44,11 @@ const LoginPage: FC = () => {
   }
 
   return (
-    <MainStackJA title={"アカウント作成"} description={null} fileId={null}>
+    <MainStackJA
+      pageTitle={"アカウント作成"}
+      pageDescription={null}
+      fileId={null}
+    >
       <HStack px={4} pt={16} justifyContent={"center"}>
         <Card
           variant={"outline"}

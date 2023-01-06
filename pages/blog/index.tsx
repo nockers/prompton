@@ -17,7 +17,7 @@ type Props = {
 
 const BlogPage: FC<Props> = (props) => {
   return (
-    <MainStackJA title={"過去の記事"} description={null} fileId={null}>
+    <MainStackJA pageTitle={"過去の記事"} pageDescription={null} fileId={null}>
       <HStack justifyContent={"center"}>
         <Stack maxW={"xl"} w={"100%"} spacing={4}>
           {props.posts.map((post) => (

@@ -69,8 +69,8 @@ const ColorPage: BlitzPage<Props> = () => {
 
   return (
     <MainStackJA
-      title={`#${label}`}
-      description={`カラーコード「#${label}」に関連する作品があります。`}
+      pageTitle={`#${label}`}
+      pageDescription={`カラーコード「#${label}」に関連する作品があります。`}
       fileId={null}
     >
       <Stack pt={{ base: 4, md: 8 }} px={{ base: 4, md: 8 }}>

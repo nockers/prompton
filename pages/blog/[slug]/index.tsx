@@ -38,7 +38,11 @@ const BlogPostPage: FC<Props> = (props) => {
   }
 
   return (
-    <MainStackJA title={props.title} description={props.body} fileId={null}>
+    <MainStackJA
+      pageTitle={props.title}
+      pageDescription={props.body}
+      fileId={null}
+    >
       <HStack justifyContent={"center"}>
         <Stack maxW={"xl"} w={"100%"} spacing={8} py={4}>
           <Stack spacing={1}>
