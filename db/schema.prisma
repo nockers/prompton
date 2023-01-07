@@ -308,8 +308,8 @@ model Like {
   folderId      String?        @map("folder_id")
   user          User           @relation("user_likes", fields: [userId], references: [id])
   userId        String         @map("user_id")
-  prompt        Prompt         @relation("prompt_likes", fields: [promptId], references: [id])
-  promptId      String         @map("prompt_id")
+  prompt        Prompt?        @relation("prompt_likes", fields: [promptId], references: [id])
+  promptId      String?        @map("prompt_id")
   notifications Notification[] @relation("notifications_like")
 
   @@unique([userId, postId])
