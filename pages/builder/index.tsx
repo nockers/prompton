@@ -12,16 +12,14 @@ import {
   Divider,
   Icon,
   Tag,
-  TagLabel,
   Wrap,
   WrapItem,
-  TagCloseButton,
   useClipboard,
   useToast,
 } from "@chakra-ui/react"
 import type { GetStaticProps } from "next"
 import { useEffect, useState } from "react"
-import { BiClipboard, BiReset, BiSave } from "react-icons/bi"
+import { BiClipboard, BiPlus, BiReset, BiSave } from "react-icons/bi"
 import { MainStackJA } from "app/components/MainStackJa"
 
 type Props = {
@@ -101,14 +99,12 @@ const BuilderPage: BlitzPage<Props> = (props) => {
                 variant={"subtle"}
                 colorScheme={"primary"}
                 fontWeight={"bold"}
+                cursor={"pointer"}
+                onClick={() => {
+                  onAddPrompt(word)
+                }}
               >
-                <TagLabel>{word.join(",")}</TagLabel>
-                <TagCloseButton
-                  fontSize={"xs"}
-                  onClick={() => {
-                    onAddPrompt(word)
-                  }}
-                />
+                {word.join(",")}
               </Tag>
             </WrapItem>
           ))}
@@ -131,6 +127,20 @@ const BuilderPage: BlitzPage<Props> = (props) => {
           display={{ base: "none", md: "block" }}
         >
           <Stack spacing={2}>
+            <Button
+              justifyContent={"flex-start"}
+              size={"sm"}
+              onClick={() => {}}
+            >
+              {"保管庫"}
+            </Button>
+            <Button
+              justifyContent={"flex-start"}
+              size={"sm"}
+              onClick={() => {}}
+            >
+              {"全て"}
+            </Button>
             {categories.map((category) => (
               <Button
                 key={category.value}
@@ -152,29 +162,40 @@ const BuilderPage: BlitzPage<Props> = (props) => {
           </Stack>
         </Box>
         <Stack flex={1} overflowY={"auto"} h={"100%"} spacing={0}>
-          <HStack spacing={2} justifyContent={"flex-end"} py={4}>
-            <Button
-              size={"xs"}
-              leftIcon={<Icon as={BiReset} />}
-              onReset={onReset}
-            >
-              {"リセット"}
-            </Button>
-            <Button size={"xs"} leftIcon={<Icon as={BiSave} />}>
-              {"セーブ"}
-            </Button>
-            <Button
-              size={"xs"}
-              colorScheme={"primary"}
-              leftIcon={<Icon as={BiClipboard} />}
-              onClick={onCopyPrompt}
-            >
-              {"コピー"}
-            </Button>
+          <HStack spacing={4} justifyContent={"space-between"} py={4}>
+            <HStack spacing={2} justifyContent={"flex-end"}>
+              <Button
+                size={"xs"}
+                leftIcon={<Icon as={BiPlus} />}
+                onReset={onReset}
+              >
+                {"追加"}
+              </Button>
+            </HStack>
+            <HStack spacing={2} justifyContent={"flex-end"}>
+              <Button
+                size={"xs"}
+                leftIcon={<Icon as={BiReset} />}
+                onReset={onReset}
+              >
+                {"リセット"}
+              </Button>
+              <Button size={"xs"} leftIcon={<Icon as={BiSave} />}>
+                {"セーブ"}
+              </Button>
+              <Button
+                size={"xs"}
+                colorScheme={"primary"}
+                leftIcon={<Icon as={BiClipboard} />}
+                onClick={onCopyPrompt}
+              >
+                {"コピー"}
+              </Button>
+            </HStack>
           </HStack>
           <Divider />
           <Stack overflowY={"auto"} py={4}>
-            <SimpleGrid minChildWidth="120px" spacing={4}>
+            <SimpleGrid minChildWidth="160px" spacing={4}>
               {categoryPrompts.map((prompt) => (
                 <Stack key={prompt.texts.join(",")} spacing={1}>
                   <Button

@@ -52,6 +52,8 @@ model User {
   minimumFee           Int            @default(1000) @map("minimum_fee")
   maximumFee           Int            @default(8000) @map("maximum_fee")
   isVerified           Boolean        @default(false) @map("is_verified")
+  prompts              Prompt[]       @relation("user_prompts")
+  permissions          Permission[]   @map("permissions")
 
   @@map("users")
 }
@@ -306,6 +308,8 @@ model Like {
   folderId      String?        @map("folder_id")
   user          User           @relation("user_likes", fields: [userId], references: [id])
   userId        String         @map("user_id")
+  prompt        Prompt         @relation("prompt_likes", fields: [promptId], references: [id])
+  promptId      String         @map("prompt_id")
   notifications Notification[] @relation("notifications_like")
 
   @@unique([userId, postId])
@@ -323,9 +327,12 @@ model Bookmark {
   postId    String?  @map("post_id")
   folder    Folder?  @relation("folder_bookmarks", fields: [folderId], references: [id])
   folderId  String?  @map("folder_id")
+  prompt    Prompt?  @relation("prompt_bookmarks", fields: [promptId], references: [id])
+  promptId  String?  @map("prompt_bookmarks")
 
   @@unique([userId, postId])
   @@unique([userId, folderId])
+  @@unique([userId, promptId])
   @@index([userId, createdAt])
   @@map("bookmarks")
 }
@@ -339,8 +346,10 @@ model Comment {
   postId    String   @map("post_id")
   user      User     @relation("user_comments", fields: [userId], references: [id])
   userId    String   @map("user_id")
+  prompt    Prompt   @relation("prompt_comments", fields: [promptId], references: [id])
+  promptId  String   @map("prompt_id")
 
-  @@unique([userId, postId])
+  @@unique([userId, promptId])
   @@index([userId, createdAt])
   @@map("comments")
 }
@@ -401,12 +410,52 @@ model File {
   @@map("files")
 }
 
+model Prompt {
+  id                String     @id @map("id")
+  createdAt         DateTime   @default(now()) @map("created_at")
+  updatedAt         DateTime   @updatedAt @map("updated_at")
+  text              String     @unique @map("word")
+  texts             String[]   @map("texts")
+  description       String?    @map("description")
+  user              User?      @relation("user_prompts", fields: [userId], references: [id])
+  userId            String?    @map("user_id")
+  likes             Like[]     @relation("prompt_likes")
+  likesCount        Int        @default(0) @map("likes_count")
+  name              String     @map("name")
+  nameJA            String     @map("name_ja")
+  isPublic          Boolean    @default(true)
+  isNsfw            Boolean    @map("is_nsfw")
+  bookmarks         Bookmark[] @relation("prompt_bookmarks")
+  comments          Comment[]  @relation("prompt_comments")
+  categorySlug      String     @map("category_slug")
+  // category          PromptCategory? @relation("prompt_category", fields: [categoryId], references: [name])
+  // categoryId        String?         @map("category_id")
+  fileId            String?    @unique @map("file_id")
+  resizableImageURL String?    @map("resizable_image_url")
+  isDeleted         Boolean    @default(false) @map("is_deleted")
+  isSingle          Boolean    @default(true) @map("is_single")
+
+  @@map("prompts")
+}
+
+// model PromptCategory {
+//   id          String   @id @map("id")
+//   createdAt   DateTime @default(now()) @map("created_at")
+//   updatedAt   DateTime @updatedAt @map("updated_at")
+//   name        String   @unique @map("name")
+//   description String?  @map("description")
+//   prompts     Prompt[] @relation("prompt_category")
+//   slug        String   @unique @map("slug")
+
+//   @@map("prompt_categories")
+// }
+
 enum NotificationType {
   FOLLOW
   FRIENDSHIP
   LIKE
-  REPLY
-  QUOTATION
+  COMMENT
+  PROMPT
 
   @@map("notification_type")
 }
@@ -452,4 +501,11 @@ enum PlanCategory {
   ILLUSTRATION_IMAGE_TO_IMAGE
 
   @@map("plan_category")
+}
+
+enum Permission {
+  CREATE_PROMPT_CATEGORY
+  DELETE_POST
+
+  @@map("permission")
 }

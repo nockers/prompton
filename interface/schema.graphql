@@ -158,6 +158,28 @@ type PlanNode implements Node {
 }
 
 """
+プロンプト
+"""
+type PromptNode implements Node {
+  id: ID!
+  createdAt: Int!
+  updatedAt: Int!
+  text: String!
+  texts: [String!]!
+  description: String
+  user: UserNode
+  likesCount: Int!
+  name: String!
+  nameJA: String!
+  isPublic: Boolean!
+  isNsfw: Boolean!
+  isDeleted: Boolean!
+  isSingle: Boolean!
+  fileId: String!
+  imageURL: String!
+}
+
+"""
 リクエスト
 """
 type RequestNode implements Node {
@@ -540,7 +562,7 @@ type Mutation {
   """
   createDeliverable(input: CreateDeliverableInput!): DeliverableNode!
   """
-  納品物を削除する
+  納品物を更新する
   """
   updateDeliverable(input: UpdateDeliverableInput!): DeliverableNode!
   """
@@ -557,6 +579,18 @@ type Mutation {
   決済方法を削除する
   """
   deletePaymentMethod: Boolean
+  """
+  プロンプトを作成する
+  """
+  createPrompt(input: CreatePromptInput!): PromptNode!
+  """
+  プロンプトを更新する
+  """
+  updatePrompt(input: UpdatePromptInput!): PromptNode!
+  """
+  プロンプトを削除する
+  """
+  deletePrompt(input: DeletePromptInput!): PromptNode!
 }
 
 input CreateWorkInput {
@@ -697,6 +731,43 @@ input DeleteDeliverableInput {
 
 input CreatePaymentMethodInput {
   requestRecipientId: String
+}
+
+input CreatePromptInput {
+  name: String!
+  description: String
+  texts: [String!]!
+  isNsfw: Boolean!
+  isSingle: Boolean!
+  fileId: String
+}
+
+input UpdatePromptInput {
+  promptId: String!
+  name: String!
+  description: String
+  isNsfw: Boolean!
+  isSingle: Boolean!
+}
+
+input DeletePromptInput {
+  promptId: String!
+}
+
+input CreatePromptCategoryInput {
+  name: String!
+  description: String
+  slug: String!
+}
+
+input UpdatePromptCategoryInput {
+  promptCategoryId: String!
+  name: String!
+  description: String
+}
+
+input DeletePromptCategoryInput {
+  promptCategoryId: String!
 }
 
 type CreatePaymentMethodResult {
