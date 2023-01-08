@@ -76,7 +76,10 @@ export const RequestNodeResolvers: PrismaResolvers<RequestNode, Request> = {
   signature(parent) {
     return parent.signature
   },
-  works() {
-    return []
+  works(parent) {
+    return db.request.findUnique({ where: { id: parent.id } }).posts()
+  },
+  deliverables(parent) {
+    return db.request.findUnique({ where: { id: parent.id } }).deliverables()
   },
 }

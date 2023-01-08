@@ -50,7 +50,7 @@ export class RequestEventConverter {
         recipientId: event.recipientId.value,
         paymentId: event.paymentId?.value ?? null,
       }
-      return zRequestCreatedEventData.parse(data)
+      return zRequestMarkedAsAcceptedEventData.parse(data)
     }
 
     if (event instanceof RequestMarkedAsRejectedEvent) {
@@ -68,7 +68,7 @@ export class RequestEventConverter {
         senderId: event.senderId.value,
         recipientId: event.recipientId.value,
       }
-      return zRequestCreatedEventData.parse(data)
+      return zRequestMarkedAsCanceledEventData.parse(data)
     }
 
     if (event instanceof RequestMarkedAsCanceledBySenderEvent) {
@@ -77,7 +77,7 @@ export class RequestEventConverter {
         senderId: event.senderId.value,
         recipientId: event.recipientId.value,
       }
-      return zRequestCreatedEventData.parse(data)
+      return zRequestMarkedAsCanceledBySenderEventData.parse(data)
     }
 
     if (event instanceof RequestMarkedAsCanceledByRecipientEvent) {
@@ -87,7 +87,7 @@ export class RequestEventConverter {
           senderId: event.senderId.value,
           recipientId: event.recipientId.value,
         }
-      return zRequestCreatedEventData.parse(data)
+      return zRequestMarkedAsCanceledByRecipientEventData.parse(data)
     }
 
     if (event instanceof RequestMarkedAsCompletedEvent) {

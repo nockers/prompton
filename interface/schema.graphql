@@ -44,6 +44,7 @@ type Viewer {
   sentRequests(offset: Int, limit: Int): [RequestNode!]!
   receivedRequests(offset: Int, limit: Int): [RequestNode!]!
   plans(offset: Int, limit: Int): [PlanNode!]!
+  deliverables(offset: Int, limit: Int): [DeliverableNode!]!
 }
 
 """
@@ -90,7 +91,7 @@ type FolderNode implements Node {
 type DeliverableNode implements Node {
   id: ID!
   createdAt: Int!
-  name: String!
+  name: String
   description: String
   user: UserNode!
   request: RequestNode!
@@ -106,7 +107,7 @@ type FileNode implements Node {
   createdAt: Int!
   path: String!
   height: Int
-  weight: Int
+  width: Int
   type: String!
 }
 
@@ -217,6 +218,10 @@ type RequestNode implements Node {
   手数料
   """
   commission: Int!
+  """
+  納品物
+  """
+  deliverables: [DeliverableNode!]!
 }
 
 """
@@ -715,7 +720,7 @@ input CancelRequestInput {
 input CreateDeliverableInput {
   requestId: String!
   fileId: String!
-  name: String!
+  name: String
   description: String
 }
 

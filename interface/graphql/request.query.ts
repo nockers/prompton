@@ -14,6 +14,18 @@ export default gql`
         name
         avatarImageURL
       }
+      deliverables {
+        id
+        createdAt
+        name
+        description
+        file {
+          id
+          path
+          height
+          width
+        }
+      }
       createdAt
       note
       fee
