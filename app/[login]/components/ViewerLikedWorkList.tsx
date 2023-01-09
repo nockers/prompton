@@ -61,6 +61,7 @@ export const ViewerLikedWorkList: FC = () => {
                 isLiked={false}
                 isBookmarked={false}
                 isFollowee={false}
+                isLoggedIn={appContext.currentUser !== null}
               />
             ))}
           </Stack>

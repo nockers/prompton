@@ -1,9 +1,11 @@
 import { HStack, Stack } from "@chakra-ui/react"
 import type { FC } from "react"
+import { useContext } from "react"
 import UserLoading from "app/[login]/loading"
 import { CardUserWork } from "app/components/CardUserWork"
 import { useColumnCount } from "app/hooks/useColumnCount"
 import { useUserWorksQuery } from "interface/__generated__/react"
+import { AppContext } from "interface/contexts/appContext"
 import { toColumnArray } from "interface/utils/toColumnArray"
 
 type Props = {
@@ -11,6 +13,8 @@ type Props = {
 }
 
 export const UserWorks: FC<Props> = (props) => {
+  const appContext = useContext(AppContext)
+
   const { data = null, loading } = useUserWorksQuery({
     variables: {
       offset: 0,
@@ -58,6 +62,7 @@ export const UserWorks: FC<Props> = (props) => {
                 isLiked={false}
                 isBookmarked={false}
                 isFollowee={false}
+                isLoggedIn={appContext.currentUser !== null}
               />
             ))}
           </Stack>

@@ -71,6 +71,7 @@ export const UserWorkList: FC<Props> = (props) => {
                 isBookmarked={work.isBookmarked}
                 isFollowee={work.user.isFollowee}
                 isEditable={work.user.id === appContext.currentUser?.uid}
+                isLoggedIn={appContext.currentUser !== null}
               />
             ))}
           </Stack>

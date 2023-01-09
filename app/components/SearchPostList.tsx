@@ -1,6 +1,7 @@
-import { Box, Button, Divider, HStack, Spinner, Stack } from "@chakra-ui/react"
+import { Box, Button, Divider, HStack, Stack } from "@chakra-ui/react"
 import type { FC } from "react"
 import { useContext } from "react"
+import { BoxLoading } from "app/components/BoxLoading"
 import { CardWork } from "app/components/CardWork"
 import { useHomeColumnCount } from "app/hooks/useHomeColumnCount"
 import { useWorksQuery } from "interface/__generated__/react"
@@ -36,11 +37,7 @@ export const SearchPostList: FC<Props> = (props) => {
   }
 
   if (loading && data === null) {
-    return (
-      <HStack pt={40} justifyContent={"center"}>
-        <Spinner size={"xl"} />
-      </HStack>
-    )
+    return <BoxLoading />
   }
 
   if (data === null || data.works.length === 0) {
@@ -82,6 +79,7 @@ export const SearchPostList: FC<Props> = (props) => {
                 isBookmarked={work.isBookmarked}
                 isFollowee={work.user.isFollowee}
                 isEditable={work.user.id === appContext.currentUser?.uid}
+                isLoggedIn={appContext.currentUser !== null}
               />
             ))}
           </Stack>

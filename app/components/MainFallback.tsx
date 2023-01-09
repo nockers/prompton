@@ -1,6 +1,6 @@
-import { Spinner, Stack } from "@chakra-ui/react"
 import Head from "next/head"
 import type { FC } from "react"
+import { MainLoading } from "app/components/MainLoading"
 
 export const MainFallback: FC = () => {
   const defaultOgImageURL = "https://prompton.io/facebook.png"
@@ -15,15 +15,7 @@ export const MainFallback: FC = () => {
         <meta name={"twitter:description"} content={""} />
         <meta name={"twitter:image"} content={defaultOgImageURL} />
       </Head>
-      <Stack
-        as={"main"}
-        justifyContent={"center"}
-        alignItems={"center"}
-        w={"100%"}
-        pt={40}
-      >
-        <Spinner size={"xl"} />
-      </Stack>
+      <MainLoading />
     </>
   )
 }

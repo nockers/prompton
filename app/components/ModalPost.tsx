@@ -58,6 +58,7 @@ type Props = {
   isFollowee: boolean
   isOpen: boolean
   isEditable: boolean
+  isLoggedIn: boolean
   onOpenUser(): void
   onClose(): void
   onLinkColor(color: string): void
@@ -278,6 +279,7 @@ export const ModalPost: FC<Props> = (props) => {
                 />
                 <ButtonFollow
                   size={"sm"}
+                  isDisabled={!props.isLoggedIn}
                   isLoading={isLoadingFriendship}
                   isActive={props.isFollowee}
                   onFollow={onFollowUser}
@@ -288,6 +290,7 @@ export const ModalPost: FC<Props> = (props) => {
                 <IconButtonBookmark
                   aria-label={"Bookmark"}
                   size={"sm"}
+                  isDisabled={!props.isLoggedIn}
                   isLoading={isLoadingBookmark}
                   isActive={props.isBookmarked}
                   onCreate={onCreateBookmark}
@@ -297,6 +300,7 @@ export const ModalPost: FC<Props> = (props) => {
                   <ButtonLike
                     size={"sm"}
                     count={props.postLikeCount}
+                    isDisabled={!props.isLoggedIn}
                     isLoading={isLoadingLike}
                     isActive={props.isLiked}
                     onCreate={onCreateLike}

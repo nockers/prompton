@@ -24,6 +24,7 @@ type Props = {
   isBookmarked: boolean
   isFollowee: boolean
   isEditable: boolean
+  isLoggedIn: boolean
 }
 
 export const CardWork: FC<Props> = (props) => {
@@ -99,6 +100,7 @@ export const CardWork: FC<Props> = (props) => {
         isBookmarked={props.isBookmarked}
         isFollowee={props.isFollowee}
         isEditable={props.isEditable}
+        isLoggedIn={props.isLoggedIn}
         onClose={onClose}
         onLinkColor={onLinkColor}
         onLinkLabel={onLinkLabel}

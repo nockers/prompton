@@ -85,6 +85,7 @@ export const HomeWorkList: FC = () => {
                 isLiked={work.isLiked}
                 isBookmarked={work.isBookmarked}
                 isFollowee={work.user.isFollowee}
+                isLoggedIn={appContext.currentUser !== null}
                 isEditable={work.user.id === appContext.currentUser?.uid}
               />
             ))}

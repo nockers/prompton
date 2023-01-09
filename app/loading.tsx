@@ -1,12 +1,8 @@
-import { HStack, Spinner } from "@chakra-ui/react"
 import type { FC } from "react"
+import { MainLoading } from "app/components/MainLoading"
 
 const RootLoading: FC = () => {
-  return (
-    <HStack py={40} justifyContent={"center"}>
-      <Spinner size={"xl"} />
-    </HStack>
-  )
+  return <MainLoading />
 }
 
 export default RootLoading

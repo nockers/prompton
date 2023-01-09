@@ -1,11 +1,11 @@
 import type { BlitzPage } from "@blitzjs/auth"
-import { Button, Divider, HStack, Spinner, Stack, Text } from "@chakra-ui/react"
+import { Button, Divider, HStack, Stack, Text } from "@chakra-ui/react"
 import type { GetStaticPaths, GetStaticProps } from "next"
 import { useRouter } from "next/router"
 import { useContext } from "react"
 import UserLayout from "app/[login]/layout"
 import { CardWork } from "app/components/CardWork"
-import { MainFallback } from "app/components/MainFallback"
+import { MainLoading } from "app/components/MainLoading"
 import { MainStackJA } from "app/components/MainStackJa"
 import { useColumnCount } from "app/hooks/useColumnCount"
 import { useWorksQuery } from "interface/__generated__/react"
@@ -50,16 +50,8 @@ const LabelPage: BlitzPage<Props> = () => {
 
   const label = router.query.name?.toString()
 
-  if (router.isFallback) {
-    return <MainFallback />
-  }
-
-  if (loading && data === null) {
-    return (
-      <HStack pt={40} justifyContent={"center"}>
-        <Spinner size={"xl"} />
-      </HStack>
-    )
+  if (router.isFallback || (loading && data === null)) {
+    return <MainLoading />
   }
 
   return (
@@ -104,6 +96,7 @@ const LabelPage: BlitzPage<Props> = () => {
                 isBookmarked={work.isBookmarked}
                 isFollowee={work.user.isFollowee}
                 isEditable={work.user.id === appContext.currentUser?.uid}
+                isLoggedIn={appContext.currentUser !== null}
               />
             ))}
           </Stack>

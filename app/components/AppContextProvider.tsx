@@ -27,6 +27,8 @@ export const AppContextProvider: FC<Props> = (props) => {
 
   const value = {
     isLoading: isLoading,
+    isLoggedIn: currentUser !== null,
+    isNotLoggedIn: currentUser === null,
     currentUser: currentUser,
   }
 

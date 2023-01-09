@@ -2,7 +2,7 @@ import { Text, Spinner, Stack, useColorModeValue } from "@chakra-ui/react"
 import type { FC } from "react"
 
 type Props = {
-  text: string
+  text?: string
 }
 
 export const MainLoading: FC<Props> = (props) => {
