@@ -8,7 +8,7 @@ type Props = {
 }
 
 @injectable()
-export class markRequestAsCanceledBySenderCommand {
+export class MarkRequestAsCanceledBySenderCommand {
   constructor(
     private requestRepository: RequestRepository,
     private eventStore: EventStore,

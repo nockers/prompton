@@ -44,7 +44,7 @@ type Viewer {
   sentRequests(offset: Int, limit: Int): [RequestNode!]!
   receivedRequests(offset: Int, limit: Int): [RequestNode!]!
   plans(offset: Int, limit: Int): [PlanNode!]!
-  deliverables(offset: Int, limit: Int): [DeliverableNode!]!
+  deliverables(offset: Int, limit: Int): [WorkNode!]!
 }
 
 """
@@ -195,7 +195,10 @@ type RequestNode implements Node {
   受け取ったユーザ
   """
   recipient: UserNode!
-  works: [WorkNode!]!
+  """
+  納品物
+  """
+  deliverables: [WorkNode!]!
   files: [FileNode!]!
   note: String!
   fee: Int!
@@ -208,6 +211,10 @@ type RequestNode implements Node {
   isCanceledByRecipient: Boolean!
   isTimeout: Boolean!
   """
+  公開されているかどうか
+  """
+  isPublic: Boolean!
+  """
   関連する決済
   """
   payments: [PaymentNode!]!
@@ -218,10 +225,6 @@ type RequestNode implements Node {
   手数料
   """
   commission: Int!
-  """
-  納品物
-  """
-  deliverables: [DeliverableNode!]!
 }
 
 """
@@ -234,6 +237,10 @@ type WorkNode implements Node {
   タイトル
   """
   title: String
+  """
+  説明
+  """
+  description: String
   """
   ファイルのID
   """
@@ -310,7 +317,6 @@ type WorkNode implements Node {
   セーフサーチ・性的な内容である可能性
   """
   annotationRacy: String
-
   """
   セーフサーチ・暴力的な内容である可能性
   """
@@ -331,6 +337,14 @@ type WorkNode implements Node {
   自分の作品かどうか
   """
   isMine: Boolean!
+  """
+  公開されているかどうか
+  """
+  isPublic: Boolean!
+  """
+  関連するリクエスト
+  """
+  request: RequestNode
 }
 
 type WorkEdge implements Edge {
@@ -565,15 +579,7 @@ type Mutation {
   """
   納品物を作成する
   """
-  createDeliverable(input: CreateDeliverableInput!): DeliverableNode!
-  """
-  納品物を更新する
-  """
-  updateDeliverable(input: UpdateDeliverableInput!): DeliverableNode!
-  """
-  納品物を削除する
-  """
-  deleteDeliverable(input: DeleteDeliverableInput!): Boolean
+  createDeliverable(input: CreateDeliverableInput!): WorkNode!
   """
   決済方法を登録する
   """
@@ -722,16 +728,6 @@ input CreateDeliverableInput {
   fileId: String!
   name: String
   description: String
-}
-
-input UpdateDeliverableInput {
-  deliverableId: String!
-  name: String!
-  description: String
-}
-
-input DeleteDeliverableInput {
-  deliverableId: String!
 }
 
 input CreatePaymentMethodInput {

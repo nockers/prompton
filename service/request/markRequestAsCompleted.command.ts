@@ -1,14 +1,20 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
-import { Id, IdFactory, RequestMarkedAsCompletedEvent } from "core"
+import {
+  Id,
+  IdFactory,
+  PostMarkedAsPublicEvent,
+  RequestMarkedAsCompletedEvent,
+} from "core"
 import { EventStore, RequestRepository } from "infrastructure"
 
 type Props = {
+  userId: string
   requestId: string
 }
 
 @injectable()
-export class markRequestAsCompletedCommand {
+export class MarkRequestAsCompletedCommand {
   constructor(
     private requestRepository: RequestRepository,
     private eventStore: EventStore,
@@ -26,6 +32,10 @@ export class markRequestAsCompletedCommand {
         return new Error()
       }
 
+      if (request.recipientId.value !== props.userId) {
+        return new Error()
+      }
+
       const event = new RequestMarkedAsCompletedEvent({
         id: IdFactory.create(),
         requestId: request.id,
@@ -34,6 +44,15 @@ export class markRequestAsCompletedCommand {
       })
 
       await this.eventStore.commit(event)
+
+      for (const postId of request.deliverableIds) {
+        const event = new PostMarkedAsPublicEvent({
+          id: IdFactory.create(),
+          postId: postId,
+          userId: request.senderId,
+        })
+        await this.eventStore.commit(event)
+      }
 
       return null
     } catch (error) {

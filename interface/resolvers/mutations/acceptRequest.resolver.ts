@@ -7,7 +7,7 @@ import type {
   RequireFields,
   Resolver,
 } from "interface/__generated__/node"
-import { markRequestAsAcceptedCommand } from "service"
+import { MarkRequestAsAcceptedCommand } from "service"
 import type { ApolloContext } from "types"
 
 type Resolvers = Resolver<
@@ -24,7 +24,7 @@ export const acceptRequestResolver: Resolvers = async (_, args, ctx) => {
     })
   }
 
-  const command = container.resolve(markRequestAsAcceptedCommand)
+  const command = container.resolve(MarkRequestAsAcceptedCommand)
 
   const event = await command.execute({
     userId: ctx.currentUser.uid,
@@ -37,5 +37,5 @@ export const acceptRequestResolver: Resolvers = async (_, args, ctx) => {
     })
   }
 
-  return await db.request.findUnique({ where: { id: args.input.requestId } })
+  return db.request.findUnique({ where: { id: args.input.requestId } })
 }

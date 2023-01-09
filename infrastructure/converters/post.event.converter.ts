@@ -2,6 +2,8 @@ import type { Event } from "@prisma/client"
 import type { z } from "zod"
 import type { PostEvent } from "core"
 import {
+  PostMarkedAsPrivateEvent,
+  PostMarkedAsPublicEvent,
   SoftwareFactory,
   Url,
   PostAnnotationsUpdatedEvent,
@@ -15,6 +17,8 @@ import {
   zPostDeletedEventData,
   zPostUpdatedEventData,
   zPostCreatedEventData,
+  zPostMarkedAsPublicEventData,
+  zPostMarkedAsPrivateEventData,
 } from "infrastructure/validations"
 
 export class PostEventConverter {
@@ -69,6 +73,22 @@ export class PostEventConverter {
       return zPostUpdatedEventData.parse(data)
     }
 
+    if (event instanceof PostMarkedAsPrivateEvent) {
+      const data: z.infer<typeof zPostMarkedAsPublicEventData> = {
+        postId: event.postId.value,
+        userId: event.userId.value,
+      }
+      return zPostMarkedAsPublicEventData.parse(data)
+    }
+
+    if (event instanceof PostMarkedAsPublicEvent) {
+      const data: z.infer<typeof zPostMarkedAsPrivateEventData> = {
+        postId: event.postId.value,
+        userId: event.userId.value,
+      }
+      return zPostMarkedAsPrivateEventData.parse(data)
+    }
+
     return event
   }
 
@@ -116,6 +136,9 @@ export class PostEventConverter {
             : null,
         prompt: typeof data.prompt === "string" ? data.prompt : null,
         seed: typeof data.seed === "string" ? data.seed : null,
+        requestId:
+          typeof data.requestId === "string" ? new Id(data.requestId) : null,
+        isPublic: data.isPublic ?? false,
       })
     }
 
@@ -138,6 +161,26 @@ export class PostEventConverter {
         userId: new Id(data.userId),
         title: data.title,
         prompt: data.prompt,
+      })
+    }
+
+    if (event.type === PostMarkedAsPrivateEvent.type) {
+      const data = zPostMarkedAsPrivateEventData.parse(event.data)
+      return new PostMarkedAsPrivateEvent({
+        id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
+        postId: new Id(data.postId),
+        userId: new Id(data.userId),
+      })
+    }
+
+    if (event.type === PostMarkedAsPublicEvent.type) {
+      const data = zPostMarkedAsPublicEventData.parse(event.data)
+      return new PostMarkedAsPublicEvent({
+        id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
+        postId: new Id(data.postId),
+        userId: new Id(data.userId),
       })
     }
 

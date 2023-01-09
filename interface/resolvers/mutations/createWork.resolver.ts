@@ -26,6 +26,8 @@ export const createWorkResolver = async (
     userId: ctx.currentUser.uid,
     postFileId: args.input.fileId,
     postFileName: args.input.fileName,
+    isPublic: true,
+    requestId: null,
   })
 
   if (event instanceof Error) {

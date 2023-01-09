@@ -20,7 +20,6 @@ const zProps = z.object({
   deliverableIds: z.array(z.instanceof(Id)),
   planId: z.instanceof(Id).nullable(),
   folderId: z.instanceof(Id).nullable(),
-  postIds: z.array(z.instanceof(Id)),
   paymentIds: z.array(z.instanceof(Id)),
 })
 
@@ -116,8 +115,6 @@ export class RequestEntity implements Props {
    * 関連するフォルダ
    */
   readonly folderId!: Props["folderId"]
-
-  readonly postIds!: Props["postIds"]
 
   readonly paymentIds!: Props["paymentIds"]
 

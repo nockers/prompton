@@ -61,6 +61,7 @@ export const QueryResolvers: Resolvers = {
         skip: skip,
         where: {
           isDeleted: false,
+          isPublic: true,
           OR: [
             {
               labels: { some: { name: { search: args.where.search } } },
@@ -82,6 +83,7 @@ export const QueryResolvers: Resolvers = {
         skip: skip,
         where: {
           isDeleted: false,
+          isPublic: true,
           userId: args.where.userId!,
         },
       })
@@ -93,6 +95,7 @@ export const QueryResolvers: Resolvers = {
         skip: skip,
         where: {
           isDeleted: false,
+          isPublic: true,
           labels: { some: { name: args.where.labelName! } },
         },
       })
@@ -104,6 +107,7 @@ export const QueryResolvers: Resolvers = {
         skip: skip,
         where: {
           isDeleted: false,
+          isPublic: true,
           webColors: { has: `#${args.where?.color}` },
         },
       })
@@ -112,7 +116,10 @@ export const QueryResolvers: Resolvers = {
       orderBy: { createdAt: "desc" },
       take: take,
       skip: skip,
-      where: { isDeleted: false },
+      where: {
+        isDeleted: false,
+        isPublic: true,
+      },
     })
   },
   work(_: unknown, args: QueryWorkArgs) {

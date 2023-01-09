@@ -7,6 +7,8 @@ type Props = {
   userId: string
   postFileId: string
   postFileName: string
+  isPublic: boolean
+  requestId: string | null
 }
 
 @injectable()
@@ -34,6 +36,8 @@ export class CreatePostCommand {
         software: null,
         prompt: null,
         seed: null,
+        isPublic: props.isPublic,
+        requestId: props.requestId === null ? null : new Id(props.requestId),
       })
 
       await this.eventStore.commit(event)

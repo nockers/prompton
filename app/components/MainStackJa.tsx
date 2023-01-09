@@ -61,6 +61,7 @@ export const MainStackJA: FC<Props> = (props) => {
         spacing={{ base: 4, md: 8 }}
         pb={8}
         overflowX={"hidden"}
+        minH={"100vh"}
         {...stackProps}
       >
         {children}

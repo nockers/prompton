@@ -13,6 +13,8 @@ const zProps = z.object({
   detectedSoftware: z.instanceof(Software).nullable(),
   seed: z.string().nullable(),
   detectedSeed: z.string().nullable(),
+  isPublic: z.boolean(),
+  requestId: z.instanceof(Id).nullable(),
 })
 
 type Props = inferEventProps<typeof zProps>
@@ -43,6 +45,10 @@ export class PostCreatedEvent extends PrototypeEvent implements Props {
   readonly software!: Props["software"]
 
   readonly detectedSoftware!: Props["detectedSoftware"]
+
+  readonly isPublic!: Props["isPublic"]
+
+  readonly requestId!: Props["requestId"]
 
   constructor(props: Props) {
     super({ ...props, documentId: props.postId })

@@ -67,7 +67,6 @@ export class RequestEventStore {
       paymentIds: event.paymentId ? [event.paymentId] : [],
       commission: event.commission,
       planId: event.planId,
-      postIds: [],
       fee: event.fee,
       title: event.title,
     })

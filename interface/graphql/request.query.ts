@@ -17,14 +17,17 @@ export default gql`
       deliverables {
         id
         createdAt
-        name
-        description
-        file {
-          id
-          path
-          height
-          width
-        }
+        title
+        fileId
+        imageURL
+        thumbnailURL
+        squareThumbnailURL
+        annotationAdult
+        annotationMedical
+        annotationViolence
+        annotationRacy
+        annotationSpoof
+        isDeleted
       }
       createdAt
       note

@@ -98,4 +98,14 @@ export const ViewerResolvers: Resolvers = {
       },
     })
   },
+  deliverables(_, __, context) {
+    return db.post.findMany({
+      orderBy: { createdAt: "desc" },
+      where: {
+        userId: context.currentUser!.uid!,
+        isDeleted: false,
+        requestId: { not: null },
+      },
+    })
+  },
 }

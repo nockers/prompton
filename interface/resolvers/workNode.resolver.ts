@@ -14,6 +14,9 @@ export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
   title(parent) {
     return parent.title
   },
+  description(parent) {
+    return parent.description
+  },
   fileId(parent) {
     return parent.fileId
   },
@@ -95,6 +98,12 @@ export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
   },
   isDeleted(parent) {
     return parent.isDeleted
+  },
+  isPublic(parent) {
+    return parent.isPublic
+  },
+  request(parent) {
+    return db.post.findUnique({ where: { id: parent.id } }).request()
   },
   async isLiked(parent, _, ctx) {
     if (ctx.currentUser === null) return false

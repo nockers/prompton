@@ -4,6 +4,7 @@ import { Id, Software, Url } from "core/valueObjects"
 const zProps = z.object({
   id: z.instanceof(Id),
   title: z.string().nullable(),
+  description: z.string().nullable(),
   fileId: z.instanceof(Id),
   prompt: z.string().nullable(),
   detectedPrompt: z.string().nullable(),
@@ -21,6 +22,8 @@ const zProps = z.object({
   annotationViolence: z.string().nullable(),
   labelIds: z.array(z.instanceof(Id)),
   resizableImageURL: z.instanceof(Url).nullable(),
+  requestId: z.instanceof(Id).nullable(),
+  isPublic: z.boolean(),
 })
 
 type Props = z.infer<typeof zProps>
@@ -38,6 +41,11 @@ export class PostEntity implements Props {
    * タイトル
    */
   readonly title!: Props["title"]
+
+  /**
+   * 説明
+   */
+  readonly description!: Props["description"]
 
   /**
    * ファイルID
@@ -78,6 +86,20 @@ export class PostEntity implements Props {
   readonly labelIds!: Props["labelIds"]
 
   readonly resizableImageURL!: Props["resizableImageURL"]
+
+  /**
+   * リクエストのID
+   */
+  readonly requestId!: Props["requestId"]
+
+  /**
+   * 公開済みかどうか
+   */
+  readonly isPublic!: Props["isPublic"]
+
+  get isDeliverable() {
+    return this.requestId !== null
+  }
 
   constructor(public props: Props) {
     zProps.parse(props)
@@ -152,6 +174,27 @@ export class PostEntity implements Props {
     return new PostEntity({
       ...this.props,
       resizableImageURL,
+    })
+  }
+
+  updateRequestId(requestId: Id | null) {
+    return new PostEntity({
+      ...this.props,
+      requestId,
+    })
+  }
+
+  makePublic() {
+    return new PostEntity({
+      ...this.props,
+      isPublic: true,
+    })
+  }
+
+  makePrivate() {
+    return new PostEntity({
+      ...this.props,
+      isPublic: false,
     })
   }
 }

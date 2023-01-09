@@ -7,7 +7,7 @@ import type {
   RequireFields,
   Resolver,
 } from "interface/__generated__/node"
-import { markRequestAsRejectedCommand } from "service"
+import { MarkRequestAsRejectedCommand } from "service"
 import type { ApolloContext } from "types"
 
 type Resolvers = Resolver<
@@ -24,7 +24,7 @@ export const rejectRequestResolver: Resolvers = async (_, args, ctx) => {
     })
   }
 
-  const command = container.resolve(markRequestAsRejectedCommand)
+  const command = container.resolve(MarkRequestAsRejectedCommand)
 
   const event = await command.execute({
     userId: ctx.currentUser.uid,

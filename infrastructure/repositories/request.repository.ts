@@ -8,9 +8,11 @@ export class RequestRepository {
       const request = await db.request.findUnique({
         where: { id: requestId.value },
         include: {
-          posts: { select: { id: true } },
+          posts: {
+            where: { isDeleted: false },
+            select: { id: true },
+          },
           files: { select: { id: true } },
-          deliverables: { select: { id: true } },
           payments: { select: { id: true } },
         },
       })
@@ -35,16 +37,13 @@ export class RequestRepository {
         isCanceledByRecipient: request.isCanceledByRecipient,
         isTimeout: request.isTimeout,
         planId: request.planId !== null ? new Id(request.planId) : null,
-        deliverableIds: request.deliverables.map((deliverable) => {
-          return new Id(deliverable.id)
-        }),
         fileIds: request.files.map((file) => {
           return new Id(file.id)
         }),
         paymentIds: request.payments.map((payment) => {
           return new Id(payment.id)
         }),
-        postIds: request.posts.map((post) => {
+        deliverableIds: request.posts.map((post) => {
           return new Id(post.id)
         }),
         title: null,
@@ -94,18 +93,13 @@ export class RequestRepository {
               return { id: id.value }
             }),
           },
-          deliverables: {
-            connect: entity.deliverableIds.map((id) => {
-              return { id: id.value }
-            }),
-          },
           payments: {
             connect: entity.paymentIds.map((id) => {
               return { id: id.value }
             }),
           },
           posts: {
-            connect: entity.postIds.map((id) => {
+            connect: entity.deliverableIds.map((id) => {
               return { id: id.value }
             }),
           },

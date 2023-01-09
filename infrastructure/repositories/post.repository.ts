@@ -45,6 +45,9 @@ export class PostRepository {
         labelIds: post.labels.map((label) => {
           return new Id(label.id)
         }),
+        description: post.description,
+        isPublic: post.isPublic,
+        requestId: post.requestId !== null ? new Id(post.requestId) : null,
       })
     } catch (error) {
       captureException(error)
@@ -58,6 +61,10 @@ export class PostRepository {
         create: {
           id: entity.id.value,
           title: entity.title,
+          description: entity.description,
+          requestId: entity.requestId?.value ?? null,
+          isDeliverable: entity.isDeliverable,
+          isPublic: entity.isPublic,
           dateText: "",
           fileId: entity.fileId.value,
           userId: entity.userId.value,
@@ -81,6 +88,7 @@ export class PostRepository {
           },
         },
         update: {
+          isPublic: entity.isPublic,
           title: entity.title,
           prompt: entity.prompt,
           detectedPrompt: entity.detectedPrompt,

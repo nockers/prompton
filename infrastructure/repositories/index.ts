@@ -1,5 +1,4 @@
 export * from "./bookmark.repository"
-export * from "./deliverable.repository"
 export * from "./event.repository"
 export * from "./friendship.repository"
 export * from "./label.repository"

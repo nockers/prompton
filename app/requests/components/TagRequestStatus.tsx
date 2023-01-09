@@ -13,22 +13,6 @@ type Props = {
 }
 
 export const TagRequestStatus: FC<Props> = (props) => {
-  if (props.isAccepted) {
-    return (
-      <Tag variant={"subtle"} colorScheme={"blue"}>
-        {"取り組み中"}
-      </Tag>
-    )
-  }
-
-  if (props.isRejected) {
-    return (
-      <Tag variant={"subtle"} colorScheme={"blue"}>
-        {"見送り"}
-      </Tag>
-    )
-  }
-
   if (props.isCompleted) {
     return (
       <Tag variant={"subtle"} colorScheme={"green"}>
@@ -65,6 +49,22 @@ export const TagRequestStatus: FC<Props> = (props) => {
     return (
       <Tag variant={"subtle"} colorScheme={"red"}>
         {"期限切れ"}
+      </Tag>
+    )
+  }
+
+  if (props.isAccepted) {
+    return (
+      <Tag variant={"subtle"} colorScheme={"blue"}>
+        {"取り組み中"}
+      </Tag>
+    )
+  }
+
+  if (props.isRejected) {
+    return (
+      <Tag variant={"subtle"} colorScheme={"blue"}>
+        {"見送り"}
       </Tag>
     )
   }

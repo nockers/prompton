@@ -10,7 +10,6 @@ import { createUserResolver } from "interface/resolvers/mutations/createUser.res
 import { createWorkResolver } from "interface/resolvers/mutations/createWork.resolver"
 import { createWorkBookmarkResolver } from "interface/resolvers/mutations/createWorkBookmark.resolver"
 import { createWorkLikeResolver } from "interface/resolvers/mutations/createWorkLike.resolver"
-import { deleteDeliverableResolver } from "interface/resolvers/mutations/deleteDeliverable.resolver"
 import { deletePaymentMethodResolver } from "interface/resolvers/mutations/deletePaymentMethod.resolver"
 import { deletePlanResolver } from "interface/resolvers/mutations/deletePlanSort.resolver"
 import { deleteWorkResolver } from "interface/resolvers/mutations/deleteWork.resolver"
@@ -19,7 +18,6 @@ import { deleteWorkLikeResolver } from "interface/resolvers/mutations/deleteWork
 import { followUserResolver } from "interface/resolvers/mutations/followUser.resolver"
 import { rejectRequestResolver } from "interface/resolvers/mutations/rejectRequest.resolver"
 import { unfollowUserResolver } from "interface/resolvers/mutations/unfollowUser.resolver"
-import { updateDeliverableResolver } from "interface/resolvers/mutations/updateDeliverable.resolver"
 import { updatePlanResolver } from "interface/resolvers/mutations/updatePlan.resolver"
 import { updatePlanSortResolver } from "interface/resolvers/mutations/updatePlanSort.resolver"
 import { updateUserProfileResolver } from "interface/resolvers/mutations/updateUserProfile.resolver"
@@ -33,32 +31,30 @@ import { ViewerResolvers } from "interface/resolvers/viewer.resolver"
 import { WorkNodeResolvers } from "interface/resolvers/workNode.resolver"
 
 const MutationResolvers = {
+  acceptRequest: acceptRequestResolver,
+  cancelRequest: cancelRequestResolver,
+  closeRequest: closeRequestResolver,
   createDeliverable: createDeliverableResolver,
+  createPaymentMethod: createPaymentMethodResolver,
   createPlan: createPlanResolver,
   createRequest: createRequestResolver,
   createUser: createUserResolver,
   createWork: createWorkResolver,
   createWorkBookmark: createWorkBookmarkResolver,
   createWorkLike: createWorkLikeResolver,
-  deleteDeliverable: deleteDeliverableResolver,
+  deletePaymentMethod: deletePaymentMethodResolver,
   deletePlan: deletePlanResolver,
   deleteWork: deleteWorkResolver,
   deleteWorkBookmark: deleteWorkBookmarkResolver,
   deleteWorkLike: deleteWorkLikeResolver,
   followUser: followUserResolver,
-  acceptRequest: acceptRequestResolver,
   rejectRequest: rejectRequestResolver,
-  closeRequest: closeRequestResolver,
-  cancelRequest: cancelRequestResolver,
   unfollowUser: unfollowUserResolver,
-  updateDeliverable: updateDeliverableResolver,
   updatePlan: updatePlanResolver,
   updatePlanSort: updatePlanSortResolver,
   updateUserProfile: updateUserProfileResolver,
   updateUserRequestSettings: updateUserRequestSettingsResolver,
   updateWork: updateWorkResolver,
-  createPaymentMethod: createPaymentMethodResolver,
-  deletePaymentMethod: deletePaymentMethodResolver,
 }
 
 export const resolvers = {

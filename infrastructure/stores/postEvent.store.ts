@@ -1,6 +1,8 @@
 import { injectable } from "tsyringe"
 import type { PostEvent } from "core"
 import {
+  PostMarkedAsPrivateEvent,
+  PostMarkedAsPublicEvent,
   PostAnnotationsUpdatedEvent,
   PostCreatedEvent,
   PostDeletedEvent,
@@ -28,6 +30,14 @@ export class PostEventStore {
 
     if (event instanceof PostUpdatedEvent) {
       return this.updated(event)
+    }
+
+    if (event instanceof PostMarkedAsPrivateEvent) {
+      return this.markedAsPrivate(event)
+    }
+
+    if (event instanceof PostMarkedAsPublicEvent) {
+      return this.markedAsPublic(event)
     }
 
     return null
@@ -62,6 +72,7 @@ export class PostEventStore {
     const draftPost = new PostEntity({
       id: event.postId,
       title: null,
+      description: null,
       fileId: event.fileId,
       userId: event.userId,
       prompt: event.prompt,
@@ -79,6 +90,8 @@ export class PostEventStore {
       annotationViolence: null,
       resizableImageURL: null,
       labelIds: [],
+      isPublic: event.isPublic,
+      requestId: event.requestId,
     })
 
     return this.repository.persist(draftPost)
@@ -101,5 +114,37 @@ export class PostEventStore {
   async updated(event: PostUpdatedEvent) {
     event
     return null
+  }
+
+  async markedAsPrivate(event: PostMarkedAsPrivateEvent) {
+    const post = await this.repository.find(event.postId)
+
+    if (post instanceof Error) {
+      return new Error()
+    }
+
+    if (post === null) {
+      return new Error()
+    }
+
+    const draftPost = post.makePrivate()
+
+    return this.repository.persist(draftPost)
+  }
+
+  async markedAsPublic(event: PostMarkedAsPublicEvent) {
+    const post = await this.repository.find(event.postId)
+
+    if (post instanceof Error) {
+      return new Error()
+    }
+
+    if (post === null) {
+      return new Error()
+    }
+
+    const draftPost = post.makePublic()
+
+    return this.repository.persist(draftPost)
   }
 }

@@ -14,7 +14,7 @@ type Props = {
 }
 
 @injectable()
-export class markRequestAsAcceptedCommand {
+export class MarkRequestAsAcceptedCommand {
   constructor(
     private requestRepository: RequestRepository,
     private eventStore: EventStore,
