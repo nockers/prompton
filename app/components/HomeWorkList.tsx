@@ -72,6 +72,7 @@ export const HomeWorkList: FC = () => {
                 postAnnotationSpoof={work.annotationSpoof}
                 postAnnotationViolence={work.annotationViolence}
                 postLabels={work.labels.map((label) => [
+                  label.name,
                   label.nameJA || label.name,
                   label.count,
                 ])}

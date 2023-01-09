@@ -13,7 +13,7 @@ type Props = {
   postAnnotationRacy: string | null
   postAnnotationSpoof: string | null
   postAnnotationViolence: string | null
-  postLabels: [string, number][]
+  postLabels: [string, string, number][]
   postColors: string[]
   postWebColors: string[]
   postThumbnailURL: string

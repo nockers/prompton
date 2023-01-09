@@ -30,7 +30,7 @@ export const CardViewerSentRequest: FC<Props> = (props) => {
         <HStack justifyContent={"space-between"}>
           <HStack>
             <Tag variant={"subtle"} colorScheme={"primary"}>
-              {"送ったリクエスト"}
+              {"送った"}
             </Tag>
             <TagRequestStatus
               isPending={props.isPending}

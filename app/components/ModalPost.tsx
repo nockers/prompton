@@ -46,7 +46,7 @@ type Props = {
   postAnnotationRacy: string | null
   postAnnotationSpoof: string | null
   postAnnotationViolence: string | null
-  postLabels: [string, number][]
+  postLabels: [string, string, number][]
   postColors: string[]
   postWebColors: string[]
   postThumbnailURL: string
@@ -239,13 +239,13 @@ export const ModalPost: FC<Props> = (props) => {
                   />
                 )}
                 <Wrap>
-                  {props.postLabels.map(([label, count]) => (
-                    <WrapItem key={label}>
+                  {props.postLabels.map(([labelId, label, count]) => (
+                    <WrapItem key={labelId}>
                       <ButtonLinkLabel
                         label={label}
                         count={count}
                         onClick={() => {
-                          props.onLinkLabel(label)
+                          props.onLinkLabel(labelId)
                         }}
                       />
                     </WrapItem>
