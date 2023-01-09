@@ -1,6 +1,7 @@
-import { Button, HStack, Spinner, Stack } from "@chakra-ui/react"
+import { Button, HStack, Stack } from "@chakra-ui/react"
 import type { FC } from "react"
 import { useContext } from "react"
+import { BoxLoading } from "app/components/BoxLoading"
 import { CardWork } from "app/components/CardWork"
 import { useHomeColumnCount } from "app/hooks/useHomeColumnCount"
 import { useWorksQuery } from "interface/__generated__/react"
@@ -43,11 +44,7 @@ export const HomeWorkList: FC = () => {
   // }, [])
 
   if (loading && data === null) {
-    return (
-      <HStack py={40} justifyContent={"center"}>
-        <Spinner size={"xl"} />
-      </HStack>
-    )
+    return <BoxLoading />
   }
 
   if (data === null || data.works.length === 0) {

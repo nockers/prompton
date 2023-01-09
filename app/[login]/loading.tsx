@@ -1,13 +1,9 @@
 "use client"
-import { HStack, Spinner } from "@chakra-ui/react"
 import type { FC } from "react"
+import { MainLoading } from "app/components/MainLoading"
 
 const UserLoading: FC = () => {
-  return (
-    <HStack py={40} justifyContent={"center"}>
-      <Spinner size={"xl"} />
-    </HStack>
-  )
+  return <MainLoading />
 }
 
 export default UserLoading

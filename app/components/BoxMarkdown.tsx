@@ -37,18 +37,10 @@ export const MarkdownDocument: FC<Props> = (props) => {
           )
         },
         ul(props) {
-          return (
-            <UnorderedList mt={"4"} ml={0}>
-              {props.children}
-            </UnorderedList>
-          )
+          return <UnorderedList ml={0}>{props.children}</UnorderedList>
         },
         ol(props) {
-          return (
-            <OrderedList mt={"4"} ml={0}>
-              {props.children}
-            </OrderedList>
-          )
+          return <OrderedList ml={0}>{props.children}</OrderedList>
         },
         h1(props) {
           return (
