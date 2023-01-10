@@ -11,6 +11,7 @@ import {
 import Link from "next/link"
 import type { FC } from "react"
 import { useState } from "react"
+import { Config } from "interface/config"
 
 type Props = {
   isLoading: boolean
@@ -33,7 +34,8 @@ export const CardRequestSubmit: FC<Props> = (props) => {
     setChecks(draftState)
   }
 
-  const isDisabled = checks.length !== 3 || props.isDisabled
+  const isDisabled =
+    checks.length !== 3 || props.isDisabled || !Config.featureRequest
 
   return (
     <Card variant={"filled"} borderRadius={"xl"} borderWidth={4}>

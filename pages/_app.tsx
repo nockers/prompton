@@ -27,7 +27,7 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
 
   useEffect(() => {
     if (Config.isNotClient) return
-    if (Config.isNotProduction) return
+    if (Config.isNotDevelopment) return
     const routeChangeComplete = () => {
       if (getApps().length === 0) return
       logEvent(getAnalytics(), "page_view", {
@@ -76,7 +76,7 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
 /**
  * Sentry
  */
-if (Config.isClient && Config.isProduction) {
+if (Config.isClient && Config.isNotDevelopment) {
   init({
     dsn: Config.sentryDSN,
     environment: Config.sentryEnvironment,
@@ -92,7 +92,7 @@ if (Config.isClient && Config.isProduction) {
  */
 if (Config.isClient && getApps().length === 0) {
   initializeApp(Config.firebaseOptions)
-  if (Config.isNotProduction) {
+  if (Config.isDevelopment) {
     setAnalyticsCollectionEnabled(getAnalytics(), false)
   }
 }

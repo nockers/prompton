@@ -97,4 +97,8 @@ export class Env {
   static get storageBucker() {
     return process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET!
   }
+
+  static get sendGridApiKey() {
+    return process.env.SENDGRID_API_KEY!
+  }
 }

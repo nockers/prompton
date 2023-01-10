@@ -8,11 +8,19 @@ export class Config {
   }
 
   static get isProduction() {
-    return process.env.NODE_ENV === "production"
+    return window.location.hostname === "prompton.io"
   }
 
   static get isNotProduction() {
-    return process.env.NODE_ENV !== "production"
+    return window.location.hostname !== "prompton.io"
+  }
+
+  static get isDevelopment() {
+    return process.env.NODE_ENV === "development"
+  }
+
+  static get isNotDevelopment() {
+    return process.env.NODE_ENV !== "development"
   }
 
   static get siteName() {
@@ -24,15 +32,15 @@ export class Config {
   }
 
   static get siteCatchphraseJA() {
-    return "AI創作コミッションサービス"
+    return "AI創作リクエストサービス"
   }
 
   static get siteDescriptionEN() {
-    return "Prompton is a community of AI Prompters. You can post AI works and accept production requests."
+    return "Prompton is a community of AI Prompters. You can post and request AI works."
   }
 
   static get siteDescriptionJA() {
-    return "Prompton（プロンプトン）ではAI作品を投稿したり有償でリクエストすることができます。"
+    return "Prompton（プロンプトン）はAI作品を投稿したりリクエストできるサービスです。"
   }
 
   static get appURL() {
@@ -69,5 +77,9 @@ export class Config {
       appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
       measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
     }
+  }
+
+  static get featureRequest() {
+    return process.env.NEXT_PUBLIC_FEATURE_REQUEST === "true"
   }
 }

@@ -9,6 +9,7 @@ import {
 import { useRouter } from "next/router"
 import { useContext, useEffect, useState } from "react"
 import { UserRequestHeader } from "app/[login]/requests/components/UserRequestHeader"
+import { CardRequestDisabled } from "app/[login]/requests/new/components/CardRequestDisabled"
 import { CardRequestFee } from "app/[login]/requests/new/components/CardRequestFee"
 import { CardRequestLogin } from "app/[login]/requests/new/components/CardRequestLogin"
 import { CardRequestNote } from "app/[login]/requests/new/components/CardRequestNote"
@@ -23,6 +24,7 @@ import {
   useUserQuery,
   useViewerUserQuery,
 } from "interface/__generated__/react"
+import { Config } from "interface/config"
 import { AppContext } from "interface/contexts/appContext"
 
 const UserRequestsNewPage: BlitzPage = () => {
@@ -191,6 +193,7 @@ const UserRequestsNewPage: BlitzPage = () => {
           alignItems={{ base: "center", lg: "flex-start" }}
         >
           <Stack maxW={"container.md"} w={"100%"} spacing={4}>
+            {!Config.featureRequest && <CardRequestDisabled />}
             {!hasSender && <CardRequestLogin onLogin={onLogin} />}
             {hasSender && !hasPaymentMethod && (
               <CardRequestPayment

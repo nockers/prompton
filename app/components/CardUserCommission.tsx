@@ -20,7 +20,7 @@ type Props = {
 export const CardUserCommission: FC<Props> = (props) => {
   if (!props.isRequestable) {
     return (
-      <Card variant={"filled"} borderWidth={4} borderRadius={"lg"}>
+      <Card variant={"filled"} borderWidth={4} borderRadius={"xl"}>
         <CardBody>
           <Stack spacing={4}>
             <Text fontWeight={"bold"}>{"リクエスト"}</Text>
@@ -39,17 +39,17 @@ export const CardUserCommission: FC<Props> = (props) => {
       variant={"filled"}
       borderWidth={4}
       borderColor={"primary.200"}
-      borderRadius={"lg"}
+      borderRadius={"xl"}
     >
       <CardBody>
-        <Stack spacing={4}>
+        <Stack spacing={2}>
           <Text fontWeight={"bold"} color={"primary.500"}>
             {"リクエスト受付中"}
           </Text>
           <Stack
             spacing={4}
-            direction={{ base: "column", sm: "row" }}
-            alignItems={{ base: "flex-start", sm: "center" }}
+            direction={{ base: "column", md: "row" }}
+            alignItems={{ base: "flex-start", md: "center" }}
           >
             <Stack flex={1}>
               <Text fontWeight={"bold"} fontSize={"lg"}>
