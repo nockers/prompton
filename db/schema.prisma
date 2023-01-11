@@ -400,7 +400,7 @@ model Prompt {
   id           String     @id @map("id")
   createdAt    DateTime   @default(now()) @map("created_at")
   updatedAt    DateTime   @updatedAt @map("updated_at")
-  text         String     @unique @map("word")
+  text         String     @map("word")
   texts        String[]   @map("texts")
   description  String?    @map("description")
   user         User?      @relation("user_prompts", fields: [userId], references: [id])
