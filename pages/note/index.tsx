@@ -93,16 +93,16 @@ const ViewerNotePage: BlitzPage = () => {
     }
   }
 
+  if (isLoading) {
+    return <MainLoading />
+  }
+
   if (appContext.currentUser === null) {
     return (
       <Box p={4}>
         <Text>{"ログインが必要です"}</Text>
       </Box>
     )
-  }
-
-  if (isLoading) {
-    return <MainLoading />
   }
 
   if (data === null) {
@@ -141,7 +141,7 @@ const ViewerNotePage: BlitzPage = () => {
               </InputLeftElement>
               <Input
                 variant={"filled"}
-                placeholder={"探す"}
+                placeholder={"プロンプトを探す"}
                 borderRadius={"md"}
                 value={searchText}
                 onChange={(event) => {

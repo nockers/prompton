@@ -180,6 +180,13 @@ export const HomeHeaderUtilities: FC<Props> = (props) => {
           >
             {"通知"}
           </MenuItem>
+          <Link href={"/note"}>
+            <MenuItem
+              icon={<Icon display={"flex"} fontSize={16} as={BiCreditCard} />}
+            >
+              {"プロンプト保管庫"}
+            </MenuItem>
+          </Link>
           <Link href={"/viewer/payments"}>
             <MenuItem
               icon={<Icon display={"flex"} fontSize={16} as={BiCreditCard} />}
