@@ -93,7 +93,7 @@ const ViewerNotePage: BlitzPage = () => {
     }
   }
 
-  if (isLoading) {
+  if (appContext.isLoading || isLoading) {
     return <MainLoading />
   }
 
