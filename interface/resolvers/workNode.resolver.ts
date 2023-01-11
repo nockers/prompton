@@ -57,11 +57,12 @@ export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
     return parent.detectedSeed
   },
   async likesCount(parent) {
-    const post = await db.post.findUnique({
-      where: { id: parent.id },
-      select: { _count: { select: { likes: true } } },
-    })
-    return post?._count.likes ?? 0
+    // const post = await db.post.findUnique({
+    //   where: { id: parent.id },
+    //   select: { _count: { select: { likes: true } } },
+    // })
+    // return post?._count.likes ?? 0
+    return db.like.count({ where: { postId: parent.id } })
   },
   colors(parent) {
     return parent.colors

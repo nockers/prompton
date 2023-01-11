@@ -108,4 +108,13 @@ export const ViewerResolvers: Resolvers = {
       },
     })
   },
+  prompts(_, __, context) {
+    return db.prompt.findMany({
+      orderBy: { createdAt: "desc" },
+      where: {
+        userId: context.currentUser!.uid!,
+        isDeleted: false,
+      },
+    })
+  },
 }

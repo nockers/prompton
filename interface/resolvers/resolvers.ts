@@ -11,7 +11,7 @@ import { createWorkResolver } from "interface/resolvers/mutations/createWork.res
 import { createWorkBookmarkResolver } from "interface/resolvers/mutations/createWorkBookmark.resolver"
 import { createWorkLikeResolver } from "interface/resolvers/mutations/createWorkLike.resolver"
 import { deletePaymentMethodResolver } from "interface/resolvers/mutations/deletePaymentMethod.resolver"
-import { deletePlanResolver } from "interface/resolvers/mutations/deletePlanSort.resolver"
+import { deletePlanResolver } from "interface/resolvers/mutations/deletePlan.resolver"
 import { deleteWorkResolver } from "interface/resolvers/mutations/deleteWork.resolver"
 import { deleteWorkBookmarkResolver } from "interface/resolvers/mutations/deleteWorkBookmark.resolver"
 import { deleteWorkLikeResolver } from "interface/resolvers/mutations/deleteWorkLike.resolver"
@@ -24,6 +24,12 @@ import { updateUserProfileResolver } from "interface/resolvers/mutations/updateU
 import { updateUserRequestSettingsResolver } from "interface/resolvers/mutations/updateUserRequestSettings.resolver"
 import { updateWorkResolver } from "interface/resolvers/mutations/updateWork.resolver"
 import { PaymentMethodNodeResolvers } from "interface/resolvers/paymentMethodNode.resolver"
+import {
+  createPromptResolver,
+  deletePromptResolver,
+  updatePromptResolver,
+} from "interface/resolvers/prompt"
+import { PromptNodeResolvers } from "interface/resolvers/promptNode.resolver"
 import { QueryResolvers } from "interface/resolvers/query.resolver"
 import { RequestNodeResolvers } from "interface/resolvers/requestNode.resolver"
 import { UserNodeResolvers } from "interface/resolvers/userNode.resolvers"
@@ -37,6 +43,7 @@ const MutationResolvers = {
   createDeliverable: createDeliverableResolver,
   createPaymentMethod: createPaymentMethodResolver,
   createPlan: createPlanResolver,
+  createPrompt: createPromptResolver,
   createRequest: createRequestResolver,
   createUser: createUserResolver,
   createWork: createWorkResolver,
@@ -44,6 +51,7 @@ const MutationResolvers = {
   createWorkLike: createWorkLikeResolver,
   deletePaymentMethod: deletePaymentMethodResolver,
   deletePlan: deletePlanResolver,
+  deletePrompt: deletePromptResolver,
   deleteWork: deleteWorkResolver,
   deleteWorkBookmark: deleteWorkBookmarkResolver,
   deleteWorkLike: deleteWorkLikeResolver,
@@ -52,18 +60,20 @@ const MutationResolvers = {
   unfollowUser: unfollowUserResolver,
   updatePlan: updatePlanResolver,
   updatePlanSort: updatePlanSortResolver,
+  updatePrompt: updatePromptResolver,
   updateUserProfile: updateUserProfileResolver,
   updateUserRequestSettings: updateUserRequestSettingsResolver,
   updateWork: updateWorkResolver,
 }
 
 export const resolvers = {
-  Mutation: MutationResolvers,
-  Query: QueryResolvers,
-  UserNode: UserNodeResolvers,
-  WorkNode: WorkNodeResolvers,
   LabelNode: LabelNodeResolvers,
-  RequestNode: RequestNodeResolvers,
+  Mutation: MutationResolvers,
   PaymentMethodNode: PaymentMethodNodeResolvers,
+  PromptNode: PromptNodeResolvers,
+  Query: QueryResolvers,
+  RequestNode: RequestNodeResolvers,
+  UserNode: UserNodeResolvers,
   Viewer: ViewerResolvers,
+  WorkNode: WorkNodeResolvers,
 }

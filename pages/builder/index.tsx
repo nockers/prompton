@@ -34,7 +34,7 @@ type Props = {
 const BuilderPage: BlitzPage<Props> = (props) => {
   const [currentCategory, setCurrentCategory] = useState("CHARACTER")
 
-  const [prompts, setPrompts] = useState([["nsfw"]])
+  const [prompts, setPrompts] = useState([["white background"]])
 
   const toast = useToast()
 
@@ -86,6 +86,7 @@ const BuilderPage: BlitzPage<Props> = (props) => {
       fileId={null}
       pb={0}
       h={"calc(100vh - 72px)"}
+      minH={0}
       spacing={0}
       overflow={"hidden"}
     >

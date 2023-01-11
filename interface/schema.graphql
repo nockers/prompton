@@ -45,6 +45,7 @@ type Viewer {
   receivedRequests(offset: Int, limit: Int): [RequestNode!]!
   plans(offset: Int, limit: Int): [PlanNode!]!
   deliverables(offset: Int, limit: Int): [WorkNode!]!
+  prompts(offset: Int, limit: Int): [PromptNode!]!
 }
 
 """
@@ -167,17 +168,19 @@ type PromptNode implements Node {
   updatedAt: Int!
   text: String!
   texts: [String!]!
+  title: String
+  titleJA: String
   description: String
   user: UserNode
   likesCount: Int!
-  name: String!
-  nameJA: String!
   isPublic: Boolean!
   isNsfw: Boolean!
   isDeleted: Boolean!
   isSingle: Boolean!
-  fileId: String!
-  imageURL: String!
+  isBase: Boolean!
+  firstWork: WorkNode
+  secondWork: WorkNode
+  works: [WorkNode!]!
 }
 
 """
@@ -735,12 +738,12 @@ input CreatePaymentMethodInput {
 }
 
 input CreatePromptInput {
-  name: String!
+  name: String
   description: String
-  texts: [String!]!
+  text: String!
   isNsfw: Boolean!
+  isBase: Boolean!
   isSingle: Boolean!
-  fileId: String
 }
 
 input UpdatePromptInput {
@@ -748,6 +751,7 @@ input UpdatePromptInput {
   name: String!
   description: String
   isNsfw: Boolean!
+  isBase: Boolean!
   isSingle: Boolean!
 }
 
