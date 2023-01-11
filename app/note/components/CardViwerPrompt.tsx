@@ -37,7 +37,7 @@ export const CardViewerPrompt: FC<Props> = (props) => {
         spacing={{ base: 2, md: 2 }}
         alignItems={"flex-start"}
       >
-        <Stack flex={1}>
+        <Stack flex={1} w={"100%"}>
           <HStack justifyContent={"space-between"}>
             <HStack>
               <Button
@@ -59,7 +59,7 @@ export const CardViewerPrompt: FC<Props> = (props) => {
               </Button>
             </HStack>
             <Text fontSize={"xs"}>
-              {new Date(props.createdAt * 1000).toDateString()}
+              {new Date(props.createdAt * 1000).toLocaleString()}
             </Text>
           </HStack>
           <Box bg={"blackAlpha.200"} px={1} borderRadius={"md"}>

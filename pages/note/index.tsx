@@ -15,9 +15,10 @@ import {
   TabList,
   Tabs,
   useToast,
+  IconButton,
 } from "@chakra-ui/react"
 import { useContext, useState } from "react"
-import { BiArrowToTop, BiPlus, BiSearch } from "react-icons/bi"
+import { BiArrowToTop, BiPlus, BiSearch, BiX } from "react-icons/bi"
 import { MainLoading } from "app/components/MainLoading"
 import { MainStackJA } from "app/components/MainStackJa"
 import { CardViewerPrompt } from "app/note/components/CardViwerPrompt"
@@ -56,6 +57,10 @@ const ViewerNotePage: BlitzPage = () => {
 
   const imageURL =
     "https://lh3.googleusercontent.com/tFn-0rbAn7xSDl7lXZFyVF5qVvrPdezRJg0aSRTXtyeqTs6s1VpufCH6yHvXRAdKL8bJ2anJLZvCu5821_IGOKyk8162ssWsKq67XjwEeshsiJCJBg=s512"
+
+  const onResetSearchText = () => {
+    setSearchText("")
+  }
 
   const onCreatePrompt = async () => {
     try {
@@ -110,7 +115,7 @@ const ViewerNotePage: BlitzPage = () => {
   }
 
   const searchPrompts = data.viewer.prompts.filter((prompt) => {
-    return prompt.text.includes(searchText)
+    return prompt.text.toLowerCase().includes(searchText.toLowerCase())
   })
 
   return (
@@ -134,7 +139,7 @@ const ViewerNotePage: BlitzPage = () => {
         spacing={{ base: 0, md: 4 }}
       >
         <Stack flex={1} overflowY={"auto"} h={"100%"} spacing={0}>
-          <Box py={4}>
+          <HStack py={4}>
             <InputGroup size={"sm"}>
               <InputLeftElement pointerEvents="none">
                 <Icon as={BiSearch} fontSize={16} />
@@ -149,7 +154,15 @@ const ViewerNotePage: BlitzPage = () => {
                 }}
               />
             </InputGroup>
-          </Box>
+            {0 < searchText.length && (
+              <IconButton
+                size={"sm"}
+                icon={<Icon as={BiX} fontSize={16} />}
+                aria-label={""}
+                onClick={onResetSearchText}
+              />
+            )}
+          </HStack>
           <Divider />
           <Stack overflowY={"auto"} spacing={0}>
             <Stack py={4}>
@@ -165,6 +178,7 @@ const ViewerNotePage: BlitzPage = () => {
                   }}
                 />
                 <Button
+                  isDisabled={newPromptText.trim().length < 2}
                   isLoading={isCreatingPrompt}
                   rightIcon={<Icon as={BiPlus} fontSize={16} />}
                   onClick={onCreatePrompt}
