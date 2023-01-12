@@ -27,7 +27,7 @@ export const App: FC<AppProps> = ({ Component, pageProps }) => {
 
   useEffect(() => {
     if (Config.isNotClient) return
-    if (Config.isNotDevelopment) return
+    if (Config.isDevelopment) return
     const routeChangeComplete = () => {
       if (getApps().length === 0) return
       logEvent(getAnalytics(), "page_view", {
