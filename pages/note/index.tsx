@@ -26,6 +26,7 @@ import { DrawerViewerPrompt } from "app/note/components/DrawerViwerPrompt"
 import {
   useCreatePromptMutation,
   useDeletePromptMutation,
+  useDeleteWorkMutation,
   useViewerPromptsQuery,
 } from "interface/__generated__/react"
 import { AppContext } from "interface/contexts/appContext"
@@ -55,6 +56,8 @@ const ViewerNotePage: BlitzPage = () => {
     useCreatePromptMutation()
 
   const [deletePrompt] = useDeletePromptMutation()
+
+  const [deleteWork] = useDeleteWorkMutation()
 
   const toast = useToast()
 
@@ -95,6 +98,20 @@ const ViewerNotePage: BlitzPage = () => {
         variables: { input: { promptId: promptId } },
       })
       await refetch()
+      toast({ status: "success", description: "プロンプトを削除しました" })
+    } catch (error) {
+      if (error instanceof Error) {
+        toast({ status: "error", description: error.message })
+      }
+    }
+  }
+
+  const onDeletePromptWork = async (workId: string) => {
+    try {
+      await deleteWork({
+        variables: { input: { workId: workId } },
+      })
+      // await refetch()
       toast({ status: "success", description: "プロンプトを削除しました" })
     } catch (error) {
       if (error instanceof Error) {
@@ -221,6 +238,7 @@ const ViewerNotePage: BlitzPage = () => {
                     key={prompt.id}
                     text={prompt.text}
                     imageURL={imageURL}
+                    works={prompt.works}
                     createdAt={prompt.createdAt}
                     onDelete={() => {
                       onDeletePrompt(prompt.id)
@@ -235,9 +253,13 @@ const ViewerNotePage: BlitzPage = () => {
                     key={prompt.id}
                     promptId={prompt.id}
                     promptText={prompt.text}
+                    works={prompt.works}
                     isOpen={selectedId === prompt.id}
                     onClose={() => {
                       setSelectedId(null)
+                    }}
+                    onDelete={() => {
+                      onDeletePromptWork(prompt.id)
                     }}
                   />
                 ))}

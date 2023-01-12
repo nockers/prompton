@@ -145,7 +145,7 @@ model Post {
   detectedSeed       String?        @map("detected_seed")
   isDeliverable      Boolean        @default(false) @map("is_deliverable")
   description        String?        @map("description")
-  Prompt             Prompt?        @relation("prompt_posts", fields: [promptId], references: [id])
+  prompt             Prompt?        @relation("prompt_posts", fields: [promptId], references: [id])
   promptId           String?        @map("prompt_id")
   promptFirstPosts   Prompt[]       @relation("prompt_first_posts")
   promptSecondPosts  Prompt[]       @relation("prompt_second_posts")

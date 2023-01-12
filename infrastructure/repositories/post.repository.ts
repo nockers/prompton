@@ -19,6 +19,7 @@ export class PostRepository {
         title: post.title,
         fileId: new Id(post.fileId),
         userId: new Id(post.userId),
+        promptId: post.promptId !== null ? new Id(post.promptId) : null,
         inputtedPrompt: post.inputtedPrompt,
         detectedPrompt: post.detectedPrompt,
         software:
@@ -38,7 +39,7 @@ export class PostRepository {
         annotationRacy: post.annotationRacy,
         annotationSpoof: post.annotationSpoof,
         annotationViolence: post.annotationViolence,
-        resizableImageURL:
+        imageURL:
           post.resizableImageURL !== null
             ? new Url(post.resizableImageURL)
             : null,
@@ -47,6 +48,7 @@ export class PostRepository {
         }),
         description: post.description,
         isPublic: post.isPublic,
+        isPublicPrompt: post.isPublicPrompt,
         requestId: post.requestId !== null ? new Id(post.requestId) : null,
       })
     } catch (error) {
@@ -65,9 +67,11 @@ export class PostRepository {
           requestId: entity.requestId?.value ?? null,
           isDeliverable: entity.isDeliverable,
           isPublic: entity.isPublic,
+          isPublicPrompt: entity.isPublicPrompt,
           dateText: "",
           fileId: entity.fileId.value,
           userId: entity.userId.value,
+          promptId: entity.promptId?.value ?? null,
           inputtedPrompt: entity.inputtedPrompt,
           detectedPrompt: entity.detectedPrompt,
           software: entity.software?.value ?? null,
@@ -90,6 +94,9 @@ export class PostRepository {
         update: {
           isPublic: entity.isPublic,
           title: entity.title,
+          description: entity.description,
+          isPublicPrompt: entity.isPublicPrompt,
+          promptId: entity.promptId?.value ?? null,
           inputtedPrompt: entity.inputtedPrompt,
           detectedPrompt: entity.detectedPrompt,
           software: entity.software?.value ?? null,
@@ -103,7 +110,7 @@ export class PostRepository {
           annotationRacy: entity.annotationRacy,
           annotationSpoof: entity.annotationSpoof,
           annotationViolence: entity.annotationViolence,
-          resizableImageURL: entity.resizableImageURL?.value,
+          resizableImageURL: entity.imageURL?.value,
           labels: {
             connect: entity.labelIds.map((labelId) => {
               return { id: labelId.value }

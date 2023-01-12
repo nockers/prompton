@@ -20,24 +20,24 @@ import { useState } from "react"
 import { BiX } from "react-icons/bi"
 import { UploadDropzone } from "app/[login]/components/UploadDropzone"
 import { useFileUpload } from "app/hooks/useFileUpload"
-import { useCreateWorkMutation } from "interface/__generated__/react"
+import type { PromptWorkFieldsFragment } from "interface/__generated__/react"
+import { useCreatePromptWorkMutation } from "interface/__generated__/react"
 
 type Props = {
   promptId: string
   promptText: string
   isOpen: boolean
+  works: PromptWorkFieldsFragment[]
   onClose(): void
+  onDelete(): void
 }
 
 export const DrawerViewerPrompt: FC<Props> = (props) => {
-  const imageURL =
-    "https://lh3.googleusercontent.com/tFn-0rbAn7xSDl7lXZFyVF5qVvrPdezRJg0aSRTXtyeqTs6s1VpufCH6yHvXRAdKL8bJ2anJLZvCu5821_IGOKyk8162ssWsKq67XjwEeshsiJCJBg=s512"
-
   const [uploadFile] = useFileUpload()
 
   const [isUploading, setUploading] = useState(false)
 
-  const [createWork] = useCreateWorkMutation()
+  const [createPromptWork] = useCreatePromptWorkMutation()
 
   const toast = useToast()
 
@@ -50,11 +50,13 @@ export const DrawerViewerPrompt: FC<Props> = (props) => {
       })
       for (const file of Array.from(files)) {
         const fileId = await uploadFile(file)
-        await createWork({
+        await createPromptWork({
           variables: {
             input: {
               fileId: fileId,
               fileName: file.name,
+              isPublic: false,
+              promptId: props.promptId,
             },
           },
         })
@@ -104,20 +106,22 @@ export const DrawerViewerPrompt: FC<Props> = (props) => {
             </Card>
             <UploadDropzone isLoading={isUploading} onChange={onUploadFiles} />
             <Stack divider={<Divider />} spacing={4}>
-              <Stack>
-                <HStack justifyContent={"space-between"}>
-                  <Text>{"xxxxxxxxx"}</Text>
-                  <Button size={"sm"}>{"削除"}</Button>
-                </HStack>
-                <Image borderRadius={"lg"} w={"100%"} src={imageURL} alt={""} />
-              </Stack>
-              <Stack>
-                <HStack justifyContent={"space-between"}>
-                  <Text>{"xxxxxxxxx"}</Text>
-                  <Button size={"sm"}>{"削除"}</Button>
-                </HStack>
-                <Image borderRadius={"lg"} w={"100%"} src={imageURL} alt={""} />
-              </Stack>
+              {props.works.map((work) => (
+                <Stack key={work.id}>
+                  <HStack justifyContent={"space-between"}>
+                    <Text>{work.id}</Text>
+                    <Button size={"sm"} onClick={props.onDelete}>
+                      {"削除"}
+                    </Button>
+                  </HStack>
+                  <Image
+                    borderRadius={"lg"}
+                    w={"100%"}
+                    src={work.imageURL}
+                    alt={""}
+                  />
+                </Stack>
+              ))}
             </Stack>
           </Stack>
         </DrawerBody>

@@ -1,6 +1,7 @@
 import { container } from "tsyringe"
 import type { DomainEvent } from "core"
 import {
+  PostPromptCreatedEvent,
   NotificationCreatedEvent,
   UserCreatedEvent,
   LikeCreatedEvent,
@@ -12,7 +13,10 @@ import { FriendshipCreatedEventHandler } from "service/friendship"
 import { LabelCreatedEventHandler } from "service/label"
 import { LikeCreatedEventHandler } from "service/like"
 import { NotificationCreatedEventHandler } from "service/notification"
-import { PostCreatedEventHandler } from "service/post"
+import {
+  PostCreatedEventHandler,
+  PostPromptCreatedEventHandler,
+} from "service/post"
 import { UserCreatedEventHandler } from "service/user"
 
 export class EventHandler {
@@ -39,6 +43,10 @@ export class EventHandler {
 
     if (event instanceof PostCreatedEvent) {
       return container.resolve(PostCreatedEventHandler).execute(event)
+    }
+
+    if (event instanceof PostPromptCreatedEvent) {
+      return container.resolve(PostPromptCreatedEventHandler).execute(event)
     }
 
     return null

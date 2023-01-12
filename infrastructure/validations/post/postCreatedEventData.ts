@@ -12,4 +12,5 @@ export const zPostCreatedEventData = z.object({
   seed: z.string().nullable().optional(),
   isPublic: z.boolean().optional(),
   requestId: z.string().nullable().optional(),
+  promptId: z.string().nullable().optional(),
 })

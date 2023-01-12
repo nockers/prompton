@@ -12,11 +12,13 @@ import {
 } from "@chakra-ui/react"
 import type { FC } from "react"
 import { BiClipboard, BiEdit, BiTrashAlt } from "react-icons/bi"
+import type { PromptWorkFieldsFragment } from "interface/__generated__/react"
 
 type Props = {
   text: string
   imageURL: string
   createdAt: number
+  works: PromptWorkFieldsFragment[]
   onDelete(): void
   onEdit(): void
 }
@@ -30,6 +32,8 @@ export const CardViewerPrompt: FC<Props> = (props) => {
     toast({ description: "プロンプトをコピーしました" })
     onCopy()
   }
+
+  const [firstWork = null, secondWork = null] = props.works
 
   return (
     <Card variant={"filled"} p={2} borderRadius={"xl"}>
@@ -79,18 +83,40 @@ export const CardViewerPrompt: FC<Props> = (props) => {
             </Box>
           </Stack>
           <HStack>
-            <Image
-              borderRadius={"lg"}
-              w={"80px"}
-              src={props.imageURL}
-              alt={""}
-            />
-            <Image
-              borderRadius={"lg"}
-              w={"80px"}
-              src={props.imageURL}
-              alt={""}
-            />
+            {firstWork !== null && (
+              <Image
+                borderRadius={"lg"}
+                w={"80px"}
+                h={"80px"}
+                src={firstWork?.squareThumbnailURL ?? ""}
+                alt={""}
+              />
+            )}
+            {firstWork === null && (
+              <Card
+                variant={"outline"}
+                borderRadius={"lg"}
+                w={"80px"}
+                h={"80px"}
+              />
+            )}
+            {secondWork !== null && (
+              <Image
+                borderRadius={"lg"}
+                w={"80px"}
+                h={"80px"}
+                src={secondWork?.squareThumbnailURL ?? ""}
+                alt={""}
+              />
+            )}
+            {secondWork === null && (
+              <Card
+                variant={"outline"}
+                borderRadius={"lg"}
+                w={"80px"}
+                h={"80px"}
+              />
+            )}
           </HStack>
         </HStack>
       </Stack>

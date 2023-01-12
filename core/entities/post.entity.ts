@@ -6,6 +6,7 @@ const zProps = z.object({
   title: z.string().nullable(),
   description: z.string().nullable(),
   fileId: z.instanceof(Id),
+  promptId: z.instanceof(Id).nullable(),
   inputtedPrompt: z.string().nullable(),
   detectedPrompt: z.string().nullable(),
   seed: z.string().nullable(),
@@ -21,9 +22,10 @@ const zProps = z.object({
   annotationSpoof: z.string().nullable(),
   annotationViolence: z.string().nullable(),
   labelIds: z.array(z.instanceof(Id)),
-  resizableImageURL: z.instanceof(Url).nullable(),
+  imageURL: z.instanceof(Url).nullable(),
   requestId: z.instanceof(Id).nullable(),
   isPublic: z.boolean(),
+  isPublicPrompt: z.boolean(),
 })
 
 type Props = z.infer<typeof zProps>
@@ -57,6 +59,11 @@ export class PostEntity implements Props {
    */
   readonly userId!: Props["userId"]
 
+  /**
+   * プロンプトID
+   */
+  readonly promptId!: Props["promptId"]
+
   readonly inputtedPrompt!: Props["inputtedPrompt"]
 
   readonly detectedPrompt!: Props["detectedPrompt"]
@@ -85,7 +92,10 @@ export class PostEntity implements Props {
 
   readonly labelIds!: Props["labelIds"]
 
-  readonly resizableImageURL!: Props["resizableImageURL"]
+  /**
+   * リサイズ可能な画像のURL
+   */
+  readonly imageURL!: Props["imageURL"]
 
   /**
    * リクエストのID
@@ -96,6 +106,11 @@ export class PostEntity implements Props {
    * 公開済みかどうか
    */
   readonly isPublic!: Props["isPublic"]
+
+  /**
+   * プロンプトが公開されているかどうか
+   */
+  readonly isPublicPrompt!: Props["isPublicPrompt"]
 
   get isDeliverable() {
     return this.requestId !== null
@@ -171,9 +186,13 @@ export class PostEntity implements Props {
   }
 
   updateResizableImageURL(resizableImageURL: Url | null) {
+    if (resizableImageURL === null) {
+      return new PostEntity({ ...this.props })
+    }
+
     return new PostEntity({
       ...this.props,
-      resizableImageURL,
+      imageURL: resizableImageURL,
     })
   }
 

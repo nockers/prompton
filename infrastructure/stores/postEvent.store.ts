@@ -1,6 +1,7 @@
 import { injectable } from "tsyringe"
 import type { PostEvent } from "core"
 import {
+  PostPromptCreatedEvent,
   PostMarkedAsPrivateEvent,
   PostMarkedAsPublicEvent,
   PostAnnotationsUpdatedEvent,
@@ -22,6 +23,10 @@ export class PostEventStore {
 
     if (event instanceof PostCreatedEvent) {
       return this.created(event)
+    }
+
+    if (event instanceof PostPromptCreatedEvent) {
+      return this.promptCreated(event)
     }
 
     if (event instanceof PostDeletedEvent) {
@@ -75,6 +80,7 @@ export class PostEventStore {
       description: null,
       fileId: event.fileId,
       userId: event.userId,
+      promptId: null,
       inputtedPrompt: event.prompt,
       detectedPrompt: event.detectedPrompt,
       software: event.software,
@@ -88,10 +94,42 @@ export class PostEventStore {
       annotationRacy: null,
       annotationSpoof: null,
       annotationViolence: null,
-      resizableImageURL: null,
+      imageURL: null,
       labelIds: [],
       isPublic: event.isPublic,
+      isPublicPrompt: false,
       requestId: event.requestId,
+    })
+
+    return this.repository.persist(draftPost)
+  }
+
+  async promptCreated(event: PostPromptCreatedEvent) {
+    const draftPost = new PostEntity({
+      id: event.postId,
+      title: null,
+      description: null,
+      fileId: event.fileId,
+      userId: event.userId,
+      promptId: event.promptId,
+      inputtedPrompt: null,
+      detectedPrompt: event.detectedPrompt,
+      software: event.software,
+      detectedSoftware: event.detectedSoftware,
+      seed: event.seed,
+      detectedSeed: event.detectedSeed,
+      colors: [],
+      webColors: [],
+      annotationAdult: null,
+      annotationMedical: null,
+      annotationRacy: null,
+      annotationSpoof: null,
+      annotationViolence: null,
+      imageURL: event.imageURL,
+      labelIds: [],
+      isPublic: event.isPublic,
+      isPublicPrompt: false,
+      requestId: null,
     })
 
     return this.repository.persist(draftPost)

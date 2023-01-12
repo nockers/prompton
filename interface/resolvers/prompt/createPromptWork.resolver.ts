@@ -7,7 +7,7 @@ import type {
   RequireFields,
   Resolver,
 } from "interface/__generated__/node"
-import { CreatePostCommand } from "service"
+import { CreatePromptPostCommand } from "service"
 import type { ApolloContext } from "types"
 
 type Resolvers = Resolver<
@@ -24,14 +24,14 @@ export const createPromptWorkResolver: Resolvers = async (_, args, ctx) => {
     })
   }
 
-  const command = container.resolve(CreatePostCommand)
+  const command = container.resolve(CreatePromptPostCommand)
 
   const event = await command.execute({
     userId: ctx.currentUser.uid,
     postFileId: args.input.fileId,
     postFileName: args.input.fileName,
     isPublic: false,
-    requestId: null,
+    promptId: args.input.promptId,
   })
 
   if (event instanceof Error) {

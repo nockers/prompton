@@ -2,6 +2,7 @@ import type { Event } from "@prisma/client"
 import type { z } from "zod"
 import type { PostEvent } from "core"
 import {
+  PostPromptCreatedEvent,
   PostMarkedAsPrivateEvent,
   PostMarkedAsPublicEvent,
   SoftwareFactory,
@@ -19,6 +20,7 @@ import {
   zPostCreatedEventData,
   zPostMarkedAsPublicEventData,
   zPostMarkedAsPrivateEventData,
+  zPostPromptCreatedEventData,
 } from "infrastructure/validations"
 
 export class PostEventConverter {
@@ -51,8 +53,27 @@ export class PostEventConverter {
         prompt: event.prompt ?? null,
         software: event.software?.value ?? null,
         seed: event.seed ?? null,
+        isPublic: event.isPublic,
+        requestId: event.requestId?.value ?? null,
       }
       return zPostCreatedEventData.parse(data)
+    }
+
+    if (event instanceof PostPromptCreatedEvent) {
+      const data: z.infer<typeof zPostPromptCreatedEventData> = {
+        postId: event.postId.value,
+        userId: event.userId.value,
+        fileId: event.fileId.value,
+        detectedSeed: event.detectedSeed,
+        detectedSoftware: event.detectedSoftware?.value ?? null,
+        detectedPrompt: event.detectedPrompt,
+        software: event.software?.value ?? null,
+        seed: event.seed ?? null,
+        isPublic: event.isPublic,
+        promptId: event.promptId.value,
+        imageURL: event.imageURL.value,
+      }
+      return zPostPromptCreatedEventData.parse(data)
     }
 
     if (event instanceof PostDeletedEvent) {
@@ -139,6 +160,33 @@ export class PostEventConverter {
         requestId:
           typeof data.requestId === "string" ? new Id(data.requestId) : null,
         isPublic: data.isPublic ?? false,
+      })
+    }
+
+    if (event.type === PostPromptCreatedEvent.type) {
+      const data = zPostPromptCreatedEventData.parse(event.data)
+      return new PostPromptCreatedEvent({
+        id: new Id(event.id),
+        timestamp: Math.floor(event.timestamp.getTime() / 1000),
+        postId: new Id(data.postId),
+        userId: new Id(data.userId),
+        fileId: new Id(data.fileId),
+        detectedSoftware:
+          typeof data.detectedSoftware === "string"
+            ? SoftwareFactory.fromFileName(data.detectedSoftware)
+            : null,
+        detectedPrompt:
+          typeof data.detectedPrompt === "string" ? data.detectedPrompt : null,
+        detectedSeed:
+          typeof data.detectedSeed === "string" ? data.detectedSeed : null,
+        software:
+          typeof data.software === "string"
+            ? SoftwareFactory.fromFileName(data.software)
+            : null,
+        seed: typeof data.seed === "string" ? data.seed : null,
+        isPublic: data.isPublic ?? false,
+        promptId: new Id(data.promptId),
+        imageURL: new Url(data.imageURL),
       })
     }
 

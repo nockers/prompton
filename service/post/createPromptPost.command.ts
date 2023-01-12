@@ -1,19 +1,22 @@
 import { captureException } from "@sentry/node"
 import { injectable } from "tsyringe"
-import { Id, IdFactory, PostCreatedEvent, SoftwareFactory } from "core"
-import { EventStore } from "infrastructure"
+import { Id, IdFactory, PostPromptCreatedEvent, SoftwareFactory } from "core"
+import { EventStore, ImageAdapter } from "infrastructure"
 
 type Props = {
   userId: string
   postFileId: string
   postFileName: string
   isPublic: boolean
-  requestId: string | null
+  promptId: string
 }
 
 @injectable()
 export class CreatePromptPostCommand {
-  constructor(private eventStore: EventStore) {}
+  constructor(
+    private eventStore: EventStore,
+    private imageAdapter: ImageAdapter,
+  ) {}
 
   async execute(props: Props) {
     try {
@@ -25,19 +28,27 @@ export class CreatePromptPostCommand {
 
       const detectedSeed = this.parseSeed(props.postFileName)
 
-      const event = new PostCreatedEvent({
+      const fileId = new Id(props.postFileId)
+
+      const imageURL = await this.imageAdapter.createURL(fileId)
+
+      if (imageURL === null) {
+        return new Error()
+      }
+
+      const event = new PostPromptCreatedEvent({
         id: IdFactory.create(),
         postId: postId,
-        fileId: new Id(props.postFileId),
+        fileId: fileId,
         userId: new Id(props.userId),
         detectedSoftware: detectedSoftware,
         detectedPrompt: detectedPrompt,
         detectedSeed: detectedSeed,
         software: null,
-        prompt: null,
         seed: null,
         isPublic: props.isPublic,
-        requestId: props.requestId === null ? null : new Id(props.requestId),
+        promptId: new Id(props.promptId),
+        imageURL: imageURL,
       })
 
       await this.eventStore.commit(event)
