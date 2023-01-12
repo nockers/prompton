@@ -75,7 +75,7 @@ export class PostEventStore {
       description: null,
       fileId: event.fileId,
       userId: event.userId,
-      prompt: event.prompt,
+      inputtedPrompt: event.prompt,
       detectedPrompt: event.detectedPrompt,
       software: event.software,
       detectedSoftware: event.detectedSoftware,

@@ -6,7 +6,7 @@ const zProps = z.object({
   title: z.string().nullable(),
   description: z.string().nullable(),
   fileId: z.instanceof(Id),
-  prompt: z.string().nullable(),
+  inputtedPrompt: z.string().nullable(),
   detectedPrompt: z.string().nullable(),
   seed: z.string().nullable(),
   detectedSeed: z.string().nullable(),
@@ -57,7 +57,7 @@ export class PostEntity implements Props {
    */
   readonly userId!: Props["userId"]
 
-  readonly prompt!: Props["prompt"]
+  readonly inputtedPrompt!: Props["inputtedPrompt"]
 
   readonly detectedPrompt!: Props["detectedPrompt"]
 
@@ -110,7 +110,7 @@ export class PostEntity implements Props {
   updatePrompt(prompt: string | null) {
     return new PostEntity({
       ...this.props,
-      prompt,
+      inputtedPrompt: prompt,
     })
   }
 

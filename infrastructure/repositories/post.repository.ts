@@ -19,7 +19,7 @@ export class PostRepository {
         title: post.title,
         fileId: new Id(post.fileId),
         userId: new Id(post.userId),
-        prompt: post.prompt,
+        inputtedPrompt: post.inputtedPrompt,
         detectedPrompt: post.detectedPrompt,
         software:
           post.software !== null
@@ -68,7 +68,7 @@ export class PostRepository {
           dateText: "",
           fileId: entity.fileId.value,
           userId: entity.userId.value,
-          prompt: entity.prompt,
+          inputtedPrompt: entity.inputtedPrompt,
           detectedPrompt: entity.detectedPrompt,
           software: entity.software?.value ?? null,
           detectedSoftware: entity.detectedSoftware?.value ?? null,
@@ -90,7 +90,7 @@ export class PostRepository {
         update: {
           isPublic: entity.isPublic,
           title: entity.title,
-          prompt: entity.prompt,
+          inputtedPrompt: entity.inputtedPrompt,
           detectedPrompt: entity.detectedPrompt,
           software: entity.software?.value ?? null,
           detectedSoftware: entity.detectedSoftware?.value ?? null,
