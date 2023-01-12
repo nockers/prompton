@@ -39,7 +39,7 @@ export const WorkNodeResolvers: PrismaResolvers<WorkNode, Post> = {
     return `${Env.imageUrl}/${parent.fileId}?w=256&h=256`
   },
   prompt(parent) {
-    return parent.prompt || parent.detectedPrompt
+    return parent.inputtedPrompt || parent.detectedPrompt
   },
   detectedPrompt(parent) {
     return parent.detectedPrompt

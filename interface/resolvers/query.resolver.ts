@@ -70,7 +70,7 @@ export const QueryResolvers: Resolvers = {
               title: { search: args.where.search },
             },
             {
-              prompt: { search: args.where.search },
+              inputtedPrompt: { search: args.where.search },
             },
           ],
         },

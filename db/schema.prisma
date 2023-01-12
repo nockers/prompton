@@ -115,7 +115,6 @@ model Post {
   user               User           @relation("user_posts", fields: [userId], references: [id])
   userId             String         @map("user_id")
   fileId             String         @unique @map("file_id")
-  prompt             String?        @map("prompt")
   inputtedPrompt     String?        @map("inputted_prompt")
   detectedPrompt     String?        @map("deleted_prompt")
   software           Software?      @map("software")
