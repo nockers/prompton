@@ -26,6 +26,7 @@ import { updateWorkResolver } from "interface/resolvers/mutations/updateWork.res
 import { PaymentMethodNodeResolvers } from "interface/resolvers/paymentMethodNode.resolver"
 import {
   createPromptResolver,
+  createPromptWorkResolver,
   deletePromptResolver,
   updatePromptResolver,
 } from "interface/resolvers/prompt"
@@ -44,6 +45,7 @@ const MutationResolvers = {
   createPaymentMethod: createPaymentMethodResolver,
   createPlan: createPlanResolver,
   createPrompt: createPromptResolver,
+  createPromptWork: createPromptWorkResolver,
   createRequest: createRequestResolver,
   createUser: createUserResolver,
   createWork: createWorkResolver,

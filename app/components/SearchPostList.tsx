@@ -26,6 +26,9 @@ export const SearchPostList: FC<Props> = (props) => {
       limit: 9 * 6,
       where: {
         search: props.searchText || null,
+        color: null,
+        labelName: null,
+        userId: null,
       },
     },
   })

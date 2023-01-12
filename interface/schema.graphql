@@ -605,6 +605,10 @@ type Mutation {
   プロンプトを削除する
   """
   deletePrompt(input: DeletePromptInput!): PromptNode!
+  """
+  プロンプトの作品を追加する
+  """
+  createPromptWork(input: CreatePromptWorkInput!): PromptNode!
 }
 
 input CreateWorkInput {
@@ -773,6 +777,13 @@ input UpdatePromptCategoryInput {
 
 input DeletePromptCategoryInput {
   promptCategoryId: String!
+}
+
+input CreatePromptWorkInput {
+  fileId: String!
+  fileName: String!
+  isPublic: Boolean!
+  promptId: String!
 }
 
 type CreatePaymentMethodResult {

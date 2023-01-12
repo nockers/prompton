@@ -43,6 +43,7 @@ const ColorPage: BlitzPage<Props> = () => {
         color: router.query.name as string,
         labelName: null,
         userId: null,
+        search: null,
       },
     },
   })
@@ -146,6 +147,7 @@ export const getStaticProps: GetStaticProps<Props, Paths> = async (context) => {
         color: context.params!.name,
         labelName: null,
         userId: null,
+        search: null,
       },
     },
   })

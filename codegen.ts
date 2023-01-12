@@ -12,7 +12,12 @@ const config: CodegenConfig = {
         useIndexSignature: true,
         contextType: "types#ApolloContext",
         enumsAsConst: true,
-        avoidOptionals: true,
+        avoidOptionals: {
+          field: true,
+          inputValue: true,
+          object: true,
+          defaultValue: false,
+        },
       },
     },
     "interface/__generated__/react.ts": {
@@ -26,7 +31,7 @@ const config: CodegenConfig = {
         enumsAsConst: true,
         avoidOptionals: {
           field: true,
-          inputValue: false,
+          inputValue: true,
           object: true,
           defaultValue: false,
         },

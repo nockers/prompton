@@ -25,6 +25,7 @@ export const UserWorkList: FC<Props> = (props) => {
         color: null,
         labelName: null,
         userId: props.userId,
+        search: null,
       },
     },
   })

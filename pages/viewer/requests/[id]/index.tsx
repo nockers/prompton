@@ -75,6 +75,8 @@ const ViewerRequestPage: BlitzPage = () => {
             input: {
               requestId: requestId,
               fileId: fileId,
+              description: null,
+              name: null,
             },
           },
         })

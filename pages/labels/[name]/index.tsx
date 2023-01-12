@@ -38,6 +38,7 @@ const LabelPage: BlitzPage<Props> = () => {
         color: null,
         labelName: router.query.name as string,
         userId: null,
+        search: null,
       },
     },
   })

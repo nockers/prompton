@@ -18,10 +18,11 @@ import {
   IconButton,
 } from "@chakra-ui/react"
 import { useContext, useState } from "react"
-import { BiArrowToTop, BiPlus, BiSearch, BiX } from "react-icons/bi"
+import { BiPlus, BiSearch, BiX } from "react-icons/bi"
 import { MainLoading } from "app/components/MainLoading"
 import { MainStackJA } from "app/components/MainStackJa"
 import { CardViewerPrompt } from "app/note/components/CardViwerPrompt"
+import { DrawerViewerPrompt } from "app/note/components/DrawerViwerPrompt"
 import {
   useCreatePromptMutation,
   useDeletePromptMutation,
@@ -31,6 +32,8 @@ import { AppContext } from "interface/contexts/appContext"
 
 const ViewerNotePage: BlitzPage = () => {
   const appContext = useContext(AppContext)
+
+  const [selectedId, setSelectedId] = useState<string | null>(null)
 
   const [searchText, setSearchText] = useState("")
 
@@ -71,6 +74,8 @@ const ViewerNotePage: BlitzPage = () => {
             isBase: false,
             isSingle: false,
             text: newPromptText,
+            description: null,
+            name: null,
           },
         },
       })
@@ -197,12 +202,12 @@ const ViewerNotePage: BlitzPage = () => {
                   </TabList>
                 </Tabs>
                 <HStack>
-                  <Button
+                  {/* <Button
                     size={"sm"}
                     rightIcon={<Icon as={BiArrowToTop} fontSize={14} />}
                   >
                     {"新しい順"}
-                  </Button>
+                  </Button> */}
                 </HStack>
               </HStack>
               <Stack spacing={4} pb={4}>
@@ -219,6 +224,20 @@ const ViewerNotePage: BlitzPage = () => {
                     createdAt={prompt.createdAt}
                     onDelete={() => {
                       onDeletePrompt(prompt.id)
+                    }}
+                    onEdit={() => {
+                      setSelectedId(prompt.id)
+                    }}
+                  />
+                ))}
+                {searchPrompts.map((prompt) => (
+                  <DrawerViewerPrompt
+                    key={prompt.id}
+                    promptId={prompt.id}
+                    promptText={prompt.text}
+                    isOpen={selectedId === prompt.id}
+                    onClose={() => {
+                      setSelectedId(null)
                     }}
                   />
                 ))}
